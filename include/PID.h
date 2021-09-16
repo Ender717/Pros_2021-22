@@ -99,7 +99,6 @@ public:
    //-----------------------------------------------------------------------------
    // Returns the control variable based on the target and current values
    // float currentValue - the current value of the system's output
-   // float targetValue - the desired value for the system to reach
    // returns: The value of the control variable (system output)
    // v1: Created the method - Nathan S, 9-10-21
    //-----------------------------------------------------------------------------
