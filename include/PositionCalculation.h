@@ -14,32 +14,56 @@ private:
    // ROBOT_WIDTH: The distance between the left and right tracking wheels
    //--------------------------------------------------------------------------
    const float ROBOT_WIDTH = 15.0;
+   const float TRACKING_RADIUS = 5.0;
 
    //--------------------------------------------------------------------------
    // Private class member variables
    // oldLeftValue: The starting value of the left tracking wheel
    // oldRightValue: The starting value of the right tracking wheel
-   // oldTheta: The starting angle of the robot
+   // oldCenterValue: The starting value of the center tracking wheel
    // newLeftValue: The new value of the left tracking wheel
    // newRightPosition: The new value of the right tracking wheel
-   // newTheta: The new angle of the robot
-   // originX: The x-coordinate of the arc origin point
-   // originY: The y-coordinate of the arc origin point
+   // newCenterPosition: The new value of the center tracking wheel
+   // oldTheta: The starting angle of the robot
+   // oldX: The starting x-coordinate of the robot
+   // oldY: The starting y-coordinate of the robot
    // currentX: The current x-coordinate of the robot
    // currentY: The current y-coordinate of the robot
    // currentTheta: The current angle of the robot
    //--------------------------------------------------------------------------
    float oldLeftValue;
    float oldRightValue;
-   float oldTheta;
+   float oldCenterValue;
    float newLeftValue;
    float newRightValue;
-   float newTheta;
-   float originX;
-   float originY;
+   float newCenterValue;
+   float oldX;
+   float oldY;
+   float oldTheta;
    float currentX;
    float currentY;
    float currentTheta;
+
+
+   //--------------------------------------------------------------------------
+   // Updates the values of the left and right tracking wheels
+   // v1: Created the method - Nathan S, 9-24-21
+   //--------------------------------------------------------------------------
+   void UpdateValues(float leftValue, float rightValue, float centerValue);
+
+   //--------------------------------------------------------------------------
+   // Calculates the angle of the robot using the tracking wheels, and averages
+   // that value with the inertial sensor reading
+   // v1: Created the method - Nathan S, 9-27-21
+   //--------------------------------------------------------------------------
+   void UpdateTheta(float inertialValue);
+
+   //--------------------------------------------------------------------------
+   // Calculates the position of the robot using the tracking wheels and the 
+   // angle of the robot
+   // v1: Created the method - Nathan S, 9-27-21
+   //--------------------------------------------------------------------------
+   void CalculatePosition();
 
 public:
    //--------------------------------------------------------------------------
@@ -52,16 +76,32 @@ public:
    PositionCalculation(float startX, float startY, float startTheta);
 
    //--------------------------------------------------------------------------
-   // Updates the values of the left and right tracking wheels
-   // v1: Created the method - Nathan S, 9-24-21
+   // Updates the current position of the system
+   // leftValue: The current value of the left tracking wheel
+   // rightValue: The current value of the right tracking wheel
+   // centerValue: The current value of the center tracking wheel
+   // inertialValue: The current value of the inertial sensor's z-axis
    //--------------------------------------------------------------------------
-   void UpdateValues(float leftValue, float rightValue, float angle);
+   void UpdatePosition(float leftValue, float rightValue, float centerValue,
+      float inertialValue);
 
    //--------------------------------------------------------------------------
-   // Calculates the angle of the robot using the tracking wheels, and averages
-   // that value with the inertial sensor reading
+   // Returns the current x-coordinate of the robot
+   // return: The current x-coordinate of the robot
    //--------------------------------------------------------------------------
-   void CalculateTheta(float inertialValue);
+   float getX();
+
+   //--------------------------------------------------------------------------
+   // Returns the current y-coordinate of the robot
+   // return: The current y-coordinate of the robot
+   //--------------------------------------------------------------------------
+   float getY();
+
+   //--------------------------------------------------------------------------
+   // Returns the current angle of the robot
+   // return: The current angle of the robot
+   //--------------------------------------------------------------------------
+   float getAngle();
 };
 
 #endif

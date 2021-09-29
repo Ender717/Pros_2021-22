@@ -1,4 +1,4 @@
-// Include the header file for this class
+#include "main.h"
 #include "PID.h"
 
 // Private methods ------------------------------------------------------------
@@ -55,10 +55,10 @@ bool PID::IsSaturated()
 }
 
 // Constructors ---------------------------------------------------------------
-PID::PID(float kp, float ki, float kd, float min, float max, float loopTime, 
+PID::PID(float kp, float ki, float kd, float min, float max, float loopTime,
    float startValue)
 {
-   this->kp = kp; 
+   this->kp = kp;
    this->ki = ki;
    this->kd = kd;
    this->min = min;
