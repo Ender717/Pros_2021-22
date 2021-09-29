@@ -1,9 +1,6 @@
 #include "main.h"
-/**
- * Hello, Nathan!
- * 
- * 
- * 
+#include "PositionCalculation.h"
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -79,14 +76,26 @@ void autonomous() {}
  */
 void opcontrol() 
 {
-	pros::Motor driveLeftMotor(1);
-	pros::Motor driveRightMotor(10);
-	pros::Controller controller (CONTROLLER_MASTER);
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	pros::Rotation leftEncoder(14);
+	pros::Rotation centerEncoder(15);
+	pros::Rotation rightEncoder(16);
+	pros::Imu inertial(17);
+
+	PositionCalculation *pos = new PositionCalculation(0.0, 0.0, 0.0);
+	while(inertial.is_calibrating())
+	{
+		pros::delay(50);
+	}
+
 	while (true) 
 	{
-		driveLeftMotor.move(controller.get_analog(ANALOG_LEFT_Y));
-		driveRightMotor.move(controller.get_analog(ANALOG_RIGHT_Y));
-
+		(*pos).UpdatePosition(leftEncoder.get_position(), rightEncoder.get_position(),
+			centerEncoder.get_position(), (inertial.get_rotation() * 3.1415 / 180));
+		
+		//pros::lcd::set_text(1, (*pos).getX().);
+		//pros::lcd::set_text(2, (*pos).getY());
+		//pros::lcd::set_text(3, (*pos).getAngle());
 		pros::delay(2);
 	}
 }

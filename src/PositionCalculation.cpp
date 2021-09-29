@@ -131,8 +131,8 @@ void PositionCalculation::CalculatePosition()
       }
 
       // Calculate the origin of the butterfly
-      originX = oldX + ((ROBOT_WIDTH - largeRadius) * std::cos(oldTheta);
-      originY = oldY + ((ROBOT_WIDTH - largeRadius) * std::sin(oldTheta);
+      originX = oldX + ((ROBOT_WIDTH - largeRadius) * std::cos(oldTheta));
+      originY = oldY + ((ROBOT_WIDTH - largeRadius) * std::sin(oldTheta));
 
       // Calculate the new position
       currentX = originX + (largeRadius * std::cos(currentTheta));
@@ -140,7 +140,7 @@ void PositionCalculation::CalculatePosition()
    }
 
    // Calculate the sideways drift
-   float drift = centerChange - (TRACKING_RADIUS * (newTheta - oldTheta));
+   float drift = centerChange - (TRACKING_RADIUS * (currentTheta - oldTheta));
 
    // Calculate the dimensions of the drift
    float centerRadius = std::abs(centerChange / thetaChange);
@@ -152,22 +152,22 @@ void PositionCalculation::CalculatePosition()
 void PositionCalculation::UpdatePosition(float leftValue, float rightValue,
    float centerValue, float inertialValue)
 {
-   UpdateValues();
+   UpdateValues(leftValue, rightValue, centerValue);
    UpdateTheta(inertialValue);
    CalculatePosition();
 }
 
-float getX()
+float PositionCalculation::getX()
 {
    return currentX;
 }
 
-float getY()
+float PositionCalculation::getY()
 {
    return currentY;
 }
 
-float getAngle()
+float PositionCalculation::getAngle()
 {
    return currentTheta;
 }
