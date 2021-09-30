@@ -37,6 +37,7 @@ void PositionCalculation::UpdateValues(float leftValue, float rightValue,
 
 void PositionCalculation::UpdateTheta(float inertialValue)
 {
+   /*
    float leftChange = newLeftValue - oldLeftValue;
    float rightChange = newRightValue - oldRightValue;
    
@@ -68,6 +69,8 @@ void PositionCalculation::UpdateTheta(float inertialValue)
    }
 
    currentTheta = oldTheta + ((odometryTheta + inertialValue) / 2.0);
+   */
+   currentTheta = inertialValue;
 }
 
 void PositionCalculation::CalculatePosition()
@@ -80,7 +83,7 @@ void PositionCalculation::CalculatePosition()
 
    if (leftChange * rightChange >= 0) // The motion is not a spin
    {
-      if (leftChange != rightChange) // The motion is non-linear
+      if (std::abs(thetaChange) > 0.0001) // The motion is non-linear
       {
          // Calculate the inner and outer radius of the arc
          float innerRadius, outerRadius, centerX, centerY;
@@ -111,41 +114,47 @@ void PositionCalculation::CalculatePosition()
       else // The motion is linear
       {
          // Calculate the new position
-         currentX = oldX + (leftChange * std::cos(currentTheta));
-         currentY = oldY + (leftChange * std::sin(currentTheta));
+         currentX = oldX + ((leftChange + rightChange) / 2 * std::cos(currentTheta));
+         currentY = oldY + ((leftChange + rightChange) / 2 * std::sin(currentTheta));
       }
    }
    else // The motion is a spin
    {
       // Calculate the small and large radius of the butterfly
-      float largeRadius, smallRadius, originX, originY;
-      if (std::abs(leftChange) > std::abs(rightChange))
+      if(std::abs(thetaChange) > 0.0001)
       {
-         largeRadius = std::abs(leftChange / thetaChange);
-         smallRadius = std::abs(rightChange / thetaChange);
-      }
-      else
-      {
-         largeRadius = std::abs(rightChange / thetaChange);
-         smallRadius = std::abs(leftChange / thetaChange);
-      }
+         float largeRadius, smallRadius, originX, originY;
+         if (std::abs(leftChange) > std::abs(rightChange))
+         {
+            largeRadius = std::abs(leftChange / thetaChange);
+            smallRadius = std::abs(rightChange / thetaChange);
+         }
+         else
+         {
+            largeRadius = std::abs(rightChange / thetaChange);
+            smallRadius = std::abs(leftChange / thetaChange);
+         }
 
-      // Calculate the origin of the butterfly
-      originX = oldX + ((ROBOT_WIDTH - largeRadius) * std::cos(oldTheta));
-      originY = oldY + ((ROBOT_WIDTH - largeRadius) * std::sin(oldTheta));
+         // Calculate the origin of the butterfly
+         originX = oldX + ((ROBOT_WIDTH - largeRadius) * std::cos(oldTheta));
+         originY = oldY + ((ROBOT_WIDTH - largeRadius) * std::sin(oldTheta));
 
-      // Calculate the new position
-      currentX = originX + (largeRadius * std::cos(currentTheta));
-      currentY = originY + (largeRadius * std::sin(currentTheta));
+         // Calculate the new position
+         currentX = originX + (largeRadius * std::cos(currentTheta));
+         currentY = originY + (largeRadius * std::sin(currentTheta));
+      }
    }
 
    // Calculate the sideways drift
    float drift = centerChange - (TRACKING_RADIUS * (currentTheta - oldTheta));
 
    // Calculate the dimensions of the drift
-   float centerRadius = std::abs(centerChange / thetaChange);
-   currentX += centerRadius * std::cos(thetaChange);
-   currentY += centerRadius * std::sin(thetaChange);
+   if(std::abs(thetaChange) > 0.0001)
+   {
+      float centerRadius = std::abs(centerChange / thetaChange);
+      currentX += centerRadius * std::cos(thetaChange);
+      currentY += centerRadius * std::sin(thetaChange);
+   }
 }
 
 // Public Method Definitions --------------------------------------------------

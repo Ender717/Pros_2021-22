@@ -82,20 +82,28 @@ void opcontrol()
 	pros::Rotation rightEncoder(16);
 	pros::Imu inertial(17);
 
+	leftEncoder.set_position(0.0);
+	rightEncoder.set_position(0.0);
+	centerEncoder.set_position(0.0);
+
 	PositionCalculation *pos = new PositionCalculation(0.0, 0.0, 0.0);
-	while(inertial.is_calibrating())
-	{
-		pros::delay(50);
-	}
+	float leftInches, rightInches, centerInches, inertialRadians;
+
+	pros::delay(5000);
 
 	while (true) 
 	{
-		(*pos).UpdatePosition(leftEncoder.get_position(), rightEncoder.get_position(),
-			centerEncoder.get_position(), (inertial.get_rotation() * 3.1415 / 180));
-		
-		//pros::lcd::set_text(1, (*pos).getX().);
-		//pros::lcd::set_text(2, (*pos).getY());
-		//pros::lcd::set_text(3, (*pos).getAngle());
+		leftInches = leftEncoder.get_position()*((2.807 * 3.1415) / 36000);
+		rightInches = rightEncoder.get_position()*((-2.807 * 3.1415) / 36000);
+		centerInches = centerEncoder.get_position()*((2.807 * 3.1415) / 36000);
+		inertialRadians = inertial.get_rotation() * 3.1415 / 180;
+
+		pos->UpdatePosition(leftInches, rightInches, centerInches, inertialRadians);
+
+		pros::lcd::set_text(1, std::to_string(pos->getX()));
+		pros::lcd::set_text(2, std::to_string(pos->getY()));
+		pros::lcd::set_text(3, std::to_string(pos->getAngle()));
+
 		pros::delay(2);
 	}
 }
