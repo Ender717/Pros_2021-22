@@ -3,12 +3,12 @@
 #ifndef autonController_h
 #define autonController_h
 
-#include "headers/utilities/timer.h"
+#include "include/util/timer.h"
 #include <vector>
 #include <cstdint>
 #include "pros/rtos.hpp"
-#include "headers/subsystems/systems.h"
-#include "headers/subsystems/robotDrives.h"
+#include "include/util/systems.h"
+#include "include/util/autonCommands.h"
 
 namespace autonControllers
 {

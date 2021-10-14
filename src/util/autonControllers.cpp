@@ -1,18 +1,18 @@
-#include "headers/utilities/autonControllers.h"
+#include "include/util/autonCommands.h"
 #include "headers/subsystems/systems.h"
 #include "headers/misc/config.h"
 namespace autonControllers
 {
-// template <typename... Args>
-// void autonController::addCommands(Args... args)
-// {
-// 	robotFunctionCommands = {args...};
-// 	for (int i = 0; i < robotFunctionCommands.size(); i++)
-// 	{
-// 		i = systems::systemsArray[robotFunctionCommands[i]]->addSystemCommands(i + 1, robotFunctionCommands);
-// 	}
-// 	runAutonController();
-// }
+template <typename... Args>
+void autonController::addCommands(Args... args)
+{
+	robotFunctionCommands = {args...};
+	for (int i = 0; i < robotFunctionCommands.size(); i++)
+	{
+		i = systems::systemsArray[robotFunctionCommands[i]]->addSystemCommands(i + 1, robotFunctionCommands);
+	}
+	runAutonController();
+}
 
 void autonController::resetAutonController()
 {
