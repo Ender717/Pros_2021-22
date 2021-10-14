@@ -81,80 +81,25 @@ void PositionCalculation::CalculatePosition()
    float centerChange = newCenterValue - oldCenterValue;
    float thetaChange = currentTheta - oldTheta;
 
-   if (leftChange * rightChange >= 0) // The motion is not a spin
+   // Add the approximate change from the left and right wheels
+   currentX = oldX + (((rightChange + leftChange) / 2) * cos(currentTheta + (thetaChange / 2)));
+   currentY = oldY + (((rightChange + leftChange) / 2) * sin(currentTheta + (thetaChange / 2)));
+
+   float drift;
+   
+   if(abs(thetaChange) > 0.001)
    {
-      if (std::abs(thetaChange) > 0.0001) // The motion is non-linear
-      {
-         // Calculate the inner and outer radius of the arc
-         float innerRadius, outerRadius, centerX, centerY;
-         if (std::abs(leftChange) > std::abs(rightChange))
-         {
-            innerRadius = std::abs(rightChange / thetaChange);
-            outerRadius = std::abs(leftChange / thetaChange);
-         }
-         else
-         {
-            innerRadius = std::abs(leftChange / thetaChange);
-            outerRadius = std::abs(rightChange / thetaChange);
-         }
-
-         // Calculate the center of the arc
-         centerX = oldX - (((innerRadius + outerRadius) / 2) 
-            * std::cos(oldTheta));
-         centerY = oldY - (((innerRadius + outerRadius) / 2)
-            * std::sin(oldTheta));
-
-         // Calculate the new position
-         currentX = centerX + (((innerRadius + outerRadius) / 2)
-            * std::cos(currentTheta));
-         currentY = centerY + (((innerRadius + outerRadius) / 2)
-            * std::sin(currentTheta));
-
-      }
-      else // The motion is linear
-      {
-         // Calculate the new position
-         currentX = oldX + ((leftChange + rightChange) / 2 * std::cos(currentTheta));
-         currentY = oldY + ((leftChange + rightChange) / 2 * std::sin(currentTheta));
-      }
+      float radius = ((leftChange + rightChange) / 2) / thetaChange;
+      float hypotenuse = sqrt((radius * radius) + (TRACKING_RADIUS * TRACKING_RADIUS));
+      float trackingAngle = atan(TRACKING_RADIUS / radius);
+      drift = -(((leftChange + rightChange) / 2) * cos(trackingAngle));
    }
-   else // The motion is a spin
-   {
-      // Calculate the small and large radius of the butterfly
-      if(std::abs(thetaChange) > 0.0001)
-      {
-         float largeRadius, smallRadius, originX, originY;
-         if (std::abs(leftChange) > std::abs(rightChange))
-         {
-            largeRadius = std::abs(leftChange / thetaChange);
-            smallRadius = std::abs(rightChange / thetaChange);
-         }
-         else
-         {
-            largeRadius = std::abs(rightChange / thetaChange);
-            smallRadius = std::abs(leftChange / thetaChange);
-         }
-
-         // Calculate the origin of the butterfly
-         originX = oldX + ((ROBOT_WIDTH - largeRadius) * std::cos(oldTheta));
-         originY = oldY + ((ROBOT_WIDTH - largeRadius) * std::sin(oldTheta));
-
-         // Calculate the new position
-         currentX = originX + (largeRadius * std::cos(currentTheta));
-         currentY = originY + (largeRadius * std::sin(currentTheta));
-      }
-   }
-
-   // Calculate the sideways drift
-   float drift = centerChange - (TRACKING_RADIUS * (currentTheta - oldTheta));
+   else
+      drift = centerChange;
 
    // Calculate the dimensions of the drift
-   if(std::abs(thetaChange) > 0.0001)
-   {
-      float centerRadius = std::abs(centerChange / thetaChange);
-      currentX += centerRadius * std::cos(thetaChange);
-      currentY += centerRadius * std::sin(thetaChange);
-   }
+   currentX += drift * std::cos(currentTheta - 1.5708 + (thetaChange / 2));
+   currentY += drift * std::sin(currentTheta - 1.5708 + (thetaChange / 2));
 }
 
 // Public Method Definitions --------------------------------------------------

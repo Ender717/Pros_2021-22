@@ -94,15 +94,15 @@ void opcontrol()
 	while (true) 
 	{
 		leftInches = leftEncoder.get_position()*((2.807 * 3.1415) / 36000);
-		rightInches = rightEncoder.get_position()*((-2.807 * 3.1415) / 36000);
-		centerInches = centerEncoder.get_position()*((2.807 * 3.1415) / 36000);
+		rightInches = rightEncoder.get_position()*((2.807 * 3.1415) / -36000);
+		centerInches = centerEncoder.get_position()*((2.807 * 3.1415) / -36000);
 		inertialRadians = inertial.get_rotation() * 3.1415 / 180;
 
 		pos->UpdatePosition(leftInches, rightInches, centerInches, inertialRadians);
 
 		pros::lcd::set_text(1, std::to_string(pos->getX()));
 		pros::lcd::set_text(2, std::to_string(pos->getY()));
-		pros::lcd::set_text(3, std::to_string(pos->getAngle()));
+		pros::lcd::set_text(3, std::to_string(pos->getAngle() * 180 / 3.1415));
 
 		pros::delay(2);
 	}
