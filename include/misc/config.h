@@ -2,7 +2,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-
 namespace config
 {
 
@@ -29,6 +28,5 @@ namespace config
     //autonomous.cpp
     const bool DEFAULT_AUTONOMOUS_MODE = 1;
 }
-
 
 #endif
