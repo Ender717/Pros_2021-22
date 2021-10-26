@@ -1,7 +1,6 @@
 #include "include/util/autonCommands.h"
-#include "include/util/autonControllers.h"
-#include "include/util/systems.h"
-#include "include/misc/config.h"
+#include "headers/subsystems/systems.h"
+#include "headers/misc/config.h"
 namespace autonControllers
 {
 template <typename... Args>
