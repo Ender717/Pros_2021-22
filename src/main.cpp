@@ -1,3 +1,4 @@
+/*
 #include "main.h"
 
 /**
@@ -5,7 +6,7 @@
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
- */
+ *
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;
@@ -21,7 +22,7 @@ void on_center_button() {
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
- */
+ *
 void initialize() {
 	pros::lcd::initialize();
 	
@@ -31,7 +32,7 @@ void initialize() {
  * Runs while the robot is in the disabled state of Field Management System or
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
- */
+ *
 void disabled() {}
 
 /**
@@ -42,7 +43,7 @@ void disabled() {}
  *
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
- */
+ *
 void competition_initialize() {}
 
 /**
@@ -55,7 +56,7 @@ void competition_initialize() {}
  * If the robot is disabled or communications is lost, the autonomous task
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
- */
+ *
 void autonomous() {}
 
 /**
@@ -70,7 +71,7 @@ void autonomous() {}
  * If the robot is disabled or communications is lost, the
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
- */
+ *
 void opcontrol() 
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -89,16 +90,15 @@ void opcontrol()
 	rightEncoder.set_position(0.0);
 	centerEncoder.set_position(0.0);
 
-	// float leftDrive, rightDrive;
+	float leftDrive, rightDrive;
 	PID *basePID = new PID(2.66, 0.00, 0.16, -125.0, 125.0, 0.002, 0.0);
 	PositionCalculation *pos = new PositionCalculation(0.0, 0.0, 0.0);
 	float leftInches, rightInches, centerInches, inertialRadians, drivePower;
-	basePID->SetTargetValue(360.0);
+	// basePID->SetTargetValue(360.0);
 	pros::delay(5000);
 
 	while (true) 
 	{
-		/*
 		leftDrive = (master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X));
 		rightDrive = (master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
@@ -108,7 +108,6 @@ void opcontrol()
 		rearLeftDrive.move(leftDrive);
 		frontRightDrive.move(rightDrive);
 		rearRightDrive.move(rightDrive);
-		*/
 
 		leftInches = leftEncoder.get_position()*((2.807 * 3.1415) / 36000);
 		rightInches = rightEncoder.get_position()*((2.807 * 3.1415) / -36000);
@@ -116,11 +115,13 @@ void opcontrol()
 		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * (360.0 / 355.3);
 		pos->UpdatePosition(leftInches, rightInches, centerInches, inertialRadians);
 		
+		/*
 		drivePower = basePID->GetControlValue(inertialRadians * (180.0 / 3.1415));
 		frontLeftDrive.move(drivePower);
 		rearLeftDrive.move(drivePower);
 		frontRightDrive.move(-drivePower);
 		rearRightDrive.move(-drivePower);
+		*
 
 		pros::lcd::set_text(1, std::to_string(pos->getX()));
 		pros::lcd::set_text(2, std::to_string(pos->getY()));
@@ -129,3 +130,4 @@ void opcontrol()
 		pros::delay(2);
 	}
 }
+*/
