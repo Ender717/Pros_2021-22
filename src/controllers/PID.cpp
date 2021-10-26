@@ -39,9 +39,7 @@ void PID::UpdateProportional()
 void PID::UpdateIntegral()
 {
    if (!IsSaturated() || (rawValue * error < 0))
-   {
       ivalue += error * loopTime;
-   }
 }
 
 void PID::UpdateDerivative()
@@ -93,5 +91,5 @@ void PID::SetTargetValue(float targetValue)
 
 float PID::PercentTarget()
 {
-   return currentValue * (100 / startValue);
+   return 100.0 - (100.0 * abs(targetValue - currentValue) / targetValue);
 }

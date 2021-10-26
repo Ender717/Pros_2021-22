@@ -98,8 +98,8 @@ void PositionCalculation::CalculatePosition()
       drift = centerChange;
 
    // Calculate the dimensions of the drift
-   currentX += drift * std::cos(currentTheta - 1.5708 + (thetaChange / 2));
-   currentY += drift * std::sin(currentTheta - 1.5708 + (thetaChange / 2));
+   currentX += drift * cos(currentTheta - 1.5708 + (thetaChange / 2));
+   currentY += drift * sin(currentTheta - 1.5708 + (thetaChange / 2));
 }
 
 // Public Method Definitions --------------------------------------------------
