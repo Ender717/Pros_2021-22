@@ -4,4 +4,8 @@
 
 #include "main.h"
 
+#include "include/PositionCalculation.h"
+
+extern PositionCalculation drivePositionTracker;
+
 #endif
