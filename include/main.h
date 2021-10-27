@@ -41,8 +41,8 @@
  */
 //#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
-#include "controllers/PID.h"
-#include "controllers/PositionCalculation.h"
+#include "PID.h"
+#include "PositionCalculation.h"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
