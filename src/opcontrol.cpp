@@ -26,14 +26,15 @@ void opcontrol()
 	pros::Motor driveRight3(4, false);
 	pros::Motor armLeft(16, true);
 	pros::Motor armRight(6, false);
-	pros::Motor goalLift(14, false);
+	pros::Motor lilDicky(14, false);
+	pros::Motor stick(19, false);
 
-	float leftDrive, rightDrive, arm, lift;
+	float leftDrive, rightDrive, arm, lift, claw;
 
-	pros::Rotation leftEncoder(14);
-	pros::Rotation centerEncoder(15);
-	pros::Rotation rightEncoder(16);
-	pros::Imu inertial(17);
+	pros::Rotation leftEncoder(18);
+	pros::Rotation centerEncoder(17);
+	pros::Rotation rightEncoder(8);
+	pros::Imu inertial(9);
 
 	leftEncoder.set_position(0.0);
 	rightEncoder.set_position(0.0);
@@ -53,8 +54,10 @@ void opcontrol()
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		arm = (master.get_digital(E_CONTROLLER_DIGITAL_R1)
 				- master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 125;
-		lift =  (master.get_digital(E_CONTROLLER_DIGITAL_L1)
+		lift = (master.get_digital(E_CONTROLLER_DIGITAL_L1)
 				- master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 125;
+		claw = (master.get_digital(E_CONTROLLER_DIGITAL_A)
+				- master.get_digital(E_CONTROLLER_DIGITAL_B)) * 125;
 		
 		driveLeft1.move(leftDrive);
 		driveLeft2.move(leftDrive);
@@ -64,21 +67,14 @@ void opcontrol()
 		driveRight3.move(rightDrive);
 		armLeft.move(arm);
 		armRight.move(arm);
-		goalLift.move(lift);
+		lilDicky.move(lift);
+		stick.move(claw);
 
 		leftInches = leftEncoder.get_position()*((2.807 * 3.1415) / 36000);
 		rightInches = rightEncoder.get_position()*((2.807 * 3.1415) / -36000);
 		centerInches = centerEncoder.get_position()*((2.807 * 3.1415) / -36000);
 		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * (360.0 / 355.3);
-		pos->UpdatePosition(leftInches, rightInches, centerInches, inertialRadians);
-		
-		/*
-		drivePower = basePID->GetControlValue(inertialRadians * (180.0 / 3.1415));
-		frontLeftDrive.move(drivePower);
-		rearLeftDrive.move(drivePower);
-		frontRightDrive.move(-drivePower);
-		rearRightDrive.move(-drivePower);
-		*/
+		pos->UpdatePosition(leftInches, rightInches, centerInches, -inertialRadians);
 
 		pros::lcd::set_text(1, "x: " + std::to_string(pos->getX()));
 		pros::lcd::set_text(2, "y: " + std::to_string(pos->getY()));

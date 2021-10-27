@@ -13,8 +13,8 @@ private:
    // Private class member constants
    // ROBOT_WIDTH: The distance between the left and right tracking wheels
    //--------------------------------------------------------------------------
-   const float ROBOT_WIDTH = 14.75;
-   const float TRACKING_RADIUS = 6.25;
+   const float ROBOT_WIDTH = 12.125;
+   const float TRACKING_RADIUS = 5.00;
 
    //--------------------------------------------------------------------------
    // Private class member variables
