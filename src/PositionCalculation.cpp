@@ -85,17 +85,9 @@ void PositionCalculation::CalculatePosition()
    currentX = oldX + (((rightChange + leftChange) / 2) * cos(currentTheta + (thetaChange / 2)));
    currentY = oldY + (((rightChange + leftChange) / 2) * sin(currentTheta + (thetaChange / 2)));
 
-   float drift;
-   
-   if(abs(thetaChange) > 0.001)
-   {
-      float radius = ((leftChange + rightChange) / 2) / thetaChange;
-      float hypotenuse = sqrt((radius * radius) + (TRACKING_RADIUS * TRACKING_RADIUS));
-      float trackingAngle = atan(TRACKING_RADIUS / radius);
-      drift = -(((leftChange + rightChange) / 2) * cos(trackingAngle));
-   }
-   else
-      drift = centerChange;
+   float drift, expected;
+   expected = TRACKING_RADIUS * thetaChange;
+   drift = centerChange - expected;
 
    // Calculate the dimensions of the drift
    currentX += drift * cos(currentTheta - 1.5708 + (thetaChange / 2));
