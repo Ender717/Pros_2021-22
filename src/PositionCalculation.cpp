@@ -85,6 +85,7 @@ void PositionCalculation::CalculatePosition()
    currentX = oldX + (((rightChange + leftChange) / 2) * cos(currentTheta + (thetaChange / 2)));
    currentY = oldY + (((rightChange + leftChange) / 2) * sin(currentTheta + (thetaChange / 2)));
 
+   // Calculate the expected vs actual drift
    float drift, expected;
    expected = TRACKING_RADIUS * thetaChange;
    drift = centerChange - expected;
