@@ -37,40 +37,12 @@ void PositionCalculation::UpdateValues(float leftValue, float rightValue,
 
 void PositionCalculation::UpdateTheta(float inertialValue)
 {
-   /*
    float leftChange = newLeftValue - oldLeftValue;
    float rightChange = newRightValue - oldRightValue;
-   
-   float odometryTheta = inertialValue;
-   if (leftChange * rightChange >= 0) // If both sides are the same direction
-   {
-      if (std::abs(newLeftValue - oldLeftValue) >
-         std::abs(newRightValue - oldRightValue)) // If left moved further
-      {
-         odometryTheta = (2 * 3.1415 * leftChange) /
-            (rightChange + (2 * 3.1415 * ROBOT_WIDTH));
-      }
-      else if (std::abs(newLeftValue - oldLeftValue) <
-         std::abs(newRightValue - oldRightValue)) // If right moved further
-      {
-         odometryTheta = (2 * 3.1415 * rightChange) /
-            (leftChange + (2 * 3.1415 * ROBOT_WIDTH));
-      }
-      else // If they moved the same amount
-      {
-         odometryTheta = 0;
-      }
-      if (leftChange < 0) // If the movement was backward
-         odometryTheta += 180.0;
-   }
-   else if (leftChange * rightChange < 0) // The sides are opposite directions
-   {
-      odometryTheta = (rightChange - leftChange) / ROBOT_WIDTH;
-   }
+   float thetaChange = (leftChange - rightChange) / ROBOT_WIDTH;
+   float odometryTheta = oldTheta + thetaChange;
 
-   currentTheta = oldTheta + ((odometryTheta + inertialValue) / 2.0);
-   */
-   currentTheta = inertialValue;
+   currentTheta = ((odometryTheta + inertialValue) / 2.0);
 }
 
 void PositionCalculation::CalculatePosition()

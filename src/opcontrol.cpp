@@ -70,10 +70,10 @@ void opcontrol()
 		lilDicky.move(lift);
 		stick.move(claw);
 
-		leftInches = leftEncoder.get_position()*((2.780 * 3.1415) / 36000.0);
-		rightInches = rightEncoder.get_position()*((2.780 * 3.1415) / -36000.0);
-		centerInches = centerEncoder.get_position()*((2.780 * 3.1415) / -36000.0);
-		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * 1.0221117;
+		leftInches = leftEncoder.get_position()*((2.750 * 3.1415) / 36000.0);
+		rightInches = rightEncoder.get_position()*((2.750 * 3.1415) / -36000.0);
+		centerInches = centerEncoder.get_position()*((2.750 * 3.1415) / -36000.0);
+		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * 1.00696;
 		pos->UpdatePosition(leftInches, rightInches, centerInches, -inertialRadians);
 
 		pros::lcd::set_text(1, "x: " + std::to_string(pos->getX()));
