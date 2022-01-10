@@ -17,6 +17,10 @@ PositionCalculation::PositionCalculation(float startX, float startY,
    currentX = startX;
    currentY = startY;
    currentTheta = startTheta;
+   leftChange = newLeftValue - oldLeftValue;
+   rightChange = newRightValue - oldRightValue;
+   centerChange = newCenterValue - oldCenterValue;
+   thetaChange = currentTheta - oldTheta;
 }
 
 // Private Method Definitions -------------------------------------------------
@@ -32,39 +36,43 @@ void PositionCalculation::UpdateValues(float leftValue, float rightValue,
    newLeftValue = leftValue;
    newRightValue = rightValue;
    newCenterValue = centerValue;
-
+   leftChange = newLeftValue - oldLeftValue;
+   rightChange = newRightValue - oldRightValue;
+   centerChange = newCenterValue - oldCenterValue;
 }
 
 void PositionCalculation::UpdateTheta(float inertialValue)
 {
-   float leftChange = newLeftValue - oldLeftValue;
-   float rightChange = newRightValue - oldRightValue;
-   float thetaChange = (leftChange - rightChange) / ROBOT_WIDTH;
-   float odometryTheta = oldTheta + thetaChange;
-
-   currentTheta = ((odometryTheta + inertialValue) / 2.0);
+   // Calculate the change in theta using odometry and average the result with
+   // the change from the inertial sensor
+   thetaChange = (leftChange - rightChange) / ROBOT_WIDTH;
+   currentTheta = ((oldTheta + thetaChange + inertialValue) / 2.0);
+   thetaChange = currentTheta - oldTheta;
 }
 
 void PositionCalculation::CalculatePosition()
 {
-   // Calculate the changes from this cycle
-   float leftChange = newLeftValue - oldLeftValue;
-   float rightChange = newRightValue - oldRightValue;
-   float centerChange = newCenterValue - oldCenterValue;
-   float thetaChange = currentTheta - oldTheta;
+   float distance, drift;
 
-   // Add the approximate change from the left and right wheels
-   currentX = oldX + (((rightChange + leftChange) / 2) * cos(currentTheta + (thetaChange / 2)));
-   currentY = oldY + (((rightChange + leftChange) / 2) * sin(currentTheta + (thetaChange / 2)));
+   // Calculate the distance travelled and drifted for a constant angle
+   if (thetaChange == 0)
+   {
+      distance = (leftChange + rightChange) / 2;
+      drift = centerChange;
+   }
 
-   // Calculate the expected vs actual drift
-   float drift, expected;
-   expected = TRACKING_RADIUS * thetaChange;
-   drift = centerChange - expected;
+   // Calculate the distance travelled and drifted for a non-constant angle
+   else
+   {
+      distance = 2 * sin(thetaChange / 2) * ((rightChange / thetaChange) + RIGHT_DISTANCE);
+      drift = 2 * sin(thetaChange / 2) * ((centerChange / thetaChange) + CENTER_DISTANCE);
+   }
 
-   // Calculate the dimensions of the drift
-   currentX += drift * cos(currentTheta - 1.5708 + (thetaChange / 2));
-   currentY += drift * sin(currentTheta - 1.5708 + (thetaChange / 2));
+   // Calculate the coordinate change
+   currentX = oldX + distance * sin(oldTheta + (thetaChange / 2)) 
+      + drift * cos(oldTheta + (thetaChange / 2));
+   currentY = oldY + distance * cos(oldTheta + (thetaChange / 2)) 
+      + drift * -sin(oldTheta + (thetaChange / 2));
 }
 
 // Public Method Definitions --------------------------------------------------
