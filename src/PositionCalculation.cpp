@@ -45,7 +45,7 @@ void PositionCalculation::UpdateTheta(float inertialValue)
 {
    // Calculate the change in theta using odometry and average the result with
    // the change from the inertial sensor
-   thetaChange = (leftChange - rightChange) / ROBOT_WIDTH;
+   thetaChange = (leftChange - rightChange) / (LEFT_DISTANCE + RIGHT_DISTANCE);
    currentTheta = ((oldTheta + thetaChange + inertialValue) / 2.0);
    thetaChange = currentTheta - oldTheta;
 }

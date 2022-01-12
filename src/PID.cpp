@@ -4,8 +4,17 @@
 // Private methods ------------------------------------------------------------
 void PID::CalculateError()
 {
+   // Update the error values
    pastError = error;
    error = targetValue - currentValue;
+}
+
+void PID::CalculateTime()
+{
+   // Update the time records of the previous and current system loop
+   pastTime = currentTime;
+   currentTime = pros::c::millis();
+   loopTime = (currentTime - pastTime) / 1000;
 }
 
 void PID::SetCurrentValue(float currentValue)
@@ -15,6 +24,7 @@ void PID::SetCurrentValue(float currentValue)
 
 void PID::SaturationClamp()
 {
+   // Clamp the controller values within the minimum and maximum output values
    if (rawValue < min)
       satValue = min;
    else if (rawValue > max)
@@ -25,35 +35,39 @@ void PID::SaturationClamp()
 
 void PID::UpdateController()
 {
+   // Update each of the three components of the controller
    UpdateProportional();
    UpdateIntegral();
    UpdateDerivative();
-   rawValue = (kp * pvalue) + (ki * ivalue) + (kd * dvalue);
+
+   // Set the result of the controller calculation
+   rawValue = (kp * pValue) + (ki * iValue) + (kd * dValue) + kc;
 }
 
 void PID::UpdateProportional()
 {
-   pvalue = error;
+   // Set the proportional controller value to the error
+   pValue = error;
 }
 
 void PID::UpdateIntegral()
 {
-   if (!IsSaturated() || (rawValue * error < 0))
-      ivalue += error * loopTime;
+   // Update the integral controller value based on the error in the past loop,
+   // but only if the system is not maxed
+   if (pValue > min && pValue < max)
+      iValue += error * loopTime;
+   if (fabs(iValue) > integralLimit)
+      iValue = (iValue / fabs(iValue)) * integralLimit;
 }
 
 void PID::UpdateDerivative()
 {
-   dvalue = (error - pastError) / loopTime;
-}
-
-bool PID::IsSaturated()
-{
-   return !(rawValue >= min && rawValue <= max);
+   // Set the derivative controller value to the change in error per second
+   dValue = (error - pastError) / loopTime;
 }
 
 // Constructors ---------------------------------------------------------------
-PID::PID(float kp, float ki, float kd, float min, float max, float loopTime,
+PID::PID(float kp, float ki, float kd, float min, float max, float integralLimit, 
    float startValue)
 {
    this->kp = kp;
@@ -61,13 +75,15 @@ PID::PID(float kp, float ki, float kd, float min, float max, float loopTime,
    this->kd = kd;
    this->min = min;
    this->max = max;
-   this->loopTime = loopTime;
-   pvalue = 0.0;
-   ivalue = 0.0;
-   dvalue = 0.0;
-   this->startValue = startValue;
-   currentValue = 0.0;
-   targetValue = 0.0;
+   this->integralLimit = integralLimit;
+   currentTime = pros::c::millis();
+   pastTime = pros::c::millis();
+   loopTime = 0.0;
+   pValue = 0.0;
+   iValue = 0.0;
+   dValue = 0.0;
+   currentValue = startValue;
+   targetValue = startValue;
    error = 0.0;
    pastError = 0.0;
    rawValue = 0.0;
@@ -79,6 +95,7 @@ float PID::GetControlValue(float currentValue)
 {
    SetCurrentValue(currentValue);
    CalculateError();
+   CalculateTime();
    UpdateController();
    SaturationClamp();
    return satValue;
@@ -87,9 +104,4 @@ float PID::GetControlValue(float currentValue)
 void PID::SetTargetValue(float targetValue)
 {
    this->targetValue = targetValue;
-}
-
-float PID::PercentTarget()
-{
-   return 100.0 - (100.0 * abs(targetValue - currentValue) / targetValue);
 }
