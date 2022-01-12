@@ -26,13 +26,14 @@ void opcontrol()
 	pros::Motor driveRight3(4, false);
 	pros::Motor armLeft(16, true);
 	pros::Motor armRight(6, false);
-	pros::Motor lilDicky(14, false);
 	pros::Motor stick(19, false);
+	pros::Motor leftLift(15, true);
+	pros::Motor rightLift(14, false);
 
 	float leftDrive, rightDrive, arm, lift, claw;
 
 	pros::Rotation leftEncoder(18);
-	pros::Rotation centerEncoder(17);
+	pros::Rotation centerEncoder(5);
 	pros::Rotation rightEncoder(8);
 	pros::Imu inertial(9);
 
@@ -67,13 +68,14 @@ void opcontrol()
 		driveRight3.move(rightDrive);
 		armLeft.move(arm);
 		armRight.move(arm);
-		lilDicky.move(lift);
 		stick.move(claw);
+		leftLift.move(lift);
+		rightLift.move(lift);
 
-		leftInches = leftEncoder.get_position()*((2.807 * 3.1415) / 36000);
-		rightInches = rightEncoder.get_position()*((2.807 * 3.1415) / -36000);
-		centerInches = centerEncoder.get_position()*((2.807 * 3.1415) / -36000);
-		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * (360.0 / 355.3);
+		leftInches = leftEncoder.get_position()*((2.750 * 3.1415) / 36000.0);
+		rightInches = rightEncoder.get_position()*((2.750 * 3.1415) / -36000.0);
+		centerInches = centerEncoder.get_position()*((2.750 * 3.1415) / -36000.0);
+		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * 1.00696;
 		pos->UpdatePosition(leftInches, rightInches, centerInches, -inertialRadians);
 
 		pros::lcd::set_text(1, "x: " + std::to_string(pos->getX()));

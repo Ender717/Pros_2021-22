@@ -11,10 +11,16 @@ class PositionCalculation
 private:
    //--------------------------------------------------------------------------
    // Private class member constants
-   // ROBOT_WIDTH: The distance between the left and right tracking wheels
+   // LEFT_DISTANCE: The distance between the left tracking wheel and the 
+   //                center of the robot
+   // RIGHT_DISTANCE: The distance between the right tracking wheel and the 
+   //                 center of the robot
+   // CENTER_DISTANCE: The distance between the center tracking wheel and the 
+   //                  center of the robot
    //--------------------------------------------------------------------------
-   const float ROBOT_WIDTH = 12.125;
-   const float TRACKING_RADIUS = 5.00;
+   const float LEFT_DISTANCE = 6.0625;
+   const float RIGHT_DISTANCE = 6.0625;
+   const float CENTER_DISTANCE = 5.00;
 
    //--------------------------------------------------------------------------
    // Private class member variables
@@ -30,6 +36,10 @@ private:
    // currentX: The current x-coordinate of the robot
    // currentY: The current y-coordinate of the robot
    // currentTheta: The current angle of the robot
+   // leftChange: The change in value of the left tracking wheel
+   // rightChange: The change in value of the right tracking wheel
+   // centerChange: The change in value of the center tracking wheel
+   // thetaChange: The change in the angle of the robot
    //--------------------------------------------------------------------------
    float oldLeftValue;
    float oldRightValue;
@@ -43,6 +53,10 @@ private:
    float currentX;
    float currentY;
    float currentTheta;
+   float leftChange;
+   float rightChange;
+   float centerChange;
+   float thetaChange;
 
 
    //--------------------------------------------------------------------------
@@ -81,6 +95,8 @@ public:
    // rightValue: The current value of the right tracking wheel
    // centerValue: The current value of the center tracking wheel
    // inertialValue: The current value of the inertial sensor's z-axis
+   // v1: Created the method - Nathan S, 9-24-21
+   // v2: Corrected the calculations - Nathan S, 1-9-22
    //--------------------------------------------------------------------------
    void UpdatePosition(float leftValue, float rightValue, float centerValue,
       float inertialValue);
@@ -88,18 +104,21 @@ public:
    //--------------------------------------------------------------------------
    // Returns the current x-coordinate of the robot
    // return: The current x-coordinate of the robot
+   // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
    float getX();
 
    //--------------------------------------------------------------------------
    // Returns the current y-coordinate of the robot
    // return: The current y-coordinate of the robot
+   // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
    float getY();
 
    //--------------------------------------------------------------------------
    // Returns the current angle of the robot
    // return: The current angle of the robot
+   // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
    float getAngle();
 };

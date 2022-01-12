@@ -5,28 +5,79 @@
 class PID
 {
 private:
-   float kp; // Proportional constant
-   float ki; // Integral constant
-   float kd; // Derivative constant
-   float min; // The minimum value of the output
-   float max; // The maximum value of the output
-   float loopTime; // The amount of time per system loop
-   float pvalue; // The value of the proportional controller
-   float ivalue; // The value of the integral controller
-   float dvalue; // The value of the derivative controller
-   float startValue; // The value the system started at
-   float currentValue; // The current value of the system
-   float targetValue; // The target value of the system
-   float error; // The error between the target value and current value
-   float pastError; // The error during the last iteration of the loop
-   float rawValue; // The unmodified result of the controller calculation
-   float satValue; // The result of the calculation constrained to the sat limit
+   //-----------------------------------------------------------------------------
+   // Control constants:
+   // kp: Proportional constant
+   // ki: Integral constant
+   // kd: Derivative constant
+   // kc: System constant
+   //-----------------------------------------------------------------------------
+   float kp;
+   float ki;
+   float kd;
+   float kc;
+
+   //-----------------------------------------------------------------------------
+   // Limiting values:
+   // min: Minimum output value
+   // max: Maximum output value
+   // integralLimit: Maximum integral controller value
+   //-----------------------------------------------------------------------------
+   float min;
+   float max;
+   float integralLimit;
+
+   //-----------------------------------------------------------------------------
+   // Time values:
+   // currentTime: The current time on the system clock
+   // pastTime: The previous time on the system clock
+   // loopTime: The amount of time elapsed during the system loop
+   //-----------------------------------------------------------------------------
+   float currentTime;
+   float pastTime;
+   float loopTime;
+
+   //-----------------------------------------------------------------------------
+   // Input values:
+   // currentValue: The current value of the external system
+   // targetValue: The target value of the external system
+   // error: The distance between the current and target values
+   // pastError: The error during the previous system loop
+   //-----------------------------------------------------------------------------
+   float currentValue;
+   float targetValue;
+   float error;
+   float pastError;
+
+   //-----------------------------------------------------------------------------
+   // Control values:
+   // pValue: The value of the proportional controller
+   // iValue: The value of the integral controller
+   // dValue: The value of the derivative controller
+   //-----------------------------------------------------------------------------
+   float pValue; // The value of the proportional controller
+   float iValue; // The value of the integral controller
+   float dValue; // The value of the derivative controller
+   
+   //-----------------------------------------------------------------------------
+   // Output values:
+   // rawValue: The unmodified result of the controller calculation
+   // satValue: The value of the controller calculation with a saturation clamp
+   //-----------------------------------------------------------------------------
+   float rawValue; 
+   float satValue; 
 
    //-----------------------------------------------------------------------------
    // Calculates the current error in the system
    // v1: Created the method - Nathan S, 9-12-21
    //-----------------------------------------------------------------------------
    void CalculateError();
+
+   //-----------------------------------------------------------------------------
+   // Calculates the time taken for the last loop of the system
+   // v1: Created the method - Nathan S, 1-12-21
+   //-----------------------------------------------------------------------------
+   void CalculateTime();
 
    //-----------------------------------------------------------------------------
    // Sets the current value of the system
@@ -43,15 +94,6 @@ private:
    // v3: Changed method to void and made result class member - Nathan S, 9-12-21
    //-----------------------------------------------------------------------------
    void SaturationClamp();
-
-   //-----------------------------------------------------------------------------
-   // Checks if the controller is saturated
-   // float rawValue - the unconstrained control value
-   // float controlValue - the constrained control value
-   // returns: true if the controller is saturated, false if not
-   // v1: Created the method - Nathan S, 9-10-21
-   //-----------------------------------------------------------------------------
-   bool IsSaturated();
 
    //-----------------------------------------------------------------------------
    // Updates all components of the controller and returns its control value
@@ -88,12 +130,14 @@ public:
    // float kd - the derivative constant for this system
    // float min - the minimum value the controller can output
    // float max - the maximum value the controller can output
+   // float startValue - the starting value of the system
    // v1: Created blank constructor - Nathan S, 9-10-21
    // v2: Added variable minimum and maximum initialization - Nathan S, 9-10-21
    // v3: Added constant read initializations - Nathan S, 9-10-21
    // v4: Added parameter for system loop time - Nathan S, 9-12-21
+   // v5: Removed system loop time parameter - Nathan S, 1-12-21
    //-----------------------------------------------------------------------------
-   PID(float kp, float ki, float kd, float min, float max, float loopTime,
+   PID(float kp, float ki, float kd, float min, float max, float integralLimit, 
       float startValue);
 
    //-----------------------------------------------------------------------------
@@ -110,10 +154,6 @@ public:
    // v1: Created the method - Nathan S, 9-11-21
    //-----------------------------------------------------------------------------
    void SetTargetValue(float targetValue);
-
-   //-----------------------------------------------------------------------------
-   // Checks whether the pid controller has reached its target
-   float PercentTarget();
 };
 
 #endif
