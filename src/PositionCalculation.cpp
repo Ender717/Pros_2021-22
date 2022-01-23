@@ -84,17 +84,17 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue,
    CalculatePosition();
 }
 
-float PositionCalculation::getX()
+float PositionCalculation::GetX()
 {
    return currentX;
 }
 
-float PositionCalculation::getY()
+float PositionCalculation::GetY()
 {
    return currentY;
 }
 
-float PositionCalculation::getAngle()
+float PositionCalculation::GetAngle()
 {
    return currentTheta;
 }

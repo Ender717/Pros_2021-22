@@ -1,6 +1,21 @@
 // Included libraries
 #include "Drive.h"
 
+// Private method definitions -------------------------------------------------
+void Drive::SetLeftDrive(float power)
+{
+    leftRearDriveMotor->move(power);
+    leftMiddleDriveMotor->move(power);
+    leftFrontDriveMotor->move(power);
+}
+
+void Drive::SetRightDrive(float power)
+{
+    rightRearDriveMotor->move(power);
+    rightMiddleDriveMotor->move(power);
+    rightFrontDriveMotor->move(power);
+}
+
 // Constructor definitions ----------------------------------------------------
 Drive::Drive()
 {
@@ -29,4 +44,40 @@ Drive::Drive()
     distancePID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 40.0, 0.0);
     anglePID = new PID(10.0, 10.0, 10.0, -50.0, 50.0, 10.0, 0.0);
     turnPID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 50.0, 0.0);
+}
+
+// Public method definitions --------------------------------------------------
+void Drive::DriveStraight(float inches, bool reversed)
+{
+    // Confirm that the position tracking is running
+    if (positionTracking != nullptr)
+    {
+        // Set the PID controllers for the desired motion
+        distancePID->setTarget(inches);
+        distancePID->UpdateController();
+        anglePID->setTarget(positionTracking->GetAngle());
+        anglePID->UpdateController();
+        float startingPosition = leftTrackingSensor->get();
+
+        // Run the loop until the PID controller is done
+        while(fabs(distancePID->GetControlValue()) > 0.0)
+        {
+            // Run the control for forward movement
+            if(!reversed)
+            {
+                SetLeftDrive(distancePID->GetControlValue(leftTrackingSensor->get() - startingPosition) 
+                             + anglePID->GetControlValue(positionTracking->GetAngle()));
+                SetRightDrive(distancePID->GetControlValue(leftTrackingSensor->get() - startingPosition) 
+                              - anglePID->GetControlValue(positionTracking->GetAngle()));
+            }
+            // Run the control for backward movement
+            else
+            {
+                SetLeftDrive(-distancePID->GetControlValue(startingPosition - leftTrackingSensor->get()) - 
+                             anglePID->GetControlValue(startingPosition - positionTracking->GetAngle()));
+                SetRightDrive(-distancePID->GetControlValue(leftTrackingSensor->get()) + 
+                             anglePID->GetControlValue(positionTracking->GetAngle()));
+            }
+        }
+    }
 }

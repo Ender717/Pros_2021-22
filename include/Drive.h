@@ -9,7 +9,7 @@
 
 //-----------------------------------------------------------------------------
 // This class controls the drive subsystem of the robot
-// v1: Created the class - Nathan S, 1-23-21
+// v1: Created the class - Nathan S, 1-23-22
 //-----------------------------------------------------------------------------
 class Drive
 {
@@ -79,10 +79,24 @@ private:
     PID* anglePID;
     PID* turnPID;
 
+    //-------------------------------------------------------------------------
+    // Runs the left side of the drive at the desired power
+    // power: The power to run the motors at
+    // v1: Created the method - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    void SetLeftDrive(float power);
+
+    //-------------------------------------------------------------------------
+    // Runs the right side of the drive at the desired power
+    // power: The power to run the motors at
+    // v1: Created the method - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    void SetRightDrive(float power);
+
 public:
     //-------------------------------------------------------------------------
     // Constructor for the Drive class
-    // v1: Created the constructor - Nathan S, 1-23-21
+    // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     Drive();
 
@@ -90,6 +104,7 @@ public:
     // Temporary basic control function for driving forward and backward
     // inches: The distance to travel
     // reversed: The direction to travel in (false is forward, true is backward)
+    // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     void DriveStraight(float inches, bool reversed);
 
@@ -97,6 +112,7 @@ public:
     // Temporary basic control function for driving forward and backward
     // inches: The distance to travel
     // reversed: The direction to travel in (false is forward, true is backward)
+    // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     void SpinTurn(float degrees, bool reversed);
 

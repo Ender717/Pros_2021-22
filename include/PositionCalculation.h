@@ -106,21 +106,21 @@ public:
    // return: The current x-coordinate of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float getX();
+   float GetX();
 
    //--------------------------------------------------------------------------
    // Returns the current y-coordinate of the robot
    // return: The current y-coordinate of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float getY();
+   float GetY();
 
    //--------------------------------------------------------------------------
    // Returns the current angle of the robot
    // return: The current angle of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float getAngle();
+   float GetAngle();
 };
 
 #endif
