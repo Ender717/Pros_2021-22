@@ -42,7 +42,7 @@ Drive::Drive()
     // Processes
     positionTracking = nullptr; // THIS IS SET IN AUTON
     distancePID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 40.0, 0.0);
-    anglePID = new PID(10.0, 10.0, 10.0, -50.0, 50.0, 10.0, 0.0);
+    anglePID = new PID(2.0, 2.0, 2.0, -50.0, 50.0, 10.0, 0.0);
     turnPID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 50.0, 0.0);
 }
 
@@ -53,31 +53,52 @@ void Drive::DriveStraight(float inches, bool reversed)
     if (positionTracking != nullptr)
     {
         // Set the PID controllers for the desired motion
+        positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
+                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
         distancePID->setTarget(inches);
         distancePID->UpdateController();
         anglePID->setTarget(positionTracking->GetAngle());
         anglePID->UpdateController();
-        float startingPosition = leftTrackingSensor->get();
+        float startingPosition = leftTrackingSensor->get_position();
 
         // Run the loop until the PID controller is done
         while(fabs(distancePID->GetControlValue()) > 0.0)
         {
+            positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
+                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
             // Run the control for forward movement
             if(!reversed)
             {
-                SetLeftDrive(distancePID->GetControlValue(leftTrackingSensor->get() - startingPosition) 
+                SetLeftDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() - startingPosition) 
                              + anglePID->GetControlValue(positionTracking->GetAngle()));
-                SetRightDrive(distancePID->GetControlValue(leftTrackingSensor->get() - startingPosition) 
+                SetRightDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() - startingPosition) 
                               - anglePID->GetControlValue(positionTracking->GetAngle()));
             }
             // Run the control for backward movement
             else
             {
-                SetLeftDrive(-distancePID->GetControlValue(startingPosition - leftTrackingSensor->get()) - 
+                SetLeftDrive(-distancePID->GetControlValue(startingPosition - leftTrackingSensor->get_position()) - 
                              anglePID->GetControlValue(startingPosition - positionTracking->GetAngle()));
-                SetRightDrive(-distancePID->GetControlValue(leftTrackingSensor->get()) + 
+                SetRightDrive(-distancePID->GetControlValue(leftTrackingSensor->get_position()) + 
                              anglePID->GetControlValue(positionTracking->GetAngle()));
             }
         }
+    }
+}
+
+void Drive::SpinTurn(float degrees)
+{
+    // Set the PID controller for the motion
+    positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
+                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
+    turnPID->setTarget(positionTracking->GetAngle())
+
+    // Run the control loop
+    while(fabs(turnPID->GetControlValue(positionTracking->GetAngle())) > 0.0)
+    {
+        positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
+                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
+        SetLeftDrive(turnPID->GetControlValue(positionTracking->GetAngle()));
+        SetRightDrive(-turnPID->GetControlValue(positionTracking->GetAngle()));
     }
 }

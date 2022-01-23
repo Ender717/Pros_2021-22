@@ -109,17 +109,11 @@ public:
     void DriveStraight(float inches, bool reversed);
 
     //-------------------------------------------------------------------------
-    // Temporary basic control function for driving forward and backward
-    // inches: The distance to travel
-    // reversed: The direction to travel in (false is forward, true is backward)
+    // Temporary basic control function for turning in place
+    // degrees: The number of degrees to turn
     // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
-    void SpinTurn(float degrees, bool reversed);
-
-    //-------------------------------------------------------------------------
-    //
-    //-------------------------------------------------------------------------
-
+    void SpinTurn(float degrees);
 };
 
 #endif
