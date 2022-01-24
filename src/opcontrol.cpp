@@ -16,24 +16,24 @@
 void opcontrol() 
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	Drive* robotDrive = new Drive();
+	Robot* robot = new Robot();
 
-	float leftDrive, rightDrive;
-	robotDrive->Initialize();
+	float leftDrivePower, rightDrivePower;
+	robot->Initialize();
 
 	while (true) 
 	{
-		leftDrive = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		rightDrive = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		robotDrive->SetLeftDrive(leftDrive);
-		robotDrive->SetRightDrive(rightDrive);
+		robot->drive->SetLeftDrive(leftDrivePower);
+		robot->drive->SetRightDrive(rightDrivePower);
 
-		robotDrive->UpdatePosition();
-		pros::lcd::set_text(1, "x: " + std::to_string(robotDrive->GetX()));
-		pros::lcd::set_text(2, "y: " + std::to_string(robotDrive->GetY()));
-		pros::lcd::set_text(3, "angle: " + std::to_string(robotDrive->GetTheta() * 180 / 3.1415));
+		robot->drive->UpdatePosition();
+		pros::lcd::set_text(1, "x: " + std::to_string(robot->drive->GetX()));
+		pros::lcd::set_text(2, "y: " + std::to_string(robot->drive->GetY()));
+		pros::lcd::set_text(3, "angle: " + std::to_string(robot->drive->GetTheta()));
 
 		pros::delay(2);
 	}

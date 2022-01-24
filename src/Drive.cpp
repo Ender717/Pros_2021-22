@@ -225,7 +225,7 @@ float Drive::GetY()
 
 float Drive::GetTheta()
 {
-    return positionTracking->GetAngle();
+    return positionTracking->GetAngle() / DEGREES_TO_RADIANS;
 }
 
 void Drive::UpdatePosition()
