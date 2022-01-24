@@ -90,6 +90,15 @@ public:
    PositionCalculation(float startX, float startY, float startTheta);
 
    //--------------------------------------------------------------------------
+   // Sets the coordinates in the tracking system to a new position
+   // x: The value to set the x-coordinate to
+   // y: The value to set the y-coordinate to
+   // theta: The value to set the angle to
+   // v1: Created the method - Nathan S, 1-24-22
+   //--------------------------------------------------------------------------
+   void SetPosition(float x, float y, float theta);
+
+   //--------------------------------------------------------------------------
    // Updates the current position of the system
    // leftValue: The current value of the left tracking wheel
    // rightValue: The current value of the right tracking wheel

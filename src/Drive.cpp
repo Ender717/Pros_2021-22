@@ -44,28 +44,6 @@ float Drive::CalculateDistance(float startX, float startY, float endX, float end
     return sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY));
 }
 
-void Drive::SetLeftDrive(float power)
-{
-    leftRearDriveMotor->move(power);
-    leftMiddleDriveMotor->move(power);
-    leftFrontDriveMotor->move(power);
-}
-
-void Drive::SetRightDrive(float power)
-{
-    rightRearDriveMotor->move(power);
-    rightMiddleDriveMotor->move(power);
-    rightFrontDriveMotor->move(power);
-}
-
-void Drive::UpdatePosition()
-{
-    positionTracking->UpdatePosition(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION,
-                                     rightTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION,
-                                     strafeTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION, 
-                                     inertialSensor->get_rotation() * DEGREES_TO_RADIANS * INERTIAL_TUNING);
-}
-
 // Constructor definitions ----------------------------------------------------
 Drive::Drive()
 {
@@ -90,10 +68,22 @@ Drive::Drive()
     inertialSensor = new pros::Imu(INERTIAL_PORT);
 
     // Processes
-    positionTracking = nullptr; // THIS IS SET IN AUTON
+    positionTracking = new PositionCalculation(0.0, 0.0, 0.0); // THIS IS SET IN AUTON
     distancePID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 40.0, 0.0);
     anglePID = new PID(2.0, 2.0, 2.0, -50.0, 50.0, 10.0, 0.0);
     turnPID = new PID(10.0, 10.0, 10.0, -125.0, 125.0, 50.0, 0.0);
+}
+
+void Drive::Initialize()
+{
+    inertialSensor->reset();
+    while (inertialSensor->is_calibrating()) 
+    {
+        pros::delay(2);
+    }
+    leftTrackingSensor->set_position(0.0);
+	rightTrackingSensor->set_position(0.0);
+	strafeTrackingSensor->set_position(0.0);
 }
 
 // Public method definitions --------------------------------------------------
@@ -147,6 +137,20 @@ void Drive::SpinTurn(float degrees)
     }
 }
 
+void Drive::SetLeftDrive(float power)
+{
+    leftRearDriveMotor->move(power);
+    leftMiddleDriveMotor->move(power);
+    leftFrontDriveMotor->move(power);
+}
+
+void Drive::SetRightDrive(float power)
+{
+    rightRearDriveMotor->move(power);
+    rightMiddleDriveMotor->move(power);
+    rightFrontDriveMotor->move(power);
+}
+
 void Drive::DriveToPoint(float targetX, float targetY, bool reversed)
 {
     // Set up the control variables
@@ -168,7 +172,9 @@ void Drive::DriveToPoint(float targetX, float targetY, bool reversed)
         // Control for backward motion
         else
         {
-            angle = (angle + 180.0) % 360.0;
+            angle = angle + 180.0;
+            if(angle > 360.0)
+                angle = angle - 360.0;
             distancePID->SetTargetValue(-distance);
             anglePID->SetTargetValue(angle);
             SetLeftDrive(distancePID->GetControlValue(0.0) - anglePID->GetControlValue(positionTracking->GetAngle()));
@@ -197,10 +203,40 @@ void Drive::DriveThroughPoint(float targetX, float targetY, float power, bool re
         // Control for backward motion
         else
         {
-            angle = (angle + 180.0) % 360.0;
+            angle = angle + 180.0;
+            if(angle > 360.0)
+                angle = angle - 360.0;
             anglePID->SetTargetValue(angle);
             SetLeftDrive(-power + anglePID->GetControlValue(positionTracking->GetAngle()));
             SetRightDrive(-power - anglePID->GetControlValue(positionTracking->GetAngle()));
         }
     }
+}
+
+float Drive::GetX()
+{
+    return positionTracking->GetX();
+}
+
+float Drive::GetY()
+{
+    return positionTracking->GetY();
+}
+
+float Drive::GetTheta()
+{
+    return positionTracking->GetAngle();
+}
+
+void Drive::UpdatePosition()
+{
+    positionTracking->UpdatePosition(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION,
+                                     rightTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION,
+                                     strafeTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION, 
+                                     inertialSensor->get_rotation() * DEGREES_TO_RADIANS * INERTIAL_TUNING);
+}
+
+void Drive::SetPosition(float x, float y, float theta)
+{
+    positionTracking->SetPosition(x, y, theta);
 }

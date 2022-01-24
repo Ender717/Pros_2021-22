@@ -76,6 +76,13 @@ void PositionCalculation::CalculatePosition()
 }
 
 // Public Method Definitions --------------------------------------------------
+void PositionCalculation::SetPosition(float x, float y, float theta)
+{
+   currentX = x;
+   currentY = y;
+   currentTheta = theta;
+}
+
 void PositionCalculation::UpdatePosition(float leftValue, float rightValue,
    float centerValue, float inertialValue)
 {
