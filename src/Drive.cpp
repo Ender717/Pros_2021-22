@@ -147,7 +147,7 @@ void Drive::SpinTurn(float degrees)
     }
 }
 
-void Drive::DriveToPoint(float targetX, float targetY)
+void Drive::DriveToPoint(float targetX, float targetY, bool reversed)
 {
     // Set up the control variables
     UpdatePosition();
@@ -157,9 +157,50 @@ void Drive::DriveToPoint(float targetX, float targetY)
     // Loop until the target is reached
     while(distance > 0.0)
     {
-        distancePID->SetTargetValue(distance);
-        anglePID->SetTargetValue(angle);
-        SetLeftDrive(distancePID->GetControlValue(0.0) + anglePID->GetControlValue(positionTracking->GetAngle()));
-        SetRightDrive(distancePID->GetControlValue(0.0) - anglePID->GetControlValue(positionTracking->GetAngle()));
+        // Control for forward motion
+        if(!reversed)
+        {
+            distancePID->SetTargetValue(distance);
+            anglePID->SetTargetValue(angle);
+            SetLeftDrive(distancePID->GetControlValue(0.0) + anglePID->GetControlValue(positionTracking->GetAngle()));
+            SetRightDrive(distancePID->GetControlValue(0.0) - anglePID->GetControlValue(positionTracking->GetAngle()));
+        }
+        // Control for backward motion
+        else
+        {
+            angle = (angle + 180.0) % 360.0;
+            distancePID->SetTargetValue(-distance);
+            anglePID->SetTargetValue(angle);
+            SetLeftDrive(distancePID->GetControlValue(0.0) - anglePID->GetControlValue(positionTracking->GetAngle()));
+            SetRightDrive(distancePID->GetControlValue(0.0) + anglePID->GetControlValue(positionTracking->GetAngle()));
+        }
+    }
+}
+
+void Drive::DriveThroughPoint(float targetX, float targetY, float power, bool reversed)
+{
+    // Set up the control variables
+    UpdatePosition();
+    float distance = CalculateDistance(positionTracking->GetX(), positionTracking->GetY(), targetX, targetY);
+    float angle = CalculateAngle(positionTracking->GetX(), positionTracking->GetY(), targetX, targetY);
+
+    // Loop until the target is reached
+    while(distance > 0.0)
+    {
+        // Control for forward motion
+        if(!reversed)
+        {
+            anglePID->SetTargetValue(angle);
+            SetLeftDrive(power + anglePID->GetControlValue(positionTracking->GetAngle()));
+            SetRightDrive(power - anglePID->GetControlValue(positionTracking->GetAngle()));
+        }
+        // Control for backward motion
+        else
+        {
+            angle = (angle + 180.0) % 360.0;
+            anglePID->SetTargetValue(angle);
+            SetLeftDrive(-power + anglePID->GetControlValue(positionTracking->GetAngle()));
+            SetRightDrive(-power - anglePID->GetControlValue(positionTracking->GetAngle()));
+        }
     }
 }

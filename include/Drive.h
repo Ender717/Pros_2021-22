@@ -162,9 +162,20 @@ public:
     // Drives the robot from its current position to the specified coordinates
     // targetX: The target x-coordinate
     // targetY: The target y-coordinate
+    // reversed: Whether the motion is reversed or not
     // v1: Created the method - Nathan S, 1-23-22
+    // v2: Allowed driving backward - Nathan S, 1-24-22
     //-------------------------------------------------------------------------
-    void DriveToPoint(float targetX, float targetY);
+    void DriveToPoint(float targetX, float targetY, bool reversed);
+
+    //-------------------------------------------------------------------------
+    // Drives the robot from its current position through the specified coordinates
+    // targetX: The target x-coordinate
+    // targetY: The target y-coordinate
+    // v1: Created the method - Nathan S, 1-24-22
+    // v2: Allowed driving backward - Nathan S, 1-24-22
+    //-------------------------------------------------------------------------
+    void DriveThroughPoint(float targetX, float targetY, float power, bool reversed);
 };
 
 #endif
