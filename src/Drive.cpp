@@ -2,6 +2,48 @@
 #include "Drive.h"
 
 // Private method definitions -------------------------------------------------
+float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
+{
+    float angle;
+    // Run the normal calculation if the values are not equal
+    if(startX != endX && startY != endY)
+    {
+        angle = atan2f(fabs(endY - startY), fabs(endX - startX));
+
+        // Place the angle in the correct quadrant
+        if(endX < startX && endY > startY)
+            angle = 180.0 - angle;
+        else if (endX < startX && endY < startY)
+            angle += 180.0;
+        else if (endX > startX && endY < startY)
+            angle = 360.0 - angle;
+    }
+    // Find the angle if both points lie on the same y-axis
+    else if (startX == endX)
+    {
+        if(endY > startY)
+            angle = 90.0;
+        else
+            angle = 270.0;
+    }
+    // Find the angle if both points lie on the same x-axis
+    else
+    {
+        if(endX > startX)
+            angle = 0.0;
+        else
+            angle = 180.0;
+    }
+
+    // return the result
+    return angle;
+}
+
+float Drive::CalculateDistance(float startX, float startY, float endX, float endY)
+{
+    return sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY));
+}
+
 void Drive::SetLeftDrive(float power)
 {
     leftRearDriveMotor->move(power);
@@ -14,6 +56,14 @@ void Drive::SetRightDrive(float power)
     rightRearDriveMotor->move(power);
     rightMiddleDriveMotor->move(power);
     rightFrontDriveMotor->move(power);
+}
+
+void Drive::UpdatePosition()
+{
+    positionTracking->UpdatePosition(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION,
+                                     rightTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION,
+                                     strafeTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION, 
+                                     inertialSensor->get_rotation() * DEGREES_TO_RADIANS * INERTIAL_TUNING);
 }
 
 // Constructor definitions ----------------------------------------------------
@@ -53,25 +103,21 @@ void Drive::DriveStraight(float inches, bool reversed)
     if (positionTracking != nullptr)
     {
         // Set the PID controllers for the desired motion
-        positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
-                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
-        distancePID->setTarget(inches);
-        distancePID->UpdateController();
-        anglePID->setTarget(positionTracking->GetAngle());
-        anglePID->UpdateController();
-        float startingPosition = leftTrackingSensor->get_position();
+        UpdatePosition();
+        distancePID->SetTargetValue(inches);
+        anglePID->SetTargetValue(positionTracking->GetAngle());
+        float startingPosition = leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION;
 
         // Run the loop until the PID controller is done
-        while(fabs(distancePID->GetControlValue()) > 0.0)
+        while(fabs(distancePID->GetControlValue(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION - startingPosition)) > 0.0)
         {
-            positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
-                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
+            UpdatePosition();
             // Run the control for forward movement
             if(!reversed)
             {
-                SetLeftDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() - startingPosition) 
+                SetLeftDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION - startingPosition) 
                              + anglePID->GetControlValue(positionTracking->GetAngle()));
-                SetRightDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() - startingPosition) 
+                SetRightDrive(distancePID->GetControlValue(leftTrackingSensor->get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION - startingPosition) 
                               - anglePID->GetControlValue(positionTracking->GetAngle()));
             }
             // Run the control for backward movement
@@ -89,16 +135,31 @@ void Drive::DriveStraight(float inches, bool reversed)
 void Drive::SpinTurn(float degrees)
 {
     // Set the PID controller for the motion
-    positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
-                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
-    turnPID->setTarget(positionTracking->GetAngle())
+    UpdatePosition();
+    turnPID->SetTargetValue(positionTracking->GetAngle());
 
     // Run the control loop
     while(fabs(turnPID->GetControlValue(positionTracking->GetAngle())) > 0.0)
     {
-        positionTracking->UpdatePosition(leftTrackingSensor->get_position(), rightTrackingSensor->get_position(),
-                                             strafeTrackingSensor->get_position(), inertialSensor->get_position());
+        UpdatePosition();
         SetLeftDrive(turnPID->GetControlValue(positionTracking->GetAngle()));
         SetRightDrive(-turnPID->GetControlValue(positionTracking->GetAngle()));
+    }
+}
+
+void Drive::DriveToPoint(float targetX, float targetY)
+{
+    // Set up the control variables
+    UpdatePosition();
+    float distance = CalculateDistance(positionTracking->GetX(), positionTracking->GetY(), targetX, targetY);
+    float angle = CalculateAngle(positionTracking->GetX(), positionTracking->GetY(), targetX, targetY);
+
+    // Loop until the target is reached
+    while(distance > 0.0)
+    {
+        distancePID->SetTargetValue(distance);
+        anglePID->SetTargetValue(angle);
+        SetLeftDrive(distancePID->GetControlValue(0.0) + anglePID->GetControlValue(positionTracking->GetAngle()));
+        SetRightDrive(distancePID->GetControlValue(0.0) - anglePID->GetControlValue(positionTracking->GetAngle()));
     }
 }

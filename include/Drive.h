@@ -15,6 +15,21 @@ class Drive
 {
 private:
     //-------------------------------------------------------------------------
+    // Constants
+    // TRACKING_WHEEL_SIZE: The diameter of the tracking wheels
+    // PI: The mathematical value for pi
+    // COUNTS_PER_ROTATION: The number of encoder counts in one rotation of a 
+    //                      rotation sensor
+    // DEGREES_TO_RADIANS: The number to multiply degrees by to get radians
+    // INERTIAL_TUNING: The inertial sensor tuning multiplier
+    //-------------------------------------------------------------------------
+    const float TRACKING_WHEEL_SIZE = 2.75;
+    const float PI = 3.1415;
+    const float COUNTS_PER_ROTATION = 36000.0;
+    const float DEGREES_TO_RADIANS = 0.0174;
+    const float INERTIAL_TUNING = 1.00696;
+
+    //-------------------------------------------------------------------------
     // Ports
     // LEFT_REAR_DRIVE_PORT: The port the left rear drive motor is plugged into
     // LEFT_MIDDLE_DRIVE_PORT: The port the left middle drive motor is plugged into
@@ -80,6 +95,28 @@ private:
     PID* turnPID;
 
     //-------------------------------------------------------------------------
+    // Calculates the angle between two points
+    // startX: The starting x-coordinate
+    // startY: The starting y-coordinate
+    // endX: The ending x-coordinate
+    // endY: The ending y-coordinate
+    // return: The angle between the points
+    // v1: Created the method - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    float CalculateAngle(float startX, float startY, float endX, float endY);
+
+    //-------------------------------------------------------------------------
+    // Calculates the distance between two points
+    // startX: The starting x-coordinate
+    // startY: The starting y-coordinate
+    // endX: The ending x-coordinate
+    // endY: The ending y-coordinate
+    // return: The distance between the points
+    // v1: Created the method - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    float CalculateDistance(float startX, float startY, float endX, float endY);
+
+    //-------------------------------------------------------------------------
     // Runs the left side of the drive at the desired power
     // power: The power to run the motors at
     // v1: Created the method - Nathan S, 1-23-22
@@ -92,6 +129,12 @@ private:
     // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     void SetRightDrive(float power);
+
+    //-------------------------------------------------------------------------
+    // Updates the position tracking system
+    // v1: Created the method - Nathan S, 1-23-21
+    //-------------------------------------------------------------------------
+    void UpdatePosition();
 
 public:
     //-------------------------------------------------------------------------
@@ -114,6 +157,14 @@ public:
     // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     void SpinTurn(float degrees);
+
+    //-------------------------------------------------------------------------
+    // Drives the robot from its current position to the specified coordinates
+    // targetX: The target x-coordinate
+    // targetY: The target y-coordinate
+    // v1: Created the method - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    void DriveToPoint(float targetX, float targetY);
 };
 
 #endif

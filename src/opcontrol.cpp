@@ -78,9 +78,9 @@ void opcontrol()
 		inertialRadians = inertial.get_rotation() * (3.1415 / 180.0) * 1.00696;
 		pos->UpdatePosition(leftInches, rightInches, centerInches, -inertialRadians);
 
-		pros::lcd::set_text(1, "x: " + std::to_string(pos->getX()));
-		pros::lcd::set_text(2, "y: " + std::to_string(pos->getY()));
-		pros::lcd::set_text(3, "angle: " + std::to_string(pos->getAngle() * 180 / 3.1415));
+		pros::lcd::set_text(1, "x: " + std::to_string(pos->GetX()));
+		pros::lcd::set_text(2, "y: " + std::to_string(pos->GetY()));
+		pros::lcd::set_text(3, "angle: " + std::to_string(pos->GetAngle() * 180 / 3.1415));
 
 		pros::delay(2);
 	}
