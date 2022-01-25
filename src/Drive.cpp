@@ -1,9 +1,8 @@
 // Included libraries
 #include "Drive.h"
 
-namespace Drive
-{
-    float CalculateAngle(float startX, float startY, float endX, float endY)
+// Private method definitions -------------------------------------------------
+float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
     {
         float angle;
         // Run the normal calculation if the values are not equal
@@ -40,89 +39,69 @@ namespace Drive
         return angle;
     }
 
-    float CalculateDistance(float startX, float startY, float endX, float endY)
+    // Constructor definitions ------------------------------------------------
+    Drive::Drive()
+    {
+
+    }
+
+    // Public method definitions ----------------------------------------------
+    float Drive::CalculateDistance(float startX, float startY, float endX, float endY)
     {
         return sqrt((endX - startX) * (endX - startX) + (endY - startY) * (endY - startY));
     }
 
-    pros::Motor leftRearDriveMotor(Drive::LEFT_REAR_DRIVE_PORT, pros::E_MOTOR_GEARSET_06, 
-                                   true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftMiddleDriveMotor(Drive::LEFT_MIDDLE_DRIVE_PORT, pros::E_MOTOR_GEARSET_06, 
-                                     false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftFrontDriveMotor(Drive::LEFT_FRONT_DRIVE_PORT, pros::E_MOTOR_GEARSET_06,
-                                    true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightRearDriveMotor(Drive::RIGHT_REAR_DRIVE_PORT, pros::E_MOTOR_GEARSET_06,
-                                    false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightMiddleDriveMotor(Drive::RIGHT_MIDDLE_DRIVE_PORT, pros::E_MOTOR_GEARSET_06,
-                                      true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightFrontDriveMotor(Drive::RIGHT_FRONT_DRIVE_PORT, pros::E_MOTOR_GEARSET_06,
-                                     false, E_MOTOR_ENCODER_COUNTS);
-
-    // Sensors
-    pros::Rotation leftTrackingSensor(Drive::LEFT_TRACKING_PORT);
-    pros::Rotation rightTrackingSensor(Drive::RIGHT_TRACKING_PORT);
-    pros::Rotation strafeTrackingSensor(Drive::STRAFE_TRACKING_PORT);
-    pros::Imu inertialSensor(INERTIAL_PORT);
-
-    // Processes
-    PositionCalculation positionTracking(0.0, 0.0, 0.0); // THIS IS SET IN AUTON
-    PID distancePID(7.0, 0.0, 0.0, -125.0, 125.0, 0.0, 0.0);
-    PID anglePID(0.0, 0.0, 0.0, -50.0, 50.0, 10.0, 0.0);
-    PID turnPID(10.0, 10.0, 10.0, -125.0, 125.0, 50.0, 0.0);
-
-    void Initialize()
+    void Drive::Initialize()
     {
-        inertialSensor.reset();
-        while (inertialSensor.is_calibrating()) 
-        {
-            pros::screen::print(text_format_e_t::E_TEXT_LARGE, 100, 150, "Inertial sensor calibrating");
-        }
-        leftTrackingSensor.set_position(0.0);
-	    rightTrackingSensor.set_position(0.0);
-	    strafeTrackingSensor.set_position(0.0);
+        DriveConfig::leftTrackingSensor.set_position(0.0);
+	    DriveConfig::rightTrackingSensor.set_position(0.0);
+	    DriveConfig::strafeTrackingSensor.set_position(0.0);
     }
 
     // Public method definitions --------------------------------------------------
-    void DriveStraight(float inches, bool reversed)
+    void Drive::DriveStraight(float inches, bool reversed)
     {
         // DO THIS
     }
 
-    void SpinTurn(float degrees)
+    void Drive::SpinTurn(float degrees)
     {
         // Set the PID controller for the motion
-        UpdatePosition();
-        turnPID.SetTargetValue(positionTracking.GetAngle());
+        PID turnPID(4.3, 0.05, 0.20, -125.0, 125.0, 40.0, 0.0);
+	    DriveConfig::inertialSensor.set_rotation(0.0);
+	    turnPID.SetTargetValue(degrees);
+        float controlValue = turnPID.GetControlValue(DriveConfig::inertialSensor.get_rotation());
 
         // Run the control loop
-        while(fabs(turnPID.GetControlValue(positionTracking.GetAngle())) > 0.0)
+        while(fabs(DriveConfig::inertialSensor.get_rotation() - degrees) > 0.01 || controlValue > 1.0)
         {
-            UpdatePosition();
-            SetLeftDrive(turnPID.GetControlValue(positionTracking.GetAngle()));
-            SetRightDrive(-turnPID.GetControlValue(positionTracking.GetAngle()));
+		    SetLeftDrive(controlValue);
+		    SetRightDrive(-controlValue);
+            controlValue = turnPID.GetControlValue(DriveConfig::inertialSensor.get_rotation());
+		    pros::delay(2);
         }
     }
 
-    void SetLeftDrive(float power)
+    void Drive::SetLeftDrive(float power)
     {
-        leftRearDriveMotor.move(power);
-        leftMiddleDriveMotor.move(power);
-        leftFrontDriveMotor.move(power);
+        DriveConfig::leftRearDriveMotor.move(power);
+        DriveConfig::leftMiddleDriveMotor.move(power);
+        DriveConfig::leftFrontDriveMotor.move(power);
     }
 
-    void SetRightDrive(float power)
+    void Drive::SetRightDrive(float power)
     {
-        rightRearDriveMotor.move(power);
-        rightMiddleDriveMotor.move(power);
-        rightFrontDriveMotor.move(power);
+        DriveConfig::rightRearDriveMotor.move(power);
+        DriveConfig::rightMiddleDriveMotor.move(power);
+        DriveConfig::rightFrontDriveMotor.move(power);
     }
 
-    void DriveToPoint(float targetX, float targetY, bool reversed)
+    void Drive::DriveToPoint(float targetX, float targetY, bool reversed)
     {
         // Set up the control variables
         UpdatePosition();
-        float distance = CalculateDistance(positionTracking.GetX(), positionTracking.GetY(), targetX, targetY);
-        float angle = CalculateAngle(positionTracking.GetX(), positionTracking.GetY(), targetX, targetY);
+        float distance = CalculateDistance(DriveConfig::positionTracking.GetX(), DriveConfig::positionTracking.GetY(), targetX, targetY);
+        float angle = CalculateAngle(DriveConfig::positionTracking.GetX(), DriveConfig::positionTracking.GetY(), targetX, targetY);
 
         // Loop until the target is reached
         while(distance > 0.0)
@@ -130,10 +109,10 @@ namespace Drive
             // Control for forward motion
             if(!reversed)
             {
-                distancePID.SetTargetValue(distance);
-                anglePID.SetTargetValue(angle);
-                SetLeftDrive(distancePID.GetControlValue(0.0) + anglePID.GetControlValue(positionTracking.GetAngle()));
-                SetRightDrive(distancePID.GetControlValue(0.0) - anglePID.GetControlValue(positionTracking.GetAngle()));
+                DriveConfig::distancePID.SetTargetValue(distance);
+                DriveConfig::anglePID.SetTargetValue(angle);
+                SetLeftDrive(DriveConfig::distancePID.GetControlValue(0.0) + DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
+                SetRightDrive(DriveConfig::distancePID.GetControlValue(0.0) - DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
             }
             // Control for backward motion
             else
@@ -141,20 +120,20 @@ namespace Drive
                 angle = angle + 180.0;
                 if(angle > 360.0)
                     angle = angle - 360.0;
-                distancePID.SetTargetValue(-distance);
-                anglePID.SetTargetValue(angle);
-                SetLeftDrive(distancePID.GetControlValue(0.0) - anglePID.GetControlValue(positionTracking.GetAngle()));
-                SetRightDrive(distancePID.GetControlValue(0.0) + anglePID.GetControlValue(positionTracking.GetAngle()));
+                DriveConfig::distancePID.SetTargetValue(-distance);
+                DriveConfig::anglePID.SetTargetValue(angle);
+                SetLeftDrive(DriveConfig::distancePID.GetControlValue(0.0) - DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
+                SetRightDrive(DriveConfig::distancePID.GetControlValue(0.0) + DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
             }
         }
     }
 
-    void DriveThroughPoint(float targetX, float targetY, float power, bool reversed)
+    void Drive::DriveThroughPoint(float targetX, float targetY, float power, bool reversed)
     {
         // Set up the control variables
         UpdatePosition();
-        float distance = CalculateDistance(positionTracking.GetX(), positionTracking.GetY(), targetX, targetY);
-        float angle = CalculateAngle(positionTracking.GetX(), positionTracking.GetY(), targetX, targetY);
+        float distance = CalculateDistance(DriveConfig::positionTracking.GetX(), DriveConfig::positionTracking.GetY(), targetX, targetY);
+        float angle = CalculateAngle(DriveConfig::positionTracking.GetX(), DriveConfig::positionTracking.GetY(), targetX, targetY);
 
         // Loop until the target is reached
         while(distance > 0.0)
@@ -162,9 +141,9 @@ namespace Drive
             // Control for forward motion
             if(!reversed)
             {
-                anglePID.SetTargetValue(angle);
-                SetLeftDrive(power + anglePID.GetControlValue(positionTracking.GetAngle()));
-                SetRightDrive(power - anglePID.GetControlValue(positionTracking.GetAngle()));
+                DriveConfig::anglePID.SetTargetValue(angle);
+                SetLeftDrive(power + DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
+                SetRightDrive(power - DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
             }
             // Control for backward motion
             else
@@ -172,38 +151,37 @@ namespace Drive
                 angle = angle + 180.0;
                 if(angle > 360.0)
                     angle = angle - 360.0;
-                anglePID.SetTargetValue(angle);
-                SetLeftDrive(-power + anglePID.GetControlValue(positionTracking.GetAngle()));
-                SetRightDrive(-power - anglePID.GetControlValue(positionTracking.GetAngle()));
+                DriveConfig::anglePID.SetTargetValue(angle);
+                SetLeftDrive(-power + DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
+                SetRightDrive(-power - DriveConfig::anglePID.GetControlValue(DriveConfig::positionTracking.GetAngle()));
             }
         }
     }
 
-    float GetX()
+    float Drive::GetX()
     {
-        return positionTracking.GetX();
+        return DriveConfig::positionTracking.GetX();
     }
 
-    float GetY()
+    float Drive::GetY()
     {
-        return positionTracking.GetY();
+        return DriveConfig::positionTracking.GetY();
     }
 
-    float GetTheta()
+    float Drive::GetTheta()
     {
-        return positionTracking.GetAngle() / DEGREES_TO_RADIANS;
+        return DriveConfig::positionTracking.GetAngle() / DriveConfig::DEGREES_TO_RADIANS;
     }
 
-    void UpdatePosition()
+    void Drive::UpdatePosition()
     {
-        positionTracking.UpdatePosition(leftTrackingSensor.get_position() * TRACKING_WHEEL_SIZE * PI / COUNTS_PER_ROTATION,
-                                        rightTrackingSensor.get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION,
-                                        strafeTrackingSensor.get_position() * TRACKING_WHEEL_SIZE * PI / -COUNTS_PER_ROTATION, 
-                                        inertialSensor.get_rotation() * DEGREES_TO_RADIANS * INERTIAL_TUNING);
+        DriveConfig::positionTracking.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
+                                                     DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
+                                                     DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION, 
+                                                     DriveConfig::inertialSensor.get_rotation() * DriveConfig::DEGREES_TO_RADIANS * DriveConfig::INERTIAL_TUNING);
     }
 
-    void SetPosition(float x, float y, float theta)
+    void Drive::SetPosition(float x, float y, float theta)
     {
-        positionTracking.SetPosition(x, y, theta);
+        DriveConfig::positionTracking.SetPosition(x, y, theta);
     }
-}

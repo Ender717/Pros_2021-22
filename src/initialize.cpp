@@ -24,8 +24,8 @@ void on_center_button() {
  */
 void initialize() 
 {
-	//Robot* robot = new Robot();
-	//robot->Initialize();
+	//Drive::inertialSensor.reset();
+	pros::delay(3000);
 }
 
 /**
