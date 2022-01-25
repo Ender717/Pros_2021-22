@@ -3,5 +3,6 @@
 #define INITIALIZE_H
 
 #include "main.h"
+#include "Robot.h"
 
 #endif

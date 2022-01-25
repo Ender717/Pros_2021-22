@@ -18,9 +18,9 @@ private:
    // CENTER_DISTANCE: The distance between the center tracking wheel and the 
    //                  center of the robot
    //--------------------------------------------------------------------------
-   const float LEFT_DISTANCE = 6.0625;
-   const float RIGHT_DISTANCE = 6.0625;
-   const float CENTER_DISTANCE = 5.00;
+   const float LEFT_DISTANCE = 6.0938;
+   const float RIGHT_DISTANCE = 6.0938;
+   const float CENTER_DISTANCE = 1.50;
 
    //--------------------------------------------------------------------------
    // Private class member variables
