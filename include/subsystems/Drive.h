@@ -3,8 +3,10 @@
 #define DRIVE_H
 
 // Included libraries
-#include "main.h"
-#include "DriveConfig.h"
+#include "./main.h"
+#include "./config/DriveConfig.h"
+#include "./processes/PositionCalculation.h"
+#include "./processes/PID.h"
     
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
@@ -13,6 +15,18 @@
 class Drive
 {
 private:
+    //-------------------------------------------------------------------------
+    // Processes
+    // distancePID: Manages the distance to the target in motion commands
+    // anglePID: Manages the angle to the target in motion commands
+    // turnPID: Manages turn commands
+    // position: Manages the coordinate tracking system
+    //-------------------------------------------------------------------------
+    PID* distancePID;
+    PID* anglePID;
+    PID* turnPID;
+    PositionCalculation* position;
+
     //-------------------------------------------------------------------------
     // Calculates the angle between two points
     // startX: The starting x-coordinate

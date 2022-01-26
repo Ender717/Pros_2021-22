@@ -1,5 +1,5 @@
 // Included libraries
-#include "DriveConfig.h"
+#include "config/DriveConfig.h"
 
 namespace DriveConfig
 {
@@ -41,10 +41,4 @@ namespace DriveConfig
     pros::Rotation rightTrackingSensor(RIGHT_TRACKING_PORT);
     pros::Rotation strafeTrackingSensor(STRAFE_TRACKING_PORT);
     pros::Imu inertialSensor(INERTIAL_PORT);
-
-    // Processes
-    PositionCalculation positionTracking(0.0, 0.0, 0.0); // THIS IS SET IN AUTON
-    //PID distancePID(5.0, 0.05, 0.010, -125.0, 125.0, 40.0, 0.0); FIGURE OUT WHY THESE DONT WORK
-    //PID anglePID(0.25, 0.0, 0.001, -60.0, 60.0, 20.0, 0.0);
-    //PID turnPID(5.0, 0.05, 0.10, -125.0, 125.0, 40.0, 0.0);
 }

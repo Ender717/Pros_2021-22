@@ -3,9 +3,7 @@
 #define DRIVE_CONFIG_H
 
 // Included libraries
-#include "main.h"
-#include "PositionCalculation.h"
-#include "PID.h"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This namespace controls the drive subsystem members of the robot
@@ -80,19 +78,6 @@ namespace DriveConfig
     extern pros::Rotation rightTrackingSensor;
     extern pros::Rotation strafeTrackingSensor;
     extern pros::Imu inertialSensor;
-
-    //-------------------------------------------------------------------------
-    // Drive Processes
-    // positionTracking: The position calculation process which tracks the
-    //                   the coordinates of the robot
-    // distancePID: The PID controller in charge of managing distance from the target
-    // anglePID: The PID controller in charge of managing angle towards the target
-    // turnPID: The PID controller in charge of managing turns
-    //-------------------------------------------------------------------------
-    extern PositionCalculation positionTracking;
-    extern PID distancePID;
-    extern PID anglePID;
-    extern PID turnPID;
 };
 
 #endif
