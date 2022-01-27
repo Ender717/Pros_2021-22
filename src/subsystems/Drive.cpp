@@ -42,10 +42,9 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
     // Constructor definitions ------------------------------------------------
     Drive::Drive()
     {
-        distancePID = new PID(5.5, 0.1, 0.3, -125.0, 125.0, 40.0, 0.0);
-        anglePID = new PID(0.5, 0.0, 0.0, -50.0, 50.0, 20.0, 0.0);
-        turnPID = new PID(4.3, 0.05, 0.20, -125.0, 125.0, 40.0, 0.0);
-        position = new PositionCalculation(0.0, 0.0, 0.0);
+        //distancePID = new PID(5.5, 0.1, 0.3, -125.0, 125.0, 40.0, 0.0);
+        //anglePID = new PID(0.5, 0.0, 0.0, -50.0, 50.0, 20.0, 0.0);
+        //turnPID = new PID(4.3, 0.05, 0.20, -125.0, 125.0, 40.0, 0.0);
         DriveConfig::leftTrackingSensor.set_position(0.0);
         DriveConfig::rightTrackingSensor.set_position(0.0);
         DriveConfig::strafeTrackingSensor.set_position(0.0);
@@ -81,46 +80,38 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
     }
 
     // Public method definitions --------------------------------------------------
-    void Drive::DriveStraight(float inches, bool reversed)
+    void Drive::DriveStraight(float inches, PositionCalculation& position)
     {
-        float leftStart = DriveConfig::leftTrackingSensor.get_position();
-        float rightStart = DriveConfig::rightTrackingSensor.get_position();
-        float leftCurrent = 0.0;
-        float rightCurrent = 0.0;
-        float current = 0.0;
-        float angle = DriveConfig::inertialSensor.get_rotation();
-        distancePID->SetTargetValue(inches);
-        anglePID->SetTargetValue(DriveConfig::inertialSensor.get_rotation());
+        PID distancePID(5.5, 0.1, 0.3, -125.0, 125.0, 40.0, 0.0);
+        DriveConfig::leftTrackingSensor.set_position(0.0);
+        float distance = leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
+        float controlValue = distancePID.GetControlValue(distance);
 
-        while(fabs(inches - current) > 0.01 || distancePID->GetControlValue(current) > 1.0)
+        while(abs(inches - distance) > 0.1 || controlValue > 1)
         {
-            leftCurrent = fabs(DriveConfig::leftTrackingSensor.get_position() - leftStart);
-            rightCurrent = fabs(DriveConfig::rightTrackingSensor.get_position() - rightStart);
-            current = (leftCurrent + rightCurrent) / 2 * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
-            angle = DriveConfig::inertialSensor.get_rotation();
-            SetLeftDrive(distancePID->GetControlValue(current) - anglePID->GetControlValue(angle));
-            SetRightDrive(distancePID->GetControlValue(current) + anglePID->GetControlValue(angle));
+            distance = leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
+            controlValue = distancePID.GetControlValue(distance);
+            SetLeftDrive(controlValue);
+            SetRightDrive(controlValue);
         }
     }
 
-    void Drive::SpinTurn(float degrees)
+    void Drive::SpinTurn(float degrees, PositionCalculation& position)
     {
-        // Set the PID controller for the motion
-        //PID spinPID(4.3, 0.0, 0.10, -125.0, 125.0, 40.0, 0.0);
-        DriveConfig::inertialSensor.set_rotation(0.0);
-	    //spinPID.SetTargetValue(degrees);
-        //float controlValue = turnPID->GetControlValue(DriveConfig::inertialSensor.get_rotation());
-        float controlValue = (degrees - DriveConfig::inertialSensor.get_rotation()) * 4.0;
+        PID turnPID(4.3, 0.05, 0.20, -125.0, 125.0, 40.0, 0.0);
+        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
+                                DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
+                                DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        float targetAngle = position.GetTheta() + degrees;
+        float angle = position.GetTheta();
+        float controlValue = turnPID.GetControlValue(angle);
 
-        // Run the control loop
-        while(fabs(degrees - DriveConfig::inertialSensor.get_rotation()) > 1.0 || fabs(controlValue) > 1.0)
+        while(abs(targetAngle - angle) > 0.1 || controlValue > 1)
         {
-            pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 200, "Inertial: %f", DriveConfig::inertialSensor.get_rotation());
-            //controlValue = spinPID.GetControlValue(DriveConfig::inertialSensor.get_rotation());
-            controlValue = (degrees - DriveConfig::inertialSensor.get_rotation()) * 4.0;
-		    SetLeftDrive(controlValue);
-		    SetRightDrive(-controlValue);
-		    pros::delay(2);
+            angle = position.GetTheta();
+            controlValue = turnPID.GetControlValue(angle);
+            SetLeftDrive(controlValue);
+            SetRightDrive(-controlValue);
         }
     }
 

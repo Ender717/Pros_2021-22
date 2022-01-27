@@ -16,18 +16,6 @@ class Drive
 {
 private:
     //-------------------------------------------------------------------------
-    // Processes
-    // distancePID: Manages the distance to the target in motion commands
-    // anglePID: Manages the angle to the target in motion commands
-    // turnPID: Manages turn commands
-    // position: Manages the coordinate tracking system
-    //-------------------------------------------------------------------------
-    PID* distancePID;
-    PID* anglePID;
-    PID* turnPID;
-    PositionCalculation* position;
-
-    //-------------------------------------------------------------------------
     // Calculates the angle between two points
     // startX: The starting x-coordinate
     // startY: The starting y-coordinate
@@ -71,17 +59,20 @@ public:
     //-------------------------------------------------------------------------
     // Temporary basic control function for driving forward and backward
     // inches: The distance to travel
-    // reversed: The direction to travel in (false is forward, true is backward)
+    // position: The position tracking system
     // v1: Created the method - Nathan S, 1-23-22
+    // v2: Added the positioning system - Nathan S, 1-26-22
     //-------------------------------------------------------------------------
-    void DriveStraight(float inches, bool reversed);
+    void DriveStraight(float inches, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
     // Temporary basic control function for turning in place
     // degrees: The number of degrees to turn
+    // position: The position tracking system
     // v1: Created the method - Nathan S, 1-23-22
+    // v2: Added the positioning system - Nathan S, 1-26-22
     //-------------------------------------------------------------------------
-    void SpinTurn(float degrees);
+    void SpinTurn(float degrees, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
     // Runs the left side of the drive at the desired power
