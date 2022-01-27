@@ -15,69 +15,28 @@ private:
    //                center of the robot
    // RIGHT_DISTANCE: The distance between the right tracking wheel and the 
    //                 center of the robot
-   // CENTER_DISTANCE: The distance between the center tracking wheel and the 
+   // STRAFE_DISTANCE: The distance between the center tracking wheel and the 
    //                  center of the robot
    //--------------------------------------------------------------------------
    const float LEFT_DISTANCE = 6.0938;
    const float RIGHT_DISTANCE = 6.0938;
-   const float CENTER_DISTANCE = 1.50;
+   const float STRAFE_DISTANCE = 1.50;
 
    //--------------------------------------------------------------------------
-   // Private class member variables
-   // oldLeftValue: The starting value of the left tracking wheel
-   // oldRightValue: The starting value of the right tracking wheel
-   // oldCenterValue: The starting value of the center tracking wheel
-   // newLeftValue: The new value of the left tracking wheel
-   // newRightPosition: The new value of the right tracking wheel
-   // newCenterPosition: The new value of the center tracking wheel
-   // oldTheta: The starting angle of the robot
-   // oldX: The starting x-coordinate of the robot
-   // oldY: The starting y-coordinate of the robot
-   // currentX: The current x-coordinate of the robot
-   // currentY: The current y-coordinate of the robot
-   // currentTheta: The current angle of the robot
-   // leftChange: The change in value of the left tracking wheel
-   // rightChange: The change in value of the right tracking wheel
-   // centerChange: The change in value of the center tracking wheel
-   // thetaChange: The change in the angle of the robot
+   // Private data members
+   // currentX: The robot's current x-coordinate
+   // currentY: The robot's current y-coordinate
+   // currentTheta: The robot's current angle
+   // lastLeft: The position of the left tracking wheel during the last cycle
+   // lastRight: The position of the right tracking wheel during the last cycle
+   // lastStrafe: The position of the strafe tracking wheel during the last cycle
    //--------------------------------------------------------------------------
-   float oldLeftValue;
-   float oldRightValue;
-   float oldCenterValue;
-   float newLeftValue;
-   float newRightValue;
-   float newCenterValue;
-   float oldX;
-   float oldY;
-   float oldTheta;
    float currentX;
    float currentY;
-   float currentTheta;
-   float leftChange;
-   float rightChange;
-   float centerChange;
-   float thetaChange;
-
-
-   //--------------------------------------------------------------------------
-   // Updates the values of the left and right tracking wheels
-   // v1: Created the method - Nathan S, 9-24-21
-   //--------------------------------------------------------------------------
-   void UpdateValues(float leftValue, float rightValue, float centerValue);
-
-   //--------------------------------------------------------------------------
-   // Calculates the angle of the robot using the tracking wheels, and averages
-   // that value with the inertial sensor reading
-   // v1: Created the method - Nathan S, 9-27-21
-   //--------------------------------------------------------------------------
-   void UpdateTheta(float inertialValue);
-
-   //--------------------------------------------------------------------------
-   // Calculates the position of the robot using the tracking wheels and the 
-   // angle of the robot
-   // v1: Created the method - Nathan S, 9-27-21
-   //--------------------------------------------------------------------------
-   void CalculatePosition();
+   float currentZ;
+   float lastLeft;
+   float lastRight;
+   float lastStrafe;
 
 public:
    //--------------------------------------------------------------------------
@@ -102,13 +61,13 @@ public:
    // Updates the current position of the system
    // leftValue: The current value of the left tracking wheel
    // rightValue: The current value of the right tracking wheel
-   // centerValue: The current value of the center tracking wheel
-   // inertialValue: The current value of the inertial sensor's z-axis
+   // strafeValue: The current value of the center tracking wheel
    // v1: Created the method - Nathan S, 9-24-21
    // v2: Corrected the calculations - Nathan S, 1-9-22
+   // v3: Reformatted the method - Nathan S, 1-26-22
+   // Credit: Team 5225A - E-Bots Pilons
    //--------------------------------------------------------------------------
-   void UpdatePosition(float leftValue, float rightValue, float centerValue,
-      float inertialValue);
+   void UpdatePosition(float leftValue, float rightValue, float strafeValue);
 
    //--------------------------------------------------------------------------
    // Returns the current x-coordinate of the robot
@@ -129,7 +88,7 @@ public:
    // return: The current angle of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float GetAngle();
+   float GetTheta();
 };
 
 #endif

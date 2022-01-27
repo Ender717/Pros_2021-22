@@ -212,15 +212,14 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
 
     float Drive::GetTheta()
     {
-        return position->GetAngle() / DriveConfig::DEGREES_TO_RADIANS;
+        return position->GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
     }
 
     void Drive::UpdatePosition()
     {
         position->UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
                                 DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                                DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION, 
-                                DriveConfig::inertialSensor.get_rotation() * DriveConfig::DEGREES_TO_RADIANS * DriveConfig::INERTIAL_TUNING);
+                                DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
     }
 
     void Drive::SetPosition(float x, float y, float theta)
