@@ -108,6 +108,9 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
 
         while(abs(targetAngle - angle) > 0.1 || controlValue > 1)
         {
+            position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
+                                DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
+                                DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
             angle = position.GetTheta();
             controlValue = turnPID.GetControlValue(angle);
             SetLeftDrive(controlValue);
