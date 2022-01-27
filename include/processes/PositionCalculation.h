@@ -30,13 +30,15 @@ private:
    // lastLeft: The position of the left tracking wheel during the last cycle
    // lastRight: The position of the right tracking wheel during the last cycle
    // lastStrafe: The position of the strafe tracking wheel during the last cycle
+   // lastTheta: The angle of the robot during the last cycle
    //--------------------------------------------------------------------------
    float currentX;
    float currentY;
-   float currentZ;
+   float currentTheta;
    float lastLeft;
    float lastRight;
    float lastStrafe;
+   float lastTheta;
 
 public:
    //--------------------------------------------------------------------------

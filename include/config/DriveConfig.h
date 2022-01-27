@@ -19,13 +19,11 @@ namespace DriveConfig
     // COUNTS_PER_ROTATION: The number of encoder counts in one rotation of a 
     //                      rotation sensor
     // DEGREES_TO_RADIANS: The number to multiply degrees by to get radians
-    // INERTIAL_TUNING: The inertial sensor tuning multiplier
     //-------------------------------------------------------------------------
     extern const float TRACKING_WHEEL_SIZE;
     extern const float PI;
     extern const float COUNTS_PER_ROTATION;
     extern const float DEGREES_TO_RADIANS;
-    extern const float INERTIAL_TUNING;
 
     //-------------------------------------------------------------------------
     // Ports
@@ -49,7 +47,6 @@ namespace DriveConfig
     extern const int LEFT_TRACKING_PORT;
     extern const int RIGHT_TRACKING_PORT;
     extern const int STRAFE_TRACKING_PORT;
-    extern const int INERTIAL_PORT;
 
     //-------------------------------------------------------------------------
     // Drive Motors
@@ -77,7 +74,6 @@ namespace DriveConfig
     extern pros::Rotation leftTrackingSensor;
     extern pros::Rotation rightTrackingSensor;
     extern pros::Rotation strafeTrackingSensor;
-    extern pros::Imu inertialSensor;
 };
 
 #endif

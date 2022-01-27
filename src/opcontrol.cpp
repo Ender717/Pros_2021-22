@@ -19,14 +19,8 @@ void opcontrol()
 	Drive* drive = new Drive();
 
 	float leftDrivePower, rightDrivePower;
-	drive->SpinTurn(180.0);
-	pros::delay(1000);
-	drive->SpinTurn(-180.0);
-	pros::delay(1000);
 	while (true) 
 	{
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 200, "Inertial: %f", DriveConfig::inertialSensor.get_rotation());
-		
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)

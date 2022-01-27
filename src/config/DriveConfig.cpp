@@ -8,7 +8,6 @@ namespace DriveConfig
     const float PI = 3.1415;
     const float COUNTS_PER_ROTATION = 36000.0;
     const float DEGREES_TO_RADIANS = 0.0174;
-    const float INERTIAL_TUNING = 1.00696;
 
     // Ports
     const int LEFT_REAR_DRIVE_PORT = 13;
@@ -20,7 +19,6 @@ namespace DriveConfig
     const int LEFT_TRACKING_PORT = 14;
     const int RIGHT_TRACKING_PORT = 4;
     const int STRAFE_TRACKING_PORT = 5;
-    const int INERTIAL_PORT = 20;
 
     // Motors
     pros::Motor leftRearDriveMotor(LEFT_REAR_DRIVE_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -40,5 +38,4 @@ namespace DriveConfig
     pros::Rotation leftTrackingSensor(LEFT_TRACKING_PORT);
     pros::Rotation rightTrackingSensor(RIGHT_TRACKING_PORT);
     pros::Rotation strafeTrackingSensor(STRAFE_TRACKING_PORT);
-    pros::Imu inertialSensor(INERTIAL_PORT);
 }
