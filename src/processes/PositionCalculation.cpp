@@ -50,7 +50,7 @@ void PositionCalculation::UpdateTheta(float inertialValue)
    thetaChange = currentTheta - oldTheta;
 }
 
-void PositionCalculation::CalculatePosition()
+void PositionCalculation::CalculatePosition() // SOMETHING IS WRONG WITH Y
 {
    float distance, drift;
 

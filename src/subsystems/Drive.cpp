@@ -1,5 +1,5 @@
 // Included libraries
-#include "Drive.h"
+#include "subsystems/Drive.h"
 
 // Private method definitions -------------------------------------------------
 float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
@@ -46,6 +46,19 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
         anglePID = new PID(0.5, 0.0, 0.0, -50.0, 50.0, 20.0, 0.0);
         turnPID = new PID(4.3, 0.05, 0.20, -125.0, 125.0, 40.0, 0.0);
         position = new PositionCalculation(0.0, 0.0, 0.0);
+        DriveConfig::leftTrackingSensor.set_position(0.0);
+        DriveConfig::rightTrackingSensor.set_position(0.0);
+        DriveConfig::strafeTrackingSensor.set_position(0.0);
+        DriveConfig::inertialSensor.set_rotation(0.0);
+    }
+
+    // Destructor definitions -------------------------------------------------
+    Drive::~Drive()
+    {
+        delete distancePID;
+        delete anglePID;
+        delete turnPID;
+        delete position;
     }
 
     // Public method definitions ----------------------------------------------
@@ -59,6 +72,12 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
         DriveConfig::leftTrackingSensor.set_position(0.0);
 	    DriveConfig::rightTrackingSensor.set_position(0.0);
 	    DriveConfig::strafeTrackingSensor.set_position(0.0);
+        DriveConfig::inertialSensor.reset();
+        while (DriveConfig::inertialSensor.is_calibrating())
+        {
+            pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Inertial is calibrating");
+        }
+        DriveConfig::inertialSensor.set_rotation(0.0);
     }
 
     // Public method definitions --------------------------------------------------
@@ -87,15 +106,20 @@ float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
     void Drive::SpinTurn(float degrees)
     {
         // Set the PID controller for the motion
-	    DriveConfig::inertialSensor.set_rotation(0.0);
-	    turnPID->SetTargetValue(degrees);
+        //PID spinPID(4.3, 0.0, 0.10, -125.0, 125.0, 40.0, 0.0);
+        DriveConfig::inertialSensor.set_rotation(0.0);
+	    //spinPID.SetTargetValue(degrees);
+        //float controlValue = turnPID->GetControlValue(DriveConfig::inertialSensor.get_rotation());
+        float controlValue = (degrees - DriveConfig::inertialSensor.get_rotation()) * 4.0;
 
         // Run the control loop
-        while(fabs(DriveConfig::inertialSensor.get_rotation() - degrees) > 0.01 
-                || turnPID->GetControlValue(DriveConfig::inertialSensor.get_rotation()) > 1.0)
+        while(fabs(degrees - DriveConfig::inertialSensor.get_rotation()) > 1.0 || fabs(controlValue) > 1.0)
         {
-		    SetLeftDrive(turnPID->GetControlValue(DriveConfig::inertialSensor.get_rotation()));
-		    SetRightDrive(-turnPID->GetControlValue(DriveConfig::inertialSensor.get_rotation()));
+            pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 200, "Inertial: %f", DriveConfig::inertialSensor.get_rotation());
+            //controlValue = spinPID.GetControlValue(DriveConfig::inertialSensor.get_rotation());
+            controlValue = (degrees - DriveConfig::inertialSensor.get_rotation()) * 4.0;
+		    SetLeftDrive(controlValue);
+		    SetRightDrive(-controlValue);
 		    pros::delay(2);
         }
     }

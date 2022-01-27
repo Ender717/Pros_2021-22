@@ -46,6 +46,12 @@ public:
     Drive();
 
     //-------------------------------------------------------------------------
+    // Default destructor for the drive class
+    // v1: Created the constructor - Nathan S, 1-26-22
+    //-------------------------------------------------------------------------
+    ~Drive();
+
+    //-------------------------------------------------------------------------
     // Calculates the distance between two points
     // startX: The starting x-coordinate
     // startY: The starting y-coordinate
