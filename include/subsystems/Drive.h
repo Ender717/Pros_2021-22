@@ -113,8 +113,19 @@ public:
     // angle: The angle to turn the robot to
     // power: The maximum speed at which to turn
     // position: The position tracking system
+    // v1: Created the method - Nathan S, 1-28-22
     //-------------------------------------------------------------------------
     void TurnToAngle(float angle, float power, PositionCalculation& position);
+
+    //-------------------------------------------------------------------------
+    // Turns the robot to face a specified point
+    // targetX: The x-coordinate of the specified point
+    // targetY: The y-coordinate of the specified point
+    // power: The maximum speed at which to turn
+    // position: The position tracking system
+    // v1: Created the method - Nathan S, 1-28-22
+    //-------------------------------------------------------------------------
+    void TurnTowardsPoint(float targetX, float targetY, float power, PositionCalculation& position);
 };
 
 #endif
