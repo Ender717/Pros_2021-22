@@ -76,9 +76,7 @@ void Drive::DriveStraight(float inches, PositionCalculation& position)
 void Drive::SpinTurn(float degrees, PositionCalculation& position)
 {
     PID turnPID(4.3, 0.05, 0.20, 0.0, -125.0, 125.0, 40.0, 0.0);
-    position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+    position.UpdatePosition();
     float targetAngle = position.GetTheta() + degrees;
     turnPID.SetTargetValue(targetAngle);
     float angle = position.GetTheta();
@@ -86,9 +84,7 @@ void Drive::SpinTurn(float degrees, PositionCalculation& position)
 
     while(abs(targetAngle - angle) > 0.1 || controlValue > 1)
     {
-        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        position.UpdatePosition();
         angle = position.GetTheta();
         controlValue = turnPID.GetControlValue(angle);
         SetLeftDrive(controlValue);
@@ -115,18 +111,14 @@ void Drive::DriveToPoint(float targetX, float targetY, float power, bool reverse
     // Set up the control variables
     PID distancePID(5.5, 0.1, 0.3, 0.0, -power, power, (power / 3.0), 0.0);
     PID anglePID(0.5, 0.0, 0.01, 0.0, -(power / 3.0), (power / 3.0), (power / 9.0), 0.0);
-    position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+    position.UpdatePosition();
     float distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
     float angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
 
     // Loop until the target is reached
     while(distance > 0.1)
     {
-        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        position.UpdatePosition();
         distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
         angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
         // Control for forward motion
@@ -155,18 +147,14 @@ void Drive::DriveThroughPoint(float targetX, float targetY, float power, bool re
 {
     // Set up the control variables
     PID anglePID(0.5, 0.0, 0.01, 0.0, -(power / 3.0), (power / 3.0), (power / 9.0), 0.0);
-    position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+    position.UpdatePosition();
     float distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
     float angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
 
     // Loop until the target is reached
     while(distance > 0.1)
     {
-        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        position.UpdatePosition();
         distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
         angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
         // Control for forward motion
@@ -193,16 +181,12 @@ void Drive::TurnToAngle(float angle, float power, PositionCalculation& position)
 {
     PID turnPID(4.3, 0.05, 0.20, 0.0, -power, power, (power / 3.0), position.GetTheta());
     turnPID.SetTargetValue(angle);
-    position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+    position.UpdatePosition();
     float controlValue = turnPID.GetControlValue(position.GetTheta());
 
     while(fabs(angle - position.GetTheta()) > 0.1 || controlValue > 1)
     {
-        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        position.UpdatePosition();
         controlValue = turnPID.GetControlValue(position.GetTheta());
         SetLeftDrive(controlValue);
         SetRightDrive(-controlValue);
@@ -212,18 +196,14 @@ void Drive::TurnToAngle(float angle, float power, PositionCalculation& position)
 void Drive::TurnTowardsPoint(float targetX, float targetY, float power, PositionCalculation& position)
 {
     PID turnPID(4.3, 0.05, 0.20, 0.0, -power, power, (power / 3.0), position.GetTheta());
-    position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+    position.UpdatePosition();
     float angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
     turnPID.SetTargetValue(angle);
     float controlValue = turnPID.GetControlValue(position.GetTheta());
 
     while(fabs(angle - position.GetTheta()) > 0.1 || controlValue > 1)
     {
-        position.UpdatePosition(DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION,
-                            DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION);
+        position.UpdatePosition();
         controlValue = turnPID.GetControlValue(position.GetTheta());
         SetLeftDrive(controlValue);
         SetRightDrive(-controlValue);

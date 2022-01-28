@@ -61,15 +61,13 @@ public:
 
    //--------------------------------------------------------------------------
    // Updates the current position of the system
-   // leftValue: The current value of the left tracking wheel
-   // rightValue: The current value of the right tracking wheel
-   // strafeValue: The current value of the center tracking wheel
    // v1: Created the method - Nathan S, 9-24-21
    // v2: Corrected the calculations - Nathan S, 1-9-22
    // v3: Reformatted the method - Nathan S, 1-26-22
+   // v4: Changed to an automatic data method instead of input - Nathan S, 1-28-22
    // Credit: Team 5225A - E-Bots Pilons
    //--------------------------------------------------------------------------
-   void UpdatePosition(float leftValue, float rightValue, float strafeValue);
+   void UpdatePosition();
 
    //--------------------------------------------------------------------------
    // Returns the current x-coordinate of the robot
