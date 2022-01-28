@@ -26,19 +26,6 @@ private:
     //-------------------------------------------------------------------------
     float CalculateAngle(float startX, float startY, float endX, float endY);
 
-public:
-    //-------------------------------------------------------------------------
-    // Default constructor for the drive class
-    // v1: Created the constructor - Nathan S, 1-23-22
-    //-------------------------------------------------------------------------
-    Drive();
-
-    //-------------------------------------------------------------------------
-    // Default destructor for the drive class
-    // v1: Created the constructor - Nathan S, 1-26-22
-    //-------------------------------------------------------------------------
-    ~Drive();
-
     //-------------------------------------------------------------------------
     // Calculates the distance between two points
     // startX: The starting x-coordinate
@@ -49,6 +36,13 @@ public:
     // v1: Created the method - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     float CalculateDistance(float startX, float startY, float endX, float endY);
+
+public:
+    //-------------------------------------------------------------------------
+    // Default constructor for the drive class
+    // v1: Created the constructor - Nathan S, 1-23-22
+    //-------------------------------------------------------------------------
+    Drive();
 
     //-------------------------------------------------------------------------
     // Initializes the drive
@@ -94,57 +88,33 @@ public:
     // Drives the robot from its current position to the specified coordinates
     // targetX: The target x-coordinate
     // targetY: The target y-coordinate
+    // power: The maximum forward speed of the motion
     // reversed: Whether the motion is reversed or not
+    // position: The position calculation system
     // v1: Created the method - Nathan S, 1-23-22
     // v2: Allowed driving backward - Nathan S, 1-24-22
     //-------------------------------------------------------------------------
-    void DriveToPoint(float targetX, float targetY, bool reversed);
+    void DriveToPoint(float targetX, float targetY, float power, bool reversed, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
     // Drives the robot from its current position through the specified coordinates
     // targetX: The target x-coordinate
     // targetY: The target y-coordinate
+    // power: The speed at which to move through the coordinate
+    // reversed: Whether the robot is going backward or not
+    // position: The position tracking system
     // v1: Created the method - Nathan S, 1-24-22
     // v2: Allowed driving backward - Nathan S, 1-24-22
     //-------------------------------------------------------------------------
-    void DriveThroughPoint(float targetX, float targetY, float power, bool reversed);
+    void DriveThroughPoint(float targetX, float targetY, float power, bool reversed, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
-    // Gets the current x-coordinate of the position tracking system
-    // return: The robot's x-coordinate
-    // v1: Created the method - Nathan S, 1-24-22
+    // Turns the robot to a specified angle
+    // angle: The angle to turn the robot to
+    // power: The maximum speed at which to turn
+    // position: The position tracking system
     //-------------------------------------------------------------------------
-    float GetX();
-
-    //-------------------------------------------------------------------------
-    // Gets the current y-coordinate of the position tracking system
-    // return: The robot's y-coordinate
-    // v1: Created the method - Nathan S, 1-24-22
-    //-------------------------------------------------------------------------
-    float GetY();
-
-    //-------------------------------------------------------------------------
-    // Gets the current angle of the position tracking system
-    // return: The robot's angle
-    // v1: Created the method - Nathan S, 1-24-22
-    //-------------------------------------------------------------------------
-    float GetTheta();
-
-    //-------------------------------------------------------------------------
-    // Updates the position tracking system
-    // v1: Created the method - Nathan S, 1-23-21
-    // v2: Made method public - Nathan S, 1-24-22
-    //-------------------------------------------------------------------------
-    void UpdatePosition();
-
-    //-------------------------------------------------------------------------
-    // Sets the position of the tracking system
-    // x: The x-coordinate to set the tracking system to
-    // y: The y-coordinate to set the tracking system to
-    // theta: The angle to set the tracking system to
-    // v1: Created the method - Nathan S, 1-24-22
-    //-------------------------------------------------------------------------
-    void SetPosition(float x, float y, float theta);
+    void TurnToAngle(float angle, float power, PositionCalculation& position);
 };
 
 #endif
