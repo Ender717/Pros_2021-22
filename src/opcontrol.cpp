@@ -17,10 +17,25 @@ void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	Drive* drive = new Drive();
+	pros::Motor clawMotor(15, pros::E_MOTOR_GEARSET_36,
+                                     false, E_MOTOR_ENCODER_COUNTS);
+	drive->Initialize();
+	PositionCalculation position(0.0, 0.0, 0.0);
+
+	drive->DriveStraight(43.18, position);
+	clawMotor.move(127);
+	pros::delay(100);
+	clawMotor.move(50);
+	drive->DriveStraight(-43.18, position);
 
 	float leftDrivePower, rightDrivePower;
 	while (true) 
 	{
+		position.UpdatePosition();
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
+
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)

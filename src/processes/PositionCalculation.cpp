@@ -27,7 +27,7 @@ void PositionCalculation::UpdatePosition()
    // Calculate the number of inches moved by each wheel
    float leftValue = DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
    float rightValue = DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION;
-   float strafeValue = DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION;
+   float strafeValue = DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
 
    // Calculate the distance moved by each wheel since the last cycle
    float leftDistance = leftValue - lastLeft;
@@ -43,26 +43,27 @@ void PositionCalculation::UpdatePosition()
    float thetaChange = currentTheta - lastTheta;
 
    // Calculate the local offset
-   float forwardDistance, sidewaysDistance;
-   if (thetaChange == 0)
+   float forwardDistance = 0.0;
+   float sidewaysDistance = 0.0;
+   if (thetaChange == 0.0)
    {
       sidewaysDistance = strafeDistance;
       forwardDistance = rightDistance;
    }
    else
    {
-      sidewaysDistance = (2 * sin(currentTheta / 2)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
-      forwardDistance = (2 * sin(currentTheta / 2)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
+      sidewaysDistance = (2.0 * sinf(currentTheta / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
+      forwardDistance = (2.0 * sinf(currentTheta / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
    }
 
    // Calculate the average orientation
-   float averageTheta = lastTheta + (thetaChange / 2);
+   float averageTheta = lastTheta + (thetaChange / 2.0);
 
    // Calculate the global offset
-   float polarDistance = sqrt((sidewaysDistance * sidewaysDistance) + (forwardDistance * forwardDistance));
-   float polarAngle = atan(forwardDistance / sidewaysDistance) - averageTheta;
-   float xChange = polarDistance * cos(polarAngle);
-   float yChange = polarDistance * sin(polarAngle);
+   float polarDistance = sqrtf((sidewaysDistance * sidewaysDistance) + (forwardDistance * forwardDistance));
+   float polarAngle = atan2f(forwardDistance, sidewaysDistance) - averageTheta;
+   float xChange = polarDistance * cosf(polarAngle);
+   float yChange = polarDistance * sinf(polarAngle);
 
    // Calculate the new absolute position
    currentX += xChange;
@@ -87,5 +88,5 @@ float PositionCalculation::GetY()
 
 float PositionCalculation::GetTheta()
 {
-   return currentTheta;
+   return currentTheta / DriveConfig::DEGREES_TO_RADIANS;
 }
