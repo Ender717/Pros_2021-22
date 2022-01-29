@@ -42,3 +42,9 @@ void Carrier::SetUp()
         pros::delay(2);
     }
 }
+
+void Carrier::Initialize()
+{
+    CarrierConfig::leftCarrierMotor.tare_position();
+    CarrierConfig::rightCarrierMotor.tare_position();
+}
