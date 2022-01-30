@@ -19,8 +19,8 @@ void opcontrol()
 	Drive* drive = new Drive();
 	Carrier* carrier = new Carrier();
 	pros::Motor clawMotor(15, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-	pros::Motor leftArmMotor(17, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-	pros::Motor rightArmMotor(7, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
+	pros::Motor leftArmMotor(17, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
+	pros::Motor rightArmMotor(7, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
 	clawMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	leftArmMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	rightArmMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -44,8 +44,8 @@ void opcontrol()
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		drive->SetLeftDrive(leftDrivePower);
 		drive->SetRightDrive(rightDrivePower);
-		leftArmMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_L2) - master.get_digital(E_CONTROLLER_DIGITAL_L1)) * 125);
-		rightArmMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_L2) - master.get_digital(E_CONTROLLER_DIGITAL_L1)) * 125);
+		leftArmMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 125);
+		rightArmMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 125);
 		clawMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 125);
 		carrier->SetCarrier((master.get_digital(E_CONTROLLER_DIGITAL_Y) - master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) * 125);
 		

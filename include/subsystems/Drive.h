@@ -54,10 +54,12 @@ public:
     // Temporary basic control function for driving forward and backward
     // inches: The distance to travel
     // position: The position tracking system
+    // power: The power with which to move forward
     // v1: Created the method - Nathan S, 1-23-22
     // v2: Added the positioning system - Nathan S, 1-26-22
+    // v3: Added a power control - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
-    void DriveStraight(float inches, PositionCalculation& position);
+    void DriveStraight(float inches, float power, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
     // Temporary basic control function for turning in place
@@ -65,8 +67,9 @@ public:
     // position: The position tracking system
     // v1: Created the method - Nathan S, 1-23-22
     // v2: Added the positioning system - Nathan S, 1-26-22
+    // v3: Added a power control - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
-    void SpinTurn(float degrees, PositionCalculation& position);
+    void SpinTurn(float degrees, float power, PositionCalculation& position);
 
     //-------------------------------------------------------------------------
     // Runs the left side of the drive at the desired power

@@ -62,10 +62,10 @@ void Drive::Initialize()
 }
 
 // Public method definitions --------------------------------------------------
-void Drive::DriveStraight(float inches, PositionCalculation& position)
+void Drive::DriveStraight(float inches, float power, PositionCalculation& position)
 {
-    PID distancePID(8.3, 0.01, 0.05, 0.0, -125.0, 125.0, 40.0, 0.0);
-    PID anglePID(1.0, 0.01, 0.02, 0.0, -30.0, 30.0, 5.0, position.GetTheta());
+    PID distancePID(8.3, 0.01, 0.05, 0.0, -power, power, (power / 3.0), 0.0);
+    PID anglePID(1.0, 0.01, 0.02, 0.0, -(power / 4.0), (power / 4.0), (power / 12.0), position.GetTheta());
     float startValue = DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
     distancePID.SetTargetValue(inches + startValue);
     anglePID.SetTargetValue(position.GetTheta());
@@ -86,9 +86,9 @@ void Drive::DriveStraight(float inches, PositionCalculation& position)
     SetRightDrive(0.0);
 }
 
-void Drive::SpinTurn(float degrees, PositionCalculation& position)
+void Drive::SpinTurn(float degrees, float power, PositionCalculation& position)
 {
-    PID turnPID(4.3, 0.05, 0.20, 0.0, -125.0, 125.0, 40.0, 0.0);
+    PID turnPID(4.3, 0.05, 0.20, 0.0, -power, power, (power / 3.0), 0.0);
     position.UpdatePosition();
     float targetAngle = position.GetTheta() + degrees;
     turnPID.SetTargetValue(targetAngle);

@@ -14,7 +14,7 @@ namespace LiftConfig
     //-------------------------------------------------------------------------
     // Constants
     // BOTTOM_POSITION: The encoder position when the lift is at the ground
-    // UP_POSITION: The encoder position when the lift is at the top
+    // TOP_POSITION: The encoder position when the lift is at the top
     //-------------------------------------------------------------------------
     extern const float BOTTOM_POSITION;
     extern const float TOP_POSITION;
