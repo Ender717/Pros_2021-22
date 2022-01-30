@@ -53,6 +53,12 @@ void Drive::Initialize()
     DriveConfig::leftTrackingSensor.set_position(0.0);
     DriveConfig::rightTrackingSensor.set_position(0.0);
     DriveConfig::strafeTrackingSensor.set_position(0.0);
+    DriveConfig::leftFrontDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftMiddleDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightFrontDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightMiddleDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
 // Public method definitions --------------------------------------------------
