@@ -1,54 +1,54 @@
 // Inclusion guard
-#ifndef CARRIER_H
-#define CARRIER_H
+#ifndef CLAW_H
+#define CLAW_H
 
 // Included libraries
 #include "./main.h"
-#include "./config/CarrierConfig.h"
+#include "./config/ClawConfig.h"
 #include "./processes/PID.h"
 
 //-----------------------------------------------------------------------------
-// This class manages the carrier subsystem of the robot
-// v1: Created the class - Nathan S, 1-29-22
+// This class manages the claw subsystem of the robot
+// v1: Created the class - Nathan S, 1-31-22
 //-----------------------------------------------------------------------------
-class Carrier
+class Claw
 {
 public:
     //-------------------------------------------------------------------------
-    // Default contstructor for the Carrier class
-    // v1: Created the constructor - Nathan S, 1-29-22
+    // Default contstructor for the Claw class
+    // v1: Created the constructor - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    Carrier();
+    Claw();
 
     //-------------------------------------------------------------------------
-    // Gets the current position of the carrier
-    // return: The current position of the carrier
+    // Gets the current position of the claw
+    // return: The current position of the claw
     // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
     float GetPosition();
 
     //-------------------------------------------------------------------------
-    // Sets the carrier motors to the desired power
-    // power: The power level to set the motors to
-    // v1: Created the method - Nathan S, 1-29-22
+    // Sets the claw motor to the desired power
+    // power: The power level to set the motor to
+    // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    void SetCarrier(float power);
+    void SetClaw(float power);
 
     //-------------------------------------------------------------------------
-    // Sets the position of the Carrier to down
-    // v1: Created the method - Nathan S, 1-29-22
+    // Sets the position of the claw to closed
+    // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    void SetDown();
+    void SetClosed();
 
     //-------------------------------------------------------------------------
-    // Sets the position of the Carrier to up
-    // v1: Created the method - Nathan S, 1-29-22
+    // Sets the position of the claw to open
+    // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    void SetUp();
+    void SetOpen();
 
     //-------------------------------------------------------------------------
-    // Initializes the carrier
-    // v1: Created the method - Nathan S, 1-29-22
+    // Initializes the claw
+    // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
     void Initialize();
 };

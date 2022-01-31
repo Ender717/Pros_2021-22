@@ -27,9 +27,10 @@ void Lift::SetLift(float power)
 
 void Lift::SetHeight(float inches)
 {
+    
+    PID armPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), GetHeight());
+    armPID.SetTargetValue(inches);
     float height = GetHeight();
-    PID armPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), height);
-    armPID.SetTargetValue(targetAngle);
     float controlValue = armPID.GetControlValue(height);
 
     while(abs(inches - height) > 0.1 || controlValue > 1)

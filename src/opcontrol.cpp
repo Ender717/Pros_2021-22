@@ -33,8 +33,6 @@ void opcontrol()
 
 	// Create the control variables
 	float leftDrivePower, rightDrivePower, carrierPower, liftPower, clawPower;
-	bool carrierSet = true;
-	bool liftSet = true;
 	bool clawClosed = false;
 
 	// Run the driver control loop
@@ -65,9 +63,7 @@ void opcontrol()
 			carrierPID.SetTargetValue(carrier->GetPosition());
 		}
 		else
-		{
 			carrier->SetCarrier(carrierPID.GetControlValue(carrier->GetPosition()));
-		}
 		
 		// Set the lift
 		if(liftPower != 0)
@@ -76,14 +72,14 @@ void opcontrol()
 			liftPID.SetTargetValue(lift->GetHeight());
 		}
 		else
-		{
 			lift->SetLift(liftPID.GetControlValue(lift->GetHeight()));
-		}
 
 		clawMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 125);
 		
-		pros::delay(2);
+		pros::delay(5);
 	}
+
+	// Deallocate pointers
 	delete drive;
 	delete carrier;
 	delete lift;
