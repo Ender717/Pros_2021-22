@@ -20,15 +20,16 @@ void opcontrol()
 	Drive* drive = new Drive();
 	Carrier* carrier = new Carrier();
 	Lift* lift = new Lift();
-	pros::Motor clawMotor(15, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-	clawMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	Claw* claw = new Claw();
 	
 	// Initialize the processes
 	drive->Initialize();
 	carrier->Initialize();
 	lift->Initialize();
+	claw->Initialize();
 	PID carrierPID(3.5, 0.95, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
 	PID liftPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), height);
+	PID clawPID(3.5, 0.35, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
 	// Create the control variables
@@ -52,6 +53,12 @@ void opcontrol()
 		carrierPower = (master.get_digital(E_CONTROLLER_DIGITAL_Y) - master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) * 127;
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
+		// Update the claw position
+		if (master.get_digital(E_CONTROLLER_DIGITAL_R1))
+			clawClosed = false;
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_R2))
+			clawClosed = true;
+
 		// Set the drive
 		drive->SetLeftDrive(leftDrivePower);
 		drive->SetRightDrive(rightDrivePower);
@@ -74,7 +81,17 @@ void opcontrol()
 		else
 			lift->SetLift(liftPID.GetControlValue(lift->GetHeight()));
 
-		clawMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 125);
+		// Set the claw
+		if(clawClosed)
+		{
+			clawPID.SetTargetValue(8000.0);
+			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
+		}
+		else
+		{
+			clawPID.SetTargetValue(5000.0);
+			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
+		}
 		
 		pros::delay(5);
 	}
@@ -83,4 +100,5 @@ void opcontrol()
 	delete drive;
 	delete carrier;
 	delete lift;
+	delete claw;
 }
