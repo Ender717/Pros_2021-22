@@ -5,6 +5,11 @@
 Carrier::Carrier() {} 
 
 // Public method definitions --------------------------------------------------
+float Carrier::GetPosition()
+{
+    return (CarrierConfig::leftCarrierMotor.get_position() + CarrierConfig::rightCarrierMotor.get_position()) / 2.0;
+}
+
 void Carrier::SetCarrier(float power)
 {
     CarrierConfig::leftCarrierMotor.move(power);

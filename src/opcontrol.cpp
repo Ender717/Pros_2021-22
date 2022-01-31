@@ -15,6 +15,7 @@
  */
 void opcontrol() 
 {
+	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	Drive* drive = new Drive();
 	Carrier* carrier = new Carrier();
@@ -22,33 +23,68 @@ void opcontrol()
 	pros::Motor clawMotor(15, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 	clawMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	
+	// Initialize the processes
 	drive->Initialize();
 	carrier->Initialize();
 	lift->Initialize();
+	PID carrierPID(3.5, 0.95, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
+	PID liftPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), height);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
+	// Create the control variables
 	float leftDrivePower, rightDrivePower, carrierPower, liftPower, clawPower;
+	bool carrierSet = true;
+	bool liftSet = true;
+	bool clawClosed = false;
+
+	// Run the driver control loop
 	while (true) 
 	{
-		
+		// Update and display the coordinate system
 		position.UpdatePosition();
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
 
+		// Calculate the power level of each motor
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		carrierPower = (master.get_digital(E_CONTROLLER_DIGITAL_Y) - master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) * 127;
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
+
+		// Set the drive
 		drive->SetLeftDrive(leftDrivePower);
 		drive->SetRightDrive(rightDrivePower);
-		carrier->SetCarrier(carrierPower);
-		lift->SetLift(liftPower);
+
+		// Set the carrier
+		if(carrierPower != 0)
+		{
+			carrier->SetCarrier(carrierPower);
+			carrierPID.SetTargetValue(carrier->GetPosition());
+		}
+		else
+		{
+			carrier->SetCarrier(carrierPID.GetControlValue(carrier->GetPosition()));
+		}
+		
+		// Set the lift
+		if(liftPower != 0)
+		{
+			lift->SetLift(liftPower);
+			liftPID.SetTargetValue(lift->GetHeight());
+		}
+		else
+		{
+			lift->SetLift(liftPID.GetControlValue(lift->GetHeight()));
+		}
+
 		clawMotor.move((master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 125);
 		
 		pros::delay(2);
 	}
 	delete drive;
+	delete carrier;
+	delete lift;
 }

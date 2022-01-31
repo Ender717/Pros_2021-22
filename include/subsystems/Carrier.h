@@ -21,6 +21,13 @@ public:
     Carrier();
 
     //-------------------------------------------------------------------------
+    // Gets the current position of the carrier
+    // return: The current position of the carrier
+    // v1: Created the constructor - Nathan S, 1-31-22
+    //-------------------------------------------------------------------------
+    float GetPosition();
+
+    //-------------------------------------------------------------------------
     // Sets the carrier motors to the desired power
     // power: The power level to set the motors to
     // v1: Created the method - Nathan S, 1-29-22
