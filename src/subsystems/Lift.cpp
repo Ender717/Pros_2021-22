@@ -18,3 +18,24 @@ float Lift::GetHeight()
     float height = LiftConfig::ARM_LENGTH * sin(angle);
     return height;
 }
+
+void Lift::SetLift(float power)
+{
+    LiftConfig::leftLiftMotor.move(power);
+    LiftConfig::rightLiftMotor.move(power);
+}
+
+void Lift::SetHeight(float inches)
+{
+    float height = GetHeight();
+    PID armPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), height);
+    armPID.SetTargetValue(targetAngle);
+    float controlValue = armPID.GetControlValue(height);
+
+    while(abs(inches - height) > 0.1 || controlValue > 1)
+    {
+        height = GetHeight();
+        controlValue = armPID.GetControlValue(height);
+        SetLift(controlValue);
+    }
+}

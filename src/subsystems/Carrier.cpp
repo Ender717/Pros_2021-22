@@ -47,6 +47,4 @@ void Carrier::Initialize()
 {
     CarrierConfig::leftCarrierMotor.tare_position();
     CarrierConfig::rightCarrierMotor.tare_position();
-    CarrierConfig::leftCarrierMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    CarrierConfig::rightCarrierMotor.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
