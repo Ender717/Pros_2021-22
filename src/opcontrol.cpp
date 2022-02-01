@@ -85,7 +85,7 @@ void opcontrol()
 		// Set the claw
 		if(clawClosed)
 		{
-			clawPID.SetTargetValue(-1250.0);
+			clawPID.SetTargetValue(-1280.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		else
