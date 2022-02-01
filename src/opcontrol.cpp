@@ -51,7 +51,6 @@ void opcontrol()
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		carrierPower = (master.get_digital(E_CONTROLLER_DIGITAL_Y) - master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)) * 127;
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
 		// Update the claw position
@@ -65,13 +64,10 @@ void opcontrol()
 		drive->SetRightDrive(rightDrivePower);
 
 		// Set the carrier
-		if(carrierPower != 0)
-		{
-			carrier->SetCarrier(carrierPower);
-			carrierPID.SetTargetValue(carrier->GetPosition());
-		}
-		else
-			carrier->SetCarrier(carrierPID.GetControlValue(carrier->GetPosition()));
+		if (master.get_digital(E_CONTROLLER_DIGITAL_Y))
+			carrier->SetUp();
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
+			carrier->SetDown();
 		
 		// Set the lift
 		if(liftPower != 0)
