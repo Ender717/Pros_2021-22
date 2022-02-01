@@ -55,6 +55,13 @@ public:
     // v1: Created the method - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
     void SetHeight(float inches);
+
+    //-------------------------------------------------------------------------
+    // Sets the lift to the desired encoder position
+    // target: The target encoder position
+    // v1: Created the method - Nathan S, 1-31-22
+    //-------------------------------------------------------------------------
+    void SetPosition(float target);
 };
 
 #endif

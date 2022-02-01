@@ -19,7 +19,7 @@ float Lift::GetPosition()
 float Lift::GetHeight()
 {
     float countsFromParallel = LiftConfig::leftLiftMotor.get_position() - LiftConfig::MIDDLE_POSITION;
-    float angle = countsFromParallel / LiftConfig::COUNTS_PER_ROTATION * LiftConfig::DEGREES_TO_RADIANS;
+    float angle = countsFromParallel / LiftConfig::COUNTS_PER_ROTATION * 360.0 * LiftConfig::DEGREES_TO_RADIANS;
     float height = LiftConfig::ARM_LENGTH * sin(angle);
     return height;
 }
@@ -42,6 +42,21 @@ void Lift::SetHeight(float inches)
     {
         height = GetHeight();
         controlValue = armPID.GetControlValue(height);
+        SetLift(controlValue);
+    }
+}
+
+void Lift::SetPosition(float target)
+{
+    PID armPID(6.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
+    armPID.SetTargetValue(target);
+    float current = GetPosition();
+    float controlValue = armPID.GetControlValue(current);
+
+    while(abs(target - current) > 1.0 || controlValue > 1)
+    {
+        current = GetPosition();
+        controlValue = armPID.GetControlValue(current);
         SetLift(controlValue);
     }
 }

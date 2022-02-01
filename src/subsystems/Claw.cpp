@@ -17,7 +17,7 @@ void Claw::SetClaw(float power)
 
 void Claw::SetClosed()
 {
-    PID clawPID(3.5, 0.35, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
+    PID clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
     clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION);
     float current = ClawConfig::clawMotor.get_position();
     float controlValue = clawPID.GetControlValue(current);
@@ -29,6 +29,7 @@ void Claw::SetClosed()
         SetClaw(controlValue);
         pros::delay(2);
     }
+    SetClaw(0.0);
 }
 
 void Claw::SetOpen()

@@ -4,8 +4,8 @@
 namespace ClawConfig
 {
     // Constants
-    const float OPEN_POSITION = 5000.0;
-    const float CLOSED_POSITION = 8000.0;
+    const float OPEN_POSITION = -800.0;
+    const float CLOSED_POSITION = -1250.0;
 
     // Ports
     extern const int CLAW_PORT = 15;

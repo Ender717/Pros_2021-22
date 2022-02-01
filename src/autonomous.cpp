@@ -11,4 +11,23 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() 
+{
+    // Create the robot
+	Drive* drive = new Drive();
+	Carrier* carrier = new Carrier();
+	Lift* lift = new Lift();
+	Claw* claw = new Claw();
+	
+	// Initialize the processes
+	drive->Initialize();
+	carrier->Initialize();
+	lift->Initialize();
+	claw->Initialize();
+    PositionCalculation position(0.0, 0.0, 0.0);
+
+    //drive->DriveStraight(10.0, 127.0, position);
+    //drive->TurnToAngle(90.0, 127.0, position);
+    //lift->SetPosition(80000.0);
+    claw->SetClosed();
+}
