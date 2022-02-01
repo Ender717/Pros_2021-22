@@ -28,8 +28,8 @@ void opcontrol()
 	lift->Initialize();
 	claw->Initialize();
 	PID carrierPID(2.1, 0.15, 0.05, 0.0, -127.0, 127.0, 85.0, 0.0);
-	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
-	PID clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
+	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
+	PID clawPID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
 	// Create the control variables
