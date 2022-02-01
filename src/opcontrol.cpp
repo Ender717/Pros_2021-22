@@ -27,9 +27,9 @@ void opcontrol()
 	carrier->Initialize();
 	lift->Initialize();
 	claw->Initialize();
-	PID carrierPID(3.5, 0.95, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
-	PID liftPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), height);
-	PID clawPID(3.5, 0.35, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
+	PID carrierPID(2.1, 0.15, 0.05, 0.0, -127.0, 127.0, 85.0, 0.0);
+	PID liftPID(2.3, 0.05, 0.05, 5.0, -127.0, 127.0, 80.0, 0.0);
+	PID clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
 	// Create the control variables
@@ -44,6 +44,7 @@ void opcontrol()
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 140, "Lift height: %f", lift->GetHeight());
 
 		// Calculate the power level of each motor
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
@@ -76,20 +77,20 @@ void opcontrol()
 		if(liftPower != 0)
 		{
 			lift->SetLift(liftPower);
-			liftPID.SetTargetValue(lift->GetHeight());
+			liftPID.SetTargetValue(lift->GetPosition());
 		}
 		else
-			lift->SetLift(liftPID.GetControlValue(lift->GetHeight()));
+			lift->SetLift(liftPID.GetControlValue(lift->GetPosition()));
 
 		// Set the claw
 		if(clawClosed)
 		{
-			clawPID.SetTargetValue(8000.0);
+			clawPID.SetTargetValue(-1250.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		else
 		{
-			clawPID.SetTargetValue(5000.0);
+			clawPID.SetTargetValue(-800.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		

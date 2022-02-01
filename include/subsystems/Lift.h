@@ -29,6 +29,13 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
+    // Gets the current position of the lift encoders
+    // return: The position of the lift encoders
+    // v1: Created the method - Nathan S, 1-31-22
+    //-------------------------------------------------------------------------
+    float GetPosition();
+
+    //-------------------------------------------------------------------------
     // Gets the current height of the lift
     // return: The height of the lift in inches
     // v1: Created the method - Nathan S, 1-30-22

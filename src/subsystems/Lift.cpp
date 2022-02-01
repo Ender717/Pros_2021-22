@@ -11,6 +11,11 @@ void Lift::Initialize()
     LiftConfig::rightLiftMotor.tare_position();
 }
 
+float Lift::GetPosition()
+{
+    return (LiftConfig::leftLiftMotor.get_position() + LiftConfig::rightLiftMotor.get_position()) / 2.0;
+}
+
 float Lift::GetHeight()
 {
     float countsFromParallel = LiftConfig::leftLiftMotor.get_position() - LiftConfig::MIDDLE_POSITION;
@@ -28,7 +33,7 @@ void Lift::SetLift(float power)
 void Lift::SetHeight(float inches)
 {
     
-    PID armPID(4.3, 0.85, 0.43, 5.0, -power, power, (power / 1.5), GetHeight());
+    PID armPID(4.3, 0.85, 0.43, 5.0, -127.0, 127.0, 80.0, GetHeight());
     armPID.SetTargetValue(inches);
     float height = GetHeight();
     float controlValue = armPID.GetControlValue(height);
