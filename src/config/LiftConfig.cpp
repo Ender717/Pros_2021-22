@@ -12,10 +12,10 @@ namespace LiftConfig
     const float DEGREES_TO_RADIANS = 0.0174;
 
     // Ports
-    const int LEFT_LIFT_PORT = 17;
-    const int RIGHT_LIFT_PORT = 7;
+    const int LEFT_LIFT_PORT = 9;
+    const int RIGHT_LIFT_PORT = 10;
 
     // Motors
-    pros::Motor leftLiftMotor(17, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-	pros::Motor rightLiftMotor(7, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor leftLiftMotor(LEFT_LIFT_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+	pros::Motor rightLiftMotor(RIGHT_LIFT_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 }

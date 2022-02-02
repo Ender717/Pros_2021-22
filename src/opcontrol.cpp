@@ -66,9 +66,15 @@ void opcontrol()
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 		{
 			if(carrierUp)
+			{
 				carrierUp = false;
+				carrier->SetDown();
+			}	
 			else
+			{
 				carrierUp = true;
+				carrier->SetUp();
+			}	
 		}
 
 		// Update the claw position
@@ -92,12 +98,12 @@ void opcontrol()
 		// Set the claw
 		if(clawClosed)
 		{
-			clawPID.SetTargetValue(-1280.0);
+			clawPID.SetTargetValue(0.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		else
 		{
-			clawPID.SetTargetValue(-800.0);
+			clawPID.SetTargetValue(6500.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 

@@ -4,8 +4,8 @@
 namespace IntakeConfig
 {
     // Ports
-    const int INTAKE_PORT = 13;
+    const int INTAKE_PORT = 8;
 
     // Motors
-    pros::Motor intakeMotor(INTAKE_PORT, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor intakeMotor(INTAKE_PORT, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
 }
