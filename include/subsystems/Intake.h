@@ -27,6 +27,13 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
+    // Gets the current position of the intake
+    // return: The current encoder position of the intake motor
+    // v1: Created the method - Nathan S, 2-2-22
+    //-------------------------------------------------------------------------
+    float GetPosition();
+
+    //-------------------------------------------------------------------------
     // Sets the intake to a specified power level
     // power: The power level to set the intake to
     // v1: Created the method - Nathan S, 2-2-22

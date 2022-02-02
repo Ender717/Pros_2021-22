@@ -21,20 +21,24 @@ void opcontrol()
 	Carrier* carrier = new Carrier();
 	Lift* lift = new Lift();
 	Claw* claw = new Claw();
+	Intake* intake = new Intake();
 	
 	// Initialize the processes
 	drive->Initialize();
 	carrier->Initialize();
 	lift->Initialize();
 	claw->Initialize();
+	intake->Initialize();
 	PID carrierPID(2.1, 0.15, 0.05, 0.0, -127.0, 127.0, 85.0, 0.0);
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
 	PID clawPID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
+	PID intakePID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
 	// Create the control variables
-	float leftDrivePower, rightDrivePower, carrierPower, liftPower, clawPower;
+	float leftDrivePower, rightDrivePower, intakePower, liftPower, clawPower;
 	bool clawClosed = false;
+	bool carrierUp = false;
 
 	// Run the driver control loop
 	while (true) 
@@ -51,23 +55,30 @@ void opcontrol()
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
-
-		// Update the claw position
-		if (master.get_digital(E_CONTROLLER_DIGITAL_R1))
-			clawClosed = false;
-		else if (master.get_digital(E_CONTROLLER_DIGITAL_R2))
-			clawClosed = true;
+		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 127;
+		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
 		// Set the drive
 		drive->SetLeftDrive(leftDrivePower);
 		drive->SetRightDrive(rightDrivePower);
 
-		// Set the carrier
-		if (master.get_digital(E_CONTROLLER_DIGITAL_Y))
-			carrier->SetUp();
-		else if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
-			carrier->SetDown();
+		// Update the carrier position
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+		{
+			if(carrierUp)
+				carrierUp = false;
+			else
+				carrierUp = true;
+		}
+
+		// Update the claw position
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+		{
+			if(clawClosed)
+				clawClosed = false;
+			else
+				clawClosed = true;
+		}
 		
 		// Set the lift
 		if(liftPower != 0)
@@ -89,6 +100,15 @@ void opcontrol()
 			clawPID.SetTargetValue(-800.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
+
+		// Set the intake
+		if(intakePower != 0)
+		{
+			intake->SetIntake(intakePower);
+			intakePID.SetTargetValue(intake->GetPosition());
+		}
+		else
+			intake->SetIntake(intakePID.GetControlValue(intake->GetPosition()));
 		
 		pros::delay(5);
 	}
