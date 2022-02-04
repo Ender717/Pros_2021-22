@@ -28,6 +28,6 @@ void autonomous()
 
     //drive->DriveStraight(10.0, 127.0, position);
     //drive->TurnToAngle(90.0, 127.0, position);
-    //lift->SetPosition(80000.0);
+    //lift->SetPosition(-3000.0);
     claw->SetClosed();
 }

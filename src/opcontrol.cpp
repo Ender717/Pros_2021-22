@@ -44,11 +44,10 @@ void opcontrol()
 	while (true) 
 	{
 		// Update and display the coordinate system
-		position.UpdatePosition();
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
+		//position.UpdatePosition();
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Lift: %f", LiftConfig::leftLiftMotor.get_position());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Claw: %f", ClawConfig::clawMotor.get_position());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 140, "Lift height: %f", lift->GetHeight());
 
 		// Calculate the power level of each motor
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
@@ -98,12 +97,12 @@ void opcontrol()
 		// Set the claw
 		if(clawClosed)
 		{
-			clawPID.SetTargetValue(0.0);
+			clawPID.SetTargetValue(5.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		else
 		{
-			clawPID.SetTargetValue(6500.0);
+			clawPID.SetTargetValue(500.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 

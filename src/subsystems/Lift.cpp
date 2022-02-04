@@ -48,7 +48,7 @@ void Lift::SetHeight(float inches)
 
 void Lift::SetPosition(float target)
 {
-    PID armPID(6.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
+    PID armPID(4.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
     armPID.SetTargetValue(target);
     float current = GetPosition();
     float controlValue = armPID.GetControlValue(current);
@@ -58,5 +58,6 @@ void Lift::SetPosition(float target)
         current = GetPosition();
         controlValue = armPID.GetControlValue(current);
         SetLift(controlValue);
+        pros::delay(2);
     }
 }
