@@ -52,18 +52,16 @@ void PositionCalculation::UpdatePosition()
    }
    else
    {
-      sidewaysDistance = (2.0 * sinf(currentTheta / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
-      forwardDistance = (2.0 * sinf(currentTheta / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
+      sidewaysDistance = (2.0 * sin(thetaChange / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
+      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
    }
 
    // Calculate the average orientation
    float averageTheta = lastTheta + (thetaChange / 2.0);
 
    // Calculate the global offset
-   float polarDistance = sqrtf((sidewaysDistance * sidewaysDistance) + (forwardDistance * forwardDistance));
-   float polarAngle = atan2f(forwardDistance, sidewaysDistance) - averageTheta;
-   float xChange = polarDistance * cosf(polarAngle);
-   float yChange = polarDistance * sinf(polarAngle);
+   float xChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
+   float yChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
 
    // Calculate the new absolute position
    currentX += xChange;
