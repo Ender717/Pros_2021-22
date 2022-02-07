@@ -18,7 +18,7 @@ float Lift::GetPosition()
 
 float Lift::GetHeight()
 {
-    float angle = (5.0 * 3.1415 / 9.0) - (LiftConfig::leftLiftMotor.get_position() / 10.0 / 5.0 * DEGREES_TO_RADIANS);
+    float angle = (5.0 * 3.1415 / 9.0) - (LiftConfig::leftLiftMotor.get_position() / 10.0 / 5.0 * LiftConfig::DEGREES_TO_RADIANS);
     float height = LiftConfig::ARM_LENGTH * sin(angle);
     return height;
 }
