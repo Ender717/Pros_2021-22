@@ -4,11 +4,9 @@
 namespace LiftConfig
 {
     // Constants
-    const float BOTTOM_POSITION = 0.0;
-    const float MIDDLE_POSITION = 23000.0;
-    const float TOP_POSITION = 50000.0;
+    const float BOTTOM_POSITION = -3000.0;
+    const float TOP_POSITION = -5.0;
     const float ARM_LENGTH = 13.0;
-    const float COUNTS_PER_ROTATION = 252000.0;
     const float DEGREES_TO_RADIANS = 0.0174;
 
     // Ports
