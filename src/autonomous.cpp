@@ -13,5 +13,13 @@
  */
 void autonomous() 
 {
-	
+	switch(Autons::selectedAuton)
+	{
+		case 1:
+			Autons::ProgrammingSkills();
+			break;
+		default:
+			pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "No Auton Selected");
+			break;
+	}
 }
