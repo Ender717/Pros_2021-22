@@ -13,6 +13,7 @@
  */
 void autonomous() 
 {
+	// Run the selected auton
 	switch(Autons::selectedAuton)
 	{
 		case 1:

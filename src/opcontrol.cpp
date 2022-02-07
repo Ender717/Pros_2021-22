@@ -45,8 +45,8 @@ void opcontrol()
 	{
 		// Update and display the coordinate system
 		//position.UpdatePosition();
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Lift: %f", LiftConfig::leftLiftMotor.get_position());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Claw: %f", ClawConfig::clawMotor.get_position());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
 
 		// Calculate the power level of each motor
