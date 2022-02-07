@@ -30,18 +30,20 @@ private:
    // currentX: The robot's current x-coordinate
    // currentY: The robot's current y-coordinate
    // currentTheta: The robot's current angle
+   // resetTheta: The robot's angle at the last reset
+   // lastTheta: The angle of the robot during the last cycle
    // lastLeft: The position of the left tracking wheel during the last cycle
    // lastRight: The position of the right tracking wheel during the last cycle
    // lastStrafe: The position of the strafe tracking wheel during the last cycle
-   // lastTheta: The angle of the robot during the last cycle
    //--------------------------------------------------------------------------
    float currentX;
    float currentY;
    float currentTheta;
+   float resetTheta;
+   float lastTheta;
    float lastLeft;
    float lastRight;
    float lastStrafe;
-   float lastTheta;
 
 public:
    //--------------------------------------------------------------------------

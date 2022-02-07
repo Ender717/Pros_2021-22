@@ -13,6 +13,11 @@
  */
 void autonomous() 
 {
+	bool selected = false;
+	while (!selected)
+	{
+		
+	}
     // Create the robot
 	Drive* drive = new Drive();
 	Carrier* carrier = new Carrier();
