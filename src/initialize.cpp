@@ -40,4 +40,41 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() 
+{
+	// Create the controller
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+	// Select an autonomous
+	int auton = 1;
+	bool selected = false;
+	while (!selected)
+	{
+		// Move the menu selection
+		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+			auton = (auton + 1) % Autons::NUM_AUTONS;
+		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT))
+		{
+			auton--;
+			if(auton = 0)
+				auton = Autons::NUM_AUTONS;
+		}
+
+		// Display the auton selection
+		switch(auton)
+		{
+			case 1:
+				pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "Programming Skills");
+				break;
+			default:
+				pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "No Auton Selected");
+				break;
+		}
+
+		// Select the desired auton
+		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_A))
+			selected = true;
+	}
+
+	Autons::selectedAuton = auton;
+}

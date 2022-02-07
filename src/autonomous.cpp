@@ -13,28 +13,5 @@
  */
 void autonomous() 
 {
-	bool selected = false;
-	while (!selected)
-	{
-		
-	}
-    // Create the robot
-	Drive* drive = new Drive();
-	Carrier* carrier = new Carrier();
-	Lift* lift = new Lift();
-	Claw* claw = new Claw();
 	
-	// Initialize the processes
-	drive->Initialize();
-	carrier->Initialize();
-	lift->Initialize();
-	claw->Initialize();
-    PositionCalculation position(0.0, 0.0, 0.0);
-
-	drive->SetLeftDrive(127.0);
-	drive->SetRightDrive(127.0);
-    //drive->DriveStraight(10.0, 127.0, position);
-    //drive->TurnToAngle(90.0, 127.0, position);
-    //lift->SetPosition(-3000.0);
-    //claw->SetClosed();
 }
