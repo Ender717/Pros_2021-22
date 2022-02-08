@@ -105,13 +105,7 @@ void opcontrol()
 		}
 
 		// Set the intake
-		if(intakePower != 0)
-		{
-			intake->SetIntake(intakePower);
-			intakePID.SetTargetValue(intake->GetPosition());
-		}
-		else
-			intake->SetIntake(intakePID.GetControlValue(intake->GetPosition()));
+		intake->SetIntake(intakePower);
 		
 		pros::delay(5);
 	}
