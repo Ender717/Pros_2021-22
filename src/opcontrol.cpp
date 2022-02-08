@@ -32,47 +32,29 @@ void opcontrol()
 	PID carrierPID(2.1, 0.15, 0.05, 0.0, -127.0, 127.0, 85.0, 0.0);
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
 	PID clawPID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
-	PID intakePID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
 	PositionCalculation position(0.0, 0.0, 0.0);
 
 	// Create the control variables
-	float leftDrivePower, rightDrivePower, intakePower, liftPower, clawPower;
+	float leftDrivePower, rightDrivePower, liftPower, clawPower, intakePower;
 	bool clawClosed = false;
-	bool carrierUp = false;
+	bool carrierDown = false;
 
 	// Run the driver control loop
 	while (true) 
 	{
 		// Update and display the coordinate system
 		position.UpdatePosition();
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Left: %f", DriveConfig::leftTrackingSensor.get_position());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Right: %f", DriveConfig::rightTrackingSensor.get_position());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", position.GetX());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 140, "Lift height: %f", lift->GetHeight());
 
 		// Calculate the power level of each motor
-		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 127;
-		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
-
-		// Set the drive
-		drive->SetLeftDrive(leftDrivePower);
-		drive->SetRightDrive(rightDrivePower);
-
-		// Update the carrier position
-		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
-		{
-			if(carrierUp)
-			{
-				carrierUp = false;
-				carrier->SetDown();
-			}	
-			else
-			{
-				carrierUp = true;
-				carrier->SetUp();
-			}	
-		}
 
 		// Update the claw position
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
@@ -81,6 +63,25 @@ void opcontrol()
 				clawClosed = false;
 			else
 				clawClosed = true;
+		}
+			
+		// Set the drive
+		drive->SetLeftDrive(leftDrivePower);
+		drive->SetRightDrive(rightDrivePower);
+
+		// Set the carrier
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+		{
+			if(carrierDown)
+			{
+				carrier->SetUp();
+				carrierDown = false;
+			}
+			else
+			{
+				carrier->SetUp();
+				clawClosed = true;
+			}
 		}
 		
 		// Set the lift
@@ -95,17 +96,14 @@ void opcontrol()
 		// Set the claw
 		if(clawClosed)
 		{
-			clawPID.SetTargetValue(5.0);
+			clawPID.SetTargetValue(3000.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
 		else
 		{
-			clawPID.SetTargetValue(500.0);
+			clawPID.SetTargetValue(5.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
-
-		// Set the intake
-		intake->SetIntake(intakePower);
 		
 		pros::delay(5);
 	}

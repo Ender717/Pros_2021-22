@@ -22,10 +22,7 @@ void on_center_button() {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() 
-{
-	
-}
+void initialize() {}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -45,7 +42,7 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	// Create the controller
+		// Create the controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 	// Select an autonomous
@@ -68,6 +65,9 @@ void competition_initialize()
 		{
 			case 1:
 				pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "Programming Skills");
+				break;
+			case 2:
+				pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "Left Auton");
 				break;
 			default:
 				pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "No Auton Selected");

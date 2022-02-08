@@ -19,6 +19,6 @@ void Carrier::SetUp()
 
 void Carrier::Initialize()
 {
-    CarrierConfig::leftCarrierPiston.set_value(true);
-    CarrierConfig::rightCarrierPiston.set_value(true);
+    CarrierConfig::leftCarrierPiston.set_value(false);
+    CarrierConfig::rightCarrierPiston.set_value(false);
 }
