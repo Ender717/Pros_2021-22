@@ -55,6 +55,7 @@ void opcontrol()
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 127;
+		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
 		// Update the claw position
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
@@ -104,6 +105,8 @@ void opcontrol()
 			clawPID.SetTargetValue(5.0);
 			claw->SetClaw(clawPID.GetControlValue(claw->GetPosition()));
 		}
+
+		intake->SetIntake(intakePower);
 		
 		pros::delay(5);
 	}
@@ -113,4 +116,5 @@ void opcontrol()
 	delete carrier;
 	delete lift;
 	delete claw;
+	delete intake;
 }
