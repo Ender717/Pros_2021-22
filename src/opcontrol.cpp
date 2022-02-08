@@ -50,10 +50,8 @@ void opcontrol()
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", position.GetTheta());
 
 		// Calculate the power level of each motor
-		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
-					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
-					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 127;
 		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
