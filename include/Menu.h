@@ -4,6 +4,7 @@
 
 // Included libraries
 #include "./main.h"
+#include "autons.h"
 
 //-----------------------------------------------------------------------------
 // This namespace manages the menu system for the robot
