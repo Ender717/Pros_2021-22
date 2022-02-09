@@ -39,6 +39,9 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	Menu::DrawAutonSelect();
-	Menu::AutonSelect();
+	if(!Menu::autonSelected)
+	{
+		Menu::DrawAutonSelect();
+		Menu::AutonSelect();
+	}
 }

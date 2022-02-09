@@ -3,6 +3,8 @@
 
 namespace Menu
 {
+    bool autonSelected = false;
+
     void DrawAutonSelect()
     {
         // Draw the buttons
@@ -36,9 +38,9 @@ namespace Menu
         int auton = 1;
         pros::screen_touch_status_s status;
         bool touched = false;
-        bool selected = false;
+        autonSelected = false;
 
-        while (!selected)
+        while (autonSelected)
         {
             status = pros::screen::touch_status();
             // Move the menu selection
@@ -60,7 +62,7 @@ namespace Menu
                 }
                 else if (((status.x - 250) * (status.x - 250)) + ((status.y - 140) * (status.y - 140)) <= (40 * 40))
                 {
-                    selected = true;
+                    autonSelected = true;
                 }
             }
             

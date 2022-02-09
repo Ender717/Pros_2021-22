@@ -13,6 +13,12 @@
 namespace Menu
 {
     //-------------------------------------------------------------------------
+    // Variables
+    // autonSelected: True if an auton has been selected, false if not
+    //-------------------------------------------------------------------------
+    extern bool autonSelected;
+    
+    //-------------------------------------------------------------------------
     // Draws the auton selection menu
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------

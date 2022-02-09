@@ -18,8 +18,12 @@ void opcontrol()
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	Menu::DrawAutonSelect();
-	Menu::AutonSelect();
+	if(!Menu::autonSelected)
+	{
+		Menu::DrawAutonSelect();
+		Menu::AutonSelect();
+	}
+	
 	pros::screen::erase();
 	
 	while(true)
