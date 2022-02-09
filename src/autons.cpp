@@ -3,7 +3,7 @@
 namespace Autons
 {
     // Constants
-    const int NUM_AUTONS = 2;
+    const int NUM_AUTONS = 3;
 
     // Variables
     int selectedAuton;
