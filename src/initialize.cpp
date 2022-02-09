@@ -39,18 +39,28 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-		// Create the controller
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
 	// Select an autonomous
 	int auton = 1;
 	bool selected = false;
 	while (!selected)
 	{
+		// Draw the buttons
+		pros::screen::set_pen(COLOR_BLUE);
+		pros::screen::fill_rect(20, 100, 80, 160);
+		pros::screen::fill_rect(20, 100, 80, 160);
+
+		pros::screen::set_pen(COLOR_GREEN);
+		pros::screen::fill_circle(80, 130, 30);
+
+		pros::screen::set_pen(COLOR_WHITE);
+		pros::screen::draw_rect(20, 100, 80, 160);
+		pros::screen::draw_rect(20, 100, 80, 160);
+		pros::screen::draw_circle(80, 130, 30);
+
 		// Move the menu selection
-		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+		if(false)
 			auton = (auton + 1) % Autons::NUM_AUTONS;
-		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT))
+		if(false)
 		{
 			auton--;
 			if(auton = 0)
@@ -72,7 +82,7 @@ void competition_initialize()
 		}
 
 		// Select the desired auton
-		if(master.get_digital_new_press(E_CONTROLLER_DIGITAL_A))
+		if(false)
 			selected = true;
 	}
 
