@@ -38,9 +38,8 @@ namespace Menu
         int auton = 1;
         pros::screen_touch_status_s status;
         bool touched = false;
-        autonSelected = false;
 
-        while (autonSelected)
+        while (!autonSelected)
         {
             status = pros::screen::touch_status();
             // Move the menu selection
