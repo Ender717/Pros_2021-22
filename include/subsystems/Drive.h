@@ -42,7 +42,7 @@ public:
     // Default constructor for the drive class
     // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
-    Drive();
+    Drive(int n);
 
     //-------------------------------------------------------------------------
     // Initializes the drive

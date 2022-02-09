@@ -4,12 +4,7 @@
 
 // Included libraries
 #include "main.h"
-#include "subsystems/Drive.h"
-#include "subsystems/Carrier.h"
-#include "subsystems/Lift.h"
-#include "subsystems/Claw.h"
-#include "subsystems/Intake.h"
-#include "processes/PositionCalculation.h"
+#include "Robot.h"
 
 //-----------------------------------------------------------------------------
 // This namespace contains all autonomous configurations and values

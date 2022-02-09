@@ -13,7 +13,7 @@ float Drive::CalculateDistance(float startX, float startY, float endX, float end
 }
 
 // Constructor definitions ------------------------------------------------
-Drive::Drive() {}
+Drive::Drive(int n) {}
 
 // Public method definitions ----------------------------------------------
 void Drive::Initialize()

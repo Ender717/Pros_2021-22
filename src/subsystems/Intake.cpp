@@ -2,7 +2,7 @@
 #include "subsystems/Intake.h"
 
 // Constructor definitions ----------------------------------------------------
-Intake::Intake() {}
+Intake::Intake(int n) {}
 
 // Public method definitions --------------------------------------------------
 void Intake::Initialize()

@@ -18,7 +18,7 @@ public:
     // Default constructor for the intake class
     // v1: Created the constructor - Nathan S, 2-2-22
     //-------------------------------------------------------------------------
-    Intake();
+    Intake(int n);
     
     //-------------------------------------------------------------------------
     // Initializes the intake system

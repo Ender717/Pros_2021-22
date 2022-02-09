@@ -2,7 +2,7 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift() {};
+Lift::Lift(int n) {};
 
 // Public method definitions --------------------------------------------------
 void Lift::Initialize()

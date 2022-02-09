@@ -2,7 +2,7 @@
 #include "subsystems/Claw.h"
 
 // Constructor definitions ----------------------------------------------------
-Claw::Claw() {} 
+Claw::Claw(int n) {} 
 
 // Public method definitions --------------------------------------------------
 float Claw::GetPosition()

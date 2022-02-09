@@ -18,7 +18,7 @@ public:
     // Default contstructor for the Claw class
     // v1: Created the constructor - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    Claw();
+    Claw(int n);
 
     //-------------------------------------------------------------------------
     // Gets the current position of the claw
