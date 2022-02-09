@@ -19,7 +19,7 @@ void opcontrol()
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	AutonSelect();
+	//AutonSelect();
 	pros::screen::erase();
 	
 	while(true)
