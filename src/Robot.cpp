@@ -25,13 +25,6 @@ namespace Robot
 
     void Initialize()
     {
-        // Initialize the subsystems
-        drive.Initialize();
-        carrier.Initialize();
-        lift.Initialize();
-        claw.Initialize();
-        intake.Initialize();
-
         // Initialize the variables
         leftDrivePower = 0.0;
         rightDrivePower = 0.0;
@@ -39,6 +32,17 @@ namespace Robot
         intakePower = 0.0;
         clawClosed = false;
         carrierDown = false;
+
+        // Initialize the processes
+        liftPID.SetTargetValue(0.0);
+        clawPID.SetTargetValue(0.0);
+
+        // Initialize the subsystems
+        drive.Initialize();
+        carrier.Initialize();
+        lift.Initialize();
+        claw.Initialize();
+        intake.Initialize();
     }
 
     void DriveControl(pros::Controller& master)
@@ -58,9 +62,15 @@ namespace Robot
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 		{
 			if(clawClosed)
-				clawClosed = false;
+            {
+                clawPID.SetTargetValue(ClawConfig::OPEN_POSITION);
+                clawClosed = false;
+            }	
 			else
-				clawClosed = true;
+            {
+                clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION);
+                clawClosed = true;
+            }
 		}
 			
 		// Set the drive
@@ -92,17 +102,9 @@ namespace Robot
 			lift.SetLift(liftPID.GetControlValue(lift.GetPosition()));
 
 		// Set the claw
-		if(clawClosed)
-		{
-			clawPID.SetTargetValue(3000.0);
-			claw.SetClaw(clawPID.GetControlValue(claw.GetPosition()));
-		}
-		else
-		{
-			clawPID.SetTargetValue(5.0);
-			claw.SetClaw(clawPID.GetControlValue(claw.GetPosition()));
-		}
+        claw.SetClaw(clawPID.GetControlValue(claw.GetPosition()));
 
+        // Set the intake
 		intake.SetIntake(intakePower);
 		
 		pros::delay(5);
