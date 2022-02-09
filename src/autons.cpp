@@ -11,8 +11,6 @@ namespace Autons
     // Functions
     void ProgrammingSkills()
     {
-        Robot::Initialize();
-
         // Run the routine
         Robot::drive.SetLeftDrive(127.0);
         Robot::drive.SetRightDrive(127.0);

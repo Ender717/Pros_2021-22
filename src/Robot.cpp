@@ -41,7 +41,7 @@ namespace Robot
         carrierDown = false;
     }
 
-    extern void DriveControl(pros::Controller& master)
+    void DriveControl(pros::Controller& master)
     {
 		// Update and display the coordinate system
 		position.UpdatePosition();

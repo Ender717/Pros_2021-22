@@ -17,7 +17,6 @@ void opcontrol()
 {
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	Robot::Initialize();
 
 	while(true)
 	{
