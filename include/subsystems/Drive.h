@@ -51,6 +51,13 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
+    // Gets the current position of the left drive encoder
+    // return: The left drive distance
+    // v1: Created the method - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    float GetDistance();
+
+    //-------------------------------------------------------------------------
     // Temporary basic control function for driving forward and backward
     // inches: The distance to travel
     // position: The position tracking system

@@ -51,4 +51,5 @@ void Claw::SetOpen()
 void Claw::Initialize()
 {
     ClawConfig::clawMotor.tare_position();
+    ClawConfig::clawMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }

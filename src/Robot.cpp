@@ -28,7 +28,7 @@ namespace Robot
         leftDrivePower = 0.0;
         rightDrivePower = 0.0;
         intakePower = 0.0;
-        clawClosed = false;
+        clawClosed = true;
         carrierDown = false;
 
         // Initialize the processes
@@ -52,7 +52,6 @@ namespace Robot
 					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		liftPower = (master.get_digital(E_CONTROLLER_DIGITAL_R1) - master.get_digital(E_CONTROLLER_DIGITAL_R2)) * 127;
 		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
 		// Update the claw position

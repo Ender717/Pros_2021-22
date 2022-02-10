@@ -29,6 +29,11 @@ void Drive::Initialize()
     DriveConfig::rightRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
+float Drive::GetDistance()
+{
+    return DriveConfig::leftTrackingSensor.get_position();
+}
+
 // Public method definitions --------------------------------------------------
 void Drive::DriveStraight(float inches, float power, PositionCalculation& position)
 {

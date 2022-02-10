@@ -25,6 +25,8 @@ void opcontrol()
 		Menu::AutonSelect();
 	}
 	*/
+	Autons::RightAuton();
+	Robot::liftPID.SetTargetValue(Robot::lift.GetPosition());
 	
 	pros::screen::erase();
 	
@@ -32,12 +34,8 @@ void opcontrol()
 	{
 		Robot::DriveControl(master);
 
-		/*
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", Robot::position.GetX());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", Robot::position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", Robot::position.GetTheta());
-		*/
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Claw: %f", Robot::claw.GetPosition());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Lift: %f", Robot::lift.GetPosition());
 	}
 }

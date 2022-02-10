@@ -75,6 +75,9 @@ namespace Menu
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");
                     break;
                 case 3:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Auton");
+                    break;
+                case 4:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Auton");
                     break;
                 default:
