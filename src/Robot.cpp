@@ -13,7 +13,6 @@ namespace Robot
 
     // Processes
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
-	PID clawPID(1.7, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
     PositionCalculation position(0.0, 0.0, 0.0);
 
     // Subsystems
@@ -28,14 +27,12 @@ namespace Robot
         // Initialize the variables
         leftDrivePower = 0.0;
         rightDrivePower = 0.0;
-        liftPower = 0.0;
         intakePower = 0.0;
         clawClosed = false;
         carrierDown = false;
 
         // Initialize the processes
         liftPID.SetTargetValue(0.0);
-        clawPID.SetTargetValue(0.0);
 
         // Initialize the subsystems
         drive.Initialize();
@@ -62,15 +59,9 @@ namespace Robot
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 		{
 			if(clawClosed)
-            {
-                clawPID.SetTargetValue(ClawConfig::OPEN_POSITION);
-                clawClosed = false;
-            }	
+                clawClosed = false;	
 			else
-            {
-                clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION);
                 clawClosed = true;
-            }
 		}
 			
 		// Set the drive
@@ -87,22 +78,41 @@ namespace Robot
 			}
 			else
 			{
-				carrier.SetUp();
-				clawClosed = true;
+				carrier.SetDown();
+				carrierDown = true;
 			}
 		}
 		
 		// Set the lift
-		if(liftPower != 0)
+		if(master.get_digital(E_CONTROLLER_DIGITAL_R1) && (lift.GetPosition() < LiftConfig::TOP_POSITION))
 		{
-			lift.SetLift(liftPower);
+			lift.SetLift(127.0);
+			liftPID.SetTargetValue(lift.GetPosition());
+		}
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_R2) && (lift.GetPosition() > LiftConfig::BOTTOM_POSITION))
+		{
+			lift.SetLift(-127.0);
 			liftPID.SetTargetValue(lift.GetPosition());
 		}
 		else
 			lift.SetLift(liftPID.GetControlValue(lift.GetPosition()));
+			
 
 		// Set the claw
-        claw.SetClaw(clawPID.GetControlValue(claw.GetPosition()));
+        if(clawClosed)
+		{
+			if(claw.GetPosition() > ClawConfig::CLOSED_POSITION)
+				claw.SetClaw(-125.0);
+			else
+				claw.SetClaw(0.0);
+		}
+		else
+		{
+			if(claw.GetPosition() < ClawConfig::OPEN_POSITION)
+				claw.SetClaw(125.0);
+			else
+				claw.SetClaw(0.0);
+		}
 
         // Set the intake
 		intake.SetIntake(intakePower);

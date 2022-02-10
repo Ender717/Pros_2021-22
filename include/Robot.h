@@ -35,11 +35,9 @@ namespace Robot
     //-------------------------------------------------------------------------
     // Processes
     // liftPID: The PID controller in charge of the lift
-    // clawPID: The PID controller in charge of the claw
     // position: The position tracking system
     //-------------------------------------------------------------------------
 	extern PID liftPID;
-	extern PID clawPID;
 	extern PositionCalculation position;
 
     //-------------------------------------------------------------------------

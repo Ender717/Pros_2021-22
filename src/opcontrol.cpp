@@ -18,19 +18,26 @@ void opcontrol()
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
+	/*
 	if(!Menu::autonSelected)
 	{
 		Menu::DrawAutonSelect();
 		Menu::AutonSelect();
 	}
+	*/
 	
 	pros::screen::erase();
 	
 	while(true)
 	{
 		Robot::DriveControl(master);
+
+		/*
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", Robot::position.GetX());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", Robot::position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", Robot::position.GetTheta());
+		*/
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Claw: %f", Robot::claw.GetPosition());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Lift: %f", Robot::lift.GetPosition());
 	}
 }
