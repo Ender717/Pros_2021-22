@@ -54,7 +54,7 @@ namespace Autons
         }
 
         // Drive back
-        while (Robot::drive.GetDistance() > 92000.0)
+        while (Robot::drive.GetDistance() > 81000.0)
         {
             Robot::drive.SetLeftDrive(-127.0);
             Robot::drive.SetRightDrive(-127.0);
@@ -64,9 +64,12 @@ namespace Autons
                 Robot::claw.SetClaw(0.0);
             pros::delay(5);
         }
+        Robot::drive.SetLeftDrive(0.0);
+        Robot::drive.SetRightDrive(0.0);
+        pros::delay(2000);
 
         // Turn toward the goal
-        PID turnPID(3.7, 0.05, 0.05, 0.0, -127.0, 127.0, 33.0, Robot::position.GetTheta());
+        PID turnPID(5.2, 0.05, 0.05, 0.0, -127.0, 127.0, 33.0, Robot::position.GetTheta());
         PID armPID(4.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
         turnPID.SetTargetValue(-90.0);
         armPID.SetTargetValue(-2300.0);
@@ -102,20 +105,8 @@ namespace Autons
         Robot::drive.SetLeftDrive(0.0);
         Robot::drive.SetRightDrive(0.0);
 
-        Robot::carrier.SetUp();
-
-        while (Robot::lift.GetPosition() < LiftConfig::TOP_POSITION)
-        {
-            Robot::lift.SetLift(127.0);
-        }
-        Robot::lift.SetLift(0.0);
-
-        Robot::drive.TurnToAngle(-180.0, 50.0, Robot::position);
-        pros::delay(10000);
-
         Robot::intake.SetIntake(127.0);
-        Robot::drive.SetLeftDrive(40.0);
-        Robot::drive.SetRightDrive(40.0);
-        pros::delay(4000);
+        pros::delay(2000);
+        Robot::intake.SetIntake(0.0);
     }
 }
