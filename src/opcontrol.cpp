@@ -18,14 +18,12 @@ void opcontrol()
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	/*
 	if(!Menu::autonSelected)
 	{
 		Menu::DrawAutonSelect();
 		Menu::AutonSelect();
 	}
-	*/
-	Autons::RightAuton();
+	//Autons::RightAuton();
 	
 	Robot::liftPID.SetTargetValue(Robot::lift.GetPosition());
 	

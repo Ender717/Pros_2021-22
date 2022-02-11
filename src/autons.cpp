@@ -54,7 +54,7 @@ namespace Autons
         }
 
         // Drive back
-        while (Robot::drive.GetDistance() > 81000.0)
+        while (Robot::drive.GetDistance() > 80000.0)
         {
             Robot::drive.SetLeftDrive(-127.0);
             Robot::drive.SetRightDrive(-127.0);
@@ -66,7 +66,6 @@ namespace Autons
         }
         Robot::drive.SetLeftDrive(0.0);
         Robot::drive.SetRightDrive(0.0);
-        pros::delay(2000);
 
         // Turn toward the goal
         PID turnPID(5.2, 0.05, 0.05, 0.0, -127.0, 127.0, 33.0, Robot::position.GetTheta());
@@ -79,7 +78,7 @@ namespace Autons
         Robot::carrier.SetDown();
 
         int timer = 0;
-        while(timer < 2000)
+        while(timer < 2500)
         {
             Robot::position.UpdatePosition();
             driveControlValue = turnPID.GetControlValue(Robot::position.GetTheta());
@@ -94,19 +93,51 @@ namespace Autons
         Robot::drive.SetRightDrive(0.0);
         Robot::lift.SetLift(0.0);
 
+        /*
         timer = 0;
         while (timer < 500)
         {
+            liftControlValue = armPID.GetControlValue(Robot::lift.GetPosition());
             Robot::drive.SetLeftDrive(-50.0);
             Robot::drive.SetRightDrive(-50.0);
+            Robot::lift.SetLift(liftControlValue);
             timer = timer + 5;
             pros::delay(5);
         }
         Robot::drive.SetLeftDrive(0.0);
         Robot::drive.SetRightDrive(0.0);
+        Robot::lift.SetLift(0.0);
+
+        Robot::carrier.SetUp();
+
+        while (Robot::lift.GetPosition() < LiftConfig::TOP_POSITION)
+        {
+            Robot::lift.SetLift(127.0);
+        }
+        Robot::lift.SetLift(0.0);
+
+        turnPID.SetTargetValue(-180.0);
+        Robot::position.UpdatePosition();
+        driveControlValue = turnPID.GetControlValue(Robot::position.GetTheta());
+
+        timer = 0;
+        while(timer < 2000)
+        {
+            Robot::position.UpdatePosition();
+            driveControlValue = turnPID.GetControlValue(Robot::position.GetTheta());
+            Robot::drive.SetLeftDrive(driveControlValue);
+            Robot::drive.SetRightDrive(-driveControlValue);
+            timer = timer + 5;
+            pros::delay(5);
+        }
+        Robot::drive.SetLeftDrive(0.0);
+        Robot::drive.SetRightDrive(0.0);
+        pros::delay(10000);
 
         Robot::intake.SetIntake(127.0);
-        pros::delay(2000);
-        Robot::intake.SetIntake(0.0);
+        Robot::drive.SetLeftDrive(40.0);
+        Robot::drive.SetRightDrive(40.0);
+        pros::delay(4000);
+        */
     }
 }
