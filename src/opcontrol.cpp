@@ -18,11 +18,6 @@ void opcontrol()
 	// Create the robot
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	if(!Menu::autonSelected)
-	{
-		Menu::DrawAutonSelect();
-		Menu::AutonSelect();
-	}
 	//Autons::RightAuton();
 	
 	Robot::liftPID.SetTargetValue(Robot::lift.GetPosition());
@@ -33,7 +28,7 @@ void opcontrol()
 	{
 		Robot::DriveControl(master);
 
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "X: %f", Robot::position.GetX());
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Distance: %f", Robot::drive.GetDistance());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", Robot::position.GetY());
 		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", Robot::position.GetTheta());
 	}

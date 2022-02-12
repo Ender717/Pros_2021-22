@@ -105,10 +105,10 @@ namespace Autons
     void RightAuton()
     {
         // Drive to the goal
-        while (Robot::drive.GetDistance() < 130000.0)
+        while (Robot::drive.GetDistance() < 127000.0)
         {
-            Robot::drive.SetLeftDrive(120.0);
-            Robot::drive.SetRightDrive(120.0);
+            Robot::drive.SetLeftDrive(118.0);
+            Robot::drive.SetRightDrive(118.0);
             if (Robot::lift.GetPosition() > (LiftConfig::BOTTOM_POSITION - 2.0))
                 Robot::lift.SetLift(-127.0);
             else
@@ -121,10 +121,14 @@ namespace Autons
         }
         
         // Grab the goal
-        while (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION)
+        while (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION + 200)
         {
             Robot::drive.SetLeftDrive(5.0);
             Robot::drive.SetRightDrive(5.0);
+            if (Robot::lift.GetPosition() > (LiftConfig::BOTTOM_POSITION - 2.0))
+                Robot::lift.SetLift(-127.0);
+            else
+                Robot::lift.SetLift(0.0);
             Robot::claw.SetClaw(-127.0);
             pros::delay(5);
         }
