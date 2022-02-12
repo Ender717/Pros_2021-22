@@ -48,10 +48,8 @@ namespace Robot
 		position.UpdatePosition();
 
 		// Calculate the power level of each motor
-		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
-					+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
-					- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
 
 		// Update the claw position
