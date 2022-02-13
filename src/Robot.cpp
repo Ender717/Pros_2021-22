@@ -9,7 +9,6 @@ namespace Robot
     float liftPower;
     float intakePower;
     bool clawClosed;
-    bool carrierDown;
 
     // Processes
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
@@ -17,7 +16,7 @@ namespace Robot
 
     // Subsystems
     Drive drive(1);
-	Carrier carrier(1);
+	Carrier carrier(true);
 	Lift lift(1);
 	Claw claw(1);
 	Intake intake(1);
@@ -29,14 +28,12 @@ namespace Robot
         rightDrivePower = 0.0;
         intakePower = 0.0;
         clawClosed = true;
-        carrierDown = false;
 
         // Initialize the processes
         liftPID.SetTargetValue(0.0);
 
         // Initialize the subsystems
         drive.Initialize();
-        carrier.Initialize();
         lift.Initialize();
         claw.Initialize();
         intake.Initialize();
@@ -68,16 +65,10 @@ namespace Robot
 		// Set the carrier
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 		{
-			if(carrierDown)
-			{
+			if(carrier.IsDown())
 				carrier.SetUp();
-				carrierDown = false;
-			}
 			else
-			{
 				carrier.SetDown();
-				carrierDown = true;
-			}
 		}
 		
 		// Set the lift

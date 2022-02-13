@@ -2,9 +2,12 @@
 #include "subsystems/Carrier.h"
 
 // Constructor definitions ----------------------------------------------------
-Carrier::Carrier(int n) 
+Carrier::Carrier(bool startDown) 
 {
-    isDown = false;
+    CarrierConfig::leftCarrierPiston.set_value(startDown);
+    CarrierConfig::rightCarrierPiston.set_value(startDown);
+    isDown = startDown;
+    hasGoal = false;
 } 
 
 // Public method definitions --------------------------------------------------
@@ -28,8 +31,12 @@ void Carrier::SetUp()
     }
 }
 
-void Carrier::Initialize()
+bool Carrier::IsDown()
 {
-    CarrierConfig::leftCarrierPiston.set_value(false);
-    CarrierConfig::rightCarrierPiston.set_value(false);
+    return isDown;
+}
+
+bool Carrier::HasGoal()
+{
+    return hasGoal;
 }
