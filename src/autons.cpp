@@ -24,6 +24,7 @@ namespace Autons
     void MiddleAuton()
     {
         // Drive to the goal
+        Robot::claw.SetOpen();
         while (Robot::drive.GetDistance() < 155000.0)
         {
             Robot::drive.SetLeftDrive(127.0);
@@ -32,31 +33,17 @@ namespace Autons
                 Robot::lift.SetLift(-127.0);
             else
                 Robot::lift.SetLift(0.0);
-            if (Robot::claw.GetPosition() < ClawConfig::OPEN_POSITION)
-                Robot::claw.SetClaw(127.0);
-            else
-                Robot::claw.SetClaw(0.0);
-            pros::delay(5);
-        }
-        
-        // Grab the goal
-        while (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION)
-        {
-            Robot::drive.SetLeftDrive(5.0);
-            Robot::drive.SetRightDrive(5.0);
-            Robot::claw.SetClaw(-127.0);
+            claw.HoldPosition();
             pros::delay(5);
         }
 
         // Drive back
+        Robot::claw.SetClosed()
         while (Robot::drive.GetDistance() > 85000.0)
         {
             Robot::drive.SetLeftDrive(-127.0);
             Robot::drive.SetRightDrive(-127.0);
-            if (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION)
-                Robot::claw.SetClaw(-127.0);
-            else
-                Robot::claw.SetClaw(0.0);
+            Robot::claw.HoldPosition();
             pros::delay(5);
         }
         Robot::drive.SetLeftDrive(0.0);
@@ -105,6 +92,7 @@ namespace Autons
     void RightAuton()
     {
         // Drive to the goal
+        Robot::claw.SetOpen();
         while (Robot::drive.GetDistance() < 127000.0)
         {
             Robot::drive.SetLeftDrive(118.0);
@@ -113,35 +101,17 @@ namespace Autons
                 Robot::lift.SetLift(-127.0);
             else
                 Robot::lift.SetLift(0.0);
-            if (Robot::claw.GetPosition() < ClawConfig::OPEN_POSITION)
-                Robot::claw.SetClaw(127.0);
-            else
-                Robot::claw.SetClaw(0.0);
-            pros::delay(5);
-        }
-        
-        // Grab the goal
-        while (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION + 200)
-        {
-            Robot::drive.SetLeftDrive(5.0);
-            Robot::drive.SetRightDrive(5.0);
-            if (Robot::lift.GetPosition() > (LiftConfig::BOTTOM_POSITION - 2.0))
-                Robot::lift.SetLift(-127.0);
-            else
-                Robot::lift.SetLift(0.0);
-            Robot::claw.SetClaw(-127.0);
+            Robot::claw.HoldPosition();
             pros::delay(5);
         }
 
         // Drive back
-        while (Robot::drive.GetDistance() > 80000.0)
+        Robot::claw.SetClosed();
+        while (Robot::drive.GetDistance() > 90000.0)
         {
             Robot::drive.SetLeftDrive(-127.0);
             Robot::drive.SetRightDrive(-127.0);
-            if (Robot::claw.GetPosition() > ClawConfig::CLOSED_POSITION)
-                Robot::claw.SetClaw(-127.0);
-            else
-                Robot::claw.SetClaw(0.0);
+            Robot::claw.HoldPosition();
             pros::delay(5);
         }
         Robot::drive.SetLeftDrive(0.0);

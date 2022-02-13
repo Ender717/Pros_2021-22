@@ -15,7 +15,7 @@ namespace Robot
 
     // Subsystems
     Drive drive(1);
-	Carrier carrier(true);
+	Carrier carrier(false);
 	Lift lift(1);
 	Claw claw(true);
 	Intake intake(1);
