@@ -2,54 +2,54 @@
 #include "subsystems/Claw.h"
 
 // Constructor definitions ----------------------------------------------------
-Claw::Claw(int n) {} 
+Claw::Claw(bool startClosed) 
+{
+    isClosed = startClosed;
+    hasGoal = false;
+    clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
+} 
 
 // Public method definitions --------------------------------------------------
-float Claw::GetPosition()
-{
-    return ClawConfig::clawMotor.get_position();
-}
-
-void Claw::SetClaw(float power)
-{
-    ClawConfig::clawMotor.move(power);
-}
-
 void Claw::SetClosed()
 {
-    PID clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0);
     clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION);
-    float current = ClawConfig::clawMotor.get_position();
-    float controlValue = clawPID.GetControlValue(current);
-
-    while(fabs(ClawConfig::CLOSED_POSITION - current) > 1 || controlValue > 1)
-    {
-        current = ClawConfig::clawMotor.get_position();
-        controlValue = clawPID.GetControlValue(current);
-        SetClaw(controlValue);
-        pros::delay(2);
-    }
-    SetClaw(0.0);
+    isClosed = true;
 }
 
 void Claw::SetOpen()
 {
-    PID clawPID(3.5, 0.35, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
     clawPID.SetTargetValue(ClawConfig::OPEN_POSITION);
-    float current = ClawConfig::clawMotor.get_position();
-    float controlValue = clawPID.GetControlValue(current);
+    isClosed = false;
+}
 
-    while(fabs(ClawConfig::OPEN_POSITION - current) > 1 || controlValue > 1)
+void Claw::HoldPosition()
+{
+    float position = ClawConfig::clawMotor.get_position();
+    bool inPosition = (isClosed && (position > ClawConfig::CLOSED_POSITION)) ||
+                      (!isCLosed && (position < ClawConfig::OPEN_POSITION))
+    if(!inPosition)
     {
-        current = ClawConfig::clawMotor.get_position();
-        controlValue = clawPID.GetControlValue(current);
-        SetClaw(controlValue);
-        pros::delay(2);
+        float power = clawPID.GetControlValue(position);
+        ClawConfig::clawMotor.move(power);
     }
+}
+
+bool Claw::IsClosed()
+{
+    return isClosed;
+}
+
+bool Claw::HasGoal()
+{
+    return hasGoal;
 }
 
 void Claw::Initialize()
 {
     ClawConfig::clawMotor.tare_position();
     ClawConfig::clawMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+    if(isClosed)
+        clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION)
+    else
+        clawPID.SetTargetValue(ClawConfig::OPEN_POSITION)
 }

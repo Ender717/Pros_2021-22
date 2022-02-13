@@ -26,6 +26,7 @@ private:
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the Carrier class
+    // startDown: Whether the carrier starts down or not
     // v1: Created the constructor - Nathan S, 1-29-22
     // v2: Added a parameter to control start position - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
@@ -56,6 +57,12 @@ public:
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
     bool HasGoal();
+
+    //-------------------------------------------------------------------------
+    // Initializes the carrier
+    // v1: Created the method - Nathan S, 1-29-22
+    //-------------------------------------------------------------------------
+    void Initialize();
 };
 
 #endif

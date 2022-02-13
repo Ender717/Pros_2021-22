@@ -13,26 +13,24 @@
 //-----------------------------------------------------------------------------
 class Claw
 {
+private:
+    //-------------------------------------------------------------------------
+    // Private data members
+    // isClosed: Whether the claw is closed or not
+    // hasGoal: Whether the claw is holding a goal or not
+    // clawPID: The PID controller for the claw
+    //-------------------------------------------------------------------------
+    bool isClosed;
+    bool hasGoal;
+    PID clawPID;
+
 public:
     //-------------------------------------------------------------------------
     // Default contstructor for the Claw class
+    // startClosed: Whether the claw starts closed or not
     // v1: Created the constructor - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
-    Claw(int n);
-
-    //-------------------------------------------------------------------------
-    // Gets the current position of the claw
-    // return: The current position of the claw
-    // v1: Created the method - Nathan S, 1-31-22
-    //-------------------------------------------------------------------------
-    float GetPosition();
-
-    //-------------------------------------------------------------------------
-    // Sets the claw motor to the desired power
-    // power: The power level to set the motor to
-    // v1: Created the method - Nathan S, 1-31-22
-    //-------------------------------------------------------------------------
-    void SetClaw(float power);
+    Claw(bool startClosed);
 
     //-------------------------------------------------------------------------
     // Sets the position of the claw to closed
@@ -45,6 +43,26 @@ public:
     // v1: Created the method - Nathan S, 1-31-22
     //-------------------------------------------------------------------------
     void SetOpen();
+
+    //-------------------------------------------------------------------------
+    // Holds the current position of the claw
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    void HoldPosition();
+
+    //-------------------------------------------------------------------------
+    // Checks if the claw is closed or not
+    // return: True if the claw is closed, false if not
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    bool IsClosed();
+
+    //-------------------------------------------------------------------------
+    // Checks if the claw has a goal or not
+    // return: True if the claw has a goal, false if not
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    bool HasGoal();
 
     //-------------------------------------------------------------------------
     // Initializes the claw

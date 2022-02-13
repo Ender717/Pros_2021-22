@@ -4,8 +4,6 @@
 // Constructor definitions ----------------------------------------------------
 Carrier::Carrier(bool startDown) 
 {
-    CarrierConfig::leftCarrierPiston.set_value(startDown);
-    CarrierConfig::rightCarrierPiston.set_value(startDown);
     isDown = startDown;
     hasGoal = false;
 } 
@@ -13,22 +11,16 @@ Carrier::Carrier(bool startDown)
 // Public method definitions --------------------------------------------------
 void Carrier::SetDown()
 {
-    if(!isDown)
-    {
-        CarrierConfig::leftCarrierPiston.set_value(true);
-        CarrierConfig::rightCarrierPiston.set_value(true);
-        isDown = true;
-    }
+    CarrierConfig::leftCarrierPiston.set_value(true);
+    CarrierConfig::rightCarrierPiston.set_value(true);
+    isDown = true;
 }
 
 void Carrier::SetUp()
 {
-    if(isDown)
-    {
-        CarrierConfig::leftCarrierPiston.set_value(false);
-        CarrierConfig::rightCarrierPiston.set_value(false);
-        isDown = false;
-    }
+    CarrierConfig::leftCarrierPiston.set_value(false);
+    CarrierConfig::rightCarrierPiston.set_value(false);
+    isDown = false;
 }
 
 bool Carrier::IsDown()
@@ -39,4 +31,10 @@ bool Carrier::IsDown()
 bool Carrier::HasGoal()
 {
     return hasGoal;
+}
+
+void Carrier::Initialize()
+{
+    CarrierConfig::leftCarrierPiston.set_value(isDown);
+    CarrierConfig::rightCarrierPiston.set_value(isDown);
 }

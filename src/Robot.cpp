@@ -8,7 +8,6 @@ namespace Robot
     float rightDrivePower;
     float liftPower;
     float intakePower;
-    bool clawClosed;
 
     // Processes
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
@@ -18,7 +17,7 @@ namespace Robot
     Drive drive(1);
 	Carrier carrier(true);
 	Lift lift(1);
-	Claw claw(1);
+	Claw claw(true);
 	Intake intake(1);
 
     void Initialize()
@@ -27,13 +26,13 @@ namespace Robot
         leftDrivePower = 0.0;
         rightDrivePower = 0.0;
         intakePower = 0.0;
-        clawClosed = true;
 
         // Initialize the processes
         liftPID.SetTargetValue(0.0);
 
         // Initialize the subsystems
         drive.Initialize();
+		carrier.Initialize();
         lift.Initialize();
         claw.Initialize();
         intake.Initialize();
@@ -52,10 +51,10 @@ namespace Robot
 		// Update the claw position
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 		{
-			if(clawClosed)
-                clawClosed = false;	
+			if(claw.IsClosed())
+                claw.SetOpen();	
 			else
-                clawClosed = true;
+                claw.SetClosed();
 		}
 			
 		// Set the drive
@@ -85,24 +84,8 @@ namespace Robot
 		else
 			lift.SetLift(liftPID.GetControlValue(lift.GetPosition()));
 			
-
-		// Set the claw
-        if(clawClosed)
-		{
-			if(claw.GetPosition() > ClawConfig::CLOSED_POSITION)
-				claw.SetClaw(-125.0);
-			else
-				claw.SetClaw(0.0);
-		}
-		else
-		{
-			if(claw.GetPosition() < ClawConfig::OPEN_POSITION)
-				claw.SetClaw(125.0);
-			else
-				claw.SetClaw(0.0);
-		}
-
-        // Set the intake
+		// Set the motors
+        claw.HoldPosition();
 		intake.SetIntake(intakePower);
 		
 		pros::delay(5);
