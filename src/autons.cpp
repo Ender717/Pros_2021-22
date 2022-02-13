@@ -33,12 +33,12 @@ namespace Autons
                 Robot::lift.SetLift(-127.0);
             else
                 Robot::lift.SetLift(0.0);
-            claw.HoldPosition();
+            Robot::claw.HoldPosition();
             pros::delay(5);
         }
 
         // Drive back
-        Robot::claw.SetClosed()
+        Robot::claw.SetClosed();
         while (Robot::drive.GetDistance() > 85000.0)
         {
             Robot::drive.SetLeftDrive(-127.0);
