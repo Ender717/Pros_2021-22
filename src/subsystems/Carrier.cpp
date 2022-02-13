@@ -2,54 +2,34 @@
 #include "subsystems/Carrier.h"
 
 // Constructor definitions ----------------------------------------------------
-Carrier::Carrier() {} 
+Carrier::Carrier(int n) 
+{
+    isDown = false;
+} 
 
 // Public method definitions --------------------------------------------------
-float Carrier::GetPosition()
-{
-    return (CarrierConfig::leftCarrierMotor.get_position() + CarrierConfig::rightCarrierMotor.get_position()) / 2.0;
-}
-
-void Carrier::SetCarrier(float power)
-{
-    CarrierConfig::leftCarrierMotor.move(power);
-    CarrierConfig::rightCarrierMotor.move(power);
-}
-
 void Carrier::SetDown()
 {
-    PID carrierPID(3.5, 0.95, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
-    carrierPID.SetTargetValue(CarrierConfig::DOWN_POSITION);
-    float current = CarrierConfig::leftCarrierMotor.get_position();
-    float controlValue = carrierPID.GetControlValue(current);
-
-    while(fabs(CarrierConfig::DOWN_POSITION - current) > 1 || controlValue > 1)
+    if(!isDown)
     {
-        current = CarrierConfig::leftCarrierMotor.get_position();
-        controlValue = carrierPID.GetControlValue(current);
-        SetCarrier(controlValue);
-        pros::delay(2);
+        CarrierConfig::leftCarrierPiston.set_value(true);
+        CarrierConfig::rightCarrierPiston.set_value(true);
+        isDown = true;
     }
 }
 
 void Carrier::SetUp()
 {
-    PID carrierPID(3.5, 0.95, 0.1, 0.0, -125.0, 125.0, 85.0, 0.0);
-    carrierPID.SetTargetValue(CarrierConfig::UP_POSITION);
-    float current = CarrierConfig::leftCarrierMotor.get_position();
-    float controlValue = carrierPID.GetControlValue(current);
-
-    while(fabs(CarrierConfig::UP_POSITION - current) > 1 || controlValue > 1)
+    if(isDown)
     {
-        current = CarrierConfig::leftCarrierMotor.get_position();
-        controlValue = carrierPID.GetControlValue(current);
-        SetCarrier(controlValue);
-        pros::delay(2);
+        CarrierConfig::leftCarrierPiston.set_value(false);
+        CarrierConfig::rightCarrierPiston.set_value(false);
+        isDown = false;
     }
 }
 
 void Carrier::Initialize()
 {
-    CarrierConfig::leftCarrierMotor.tare_position();
-    CarrierConfig::rightCarrierMotor.tare_position();
+    CarrierConfig::leftCarrierPiston.set_value(false);
+    CarrierConfig::rightCarrierPiston.set_value(false);
 }

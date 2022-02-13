@@ -12,28 +12,20 @@
 namespace CarrierConfig
 {
     //-------------------------------------------------------------------------
-    // Constants
-    // DOWN_POSITION: The encoder position when the carrier is down
-    // UP_POSITION: The encoder position when the carrier is up
-    //-------------------------------------------------------------------------
-    extern const float DOWN_POSITION;
-    extern const float UP_POSITION;
-
-    //-------------------------------------------------------------------------
     // Ports
     // LEFT_CARRIER_PORT: The port for the left carrier motor
     // RIGHT_CARRIER_PORT: The port for the right carrier motor
     //-------------------------------------------------------------------------
-    extern const int LEFT_CARRIER_PORT;
-    extern const int RIGHT_CARRIER_PORT;
+    extern const char LEFT_CARRIER_PORT;
+    extern const char RIGHT_CARRIER_PORT;
 
     //-------------------------------------------------------------------------
     // Motors
-    // leftCarrierMotor: The motor on the left side of the carrier
-    // rightCarrierMotor: The motor on the right side of the carrier
+    // leftCarrierPiston: The piston on the left side of the carrier
+    // rightCarrierPiston: The piston on the right side of the carrier
     //-------------------------------------------------------------------------
-    extern pros::Motor leftCarrierMotor;
-    extern pros::Motor rightCarrierMotor;
+    extern pros::ADIDigitalOut leftCarrierPiston;
+    extern pros::ADIDigitalOut rightCarrierPiston;
 }
 
 #endif

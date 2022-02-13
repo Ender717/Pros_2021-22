@@ -3,17 +3,11 @@
 
 namespace CarrierConfig
 {
-    // Constants
-    const float DOWN_POSITION = 36000.0;
-    const float UP_POSITION = 0.0;
-
     // Ports
-    const int LEFT_CARRIER_PORT = 16;
-    const int RIGHT_CARRIER_PORT = 6;
+    const char LEFT_CARRIER_PORT = 'A';
+    const char RIGHT_CARRIER_PORT = 'B';
 
     // Motors
-    pros::Motor leftCarrierMotor(LEFT_CARRIER_PORT, pros::E_MOTOR_GEARSET_36,
-                                 true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightCarrierMotor(RIGHT_CARRIER_PORT, pros::E_MOTOR_GEARSET_36,
-                                  false, E_MOTOR_ENCODER_COUNTS);
+    pros::ADIDigitalOut leftCarrierPiston(LEFT_CARRIER_PORT);
+    pros::ADIDigitalOut rightCarrierPiston(RIGHT_CARRIER_PORT);
 }

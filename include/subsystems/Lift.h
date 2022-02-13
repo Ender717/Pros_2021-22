@@ -20,7 +20,7 @@ public:
     // Default constructor for the Lift class
     // v1: Created the constructor - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
-    Lift();
+    Lift(int n);
 
     //-------------------------------------------------------------------------
     // Initializes the lift

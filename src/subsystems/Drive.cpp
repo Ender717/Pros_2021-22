@@ -4,39 +4,7 @@
 // Private method definitions -------------------------------------------------
 float Drive::CalculateAngle(float startX, float startY, float endX, float endY)
 {
-    float angle;
-    // Run the normal calculation if the values are not equal
-    if(startX != endX && startY != endY)
-    {
-        angle = atan2f(fabs(endY - startY), fabs(endX - startX));
-
-        // Place the angle in the correct quadrant
-        if(endX < startX && endY > startY)
-            angle = 180.0 - angle;
-        else if (endX < startX && endY < startY)
-            angle += 180.0;
-        else if (endX > startX && endY < startY)
-            angle = 360.0 - angle;
-    }
-    // Find the angle if both points lie on the same y-axis
-    else if (startX == endX)
-    {
-        if(endY > startY)
-            angle = 90.0;
-        else
-            angle = 270.0;
-    }
-    // Find the angle if both points lie on the same x-axis
-    else
-    {
-        if(endX > startX)
-            angle = 0.0;
-        else
-            angle = 180.0;
-    }
-
-    // return the result
-    return angle;
+    return atan2(endY - startY, endX - startX) / DriveConfig::DEGREES_TO_RADIANS;
 }
 
 float Drive::CalculateDistance(float startX, float startY, float endX, float endY)
@@ -45,7 +13,7 @@ float Drive::CalculateDistance(float startX, float startY, float endX, float end
 }
 
 // Constructor definitions ------------------------------------------------
-Drive::Drive() {}
+Drive::Drive(int n) {}
 
 // Public method definitions ----------------------------------------------
 void Drive::Initialize()
@@ -61,10 +29,15 @@ void Drive::Initialize()
     DriveConfig::rightRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
+float Drive::GetDistance()
+{
+    return DriveConfig::leftTrackingSensor.get_position();
+}
+
 // Public method definitions --------------------------------------------------
 void Drive::DriveStraight(float inches, float power, PositionCalculation& position)
 {
-    PID distancePID(8.3, 0.01, 0.05, 0.0, -power, power, (power / 3.0), 0.0);
+    PID distancePID(8.3, 0.5, 0.15, 0.0, -power, power, (power / 3.0), 0.0);
     PID anglePID(1.0, 0.01, 0.02, 0.0, -(power / 4.0), (power / 4.0), (power / 12.0), position.GetTheta());
     float startValue = DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
     distancePID.SetTargetValue(inches + startValue);
@@ -73,7 +46,7 @@ void Drive::DriveStraight(float inches, float power, PositionCalculation& positi
     float controlValue = distancePID.GetControlValue(distance);
     float adjustValue = anglePID.GetControlValue(position.GetTheta());
 
-    while(abs(inches + startValue - distance) > 1.2 || controlValue > 1)
+    while(abs(inches + startValue - distance) > 1.2 || controlValue > 3)
     {
         distance = DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
         controlValue = distancePID.GetControlValue(distance);
@@ -88,7 +61,7 @@ void Drive::DriveStraight(float inches, float power, PositionCalculation& positi
 
 void Drive::SpinTurn(float degrees, float power, PositionCalculation& position)
 {
-    PID turnPID(4.3, 0.05, 0.20, 0.0, -power, power, (power / 3.0), 0.0);
+    PID turnPID(7.3, 0.35, 0.10, 0.0, -power, power, (power / 3.0), 0.0);
     position.UpdatePosition();
     float targetAngle = position.GetTheta() + degrees;
     turnPID.SetTargetValue(targetAngle);
@@ -122,37 +95,33 @@ void Drive::SetRightDrive(float power)
 void Drive::DriveToPoint(float targetX, float targetY, float power, bool reversed, PositionCalculation& position)
 {
     // Set up the control variables
-    PID distancePID(5.5, 0.1, 0.3, 0.0, -power, power, (power / 3.0), 0.0);
-    PID anglePID(0.5, 0.0, 0.01, 0.0, -(power / 3.0), (power / 3.0), (power / 9.0), 0.0);
+    PID distancePID(10.5, 0.5, 0.1, 0.0, -power, power, (power / 3.0), 0.0);
+    PID anglePID(4.5, 0.2, 0.1, 0.0, -power, power, (power / 3.0), 0.0);
     position.UpdatePosition();
     float distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
     float angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
+    distancePID.SetTargetValue(distance);
+    anglePID.SetTargetValue(angle);
+    float distanceControl = distancePID.GetControlValue(0.0);
+    float angleControl = anglePID.GetControlValue(position.GetTheta());
 
     // Loop until the target is reached
-    while(distance > 0.1)
+    while(distance > 1.0)
     {
         position.UpdatePosition();
         distance = CalculateDistance(position.GetX(), position.GetY(), targetX, targetY);
         angle = CalculateAngle(position.GetX(), position.GetY(), targetX, targetY);
-        // Control for forward motion
-        if(!reversed)
-        {
-            distancePID.SetTargetValue(distance);
-            anglePID.SetTargetValue(angle);
-            SetLeftDrive(distancePID.GetControlValue(0.0) + anglePID.GetControlValue(position.GetTheta()));
-            SetRightDrive(distancePID.GetControlValue(0.0) - anglePID.GetControlValue(position.GetTheta()));
-        }
-        // Control for backward motion
-        else
-        {
-            angle = angle + 180.0;
-            if(angle > 360.0)
-                angle = angle - 360.0;
-            distancePID.SetTargetValue(-distance);
-            anglePID.SetTargetValue(angle);
-            SetLeftDrive(distancePID.GetControlValue(0.0) - anglePID.GetControlValue(position.GetTheta()));
-            SetRightDrive(distancePID.GetControlValue(0.0) + anglePID.GetControlValue(position.GetTheta()));
-        }
+
+        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Distance: %f", distance);
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Angle: %f", angle);
+
+        distancePID.SetTargetValue(distance);
+        anglePID.SetTargetValue(angle);
+        distanceControl = distancePID.GetControlValue(0.0);
+        angleControl = anglePID.GetControlValue(position.GetTheta());
+        SetLeftDrive(distanceControl - angleControl);
+        SetRightDrive(distanceControl + angleControl);
+        pros::delay(2);
     }
 }
 
@@ -192,12 +161,12 @@ void Drive::DriveThroughPoint(float targetX, float targetY, float power, bool re
 
 void Drive::TurnToAngle(float angle, float power, PositionCalculation& position)
 {
-    PID turnPID(4.5, 0.05, 0.20, 0.0, -power, power, (power / 3.0), position.GetTheta());
+    PID turnPID(3.7, 0.05, 0.05, 0.0, -power, power, (power / 4.0), position.GetTheta());
     turnPID.SetTargetValue(angle);
     position.UpdatePosition();
     float controlValue = turnPID.GetControlValue(position.GetTheta());
 
-    while(fabs(angle - position.GetTheta()) > 1.0 || controlValue > 1)
+    while(fabs(angle - position.GetTheta()) > 0.7 || controlValue > 1)
     {
         position.UpdatePosition();
         controlValue = turnPID.GetControlValue(position.GetTheta());

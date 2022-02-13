@@ -8,10 +8,14 @@ PositionCalculation::PositionCalculation(float startX, float startY,
    currentX = startX;
    currentY = startY;
    currentTheta = startTheta;
+   resetTheta = startTheta;
+   lastTheta = startTheta;
    lastLeft = 0.0;
    lastRight = 0.0;
    lastStrafe = 0.0;
-   lastTheta = 0.0;
+   DriveConfig::leftTrackingSensor.set_position(0.0);
+   DriveConfig::rightTrackingSensor.set_position(0.0);
+   DriveConfig::strafeTrackingSensor.set_position(0.0);
 }
 
 // Public Method Definitions --------------------------------------------------
@@ -20,6 +24,10 @@ void PositionCalculation::SetPosition(float x, float y, float theta)
    currentX = x;
    currentY = y;
    currentTheta = theta;
+   resetTheta = theta;
+   DriveConfig::leftTrackingSensor.set_position(0.0);
+   DriveConfig::rightTrackingSensor.set_position(0.0);
+   DriveConfig::strafeTrackingSensor.set_position(0.0);
 }
 
 void PositionCalculation::UpdatePosition()
@@ -37,7 +45,7 @@ void PositionCalculation::UpdatePosition()
    // Calculate absolute theta
    float totalLeft = leftValue;
    float totalRight = rightValue;
-   currentTheta = (totalLeft - totalRight) / (LEFT_DISTANCE + RIGHT_DISTANCE);
+   currentTheta = ((totalLeft - totalRight) / (LEFT_DISTANCE + RIGHT_DISTANCE)) + resetTheta;
 
    // Calculate the change in theta
    float thetaChange = currentTheta - lastTheta;
@@ -52,18 +60,16 @@ void PositionCalculation::UpdatePosition()
    }
    else
    {
-      sidewaysDistance = (2.0 * sinf(currentTheta / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
-      forwardDistance = (2.0 * sinf(currentTheta / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
+      sidewaysDistance = (2.0 * sin(thetaChange / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
+      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
    }
 
    // Calculate the average orientation
    float averageTheta = lastTheta + (thetaChange / 2.0);
 
    // Calculate the global offset
-   float polarDistance = sqrtf((sidewaysDistance * sidewaysDistance) + (forwardDistance * forwardDistance));
-   float polarAngle = atan2f(forwardDistance, sidewaysDistance) - averageTheta;
-   float xChange = polarDistance * cosf(polarAngle);
-   float yChange = polarDistance * sinf(polarAngle);
+   float xChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
+   float yChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
 
    // Calculate the new absolute position
    currentX += xChange;

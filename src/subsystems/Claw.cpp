@@ -2,7 +2,7 @@
 #include "subsystems/Claw.h"
 
 // Constructor definitions ----------------------------------------------------
-Claw::Claw() {} 
+Claw::Claw(int n) {} 
 
 // Public method definitions --------------------------------------------------
 float Claw::GetPosition()
@@ -51,4 +51,5 @@ void Claw::SetOpen()
 void Claw::Initialize()
 {
     ClawConfig::clawMotor.tare_position();
+    ClawConfig::clawMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }

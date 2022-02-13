@@ -2,7 +2,7 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift() {};
+Lift::Lift(int n) {};
 
 // Public method definitions --------------------------------------------------
 void Lift::Initialize()
@@ -18,10 +18,7 @@ float Lift::GetPosition()
 
 float Lift::GetHeight()
 {
-    float countsFromParallel = LiftConfig::leftLiftMotor.get_position() - LiftConfig::MIDDLE_POSITION;
-    float angle = countsFromParallel / LiftConfig::COUNTS_PER_ROTATION * 360.0 * LiftConfig::DEGREES_TO_RADIANS;
-    float height = LiftConfig::ARM_LENGTH * sin(angle);
-    return height;
+    return 0.0;
 }
 
 void Lift::SetLift(float power)
@@ -48,7 +45,7 @@ void Lift::SetHeight(float inches)
 
 void Lift::SetPosition(float target)
 {
-    PID armPID(6.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
+    PID armPID(4.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
     armPID.SetTargetValue(target);
     float current = GetPosition();
     float controlValue = armPID.GetControlValue(current);
@@ -58,5 +55,7 @@ void Lift::SetPosition(float target)
         current = GetPosition();
         controlValue = armPID.GetControlValue(current);
         SetLift(controlValue);
+        pros::delay(2);
     }
+    SetLift(0.0);
 }

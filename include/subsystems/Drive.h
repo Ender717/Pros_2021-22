@@ -42,13 +42,20 @@ public:
     // Default constructor for the drive class
     // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
-    Drive();
+    Drive(int n);
 
     //-------------------------------------------------------------------------
     // Initializes the drive
     // v1: Created the method - Nathan S, 1-24-22
     //-------------------------------------------------------------------------
     void Initialize();
+
+    //-------------------------------------------------------------------------
+    // Gets the current position of the left drive encoder
+    // return: The left drive distance
+    // v1: Created the method - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    float GetDistance();
 
     //-------------------------------------------------------------------------
     // Temporary basic control function for driving forward and backward

@@ -13,21 +13,23 @@
  */
 void autonomous() 
 {
-    // Create the robot
-	Drive* drive = new Drive();
-	Carrier* carrier = new Carrier();
-	Lift* lift = new Lift();
-	Claw* claw = new Claw();
-	
-	// Initialize the processes
-	drive->Initialize();
-	carrier->Initialize();
-	lift->Initialize();
-	claw->Initialize();
-    PositionCalculation position(0.0, 0.0, 0.0);
-
-    //drive->DriveStraight(10.0, 127.0, position);
-    //drive->TurnToAngle(90.0, 127.0, position);
-    //lift->SetPosition(80000.0);
-    claw->SetClosed();
+    // Run the selected auton
+	switch(Autons::selectedAuton)
+	{
+		case 1:
+			Autons::ProgrammingSkills();
+			break;
+		case 2:
+			Autons::LeftAuton();
+			break;
+		case 3:
+			Autons::MiddleAuton();
+			break;
+		case 4:
+			Autons::RightAuton();
+			break;
+		default:
+			pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "No Auton Selected");
+			break;
+	}
 }

@@ -13,12 +13,12 @@ namespace DriveConfig
     const int LEFT_REAR_DRIVE_PORT = 13;
     const int LEFT_MIDDLE_DRIVE_PORT = 12;
     const int LEFT_FRONT_DRIVE_PORT = 11;
-    const int RIGHT_REAR_DRIVE_PORT = 3;
-    const int RIGHT_MIDDLE_DRIVE_PORT = 2;
-    const int RIGHT_FRONT_DRIVE_PORT = 1;
+    const int RIGHT_REAR_DRIVE_PORT = 20;
+    const int RIGHT_MIDDLE_DRIVE_PORT = 19;
+    const int RIGHT_FRONT_DRIVE_PORT = 18;
     const int LEFT_TRACKING_PORT = 14;
-    const int RIGHT_TRACKING_PORT = 4;
-    const int STRAFE_TRACKING_PORT = 5;
+    const int RIGHT_TRACKING_PORT = 17;
+    const int STRAFE_TRACKING_PORT = 16;
 
     // Motors
     pros::Motor leftRearDriveMotor(LEFT_REAR_DRIVE_PORT, pros::E_MOTOR_GEARSET_06, 
