@@ -27,9 +27,5 @@ void opcontrol()
 	while(true)
 	{
 		Robot::DriveControl(master);
-
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 20, "Distance: %f", Robot::drive.GetDistance());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 60, "Y: %f", Robot::position.GetY());
-		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 100, "Theta: %f", Robot::position.GetTheta());
 	}
 }

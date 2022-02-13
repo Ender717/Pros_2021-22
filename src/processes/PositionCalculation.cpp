@@ -30,13 +30,8 @@ void PositionCalculation::SetPosition(float x, float y, float theta)
    DriveConfig::strafeTrackingSensor.set_position(0.0);
 }
 
-void PositionCalculation::UpdatePosition()
+void PositionCalculation::UpdatePosition(float leftValue, float rightValue, float strafeValue)
 {
-   // Calculate the number of inches moved by each wheel
-   float leftValue = DriveConfig::leftTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
-   float rightValue = DriveConfig::rightTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / -DriveConfig::COUNTS_PER_ROTATION;
-   float strafeValue = DriveConfig::strafeTrackingSensor.get_position() * DriveConfig::TRACKING_WHEEL_SIZE * DriveConfig::PI / DriveConfig::COUNTS_PER_ROTATION;
-
    // Calculate the distance moved by each wheel since the last cycle
    float leftDistance = leftValue - lastLeft;
    float rightDistance = rightValue - lastRight;
@@ -94,5 +89,5 @@ float PositionCalculation::GetY()
 
 float PositionCalculation::GetTheta()
 {
-   return currentTheta / DriveConfig::DEGREES_TO_RADIANS;
+   return currentTheta;
 }

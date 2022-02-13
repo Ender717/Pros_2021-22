@@ -9,6 +9,12 @@ Carrier::Carrier(bool startDown)
 } 
 
 // Public method definitions --------------------------------------------------
+void Carrier::Initialize()
+{
+    CarrierConfig::leftCarrierPiston.set_value(isDown);
+    CarrierConfig::rightCarrierPiston.set_value(isDown);
+}
+
 void Carrier::SetDown()
 {
     CarrierConfig::leftCarrierPiston.set_value(true);
@@ -31,10 +37,4 @@ bool Carrier::IsDown()
 bool Carrier::HasGoal()
 {
     return hasGoal;
-}
-
-void Carrier::Initialize()
-{
-    CarrierConfig::leftCarrierPiston.set_value(isDown);
-    CarrierConfig::rightCarrierPiston.set_value(isDown);
 }

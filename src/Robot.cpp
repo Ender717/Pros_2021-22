@@ -14,7 +14,7 @@ namespace Robot
     PositionCalculation position(0.0, 0.0, 0.0);
 
     // Subsystems
-    Drive drive(1);
+    Drive drive(0.0, 0.0, 0.0);
 	Carrier carrier(false);
 	Lift lift(1);
 	Claw claw(true);
@@ -41,7 +41,7 @@ namespace Robot
     void DriveControl(pros::Controller& master)
     {
 		// Update and display the coordinate system
-		position.UpdatePosition();
+		drive.UpdatePosition();
 
 		// Calculate the power level of each motor
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
@@ -56,12 +56,8 @@ namespace Robot
 			else
                 claw.SetClosed();
 		}
-			
-		// Set the drive
-		drive.SetLeftDrive(leftDrivePower);
-		drive.SetRightDrive(rightDrivePower);
 
-		// Set the carrier
+		// Update the carrier position
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 		{
 			if(carrier.IsDown())
@@ -85,6 +81,7 @@ namespace Robot
 			lift.SetLift(liftPID.GetControlValue(lift.GetPosition()));
 			
 		// Set the motors
+		drive.SetDrive(leftDrivePower, rightDrivePower);
         claw.HoldPosition();
 		intake.SetIntake(intakePower);
 		

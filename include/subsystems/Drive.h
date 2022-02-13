@@ -11,38 +11,32 @@
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
 // v1: Created the class - Nathan S, 1-24-22
+// v2: Refactored the class - Nathan S, 2-13-22
 //-----------------------------------------------------------------------------
 class Drive
 {
 private:
     //-------------------------------------------------------------------------
-    // Calculates the angle between two points
-    // startX: The starting x-coordinate
-    // startY: The starting y-coordinate
-    // endX: The ending x-coordinate
-    // endY: The ending y-coordinate
-    // return: The angle between the points
-    // v1: Created the method - Nathan S, 1-23-22
+    // Private data members
+    // distancePID: The PID controller for distance
+    // anglePID: The PID controller for angle
+    // turnPID: The PID controller for turning
+    // position: The position calculation system
     //-------------------------------------------------------------------------
-    float CalculateAngle(float startX, float startY, float endX, float endY);
-
-    //-------------------------------------------------------------------------
-    // Calculates the distance between two points
-    // startX: The starting x-coordinate
-    // startY: The starting y-coordinate
-    // endX: The ending x-coordinate
-    // endY: The ending y-coordinate
-    // return: The distance between the points
-    // v1: Created the method - Nathan S, 1-23-22
-    //-------------------------------------------------------------------------
-    float CalculateDistance(float startX, float startY, float endX, float endY);
+    PID distancePID;
+    PID anglePID;
+    PID turnPID;
+    PositionCalculation position;
 
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the drive class
+    // startX: The starting x-coordinate of the drive position
+    // startY: The starting y-coordinate of the drive position
+    // startTheta: The starting angle of the drive position
     // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
-    Drive(int n);
+    Drive(float startX, float startY, float startTheta);
 
     //-------------------------------------------------------------------------
     // Initializes the drive
@@ -51,91 +45,54 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
-    // Gets the current position of the left drive encoder
-    // return: The left drive distance
-    // v1: Created the method - Nathan S, 2-9-22
+    // Sets the drive to the desired power levels
+    // leftPower: The power being sent to the left side of the drive
+    // rightPower: The power being sent to the right side of the drive
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    float GetDistance();
+    void SetDrive(float leftPower, float rightPower);
 
     //-------------------------------------------------------------------------
-    // Temporary basic control function for driving forward and backward
-    // inches: The distance to travel
-    // position: The position tracking system
-    // power: The power with which to move forward
-    // v1: Created the method - Nathan S, 1-23-22
-    // v2: Added the positioning system - Nathan S, 1-26-22
-    // v3: Added a power control - Nathan S, 1-30-22
+    // Makes the drive move towards a target position
+    // targetX: The target position's x-coordinate
+    // targetY: The target position's y-coordinate
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void DriveStraight(float inches, float power, PositionCalculation& position);
+    void GoToPosition(float targetX, float targetY);
 
     //-------------------------------------------------------------------------
-    // Temporary basic control function for turning in place
-    // degrees: The number of degrees to turn
-    // position: The position tracking system
-    // v1: Created the method - Nathan S, 1-23-22
-    // v2: Added the positioning system - Nathan S, 1-26-22
-    // v3: Added a power control - Nathan S, 1-30-22
+    // Makes the drive turn to the target angle
+    // targetAngle: The target angle in degrees
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SpinTurn(float degrees, float power, PositionCalculation& position);
+    void TurnToAngle(float targetAngle);
 
     //-------------------------------------------------------------------------
-    // Runs the left side of the drive at the desired power
-    // power: The power to run the motors at
-    // v1: Created the method - Nathan S, 1-23-22
-    // v2: Made the method public - Nathan S, 1-24-22
+    // Sets the current x-coordinate of the drive
+    // x: The new x-coordinate of the drive in inches
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetLeftDrive(float power);
+    void SetX(float x);
 
     //-------------------------------------------------------------------------
-    // Runs the right side of the drive at the desired power
-    // power: The power to run the motors at
-    // v1: Created the method - Nathan S, 1-23-22
-    // v2: Made the method public - Nathan S, 1-24-22
+    // Sets the current y-coordinate of the drive
+    // y: The new y-coordinate of the drive in inches
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetRightDrive(float power);
+    void SetY(float y);
 
     //-------------------------------------------------------------------------
-    // Drives the robot from its current position to the specified coordinates
-    // targetX: The target x-coordinate
-    // targetY: The target y-coordinate
-    // power: The maximum forward speed of the motion
-    // reversed: Whether the motion is reversed or not
-    // position: The position calculation system
-    // v1: Created the method - Nathan S, 1-23-22
-    // v2: Allowed driving backward - Nathan S, 1-24-22
+    // Sets the current angle of the drive
+    // theta: The new angle of the drive in degrees
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void DriveToPoint(float targetX, float targetY, float power, bool reversed, PositionCalculation& position);
+    void SetTheta(float theta);
 
     //-------------------------------------------------------------------------
-    // Drives the robot from its current position through the specified coordinates
-    // targetX: The target x-coordinate
-    // targetY: The target y-coordinate
-    // power: The speed at which to move through the coordinate
-    // reversed: Whether the robot is going backward or not
-    // position: The position tracking system
-    // v1: Created the method - Nathan S, 1-24-22
-    // v2: Allowed driving backward - Nathan S, 1-24-22
+    // Updates the position of the drive
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void DriveThroughPoint(float targetX, float targetY, float power, bool reversed, PositionCalculation& position);
-
-    //-------------------------------------------------------------------------
-    // Turns the robot to a specified angle
-    // angle: The angle to turn the robot to
-    // power: The maximum speed at which to turn
-    // position: The position tracking system
-    // v1: Created the method - Nathan S, 1-28-22
-    //-------------------------------------------------------------------------
-    void TurnToAngle(float angle, float power, PositionCalculation& position);
-
-    //-------------------------------------------------------------------------
-    // Turns the robot to face a specified point
-    // targetX: The x-coordinate of the specified point
-    // targetY: The y-coordinate of the specified point
-    // power: The maximum speed at which to turn
-    // position: The position tracking system
-    // v1: Created the method - Nathan S, 1-28-22
-    //-------------------------------------------------------------------------
-    void TurnTowardsPoint(float targetX, float targetY, float power, PositionCalculation& position);
+    void UpdatePosition();
 };
 
 #endif
