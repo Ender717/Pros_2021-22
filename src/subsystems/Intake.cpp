@@ -23,7 +23,7 @@ void Intake::Outtake()
     IntakeConfig::intakeMotor.move(-intakeSpeed);
 }
 
-void Intake::Hold()
+void Intake::Stop()
 {
     IntakeConfig::intakeMotor.move(0.0);
 }

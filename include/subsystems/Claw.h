@@ -18,11 +18,9 @@ private:
     //-------------------------------------------------------------------------
     // Private data members
     // isClosed: Whether the claw is closed or not
-    // hasGoal: Whether the claw is holding a goal or not
     // clawPID: The PID controller for the claw
     //-------------------------------------------------------------------------
     bool isClosed;
-    bool hasGoal;
     PID clawPID;
 
 public:
@@ -63,13 +61,6 @@ public:
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
     bool IsClosed();
-
-    //-------------------------------------------------------------------------
-    // Checks if the claw has a goal or not
-    // return: True if the claw has a goal, false if not
-    // v1: Created the method - Nathan S, 2-13-22
-    //-------------------------------------------------------------------------
-    bool HasGoal();
 };
 
 #endif

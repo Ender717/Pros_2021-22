@@ -5,7 +5,6 @@
 Carrier::Carrier(bool startDown) 
 {
     isDown = startDown;
-    hasGoal = false;
 } 
 
 // Public method definitions --------------------------------------------------
@@ -32,9 +31,4 @@ void Carrier::SetUp()
 bool Carrier::IsDown()
 {
     return isDown;
-}
-
-bool Carrier::HasGoal()
-{
-    return hasGoal;
 }

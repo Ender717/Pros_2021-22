@@ -2,60 +2,78 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift(int n) {};
+Lift::Lift(float angle) : liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0)
+{
+    startAngle = angle;
+}
+
+// Private method definitions -------------------------------------------------
+void Lift::SetLift(float power)
+{
+    LiftConfig::leftLiftMotor.move(power);
+    LiftConfig::rightLiftMoto.move(power);
+}
+
+bool Lift::AtBottom()
+{
+    return LiftConfig::leftLiftMotor.get_position() <= LiftConfig::BOTTOM_POSITION;
+}
+
+bool Lift::AtTop()
+{
+    return LiftConfig::leftLiftMotor.get_position() >= LiftConfig::TOP_POSITION;
+}
+
+float Lift::GetAngle()
+{
+    return startAngle + (LiftConfig::leftLiftMotor.get_position() * LiftConfig::COUNTS_PER_DEGREE);
+}
 
 // Public method definitions --------------------------------------------------
 void Lift::Initialize()
 {
     LiftConfig::leftLiftMotor.tare_position();
     LiftConfig::rightLiftMotor.tare_position();
+    LiftConfig::leftLiftMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+    LiftConfig::rightLiftMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }
 
-float Lift::GetPosition()
+void Lift::Raise()
 {
-    return (LiftConfig::leftLiftMotor.get_position() + LiftConfig::rightLiftMotor.get_position()) / 2.0;
+    if(!AtTop())
+        SetLift(127.0);
+    else
+        SetLift(0.0);
+    liftPID.SetTargetValue(GetAngle());
 }
 
-float Lift::GetHeight()
+void Lift::Lower()
 {
-    return 0.0;
+    if(!AtBottom())
+        SetLift(-127.0);
+    else
+        SetLift(-127.0);
+    liftPID.SetTargetValue(GetAngle());
 }
 
-void Lift::SetLift(float power)
+void Lift::HoldPosition()
 {
-    LiftConfig::leftLiftMotor.move(power);
-    LiftConfig::rightLiftMotor.move(power);
-}
-
-void Lift::SetHeight(float inches)
-{
-    
-    PID armPID(4.3, 0.85, 0.43, 5.0, -127.0, 127.0, 80.0, GetHeight());
-    armPID.SetTargetValue(inches);
-    float height = GetHeight();
-    float controlValue = armPID.GetControlValue(height);
-
-    while(abs(inches - height) > 0.1 || controlValue > 1)
+    if(!AtBottom() && !AtTop())
     {
-        height = GetHeight();
-        controlValue = armPID.GetControlValue(height);
+        float controlValue = liftPID.GetControlValue(GetAngle());
         SetLift(controlValue);
     }
+    else
+        SetLift(0.0);
 }
 
-void Lift::SetPosition(float target)
+void Lift::SetAngle(float targetAngle)
 {
-    PID armPID(4.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
-    armPID.SetTargetValue(target);
-    float current = GetPosition();
-    float controlValue = armPID.GetControlValue(current);
+    liftPID.SetTargetValue(targetAngle);
 
-    while(abs(target - current) > 1.0 || controlValue > 1)
+    while(abs(targetAngle - GetAngle()) > 0.1)
     {
-        current = GetPosition();
-        controlValue = armPID.GetControlValue(current);
-        SetLift(controlValue);
-        pros::delay(2);
+        HoldPosition();
+        pros::delay(5);
     }
-    SetLift(0.0);
 }

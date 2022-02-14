@@ -15,12 +15,13 @@ namespace LiftConfig
     // Constants
     // BOTTOM_POSITION: The encoder position when the lift is at the ground
     // TOP_POSITION: The encoder position when the lift is at the top
-    // ARM_LENGTH: The length of the arm in inches
+    // COUNTS_PER_DEGREE: The number of encoder counts the lift moves per degree
+    //                    of rotation it experiences
     // DEGREES_TO_RADIANS: The constant multiple from degrees to radians
     //-------------------------------------------------------------------------
     extern const float BOTTOM_POSITION;
     extern const float TOP_POSITION;
-    extern const float ARM_LENGTH;
+    extern const float COUNTS_PER_DEGREE;
     extern const float DEGREES_TO_RADIANS;
 
     //-------------------------------------------------------------------------

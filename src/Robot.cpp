@@ -70,9 +70,9 @@ namespace Robot
 		else if (master.get_digital(E_CONTROLLER_DIGITAL_L2))
 			intake.Outtake();
 		else
-			intake.Hold();
+			intake.Stop();
 		
-		// Set the lift
+		// Update the lift
 		if(master.get_digital(E_CONTROLLER_DIGITAL_R1) && (lift.GetPosition() < LiftConfig::TOP_POSITION))
 		{
 			lift.SetLift(127.0);

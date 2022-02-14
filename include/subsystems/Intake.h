@@ -49,10 +49,10 @@ public:
     void Outtake();
 
     //-------------------------------------------------------------------------
-    // Holds the intake still
+    // Stops the intake
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void Hold();
+    void Stop();
 };
 
 #endif

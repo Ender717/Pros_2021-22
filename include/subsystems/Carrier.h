@@ -18,10 +18,8 @@ private:
     //-------------------------------------------------------------------------
     // Private data members
     // isDown: Whether the carrier is down or not
-    // hasGoal: Whether the carrier is holding a goal or not
     //-------------------------------------------------------------------------
     bool isDown;
-    bool hasGoal;
 
 public:
     //-------------------------------------------------------------------------
@@ -56,13 +54,6 @@ public:
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
     bool IsDown();
-
-    //-------------------------------------------------------------------------
-    // Checks if the carrier has a goal or not
-    // return: True if the carrier has a goal, false if not
-    // v1: Created the method - Nathan S, 2-13-22
-    //-------------------------------------------------------------------------
-    bool HasGoal();
 };
 
 #endif
