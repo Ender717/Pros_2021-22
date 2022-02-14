@@ -13,9 +13,6 @@ PositionCalculation::PositionCalculation(float startX, float startY,
    lastLeft = 0.0;
    lastRight = 0.0;
    lastStrafe = 0.0;
-   DriveConfig::leftTrackingSensor.set_position(0.0);
-   DriveConfig::rightTrackingSensor.set_position(0.0);
-   DriveConfig::strafeTrackingSensor.set_position(0.0);
 }
 
 // Public Method Definitions --------------------------------------------------

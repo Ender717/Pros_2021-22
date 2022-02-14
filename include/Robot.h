@@ -30,20 +30,6 @@ class Robot
 {
 private:
     //-------------------------------------------------------------------------
-    // Subsystems
-    // drive: The drive subsystem
-    // carrier: The carrier subsystem
-    // lift: The lift subsystem
-    // claw: The claw subsystem
-    // intake: The intake subsystem
-    //-------------------------------------------------------------------------
-    Drive drive;
-	Carrier carrier;
-	Lift lift;
-	Claw claw;
-	Intake intake;
-
-    //-------------------------------------------------------------------------
     // Private data members
     // color: The color of the robot
     //-------------------------------------------------------------------------
@@ -85,6 +71,20 @@ private:
     void UpdateLift(pros::Controller& master);
 
 public:
+    //-------------------------------------------------------------------------
+    // Subsystems
+    // drive: The drive subsystem
+    // carrier: The carrier subsystem
+    // lift: The lift subsystem
+    // claw: The claw subsystem
+    // intake: The intake subsystem
+    //-------------------------------------------------------------------------
+    Drive drive;
+	Carrier carrier;
+	Lift lift;
+	Claw claw;
+	Intake intake;
+
     //-------------------------------------------------------------------------
     // Default constructor for the robot class
     // v1: Created the constructor - Nathan S, 2-8-22

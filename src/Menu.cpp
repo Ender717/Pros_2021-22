@@ -69,15 +69,18 @@ namespace Menu
             switch(auton)
             {
                 case 1:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 1");
                     break;
-                case 2:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");
+                case 2;
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 2");
                     break;
                 case 3:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Auton");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");
                     break;
                 case 4:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Auton");
+                    break;
+                case 5:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Auton");
                     break;
                 default:
