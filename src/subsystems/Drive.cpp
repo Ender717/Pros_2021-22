@@ -45,14 +45,18 @@ void Drive::GoToPosition(float targetX, float targetY)
     float distance = startDistance;
     float angle = atan2(targetX - position.GetX(), targetY - position.GetY());
     float controlDistance = distance * cos(angle - position.GetTheta());
+    if(controlDistance < 0)
+        angle = (-angle / abs(angle)) * ((3.1415 / 2.0) - abs(angle));
+    float controlAngle = distance * sin(angle - position.GetTheta());
+    // ANGLE CONTROL USING SIN??
 
     // Set the PID controllers
     distancePID.SetTargetValue(controlDistance);
-    anglePID.SetTargetValue(angle);
+    anglePID.SetTargetValue(controlAngle);
 
     // Get the control values
     float controlValue = distancePID.GetControlValue(0.0);
-    float adjustValue = anglePID.GetControlValue(position.GetTheta());
+    float adjustValue = anglePID.GetControlValue(0.0);
 
     // Set the motors for the control motion
     int timer = 0;
@@ -62,11 +66,15 @@ void Drive::GoToPosition(float targetX, float targetY)
         distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
         angle = atan2(targetX - position.GetX(), targetY - position.GetY());
         controlDistance = distance * cos(angle - position.GetTheta());
+        if(controlDistance < 0)
+        angle = (-angle / abs(angle)) * ((3.1415 / 2.0) - abs(angle));
+        controlAngle = distance * sin(angle - position.GetTheta());
 
         // Set the PID controllers
         distancePID.SetTargetValue(controlDistance);
+        anglePID.SetTargetValue(controlAngle);
         controlValue = distancePID.GetControlValue(0.0);
-        adjustValue = anglePID.GetControlValue(position.GetTheta());
+        adjustValue = anglePID.GetControlValue(0.0);
 
         // Control the motors
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
@@ -83,11 +91,12 @@ void Drive::TurnToAngle(float targetAngle)
     // Initialize variables
     int timer = 0;
     float angle = position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
+    float turnSize = abs(targetAngle - angle);
     turnPID.SetTargetValue(targetAngle);
     float controlValue = turnPID.GetControlValue(angle);
 
     // Loop until the target is reached
-    while((abs(targetAngle - angle) > 1.0 || controlValue > 3.0) && timer < 3000)
+    while((abs(targetAngle - angle) > 1.0 || controlValue > 3.0) && timer < (turnSize * 5))
     {
         angle = position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
         controlValue = turnPID.GetControlValue(angle);
