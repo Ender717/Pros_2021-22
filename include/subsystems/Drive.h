@@ -89,6 +89,12 @@ public:
     void SetTheta(float theta);
 
     //-------------------------------------------------------------------------
+    // Prints the current robot position to the brain screen
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    void PrintPosition();
+
+    //-------------------------------------------------------------------------
     // Updates the position of the drive
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------

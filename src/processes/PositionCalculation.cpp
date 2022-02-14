@@ -40,10 +40,18 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    // Calculate absolute theta
    float totalLeft = leftValue;
    float totalRight = rightValue;
-   currentTheta = ((totalLeft - totalRight) / (LEFT_DISTANCE + RIGHT_DISTANCE)) + resetTheta;
+   currentTheta = ((totalRight - totalLeft) / (LEFT_DISTANCE + RIGHT_DISTANCE)) + resetTheta;
 
    // Calculate the change in theta
    float thetaChange = currentTheta - lastTheta;
+   while(currentTheta > 1.5708)
+   {
+      currentTheta -= 3.1415;
+   }
+   while(currentTheta < -1.5708)
+   {
+      currentTheta += 3.1415;
+   }
 
    // Calculate the local offset
    float forwardDistance = 0.0;
@@ -63,8 +71,8 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    float averageTheta = lastTheta + (thetaChange / 2.0);
 
    // Calculate the global offset
-   float xChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
-   float yChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
+   float xChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
+   float yChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
 
    // Calculate the new absolute position
    currentX += xChange;

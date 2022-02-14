@@ -27,5 +27,6 @@ void opcontrol()
 	while(true)
 	{
 		Robot::DriveControl(master);
+		Robot::drive.PrintPosition();
 	}
 }
