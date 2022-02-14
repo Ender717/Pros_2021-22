@@ -2,11 +2,14 @@
 #include "subsystems/Drive.h"
 
 // Constructor definitions ------------------------------------------------
-Drive::Drive(float startX, float startY, float startTheta) 
-            : distancePID(8.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
+Drive::Drive(float startX, float startY, float startTheta) :
+            distancePID(8.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
             anglePID(1.0, 0.01, 0.02, 0.0, -30.0, 30.0, 10.0, 0.0),
             turnPID(7.3, 0.35, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
-            position(startX, startY, startTheta) {}
+            position(startX, startY, startTheta) 
+{
+    
+}
 
 // Public method definitions ----------------------------------------------
 void Drive::Initialize()
@@ -46,9 +49,8 @@ void Drive::GoToPosition(float targetX, float targetY)
     float angle = atan2(targetX - position.GetX(), targetY - position.GetY());
     float controlDistance = distance * cos(angle - position.GetTheta());
     if(controlDistance < 0)
-        angle = (-angle / abs(angle)) * ((3.1415 / 2.0) - abs(angle));
+        angle = (-angle / abs(angle)) * (3.1415 - abs(angle));
     float controlAngle = distance * sin(angle - position.GetTheta());
-    // ANGLE CONTROL USING SIN??
 
     // Set the PID controllers
     distancePID.SetTargetValue(controlDistance);
@@ -122,60 +124,24 @@ void Drive::SetTheta(float theta)
     position.SetPosition(position.GetX(), position.GetY(), theta * DriveConfig::DEGREES_TO_RADIANS);
 }
 
-void Drive::PrintPosition()
+void Drive::SetPosition(float x, float y, float theta)
 {
-    // Write the coordinates
-    pros::screen::set_pen(COLOR_WHITE);
-    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 32, "X: %.2f", position.GetX());
-    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 72, "Y: %.2f", position.GetY());
-    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 112, "Theta: %.2f", (position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS));
+    position.SetPosition(x, y, theta * DriveConfig::DEGREES_TO_RADIANS);
+}
 
-    // Draw the field
-    pros::screen::set_pen(COLOR_LIGHT_GRAY);
-    pros::screen::fill_rect(224, 16, 464, 256);
+float Drive::GetX()
+{
+    return position.GetX();
+}
 
-    // Draw the tape lines
-    pros::screen::set_pen(COLOR_WHITE);
-    pros::screen::draw_line(304, 16, 304, 256);
-    pros::screen::draw_line(343, 16, 343, 256);
-    pros::screen::draw_line(345, 16, 345, 256);
-    pros::screen::draw_line(384, 16, 384, 256);
-    pros::screen::draw_line(264, 256, 304, 216);
-    pros::screen::draw_line(384, 56, 424, 16);
+float Drive::GetY()
+{
+    return position.GetY();
+}
 
-    // Draw the red platform
-    pros::screen::set_pen(COLOR_RED);
-    for(int i = 0; i < 5; i++)
-        pros::screen::draw_rect(227 + i, 91 + i, 262 - i, 181 - i);
-
-    // Draw the blue platform
-    pros::screen::set_pen(COLOR_BLUE);
-    for(int i = 0; i < 5; i++)
-        pros::screen::draw_rect(426 + i, 91 + i, 461 - i, 181 - i);
-
-    // Draw the field perimeter
-    pros::screen::set_pen(COLOR_BLACK);
-    for(int i = 0; i < 2; i++)
-        pros::screen::draw_rect(223 + i, 15 + i, 465 - i, 257 - i);
-
-    // Draw the robot
-    pros::screen::set_pen(COLOR_ORANGE);
-    pros::screen::draw_circle(position.GetX(), position.GetY(), 15);
-
-    // Draw an arrow to show the direction of the robot
-    pros::screen::set_pen(COLOR_BLACK);
-    float robotX = 344 + (position.GetX() * 5.0 / 3.0);
-    float robotY = 136 + (position.GetY() * 5.0 / 3.0);
-    float lineX = 12 * cos(position.GetTheta());
-    float lineY = 12 * sin(position.GetTheta());
-    pros::screen::draw_line(robotX - lineX, robotY - lineY, 
-                            robotX + lineX, robotY + lineY);
-    pros::screen::draw_line(robotX + lineX, robotY + lineY, 
-                            robotX + (lineX / 3) + (5 * cos(position.GetTheta() + (3.1415 / 2))), 
-                            robotY + (lineY / 3) + (5 * sin(position.GetTheta() + (3.1415 / 2))));
-    pros::screen::draw_line(robotX + lineX, robotY + lineY, 
-                            robotX + (lineX / 3) + (5 * cos(position.GetTheta() - (3.1415 / 2))), 
-                            robotY + (lineY / 3) + (5 * sin(position.GetTheta() - (3.1415 / 2))));
+float Drive::GetTheta()
+{
+    return position.GetTheta();
 }
 
 void Drive::UpdatePosition()

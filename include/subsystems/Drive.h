@@ -89,6 +89,36 @@ public:
     void SetTheta(float theta);
 
     //-------------------------------------------------------------------------
+    // Sets the current position of the drive
+    // x: The new x-coordinate of the drive in inches
+    // y: The new y-coordinate of the drive in inches
+    // theta: The new angle of the drive in degrees
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    void SetPosition(float x, float y, float theta);
+
+    //-------------------------------------------------------------------------
+    // Gets the current x-coordinate of the drive
+    // return: The x-coordinate of the drive in inches
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    float GetX();
+
+    //-------------------------------------------------------------------------
+    // Gets the current y-coordinate of the drive
+    // return: The y-coordinate of the drive in inches
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    float GetY();
+
+    //-------------------------------------------------------------------------
+    // Gets the current angle of the drive
+    // return: The angle of the drive in radians
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    float GetTheta();
+
+    //-------------------------------------------------------------------------
     // Prints the current robot position to the brain screen
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------

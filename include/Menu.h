@@ -29,6 +29,15 @@ namespace Menu
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
     extern void AutonSelect();
+
+    //-------------------------------------------------------------------------
+    // Displays the current position of the robot on screen
+    // x: The robot's x-coordinate
+    // y: The robot's y-coordinate
+    // theta: The robot's angle
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    extern void DrawPosition(float x, float y, float theta);
 }
 
 #endif
