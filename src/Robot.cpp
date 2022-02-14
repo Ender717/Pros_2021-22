@@ -3,7 +3,7 @@
 
 // Constructor definitions ----------------------------------------------------
 Robot::Robot(RobotColor color) :
-    drive(0.0, 0.0, 0.0),
+    drive(),
 	carrier(false),
 	lift(70.0),
 	claw(true),
@@ -81,8 +81,6 @@ void Robot::RobotControl(pros::Controller& master)
 	UpdateDrive(master);
 	UpdateIntake(master);
 	UpdateLift(master);
-
-	Menu::DrawPosition(drive.GetX(), drive.GetY(), drive.GetTheta());
 
 	// Delay for the next loop
 	pros::delay(5);

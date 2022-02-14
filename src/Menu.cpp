@@ -71,7 +71,7 @@ namespace Menu
                 case 1:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 1");
                     break;
-                case 2;
+                case 2:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 2");
                     break;
                 case 3:
@@ -92,13 +92,13 @@ namespace Menu
         Autons::selectedAuton = auton;
     }
 
-    void DrawPosition(float x, float y, float theta)
+    void DrawPosition(Robot& robot)
     {
         // Write the coordinates
         pros::screen::set_pen(COLOR_WHITE);
-        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 32, "X: %.2f", x);
-        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 72, "Y: %.2f", y);
-        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 112, "Theta: %.2f", (theta / DriveConfig::DEGREES_TO_RADIANS));
+        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 32, "X: %.2f", robot.drive.GetX());
+        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 72, "Y: %.2f", robot.drive.GetY());
+        pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 112, "Theta: %.2f", (robot.drive.GetTheta() * 180.0 / 3.1415));
 
         // Draw the field
         pros::screen::set_pen(COLOR_LIGHT_GRAY);
@@ -130,13 +130,13 @@ namespace Menu
 
         // Draw the robot
         pros::screen::set_pen(COLOR_ORANGE);
-        float robotX = 344 + (x * 5.0 / 3.0);
-        float robotY = 136 + (y * 5.0 / 3.0);
+        float robotX = 344 + (robot.drive.GetX() * 5.0 / 3.0);
+        float robotY = 136 + (robot.drive.GetY() * 5.0 / 3.0);
         pros::screen::draw_circle(robotX, robotY, 15);
 
         // Draw an arrow to show the direction of the robot
         pros::screen::set_pen(COLOR_BLACK);
-        float angle = theta;
+        float angle = robot.drive.GetTheta();
 
         float x1 = robotX - (12 * cos(angle));
         float y1 = robotY - (12 * sin(angle));

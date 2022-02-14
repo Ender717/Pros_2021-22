@@ -31,12 +31,9 @@ private:
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the drive class
-    // startX: The starting x-coordinate of the drive position
-    // startY: The starting y-coordinate of the drive position
-    // startTheta: The starting angle of the drive position
     // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
-    Drive(float startX, float startY, float startTheta);
+    Drive();
 
     //-------------------------------------------------------------------------
     // Initializes the drive

@@ -13,23 +13,24 @@
  */
 void autonomous() 
 {
+	Robot robot(RobotColor::ORANGE);
     // Run the selected auton
 	switch(Autons::selectedAuton)
 	{
 		case 1:
-			Autons::ProgrammingSkills1();
+			Autons::ProgrammingSkills1(robot);
 			break;
 		case 2:
-			Autons::ProgrammingSkills2();
+			Autons::ProgrammingSkills2(robot);
 			break;
 		case 3:
-			Autons::LeftAuton();
+			Autons::LeftAuton(robot);
 			break;
 		case 4:
-			Autons::MiddleAuton();
+			Autons::MiddleAuton(robot);
 			break;
 		case 5:
-			Autons::RightAuton();
+			Autons::RightAuton(robot);
 			break;
 		default:
 			pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 70, "No Auton Selected");

@@ -4,7 +4,6 @@
 
 // Included libraries
 #include "./main.h"
-#include "Menu.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Carrier.h"
 #include "subsystems/Lift.h"

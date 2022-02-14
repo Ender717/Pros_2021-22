@@ -32,12 +32,10 @@ namespace Menu
 
     //-------------------------------------------------------------------------
     // Displays the current position of the robot on screen
-    // x: The robot's x-coordinate
-    // y: The robot's y-coordinate
-    // theta: The robot's angle
+    // robot: The robot
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    extern void DrawPosition(float x, float y, float theta);
+    extern void DrawPosition(Robot& robot);
 }
 
 #endif

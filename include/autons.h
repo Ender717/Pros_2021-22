@@ -35,7 +35,7 @@ namespace Autons
     // robot: The robot
     // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    extern void ProgrammingSkills1(Robot& robot);
+    extern void ProgrammingSkills2(Robot& robot);
 
     //-------------------------------------------------------------------------
     // This function runs the left auton routine
