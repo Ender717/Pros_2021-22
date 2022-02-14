@@ -10,15 +10,25 @@
 //-----------------------------------------------------------------------------
 // This class manages the Intake subsystem of the robot
 // v1: Created the class - Nathan S, 2-2-22
+// v2: Refactored the class - Nathan S, 2-14-22
 //-----------------------------------------------------------------------------
 class Intake
 {
+private:
+    //-------------------------------------------------------------------------
+    // Private data members
+    // intakeSpeed: The speed the intake runs at
+    //-------------------------------------------------------------------------
+    float intakeSpeed;
+
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the intake class
+    // speed: The speed this intake runs at
     // v1: Created the constructor - Nathan S, 2-2-22
+    // v2: Added a speed parameter - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    Intake(int n);
+    Intake(float speed);
     
     //-------------------------------------------------------------------------
     // Initializes the intake system
@@ -27,18 +37,22 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
-    // Gets the current position of the intake
-    // return: The current encoder position of the intake motor
-    // v1: Created the method - Nathan S, 2-2-22
+    // Runs the intake inwards
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    float GetPosition();
+    void Suck();
 
     //-------------------------------------------------------------------------
-    // Sets the intake to a specified power level
-    // power: The power level to set the intake to
-    // v1: Created the method - Nathan S, 2-2-22
+    // Runs the intake outwards
+    // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetIntake(float power);
+    void Blow();
+
+    //-------------------------------------------------------------------------
+    // Stops the intake
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
+    void Stop();
 };
 
 #endif

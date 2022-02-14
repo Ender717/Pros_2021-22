@@ -4,6 +4,7 @@
 
 // Included libraries
 #include "./main.h"
+#include "Menu.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Carrier.h"
 #include "subsystems/Lift.h"
@@ -11,35 +12,65 @@
 #include "subsystems/Intake.h"
 
 //-----------------------------------------------------------------------------
-// This namespace controls the robot container
-// v1: Created the namespace - Nathan S, 2-8-22
+// This enum class manages the colors a robot can be
+// v1: Created the enum class - Nathan S, 2-14-22
 //-----------------------------------------------------------------------------
-namespace Robot
+enum class RobotColor
 {
+    BLUE,
+    ORANGE
+};
+
+//-----------------------------------------------------------------------------
+// This class controls the robot container
+// v1: Created the namespace - Nathan S, 2-8-22
+// v2: Converted to a class - Nathan S, 2-8-22
+//-----------------------------------------------------------------------------
+class Robot
+{
+private:
     //-------------------------------------------------------------------------
-    // Variables
-    // leftDrivePower: The power being sent to the left side of the drive
-    // rightDrivePower: The power being sent to the right side of the drive
-    // liftPower: The power being sent to the lift
-    // intakePower: The power being sent to the intake
-    // clawClosed: Whether the claw is currently closed or not
-    // carrierDown: Whetherr the carrier is currently down or not
+    // Private data members
+    // color: The color of the robot
     //-------------------------------------------------------------------------
-    extern float leftDrivePower;
-    extern float rightDrivePower;
-    extern float liftPower;
-    extern float intakePower;
-    extern bool clawClosed;
-    extern bool carrierDown;
+    RobotColor robotColor;
 
     //-------------------------------------------------------------------------
-    // Processes
-    // liftPID: The PID controller in charge of the lift
-    // position: The position tracking system
+    // Updates the carrier subsystem
+    // master: The controller
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-	extern PID liftPID;
-	extern PositionCalculation position;
+    void UpdateCarrier(pros::Controller& master);
 
+    //-------------------------------------------------------------------------
+    // Updates the claw subsystem
+    // master: The controller
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void UpdateClaw(pros::Controller& master);
+
+    //-------------------------------------------------------------------------
+    // Updates the drive subsystem
+    // master: The controller
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void UpdateDrive(pros::Controller& master);
+
+    //-------------------------------------------------------------------------
+    // Updates the intake subsystem
+    // master: The controller
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void UpdateIntake(pros::Controller& master);
+
+    //-------------------------------------------------------------------------
+    // Updates the lift subsystem
+    // master: The controller
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void UpdateLift(pros::Controller& master);
+
+public:
     //-------------------------------------------------------------------------
     // Subsystems
     // drive: The drive subsystem
@@ -48,24 +79,30 @@ namespace Robot
     // claw: The claw subsystem
     // intake: The intake subsystem
     //-------------------------------------------------------------------------
-    extern Drive drive;
-	extern Carrier carrier;
-	extern Lift lift;
-	extern Claw claw;
-	extern Intake intake;
+    Drive drive;
+	Carrier carrier;
+	Lift lift;
+	Claw claw;
+	Intake intake;
+
+    //-------------------------------------------------------------------------
+    // Default constructor for the robot class
+    // v1: Created the constructor - Nathan S, 2-8-22
+    //-------------------------------------------------------------------------
+    Robot(RobotColor color);
 
     //-------------------------------------------------------------------------
     // Initializes the robot
-    // v1: Created the function - Nathan S, 2-8-22
+    // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    extern void Initialize();
+    void Initialize();
 
     //-------------------------------------------------------------------------
     // Controls the robot during driver control mode
     // master: The controller
-    // v1: Created the function - Nathan S, 2-8-22
+    // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    extern void DriveControl(pros::Controller& master);
-}
+    void RobotControl(pros::Controller& master);
+};
 
 #endif

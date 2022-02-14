@@ -2,21 +2,28 @@
 #include "subsystems/Intake.h"
 
 // Constructor definitions ----------------------------------------------------
-Intake::Intake(int n) {}
+Intake::Intake(float speed) 
+{
+    intakeSpeed = speed;
+}
 
 // Public method definitions --------------------------------------------------
 void Intake::Initialize()
 {
-    IntakeConfig::intakeMotor.tare_position();
     IntakeConfig::intakeMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }
 
-float Intake::GetPosition()
+void Intake::Suck()
 {
-    return IntakeConfig::intakeMotor.get_position();
+    IntakeConfig::intakeMotor.move(intakeSpeed);
 }
 
-void Intake::SetIntake(float power)
+void Intake::Blow()
 {
-    IntakeConfig::intakeMotor.move(power);
+    IntakeConfig::intakeMotor.move(-intakeSpeed);
+}
+
+void Intake::Stop()
+{
+    IntakeConfig::intakeMotor.move(0.0);
 }

@@ -2,60 +2,78 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift(int n) {};
-
-// Public method definitions --------------------------------------------------
-void Lift::Initialize()
+Lift::Lift(float angle) : liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0)
 {
-    LiftConfig::leftLiftMotor.tare_position();
-    LiftConfig::rightLiftMotor.tare_position();
+    startAngle = angle;
 }
 
-float Lift::GetPosition()
-{
-    return (LiftConfig::leftLiftMotor.get_position() + LiftConfig::rightLiftMotor.get_position()) / 2.0;
-}
-
-float Lift::GetHeight()
-{
-    return 0.0;
-}
-
+// Private method definitions -------------------------------------------------
 void Lift::SetLift(float power)
 {
     LiftConfig::leftLiftMotor.move(power);
     LiftConfig::rightLiftMotor.move(power);
 }
 
-void Lift::SetHeight(float inches)
+bool Lift::AtBottom()
 {
-    
-    PID armPID(4.3, 0.85, 0.43, 5.0, -127.0, 127.0, 80.0, GetHeight());
-    armPID.SetTargetValue(inches);
-    float height = GetHeight();
-    float controlValue = armPID.GetControlValue(height);
-
-    while(abs(inches - height) > 0.1 || controlValue > 1)
-    {
-        height = GetHeight();
-        controlValue = armPID.GetControlValue(height);
-        SetLift(controlValue);
-    }
+    return LiftConfig::leftLiftMotor.get_position() <= LiftConfig::BOTTOM_POSITION;
 }
 
-void Lift::SetPosition(float target)
+bool Lift::AtTop()
 {
-    PID armPID(4.3, 0.15, 0.05, 0.0, -127.0, 127.0, 80.0, 0.0);
-    armPID.SetTargetValue(target);
-    float current = GetPosition();
-    float controlValue = armPID.GetControlValue(current);
+    return LiftConfig::leftLiftMotor.get_position() >= LiftConfig::TOP_POSITION;
+}
 
-    while(abs(target - current) > 1.0 || controlValue > 1)
+float Lift::GetAngle()
+{
+    return startAngle + (LiftConfig::leftLiftMotor.get_position() * LiftConfig::COUNTS_PER_DEGREE);
+}
+
+// Public method definitions --------------------------------------------------
+void Lift::Initialize()
+{
+    LiftConfig::leftLiftMotor.tare_position();
+    LiftConfig::rightLiftMotor.tare_position();
+    LiftConfig::leftLiftMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+    LiftConfig::rightLiftMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+}
+
+void Lift::Raise()
+{
+    if(!AtTop())
+        SetLift(127.0);
+    else
+        SetLift(0.0);
+    liftPID.SetTargetValue(GetAngle());
+}
+
+void Lift::Lower()
+{
+    if(!AtBottom())
+        SetLift(-127.0);
+    else
+        SetLift(-127.0);
+    liftPID.SetTargetValue(GetAngle());
+}
+
+void Lift::HoldPosition()
+{
+    if(!AtBottom() && !AtTop())
     {
-        current = GetPosition();
-        controlValue = armPID.GetControlValue(current);
+        float controlValue = liftPID.GetControlValue(GetAngle());
         SetLift(controlValue);
-        pros::delay(2);
     }
-    SetLift(0.0);
+    else
+        SetLift(0.0);
+}
+
+void Lift::SetAngle(float targetAngle)
+{
+    liftPID.SetTargetValue(targetAngle);
+
+    while(abs(targetAngle - GetAngle()) > 0.1)
+    {
+        HoldPosition();
+        pros::delay(5);
+    }
 }

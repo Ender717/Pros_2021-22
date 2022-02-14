@@ -17,15 +17,18 @@ void autonomous()
 	switch(Autons::selectedAuton)
 	{
 		case 1:
-			Autons::ProgrammingSkills();
+			Autons::ProgrammingSkills1();
 			break;
 		case 2:
-			Autons::LeftAuton();
+			Autons::ProgrammingSkills2();
 			break;
 		case 3:
-			Autons::MiddleAuton();
+			Autons::LeftAuton();
 			break;
 		case 4:
+			Autons::MiddleAuton();
+			break;
+		case 5:
 			Autons::RightAuton();
 			break;
 		default:

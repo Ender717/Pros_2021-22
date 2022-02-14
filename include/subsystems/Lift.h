@@ -10,17 +10,55 @@
 //-----------------------------------------------------------------------------
 // This class manages the lift subsystem of the robot
 // v1: Created the class - Nathan S, 1-30-22
+// v2: Restructured the class - Nathan S, 2-14-22
 //-----------------------------------------------------------------------------
 class Lift
 {
 private:
+    //-------------------------------------------------------------------------
+    // Private data members
+    // liftPID: The PID controller in charge of the lift
+    // startAngle: The starting angle of the lift in degrees
+    //-------------------------------------------------------------------------
+    PID liftPID;
+    float startAngle;
+
+    //-------------------------------------------------------------------------
+    // Sets the lift to the designated power level
+    // power: The power level to set the lift to
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void SetLift(float power);
+
+    //-------------------------------------------------------------------------
+    // Checks if the lift is at the bottom of its range
+    // return: True if the lift is at the bottom of its range, false if not
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    bool AtBottom();
+
+    //-------------------------------------------------------------------------
+    // Checks if the lift is at the top of its range
+    // return: True if the lift is at the top of its range, false if not
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    bool AtTop();
+
+    //-------------------------------------------------------------------------
+    // Calculates the current angle of the lift
+    // return: The current angle of the lift in degrees
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    float GetAngle();
 
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the Lift class
+    // angle: The angle the lift is starting at
     // v1: Created the constructor - Nathan S, 1-30-22
+    // v2: Added an angle parameter - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    Lift(int n);
+    Lift(float angle);
 
     //-------------------------------------------------------------------------
     // Initializes the lift
@@ -29,39 +67,29 @@ public:
     void Initialize();
 
     //-------------------------------------------------------------------------
-    // Gets the current position of the lift encoders
-    // return: The position of the lift encoders
-    // v1: Created the method - Nathan S, 1-31-22
+    // Raises the lift
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetPosition();
+    void Raise();
 
     //-------------------------------------------------------------------------
-    // Gets the current height of the lift
-    // return: The height of the lift in inches
-    // v1: Created the method - Nathan S, 1-30-22
+    // Lowers the lift
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetHeight();
+    void Lower();
 
     //-------------------------------------------------------------------------
-    // Sets the motors on the lift to the desired power
-    // power: The power to set the motors to
-    // v1: Created the method - Nathan S, 1-30-22
+    // Holds the lift at its current position
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    void SetLift(float power);
+    void HoldPosition();
 
     //-------------------------------------------------------------------------
-    // Sets the lift to the desired height in inches
-    // inches: The height to set the lift to
-    // v1: Created the method - Nathan S, 1-30-22
+    // Sets the lift to the desired angle
+    // targetAngle: The target angle in degrees
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    void SetHeight(float inches);
-
-    //-------------------------------------------------------------------------
-    // Sets the lift to the desired encoder position
-    // target: The target encoder position
-    // v1: Created the method - Nathan S, 1-31-22
-    //-------------------------------------------------------------------------
-    void SetPosition(float target);
+    void SetAngle(float targetAngle);
 };
 
 #endif

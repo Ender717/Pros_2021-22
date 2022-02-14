@@ -66,13 +66,15 @@ public:
 
    //--------------------------------------------------------------------------
    // Updates the current position of the system
+   // leftValue: The left encoder value in inches
+   // rightValue: The right encoder value in inches
+   // strafeValue: The strafe encoder value in inches
    // v1: Created the method - Nathan S, 9-24-21
    // v2: Corrected the calculations - Nathan S, 1-9-22
    // v3: Reformatted the method - Nathan S, 1-26-22
-   // v4: Changed to an automatic data method instead of input - Nathan S, 1-28-22
    // Credit: Team 5225A - E-Bots Pilons
    //--------------------------------------------------------------------------
-   void UpdatePosition();
+   void UpdatePosition(float leftValue, float rightValue, float strafeValue);
 
    //--------------------------------------------------------------------------
    // Returns the current x-coordinate of the robot
