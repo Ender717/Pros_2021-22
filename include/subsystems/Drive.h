@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
 // v1: Created the class - Nathan S, 1-24-22
-// v2: Refactored the class - Nathan S, 2-13-22
+// v2: Restructured the class - Nathan S, 2-13-22
 //-----------------------------------------------------------------------------
 class Drive
 {

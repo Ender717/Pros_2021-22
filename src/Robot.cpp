@@ -7,25 +7,22 @@ namespace Robot
     float leftDrivePower;
     float rightDrivePower;
     float liftPower;
-    float intakePower;
 
     // Processes
 	PID liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0);
-    PositionCalculation position(0.0, 0.0, 0.0);
 
     // Subsystems
     Drive drive(0.0, 0.0, 0.0);
 	Carrier carrier(false);
 	Lift lift(1);
 	Claw claw(true);
-	Intake intake(1);
+	Intake intake(127.0);
 
     void Initialize()
     {
         // Initialize the variables
         leftDrivePower = 0.0;
         rightDrivePower = 0.0;
-        intakePower = 0.0;
 
         // Initialize the processes
         liftPID.SetTargetValue(0.0);
@@ -40,15 +37,15 @@ namespace Robot
 
     void DriveControl(pros::Controller& master)
     {
-		// Update and display the coordinate system
+		// Update the coordinate system
 		drive.UpdatePosition();
 
-		// Calculate the power level of each motor
+		// Update the drive
 		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-		intakePower = (master.get_digital(E_CONTROLLER_DIGITAL_L1) - master.get_digital(E_CONTROLLER_DIGITAL_L2)) * 127;
+		drive.SetDrive(leftDrivePower, rightDrivePower);
 
-		// Update the claw position
+		// Update the claw
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 		{
 			if(claw.IsClosed())
@@ -56,8 +53,9 @@ namespace Robot
 			else
                 claw.SetClosed();
 		}
+		claw.HoldPosition();
 
-		// Update the carrier position
+		// Update the carrier
 		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 		{
 			if(carrier.IsDown())
@@ -65,6 +63,14 @@ namespace Robot
 			else
 				carrier.SetDown();
 		}
+
+		// Update the intake
+		if (master.get_digital(E_CONTROLLER_DIGITAL_L1))
+			intake.Intake();
+		else if (master.get_digital(E_CONTROLLER_DIGITAL_L2))
+			intake.Outtake();
+		else
+			intake.Hold();
 		
 		// Set the lift
 		if(master.get_digital(E_CONTROLLER_DIGITAL_R1) && (lift.GetPosition() < LiftConfig::TOP_POSITION))
@@ -79,11 +85,6 @@ namespace Robot
 		}
 		else
 			lift.SetLift(liftPID.GetControlValue(lift.GetPosition()));
-			
-		// Set the motors
-		drive.SetDrive(leftDrivePower, rightDrivePower);
-        claw.HoldPosition();
-		intake.SetIntake(intakePower);
 		
 		pros::delay(5);
 	}

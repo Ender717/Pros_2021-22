@@ -28,17 +28,12 @@ namespace Robot
     extern float leftDrivePower;
     extern float rightDrivePower;
     extern float liftPower;
-    extern float intakePower;
-    extern bool clawClosed;
-    extern bool carrierDown;
 
     //-------------------------------------------------------------------------
     // Processes
     // liftPID: The PID controller in charge of the lift
-    // position: The position tracking system
     //-------------------------------------------------------------------------
 	extern PID liftPID;
-	extern PositionCalculation position;
 
     //-------------------------------------------------------------------------
     // Subsystems
