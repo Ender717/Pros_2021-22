@@ -11,7 +11,7 @@ Lift::Lift(float angle) : liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0
 void Lift::SetLift(float power)
 {
     LiftConfig::leftLiftMotor.move(power);
-    LiftConfig::rightLiftMoto.move(power);
+    LiftConfig::rightLiftMotor.move(power);
 }
 
 bool Lift::AtBottom()

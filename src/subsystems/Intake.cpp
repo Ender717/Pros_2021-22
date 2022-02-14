@@ -13,12 +13,12 @@ void Intake::Initialize()
     IntakeConfig::intakeMotor.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }
 
-void Intake::Intake()
+void Intake::Suck()
 {
     IntakeConfig::intakeMotor.move(intakeSpeed);
 }
 
-void Intake::Outtake()
+void Intake::Blow()
 {
     IntakeConfig::intakeMotor.move(-intakeSpeed);
 }

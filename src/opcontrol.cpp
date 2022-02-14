@@ -15,18 +15,16 @@
  */
 void opcontrol() 
 {
-	// Create the robot
+	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	Robot robot(RobotColor::ORANGE);
 
 	//Autons::RightAuton();
-	
-	Robot::liftPID.SetTargetValue(Robot::lift.GetPosition());
 	
 	pros::screen::erase();
 	
 	while(true)
 	{
-		Robot::DriveControl(master);
-		Menu::PrintPosition();
+		robot.RobotControl(master);
 	}
 }

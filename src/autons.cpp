@@ -11,10 +11,7 @@ namespace Autons
     // Functions
     void ProgrammingSkills()
     {
-        // Run the routine
-        Robot::drive.SetDrive(127.0, 127.0);
-        pros::delay(2000);
-        Robot::drive.SetDrive(0.0, 0.0);
+    
     }
 
     void LeftAuton()
