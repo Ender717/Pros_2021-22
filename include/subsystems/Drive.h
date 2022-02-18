@@ -22,11 +22,19 @@ private:
     // anglePID: The PID controller for angle
     // turnPID: The PID controller for turning
     // position: The position calculation system
+    // taskInitialized: Whether a task has already been initialized or not
+    // taskCompleted: Whether the assigned task is complete or not
+    // timer: The amount of time elapsed during a task
+    // startDistance: The distance a task started at from the target
     //-------------------------------------------------------------------------
     PID distancePID;
     PID anglePID;
     PID turnPID;
     PositionCalculation position;
+    bool taskInitialized;
+    bool taskCompleted;
+    int timer;
+    float startDistance;
 
 public:
     //-------------------------------------------------------------------------
@@ -53,9 +61,20 @@ public:
     // Makes the drive move towards a target position
     // targetX: The target position's x-coordinate
     // targetY: The target position's y-coordinate
+    // power: The speed at which the robot moves to the target coordinate
     // v1: Created the method - Nathan S, 2-13-22
+    // v2: Made the method work properly - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void GoToPosition(float targetX, float targetY);
+    void GoToPosition(float targetX, float targetY, float power);
+
+    //-------------------------------------------------------------------------
+    // Makes the drive move towards a target position as a task
+    // targetX: The target position's x-coordinate
+    // targetY: The target position's y-coordinate
+    // power: The speed at which the robot moves to the target coordinate
+    // v1: Created the method - Nathan S, 2-18-22
+    //-------------------------------------------------------------------------
+    void GoToPositionTask(float targetX, float targetY, float power);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle
@@ -63,6 +82,13 @@ public:
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
     void TurnToAngle(float targetAngle);
+
+    //-------------------------------------------------------------------------
+    // Checks if the current task has been completed
+    // return: True if the task is complete, false if not
+    // v1: Created the method - Nathan S, 2-18-22
+    //-------------------------------------------------------------------------
+    bool TaskComplete();
 
     //-------------------------------------------------------------------------
     // Sets the current x-coordinate of the drive

@@ -77,3 +77,8 @@ void Lift::SetAngle(float targetAngle)
         pros::delay(5);
     }
 }
+
+void Lift::SetTargetAngle(float targetAngle)
+{
+    liftPID.SetTargetValue(targetAngle);
+}
