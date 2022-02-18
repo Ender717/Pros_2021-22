@@ -4,7 +4,7 @@
 // Constructor definitions ------------------------------------------------
 Drive::Drive() :
     distancePID(8.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
-    anglePID(1.0, 0.01, 0.02, 0.0, -30.0, 30.0, 10.0, 0.0),
+    anglePID(20.0, 0.9, 0.3, 0.0, -127.0, 127.0, 40.0, 0.0),
     turnPID(7.3, 0.35, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
     position(0.0, 0.0, 0.0) 
 {
@@ -18,6 +18,7 @@ void Drive::Initialize()
     DriveConfig::leftTrackingSensor.set_position(0.0);
     DriveConfig::rightTrackingSensor.set_position(0.0);
     DriveConfig::strafeTrackingSensor.set_position(0.0);
+    DriveConfig::strafeTrackingSensor.set_reversed(true);
 
     // Initialize the motor brake modes
     DriveConfig::leftFrontDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -48,8 +49,10 @@ void Drive::GoToPosition(float targetX, float targetY)
     float distance = startDistance;
     float angle = atan2(targetX - position.GetX(), targetY - position.GetY());
     float controlDistance = distance * cos(angle - position.GetTheta());
-    if(controlDistance < 0)
-        angle = (-angle / abs(angle)) * (3.1415 - abs(angle));
+    if (angle > (3.1415 / 2.0))
+        angle = 3.1415 - angle;
+    else if (angle < -(3.1415 / 2.0))
+        angle = -3.1415 - angle;
     float controlAngle = distance * sin(angle - position.GetTheta());
 
     // Set the PID controllers
@@ -62,14 +65,17 @@ void Drive::GoToPosition(float targetX, float targetY)
 
     // Set the motors for the control motion
     int timer = 0;
-    while((distance > 0.5 || controlValue > 3.0) && timer < (startDistance * 30))
+    while((distance > 1.5 || controlValue > 3.0) && timer < (startDistance * 80))
     {
         // Calculate all the variables
+        UpdatePosition();
         distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-        angle = atan2(targetX - position.GetX(), targetY - position.GetY());
+        angle = atan2(targetY - position.GetY(), targetX - position.GetX());
         controlDistance = distance * cos(angle - position.GetTheta());
-        if(controlDistance < 0)
-        angle = (-angle / abs(angle)) * ((3.1415 / 2.0) - abs(angle));
+        if (angle > (3.1415 / 2.0))
+            angle += 3.1415;
+        else if (angle < -(3.1415 / 2.0))
+            angle -= 3.1415;
         controlAngle = distance * sin(angle - position.GetTheta());
 
         // Set the PID controllers

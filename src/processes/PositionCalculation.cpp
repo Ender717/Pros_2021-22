@@ -41,14 +41,6 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
 
    // Calculate the change in theta
    float thetaChange = currentTheta - lastTheta;
-   while(currentTheta > 1.5708)
-   {
-      currentTheta -= 3.1415;
-   }
-   while(currentTheta < -1.5708)
-   {
-      currentTheta += 3.1415;
-   }
 
    // Calculate the local offset
    float forwardDistance = 0.0;
@@ -61,7 +53,7 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    else
    {
       sidewaysDistance = (2.0 * sin(thetaChange / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
-      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((rightDistance / thetaChange) + RIGHT_DISTANCE);
+      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((leftDistance / thetaChange) + LEFT_DISTANCE);
    }
 
    // Calculate the average orientation

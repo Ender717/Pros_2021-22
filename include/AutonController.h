@@ -17,7 +17,7 @@ private:
     // NUM_TASKS: The number of tasks the system runs concurrently
     //-------------------------------------------------------------------------
     const int NUM_TASKS = 6;
-    pros::Task[] taskList;
+    pros::Task taskList;
 
 public:
     //-------------------------------------------------------------------------
