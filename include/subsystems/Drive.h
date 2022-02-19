@@ -91,6 +91,12 @@ public:
     bool TaskComplete();
 
     //-------------------------------------------------------------------------
+    // Sets the drive to accept a new task
+    // v1: Created the method - Nathan S, 2-18-22
+    //-------------------------------------------------------------------------
+    void NewTask();
+
+    //-------------------------------------------------------------------------
     // Sets the current x-coordinate of the drive
     // x: The new x-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-13-22

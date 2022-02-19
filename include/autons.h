@@ -5,6 +5,7 @@
 // Included libraries
 #include "main.h"
 #include "Robot.h"
+#include "Menu.h"
 
 //-----------------------------------------------------------------------------
 // This namespace contains all autonomous configurations and values

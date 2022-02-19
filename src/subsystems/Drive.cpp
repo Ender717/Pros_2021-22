@@ -3,8 +3,8 @@
 
 // Constructor definitions ------------------------------------------------
 Drive::Drive() :
-    distancePID(8.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
-    anglePID(5.0, 0.3, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
+    distancePID(11.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
+    anglePID(3.0, 0.2, 0.05, 0.0, -127.0, 127.0, 40.0, 0.0),
     turnPID(5.3, 0.15, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
     position(0.0, 0.0, 0.0) 
 {
@@ -111,27 +111,26 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
         startDistance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
         timer = 0;
         taskInitialized = true;
-        taskCompleted = false;
     }
 
     // Calculate the current polar position from the robot
     UpdatePosition();
     float distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-    float angle = atan2(targetX - position.GetX(), targetY - position.GetY());
+    float angle = atan2(targetY - position.GetY(), targetX - position.GetX());
     float controlDistance = distance * cos(angle - position.GetTheta());
     if (angle > (3.1415 / 2.0))
-        angle = 3.1415 - angle;
+        angle += 3.1415;
     else if (angle < -(3.1415 / 2.0))
-        angle = -3.1415 - angle;
+        angle -= 3.1415;
     float controlAngle = distance * sin(angle - position.GetTheta());
 
     // Set the PID controllers
     distancePID.SetTargetValue(controlDistance);
     anglePID.SetTargetValue(controlAngle);
-
-    // Get the control values
     float controlValue = distancePID.GetControlValue(0.0);
     float adjustValue = anglePID.GetControlValue(0.0);
+
+    // Get the control values
     if (controlValue > power)
         controlValue = power;
     else if (controlValue < -power)
@@ -142,17 +141,15 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
         adjustValue = -power;
 
     // Set the motors for the control motion
-    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 80))
-    {
-        // Control the motors
-        SetDrive(controlValue - adjustValue, controlValue + adjustValue);
+    SetDrive(controlValue - adjustValue, controlValue + adjustValue);
 
-        // Update the timer
+    // Update the task
+    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 40))
+    {
         timer += 10;
     }
     else
     {
-        taskInitialized = false;
         taskCompleted = true;
         SetDrive(0.0, 0.0);
     }
@@ -183,6 +180,12 @@ void Drive::TurnToAngle(float targetAngle)
 bool Drive::TaskComplete()
 {
     return taskCompleted;
+}
+
+void Drive::NewTask()
+{
+    taskInitialized = false;
+    taskCompleted = false;
 }
 
 void Drive::SetX(float x)

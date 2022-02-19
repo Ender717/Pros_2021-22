@@ -11,13 +11,58 @@ namespace Autons
     // Functions
     void ProgrammingSkills1(Robot& robot)
     {
-        // Move forward
         robot.drive.SetPosition(-55.0, -36.0, 0.0);
-        robot.lift.SetTargetAngle(10.0);
-        while(true)
+
+        // Move forward
+        robot.drive.NewTask();
+        robot.lift.SetTargetAngle(-17.0);
+        robot.claw.SetOpen();
+        while(!robot.drive.TaskComplete())
         {
+            Menu::DrawPosition(robot);
+            robot.drive.GoToPositionTask(-25.0, -36.0, 110.0);
             robot.lift.HoldPosition();
-            pros::delay(5);
+            robot.claw.HoldPosition();
+            pros::delay(10);
+        }
+
+        robot.drive.NewTask();
+        robot.lift.SetTargetAngle(-17.0);
+        robot.claw.SetClosed();
+        while(!robot.drive.TaskComplete())
+        {
+            Menu::DrawPosition(robot);
+            robot.drive.GoToPositionTask(-20.0, -36.0, 30.0);
+            robot.lift.HoldPosition();
+            robot.claw.HoldPosition();
+            pros::delay(10);
+        }
+
+        // Move backward
+        robot.drive.NewTask();
+        robot.lift.SetTargetAngle(110.0);
+        robot.claw.SetClosed();
+        while(!robot.drive.TaskComplete())
+        {
+            Menu::DrawPosition(robot);
+            robot.drive.GoToPositionTask(-60.0, -36.0, 127.0);
+            robot.lift.HoldPosition();
+            robot.claw.HoldPosition();
+            pros::delay(10);
+        }
+
+        robot.drive.TurnToAngle(90.0);
+
+        robot.drive.NewTask();
+        robot.lift.SetTargetAngle(30.0);
+        robot.claw.SetClosed();
+        while(!robot.drive.TaskComplete())
+        {
+            Menu::DrawPosition(robot);
+            robot.drive.GoToPositionTask(-60.0, -26.0, 40.0);
+            robot.lift.HoldPosition();
+            robot.claw.HoldPosition();
+            pros::delay(10);
         }
 
         /*
