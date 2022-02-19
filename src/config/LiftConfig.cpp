@@ -11,7 +11,7 @@ namespace LiftConfig
 
     // Ports
     const int LEFT_LIFT_PORT = 9;
-    const int RIGHT_LIFT_PORT = 10;
+    const int RIGHT_LIFT_PORT = 7;
 
     // Motors
     pros::Motor leftLiftMotor(LEFT_LIFT_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);

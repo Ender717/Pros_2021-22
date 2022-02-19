@@ -2,7 +2,7 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift(float angle) : liftPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 70.0, 0.0)
+Lift::Lift(float angle) : liftPID(3.0, 0.3, 0.25, 0.0, -127.0, 127.0, 70.0, 0.0)
 {
     startAngle = angle;
 }
@@ -26,7 +26,7 @@ bool Lift::AtTop()
 
 float Lift::GetAngle()
 {
-    return startAngle + (LiftConfig::leftLiftMotor.get_position() * LiftConfig::COUNTS_PER_DEGREE);
+    return startAngle + (LiftConfig::leftLiftMotor.get_position() / LiftConfig::COUNTS_PER_DEGREE);
 }
 
 // Public method definitions --------------------------------------------------

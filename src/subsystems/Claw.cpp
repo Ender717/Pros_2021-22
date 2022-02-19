@@ -33,8 +33,8 @@ void Claw::SetOpen()
 void Claw::HoldPosition()
 {
     float position = ClawConfig::clawMotor.get_position();
-    bool inPosition = (isClosed && (position > ClawConfig::CLOSED_POSITION)) ||
-                      (!isClosed && (position < ClawConfig::OPEN_POSITION));
+    bool inPosition = (isClosed && (position <= ClawConfig::CLOSED_POSITION)) ||
+                      (!isClosed && (position >= ClawConfig::OPEN_POSITION));
     if(!inPosition)
     {
         float power = clawPID.GetControlValue(position);

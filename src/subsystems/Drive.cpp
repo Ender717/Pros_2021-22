@@ -4,8 +4,8 @@
 // Constructor definitions ------------------------------------------------
 Drive::Drive() :
     distancePID(8.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
-    anglePID(10.0, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
-    turnPID(7.3, 0.35, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
+    anglePID(5.0, 0.3, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
+    turnPID(5.3, 0.15, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
     position(0.0, 0.0, 0.0) 
 {
     taskInitialized = false;
@@ -75,7 +75,7 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
 
     // Set the motors for the control motion
     int timer = 0;
-    while((distance > 1.5 || controlValue > 3.0) && timer < (startDistance * 80))
+    while((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 80))
     {
         // Calculate all the variables
         UpdatePosition();
@@ -98,7 +98,7 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
 
         // Update the loop
-        timer += 10;
+        //timer += 10;
         pros::delay(10);
     }
     SetDrive(0.0, 0.0);
@@ -142,7 +142,7 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
         adjustValue = -power;
 
     // Set the motors for the control motion
-    if((distance > 1.5 || controlValue > 3.0) && timer < (startDistance * 80))
+    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 80))
     {
         // Control the motors
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
@@ -161,15 +161,16 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
 void Drive::TurnToAngle(float targetAngle)
 {
     // Initialize variables
-    int timer = 0;
+    timer = 0;
     float angle = position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
     float turnSize = abs(targetAngle - angle);
     turnPID.SetTargetValue(targetAngle);
     float controlValue = turnPID.GetControlValue(angle);
 
     // Loop until the target is reached
-    while((abs(targetAngle - angle) > 1.0 || controlValue > 3.0) && timer < (turnSize * 5))
+    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 20))
     {
+        UpdatePosition();
         angle = position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
         controlValue = turnPID.GetControlValue(angle);
         SetDrive(-controlValue, controlValue);

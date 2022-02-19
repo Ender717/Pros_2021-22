@@ -5,7 +5,7 @@
 Robot::Robot(RobotColor color) :
     drive(),
 	carrier(false),
-	lift(70.0),
+	lift(80.0),
 	claw(true),
 	intake(127.0)
 {
