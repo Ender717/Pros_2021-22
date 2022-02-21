@@ -3,6 +3,8 @@
 #define AUTON_CONTROLLER_H
 
 // Included libraries
+#include "Robot.h"
+#include "Menu.h"
 #include "./main.h"
 
 //-----------------------------------------------------------------------------
@@ -14,9 +16,9 @@ class AutonController
 private:
     //-------------------------------------------------------------------------
     // Private data members
-    // taskComplete: Whether the main task has been completed or not
+    // robot: The robot
     //-------------------------------------------------------------------------
-    bool taskComplete;
+    Robot robot;
 
 public:
     //-------------------------------------------------------------------------
@@ -26,13 +28,30 @@ public:
     AutonController();
 
     //-------------------------------------------------------------------------
-    // Sets the main task being run by the controller
-    // function: The function the task is running
+    // Runs an autonomous task routine controlled by the drive
+    // targetX: The target x-coordinate for the drive
+    // targetY: The target y-coordinate for the drive
+    // drivePower: The maximum power for the drive
+    // liftAngle: The angle to set the lift to
+    // clawClosed: Whether the claw should be closed or not
+    // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void SetMainTask(void (*func)(float, float, float));
+    void DoDriveTask(float targetX, float targetY, float drivePower,
+                     float liftAngle, bool clawClosed, bool carrierDown);
 
-
+    //-------------------------------------------------------------------------
+    // Runs an autonomous task routine controlled by the lift
+    // targetX: The target x-coordinate for the drive
+    // targetY: The target y-coordinate for the drive
+    // drivePower: The maximum power for the drive
+    // liftAngle: The angle to set the lift to
+    // clawClosed: Whether the claw should be closed or not
+    // carrierDown: Whether the carrier should be down or not
+    // v1: Created the method - Nathan S, 2-18-22
+    //-------------------------------------------------------------------------
+    void DoLiftTask(float targetX, float targetY, float drivePower,
+                     float liftAngle, bool clawClosed, bool carrierDown);
 };
 
 #endif
