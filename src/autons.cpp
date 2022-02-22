@@ -11,104 +11,56 @@ namespace Autons
     // Functions
     void ProgrammingSkills1(Robot& robot)
     {
-        robot.drive.SetPosition(-55.0, -36.0, 0.0);
+        AutonController control(-55.0, -36.0, 0.0);
 
         // Move forward
-        robot.drive.NewTask();
-        robot.lift.SetTargetAngle(-17.0);
-        robot.claw.SetOpen();
-        while(!robot.drive.TaskComplete())
-        {
-            Menu::DrawPosition(robot);
-            robot.drive.GoToPositionTask(-25.0, -36.0, 110.0);
-            robot.lift.HoldPosition();
-            robot.claw.HoldPosition();
-            pros::delay(10);
-        }
+        control.DoPositionTask(-15.0, -36.0, 110.0, -17.0, false, false, false);
 
-        robot.drive.NewTask();
-        robot.lift.SetTargetAngle(-17.0);
-        robot.claw.SetClosed();
-        while(!robot.drive.TaskComplete())
-        {
-            Menu::DrawPosition(robot);
-            robot.drive.GoToPositionTask(-20.0, -36.0, 30.0);
-            robot.lift.HoldPosition();
-            robot.claw.HoldPosition();
-            pros::delay(10);
-        }
+        // Grab the neutral goal
+        control.DoPositionTask(-10.0, -36.0, 30.0, -17.0, true, false, false);
 
         // Move backward
-        robot.drive.NewTask();
-        robot.lift.SetTargetAngle(110.0);
-        robot.claw.SetClosed();
-        while(!robot.drive.TaskComplete())
-        {
-            Menu::DrawPosition(robot);
-            robot.drive.GoToPositionTask(-60.0, -36.0, 127.0);
-            robot.lift.HoldPosition();
-            robot.claw.HoldPosition();
-            pros::delay(10);
-        }
+        control.DoPositionTask(-36.0, -36.0, 127.0, 110.0, true, false, false);
 
-        robot.drive.TurnToAngle(90.0);
+        // Turn toward the alliance goal
+        control.DoTurnTask(90.0, 127.0, 110.0, true, true, false);
 
-        robot.drive.NewTask();
-        robot.lift.SetTargetAngle(30.0);
-        robot.claw.SetClosed();
-        while(!robot.drive.TaskComplete())
-        {
-            Menu::DrawPosition(robot);
-            robot.drive.GoToPositionTask(-60.0, -26.0, 40.0);
-            robot.lift.HoldPosition();
-            robot.claw.HoldPosition();
-            pros::delay(10);
-        }
-
-        /*
-        while(!robot.drive.TaskComplete())
-        {
-
-        }
-        robot.drive.TurnToAngle(-90.0);
-        */
-
-        /*
-        robot.carrier.SetUp();
-        robot.claw.SetOpen();
-        robot.intake.Stop();
-        robot.lift.SetTargetAngle(10.0);
-        while(!robot.drive.TaskComplete())
-        {
-            robot.drive.GoToPositionTask(-35.0, 46.0, 127.0);
-            robot.claw.HoldPosition();
-            robot.lift.HoldPosition();
-            pros::delay(10);
-        }
-        */
-        
         // Move backward
-        //robot.drive.GoToPosition(-52.0, 27.0, 127.0);
+        control.DoPositionTask(-36.0, -45.0, 127.0, 110.0, true, true, false);
+
+        // Grab the alliance goal
+        control.DoPositionTask(-36.0, -50.0, 30.0, 110.0, true, true, false);
+
+        // Align with the tiles
+        control.DoPositionTask(-36.0, -48.0, 30.0, 110.0, true, false, false);
+
+        // Turn toward the wall
+        control.DoTurnTask(180.0, 127.0, 110.0, true, false, false);
+
+        // Wait for the match loads
+        pros::delay(10000);
+
+        // Grab the match loads
+        control.DoPositionTask(-10.0, -48.0, 40.0, 110.0, true, false, true);
     }
 
-    void ProgrammingSkills2(Robot& robot)
+    void ProgrammingSkills2()
     {
-        robot.drive.SetPosition(-55.0, -36.0, 0.0);
-        robot.drive.TurnToAngle(90.0);
+
     }
 
-    void LeftAuton(Robot& robot)
+    void LeftAuton()
     {
-        robot.drive.SetPosition(-55.0, 36.0, 0.0);
+
     }
 
-    void MiddleAuton(Robot& robot)
+    void MiddleAuton()
     {
-        robot.drive.SetPosition(-55.0, -36.0, 33.2);
+
     }
 
-    void RightAuton(Robot& robot)
+    void RightAuton()
     {
-        robot.drive.SetPosition(-55.0, -36.0, 0.0);
+
     }
 }

@@ -4,8 +4,8 @@
 
 // Included libraries
 #include "main.h"
-#include "Robot.h"
 #include "Menu.h"
+#include "AutonController.h"
 
 //-----------------------------------------------------------------------------
 // This namespace contains all autonomous configurations and values
@@ -26,38 +26,33 @@ namespace Autons
 
     //-------------------------------------------------------------------------
     // This function runs the programming skills 1 routine
-    // robot: The robot
     // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    extern void ProgrammingSkills1(Robot& robot);
+    extern void ProgrammingSkills1();
 
     //-------------------------------------------------------------------------
     // This function runs the programming skills 2 routine
-    // robot: The robot
     // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    extern void ProgrammingSkills2(Robot& robot);
+    extern void ProgrammingSkills2();
 
     //-------------------------------------------------------------------------
     // This function runs the left auton routine
-    // robot: The robot
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void LeftAuton(Robot& robot);
+    extern void LeftAuton();
 
     //-------------------------------------------------------------------------
     // This function runs the middle auton routine
-    // robot: The robot
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void MiddleAuton(Robot& robot);
+    extern void MiddleAuton();
 
     //-------------------------------------------------------------------------
     // This function runs the right auton routine
-    // robot: The robot
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void RightAuton(Robot& robot);
+    extern void RightAuton();
 }
 
 #endif

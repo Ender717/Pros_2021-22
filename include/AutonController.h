@@ -23,9 +23,12 @@ private:
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the auton controller class
+    // x: The starting x-coordinate
+    // y: The starting y-coordinate
+    // theta: The starting angle
     // v1: Created the constructor - Nathan S, 2-17-22
     //-------------------------------------------------------------------------
-    AutonController();
+    AutonController(float x, float y, float theta);
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the position
@@ -38,7 +41,7 @@ public:
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
     void DoPositionTask(float targetX, float targetY, float drivePower,
-                        float liftAngle, bool clawClosed, bool carrierDown);
+                        float liftAngle, bool clawClosed, bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by a turn
@@ -50,7 +53,7 @@ public:
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
     void DoTurnTask(float targetAngle, float drivePower, float liftAngle, 
-                    bool clawClosed, bool carrierDown);
+                    bool clawClosed, bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the lift
@@ -63,7 +66,7 @@ public:
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
     void DoLiftTask(float targetX, float targetY, float drivePower,
-                     float liftAngle, bool clawClosed, bool carrierDown);
+                     float liftAngle, bool clawClosed, bool carrierDown, bool intake);
 };
 
 #endif
