@@ -92,7 +92,7 @@ namespace Menu
         Autons::selectedAuton = auton;
     }
 
-    void DrawPosition(Robot& robot)
+    void DrawPosition(const Robot& robot)
     {
         // Write the coordinates
         pros::screen::set_pen(COLOR_WHITE);

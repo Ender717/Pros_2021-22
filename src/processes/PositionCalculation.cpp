@@ -74,17 +74,17 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    lastTheta = currentTheta;
 }
 
-float PositionCalculation::GetX()
+float PositionCalculation::GetX() const
 {
    return currentX;
 }
 
-float PositionCalculation::GetY()
+float PositionCalculation::GetY() const
 {
    return currentY;
 }
 
-float PositionCalculation::GetTheta()
+float PositionCalculation::GetTheta() const
 {
    return currentTheta;
 }

@@ -232,17 +232,17 @@ void Drive::SetPosition(float x, float y, float theta)
     position.SetPosition(x, y, theta * DriveConfig::DEGREES_TO_RADIANS);
 }
 
-float Drive::GetX()
+float Drive::GetX() const
 {
     return position.GetX();
 }
 
-float Drive::GetY()
+float Drive::GetY() const
 {
     return position.GetY();
 }
 
-float Drive::GetTheta()
+float Drive::GetTheta() const
 {
     return position.GetTheta();
 }

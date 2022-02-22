@@ -2,14 +2,14 @@
 #include "Robot.h"
 
 // Constructor definitions ----------------------------------------------------
-Robot::Robot(RobotColor color) :
+Robot::Robot() :
     drive(),
 	carrier(false),
 	lift(80.0),
 	claw(true),
 	intake(127.0)
 {
-	robotColor = color;
+	
 }
 
 // Private method definitions -------------------------------------------------

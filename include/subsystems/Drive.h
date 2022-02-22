@@ -141,27 +141,21 @@ public:
     // return: The x-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetX();
+    float GetX() const;
 
     //-------------------------------------------------------------------------
     // Gets the current y-coordinate of the drive
     // return: The y-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetY();
+    float GetY() const;
 
     //-------------------------------------------------------------------------
     // Gets the current angle of the drive
     // return: The angle of the drive in radians
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetTheta();
-
-    //-------------------------------------------------------------------------
-    // Prints the current robot position to the brain screen
-    // v1: Created the method - Nathan S, 2-13-22
-    //-------------------------------------------------------------------------
-    void PrintPosition();
+    float GetTheta() const;
 
     //-------------------------------------------------------------------------
     // Updates the position of the drive

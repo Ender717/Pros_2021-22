@@ -18,7 +18,7 @@ void on_center_button() {
  */
 void initialize() 
 {
-	Robot robot(RobotColor::ORANGE);
+	Robot robot;
 	robot.Initialize();
 }
 

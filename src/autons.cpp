@@ -9,7 +9,7 @@ namespace Autons
     int selectedAuton;
 
     // Functions
-    void ProgrammingSkills1(Robot& robot)
+    void ProgrammingSkills1()
     {
         AutonController control(-55.0, -36.0, 0.0);
 

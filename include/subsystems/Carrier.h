@@ -53,7 +53,7 @@ public:
     // return: True if the carrier is down, false if not
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    bool IsDown();
+    bool IsDown() const;
 };
 
 #endif

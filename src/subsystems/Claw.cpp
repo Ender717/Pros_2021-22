@@ -42,7 +42,7 @@ void Claw::HoldPosition()
     }
 }
 
-bool Claw::IsClosed()
+bool Claw::IsClosed() const
 {
     return isClosed;
 }

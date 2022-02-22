@@ -62,7 +62,7 @@ public:
     // return: True if the claw is closed, false if not
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    bool IsClosed();
+    bool IsClosed() const;
 
     //-------------------------------------------------------------------------
     // Checks if the claw has a goal or not

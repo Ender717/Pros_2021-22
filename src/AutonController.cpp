@@ -2,7 +2,7 @@
 #include "AutonController.h"
 
 // Constructor definitions ----------------------------------------------------
-AutonController::AutonController(float x, float y, float theta) : robot(RobotColor::ORANGE)
+AutonController::AutonController(float x, float y, float theta)
 {
     robot.drive.SetPosition(x, y, theta);
 }
