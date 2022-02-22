@@ -61,3 +61,13 @@ void PID::SetTargetValue(float targetValue)
 {
    this->targetValue = targetValue;
 }
+
+void PID::SetMin(float min)
+{
+   this->min = min;
+}
+
+void PID::SetMax(float max)
+{
+   this->max = max;
+}

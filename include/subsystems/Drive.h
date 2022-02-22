@@ -26,6 +26,7 @@ private:
     // taskCompleted: Whether the assigned task is complete or not
     // timer: The amount of time elapsed during a task
     // startDistance: The distance a task started at from the target
+    // startAngle: The difference in angle a task started at from the target
     //-------------------------------------------------------------------------
     PID distancePID;
     PID anglePID;
@@ -35,6 +36,7 @@ private:
     bool taskCompleted;
     int timer;
     float startDistance;
+    float startAngle;
 
 public:
     //-------------------------------------------------------------------------
@@ -82,6 +84,14 @@ public:
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
     void TurnToAngle(float targetAngle);
+
+    //-------------------------------------------------------------------------
+    // Makes the drive turn to the target angle as a task
+    // targetAngle: The target angle in degrees
+    // power: The speed at which the drive will turn
+    // v1: Created the method - Nathan S, 2-22-22
+    //-------------------------------------------------------------------------
+    void TurnToAngleTask(float targetAngle, float power);
 
     //-------------------------------------------------------------------------
     // Checks if the current task has been completed

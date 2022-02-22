@@ -109,6 +109,10 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     if(!taskInitialized)
     {
         startDistance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
+        distancePID.SetMin(-power);
+        distancePID.SetMax(power);
+        anglePID.SetMin(-power);
+        anglePID.SetMax(power);
         timer = 0;
         taskInitialized = true;
     }
@@ -130,22 +134,10 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     float controlValue = distancePID.GetControlValue(0.0);
     float adjustValue = anglePID.GetControlValue(0.0);
 
-    // Get the control values
-    if (controlValue > power)
-        controlValue = power;
-    else if (controlValue < -power)
-        controlValue = -power;
-    if (adjustValue > power)
-        adjustValue = power;
-    else if (adjustValue < -power)
-        adjustValue = -power;
-
-    // Set the motors for the control motion
-    SetDrive(controlValue - adjustValue, controlValue + adjustValue);
-
     // Update the task
     if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 40))
     {
+        SetDrive(controlValue - adjustValue, controlValue + adjustValue);
         timer += 10;
     }
     else
@@ -175,6 +167,38 @@ void Drive::TurnToAngle(float targetAngle)
         pros::delay(10);
     }
     SetDrive(0.0, 0.0);
+}
+
+void Drive::TurnToAngleTask(float targetAngle, float power)
+{
+    if(!taskInitialized)
+    {
+        startAngle = abs(targetAngle - (position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS));
+        turnPID.SetMin(-power);
+        turnPID.SetMax(power);
+        timer = 0;
+        taskInitialized = true;
+    }
+
+    // Calculate variables
+    UpdatePosition();
+    float angle = position.GetTheta() / DriveConfig::DEGREES_TO_RADIANS;
+
+    // Get the PID control value
+    turnPID.SetTargetValue(targetAngle);
+    float controlValue = turnPID.GetControlValue(angle);
+
+    // Update the task
+    if((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (startAngle * 20))
+    {
+        SetDrive(-controlValue, controlValue);
+        timer += 10;
+    }
+    else
+    {
+        taskCompleted = true;
+        SetDrive(0.0, 0.0);
+    }
 }
 
 bool Drive::TaskComplete()
