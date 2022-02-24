@@ -35,7 +35,7 @@ void Claw::HoldPosition()
     float position = ClawConfig::clawMotor.get_position();
     bool inPosition = (isClosed && (position <= ClawConfig::CLOSED_POSITION)) ||
                       (!isClosed && (position >= ClawConfig::OPEN_POSITION));
-    if(!inPosition)
+    if(!inPosition && (!isClosed || (isClosed && HasGoal())))
     {
         float power = clawPID.GetControlValue(position);
         ClawConfig::clawMotor.move(power);
@@ -49,9 +49,8 @@ bool Claw::IsClosed() const
 
 bool Claw::HasGoal()
 {
-    if(ClawConfig::goalSensor.get_proximity() < ClawConfig::GOAL_THRESHOLD)
+    bool hasGoal = false;
+    if(ClawConfig::goalSensor.get_proximity() >= ClawConfig::GOAL_THRESHOLD)
         hasGoal = true;
-    else
-        hasGoal = false;
     return hasGoal;
 }

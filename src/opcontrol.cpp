@@ -26,6 +26,10 @@ void opcontrol()
 	while(true)
 	{
 		robot.RobotControl(master);
-		Menu::DrawPosition(robot);
+		//Menu::DrawPosition(robot);
+		if(robot.claw.HasGoal())
+			pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Goal");
+		else
+			pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "No Goal");
 	}
 }

@@ -14,10 +14,10 @@ namespace Autons
         AutonController control(-55.0, -36.0, 0.0);
 
         // Move forward
-        control.DoPositionTask(-15.0, -36.0, 110.0, -17.0, false, false, false);
+        control.DoPositionTask(-25.0, -36.0, 110.0, -17.0, false, false, false);
 
         // Grab the neutral goal
-        control.DoPositionTask(-10.0, -36.0, 30.0, -17.0, true, false, false);
+        control.DoPositionTask(-22.0, -36.0, 30.0, -17.0, true, false, false);
 
         // Move backward
         control.DoPositionTask(-36.0, -36.0, 127.0, 110.0, true, false, false);
