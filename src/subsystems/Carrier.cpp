@@ -28,7 +28,7 @@ void Carrier::SetUp()
     isDown = false;
 }
 
-bool Carrier::IsDown()
+bool Carrier::IsDown() const
 {
     return isDown;
 }

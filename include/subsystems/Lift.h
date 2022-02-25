@@ -90,6 +90,13 @@ public:
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
     void SetAngle(float targetAngle);
+
+    //-------------------------------------------------------------------------
+    // Sets the lift to the desired angle as a target
+    // targetAngle: The target angle in degrees
+    // v1: Created the method - Nathan S, 2-18-22
+    //-------------------------------------------------------------------------
+    void SetTargetAngle(float targetAngle);
 };
 
 #endif

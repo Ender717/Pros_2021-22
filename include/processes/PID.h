@@ -81,6 +81,20 @@ public:
    // v1: Created the method - Nathan S, 9-11-21
    //-----------------------------------------------------------------------------
    void SetTargetValue(float targetValue);
+
+   //-----------------------------------------------------------------------------
+   // Setter method for min
+   // float min - the value to set min to
+   // v1: Created the method - Nathan S, 9-11-21
+   //-----------------------------------------------------------------------------
+   void SetMin(float min);
+
+   //-----------------------------------------------------------------------------
+   // Setter method for max
+   // float min - the value to set max to
+   // v1: Created the method - Nathan S, 9-11-21
+   //-----------------------------------------------------------------------------
+   void SetMax(float max);
 };
 
 #endif

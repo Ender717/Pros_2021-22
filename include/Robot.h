@@ -11,16 +11,6 @@
 #include "subsystems/Intake.h"
 
 //-----------------------------------------------------------------------------
-// This enum class manages the colors a robot can be
-// v1: Created the enum class - Nathan S, 2-14-22
-//-----------------------------------------------------------------------------
-enum class RobotColor
-{
-    BLUE,
-    ORANGE
-};
-
-//-----------------------------------------------------------------------------
 // This class controls the robot container
 // v1: Created the namespace - Nathan S, 2-8-22
 // v2: Converted to a class - Nathan S, 2-8-22
@@ -28,12 +18,6 @@ enum class RobotColor
 class Robot
 {
 private:
-    //-------------------------------------------------------------------------
-    // Private data members
-    // color: The color of the robot
-    //-------------------------------------------------------------------------
-    RobotColor robotColor;
-
     //-------------------------------------------------------------------------
     // Updates the carrier subsystem
     // master: The controller
@@ -88,7 +72,7 @@ public:
     // Default constructor for the robot class
     // v1: Created the constructor - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    Robot(RobotColor color);
+    Robot();
 
     //-------------------------------------------------------------------------
     // Initializes the robot

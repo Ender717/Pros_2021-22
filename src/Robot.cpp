@@ -2,14 +2,14 @@
 #include "Robot.h"
 
 // Constructor definitions ----------------------------------------------------
-Robot::Robot(RobotColor color) :
+Robot::Robot() :
     drive(),
 	carrier(false),
-	lift(70.0),
+	lift(80.0),
 	claw(true),
 	intake(127.0)
 {
-	robotColor = color;
+	
 }
 
 // Private method definitions -------------------------------------------------
@@ -38,8 +38,14 @@ void Robot::UpdateClaw(pros::Controller& master)
 
 void Robot::UpdateDrive(pros::Controller& master)
 {
+	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
+						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	/*
 	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	*/
 	drive.SetDrive(leftDrivePower, rightDrivePower);
 	drive.UpdatePosition();
 }

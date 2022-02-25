@@ -3,6 +3,7 @@
 #define MENU_H
 
 // Included libraries
+#include "Robot.h"
 #include "./main.h"
 #include "autons.h"
 
@@ -35,7 +36,7 @@ namespace Menu
     // robot: The robot
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    extern void DrawPosition(Robot& robot);
+    extern void DrawPosition(const Robot& robot);
 }
 
 #endif
