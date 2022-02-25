@@ -42,6 +42,10 @@ void Robot::UpdateDrive(pros::Controller& master)
 						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	/*
+	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	*/
 	drive.SetDrive(leftDrivePower, rightDrivePower);
 	drive.UpdatePosition();
 }

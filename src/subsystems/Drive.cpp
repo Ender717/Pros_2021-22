@@ -23,25 +23,29 @@ void Drive::Initialize()
     DriveConfig::strafeTrackingSensor.set_reversed(true);
 
     // Initialize the motor brake modes
-    DriveConfig::leftFrontDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    DriveConfig::leftMiddleDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    DriveConfig::leftRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    DriveConfig::rightFrontDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    DriveConfig::rightMiddleDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    DriveConfig::rightRearDriveMotor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftDrive1Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftDrive2Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftDrive3Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::leftDrive4Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightDrive1Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightDrive2Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightDrive3Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    DriveConfig::rightDrive4Motor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
 void Drive::SetDrive(float leftPower, float rightPower)
 {
     // Move the left side of the drive
-    DriveConfig::leftFrontDriveMotor.move(leftPower);
-    DriveConfig::leftMiddleDriveMotor.move(leftPower);
-    DriveConfig::leftRearDriveMotor.move(leftPower);
+    DriveConfig::leftDrive1Motor.move(leftPower);
+    DriveConfig::leftDrive2Motor.move(leftPower);
+    DriveConfig::leftDrive3Motor.move(leftPower);
+    DriveConfig::leftDrive4Motor.move(leftPower);
 
     // Move the right side of the drive
-    DriveConfig::rightFrontDriveMotor.move(rightPower);
-    DriveConfig::rightMiddleDriveMotor.move(rightPower);
-    DriveConfig::rightRearDriveMotor.move(rightPower);
+    DriveConfig::rightDrive1Motor.move(rightPower);
+    DriveConfig::rightDrive2Motor.move(rightPower);
+    DriveConfig::rightDrive3Motor.move(rightPower);
+    DriveConfig::rightDrive4Motor.move(rightPower);
 }
 
 void Drive::GoToPosition(float targetX, float targetY, float power)

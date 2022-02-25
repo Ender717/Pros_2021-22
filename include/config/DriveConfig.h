@@ -27,42 +27,51 @@ namespace DriveConfig
 
     //-------------------------------------------------------------------------
     // Ports
-    // LEFT_REAR_DRIVE_PORT: The port the left rear drive motor is plugged into
-    // LEFT_MIDDLE_DRIVE_PORT: The port the left middle drive motor is plugged into
-    // LEFT_FRONT_DRIVE_PORT: The port the left front drive motor is plugged into
-    // RIGHT_REAR_DRIVE_PORT: The port the right rear drive motor is plugged into
-    // RIGHT_MIDDLE_DRIVE_PORT: The port the right middle drive motor is plugged into
-    // RIGHT_FRONT_DRIVE_PORT: The port the right front drive motor is plugged into
+    // LEFT_DRIVE_1_PORT: The port the first left drive motor is plugged into
+    // LEFT_DRIVE_2_PORT: The port the second left drive motor is plugged into
+    // LEFT_DRIVE_3_PORT: The port the third left drive motor is plugged into
+    // LEFT_DRIVE_4_PORT: The port the fourth left drive motor is plugged into
+    // RIGHT_DRIVE_1_PORT: The port the first right drive motor is plugged into
+    // RIGHT_DRIVE_2_PORT: The port the second right drive motor is plugged into
+    // RIGHT_DRIVE_3_PORT: The port the third right drive motor is plugged into
+    // RIGHT_DRIVE_4_PORT: The port the fourth right drive motor is plugged into
     // LEFT_TRACKING_PORT: The port the left rotation sensor is plugged into
     // RIGHT_TRACKING_PORT: The port the right rotation sensor is plugged into
     // STRAFE_TRACKING_PORT: The port the strafe rotation sensor is plugged into
     // INERTIAL_PORT: The port the inertial sensor is plugged into
     //-------------------------------------------------------------------------
-    extern const int LEFT_REAR_DRIVE_PORT;
-    extern const int LEFT_MIDDLE_DRIVE_PORT;
-    extern const int LEFT_FRONT_DRIVE_PORT;
-    extern const int RIGHT_REAR_DRIVE_PORT;
-    extern const int RIGHT_MIDDLE_DRIVE_PORT;
-    extern const int RIGHT_FRONT_DRIVE_PORT;
+    extern const int LEFT_DRIVE_1_PORT;
+    extern const int LEFT_DRIVE_2_PORT;
+    extern const int LEFT_DRIVE_3_PORT;
+    extern const int LEFT_DRIVE_4_PORT;
+    extern const int RIGHT_DRIVE_1_PORT;
+    extern const int RIGHT_DRIVE_2_PORT;
+    extern const int RIGHT_DRIVE_3_PORT;
+    extern const int RIGHT_DRIVE_4_PORT;
     extern const int LEFT_TRACKING_PORT;
     extern const int RIGHT_TRACKING_PORT;
     extern const int STRAFE_TRACKING_PORT;
+    extern const int INERTIAL_PORT;
 
     //-------------------------------------------------------------------------
     // Drive Motors
-    // leftRearDriveMotor: The motor positioned at the left rear of the drive
-    // leftMiddleDriveMotor: The motor positioned at the left middle of the drive
-    // leftFrontDriveMotor: The motor positioned at the left front of the drive
-    // rightRearDriveMotor: The motor positioned at the right rear of the drive
-    // rightMiddleDriveMotor: The motor positioned at the right center of the drive
-    // rightRearDriveMotor: The motor positioned at the right front of the drive
+    // leftDrive1Motor: The first left drive motor
+    // leftDrive2Motor: The second left drive motor
+    // leftDrive3Motor: The third left drive motor
+    // leftDrive4Motor: The fourth left drive motor
+    // rightDrive1Motor: The first right drive motor
+    // rightDrive2Motor: The second right drive motor
+    // rightDrive3Motor: The third right drive motor
+    // rightDrive4Motor: The fourth right drive motor
     //-------------------------------------------------------------------------
-    extern pros::Motor leftRearDriveMotor;
-    extern pros::Motor leftMiddleDriveMotor;
-    extern pros::Motor leftFrontDriveMotor;
-    extern pros::Motor rightRearDriveMotor;
-    extern pros::Motor rightMiddleDriveMotor;
-    extern pros::Motor rightFrontDriveMotor;
+    extern pros::Motor leftDrive1Motor;
+    extern pros::Motor leftDrive2Motor;
+    extern pros::Motor leftDrive3Motor;
+    extern pros::Motor leftDrive4Motor;
+    extern pros::Motor rightDrive1Motor;
+    extern pros::Motor rightDrive2Motor;
+    extern pros::Motor rightDrive3Motor;
+    extern pros::Motor rightDrive4Motor;
 
     //-------------------------------------------------------------------------
     // Drive Sensors
@@ -74,6 +83,7 @@ namespace DriveConfig
     extern pros::Rotation leftTrackingSensor;
     extern pros::Rotation rightTrackingSensor;
     extern pros::Rotation strafeTrackingSensor;
+    extern pros::Imu inertialSensor;
 };
 
 #endif
