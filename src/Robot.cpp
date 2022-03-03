@@ -38,14 +38,27 @@ void Robot::UpdateClaw(pros::Controller& master)
 
 void Robot::UpdateDrive(pros::Controller& master)
 {
+	/*
+	// Lift testing controls
+	float leftDrivePower = (master.get_digital(E_CONTROLLER_DIGITAL_R2) - 
+							master.get_digital(E_CONTROLLER_DIGITAL_R1)) * 127.0;
+	float rightDrivePower = (master.get_digital(E_CONTROLLER_DIGITAL_R2) - 
+							 master.get_digital(E_CONTROLLER_DIGITAL_R1)) * 127.0;
+	*/
+
+	// Arcade drive mode
 	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
 						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
 	/*
+	// Tank drive mode
 	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 	*/
+
+	// Update
 	drive.SetDrive(leftDrivePower, rightDrivePower);
 	drive.UpdatePosition();
 }
