@@ -2,7 +2,7 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift(float angle) : liftPID(5.0, 0.3, 0.25, 0.0, -127.0, 127.0, 70.0, 0.0)
+Lift::Lift(float angle) : liftPID(5.0, 0.3, 0.25, 0.0, -127.0, 127.0, 70.0, angle)
 {
     startAngle = angle;
 }
