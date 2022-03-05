@@ -5,7 +5,7 @@
 Robot::Robot() :
     drive(),
 	carrier(false),
-	lift(80.0),
+	lift(140.0),
 	claw(true),
 	intake(127.0)
 {
