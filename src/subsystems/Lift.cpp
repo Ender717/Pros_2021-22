@@ -49,7 +49,8 @@ void Lift::Initialize()
 
 void Lift::Raise()
 {
-    if(!AtTop())
+    //if(!AtTop())
+    if(true)
         SetLift(127.0);
     else
         SetLift(0.0);
@@ -58,16 +59,18 @@ void Lift::Raise()
 
 void Lift::Lower()
 {
-    if(!AtBottom())
+    //if(!AtBottom())
+    if(true)
         SetLift(-127.0);
     else
-        SetLift(-127.0);
+        SetLift(0.0);
     liftPID.SetTargetValue(GetAngle());
 }
 
 void Lift::HoldPosition()
 {
-    if(!AtBottom() && !AtTop())
+    //if(!AtBottom() && !AtTop())
+    if(true)
     {
         float controlValue = liftPID.GetControlValue(GetAngle());
         SetLift(controlValue);
