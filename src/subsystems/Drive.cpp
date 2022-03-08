@@ -4,7 +4,7 @@
 // Constructor definitions ------------------------------------------------
 Drive::Drive() : position(0.0, 0.0, 0.0) 
 {
-    PIDBuilder builder;
+    PID::PIDBuilder builder;
     distancePID = builder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
     anglePID = builder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
     turnPID = builder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();

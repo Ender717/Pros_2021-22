@@ -5,7 +5,7 @@
 // Included libraries
 #include "./main.h"
 #include "./config/ClawConfig.h"
-#include "./processes/PIDBuilder.h"
+#include "./processes/PID.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the claw subsystem of the robot

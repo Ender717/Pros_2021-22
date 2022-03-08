@@ -4,7 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 Claw::Claw(bool startClosed)
 {
-    PIDBuilder builder;
+    PID::PIDBuilder builder;
     clawPID = builder.WithKd(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
 
     isClosed = startClosed;

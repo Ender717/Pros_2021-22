@@ -4,7 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 Lift::Lift(float angle)
 {
-    PIDBuilder builder;
+    PID::PIDBuilder builder;
     liftPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(angle).Build();
 
     startAngle = angle;

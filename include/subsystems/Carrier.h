@@ -5,7 +5,6 @@
 // Included libraries
 #include "./main.h"
 #include "./config/CarrierConfig.h"
-#include "./processes/PID.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the carrier subsystem of the robot
