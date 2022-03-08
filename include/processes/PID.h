@@ -16,8 +16,8 @@ private:
     // MOTOR_MIN: The minimum control value of a motor
     // MOTOR_MAX: The maximum control value of a motor
     //-------------------------------------------------------------------------
-    const float MOTOR_MIN = -127.0;
-    const float MOTOR_MAX = 127.0;
+    static const float MOTOR_MIN = -127.0;
+    static const float MOTOR_MAX = 127.0;
     
     //-------------------------------------------------------------------------
     // Control constants:
@@ -62,12 +62,12 @@ private:
 public:
     //-------------------------------------------------------------------------
     // Default constructor for PID class
-    // v1: Created blank constructor - Nathan S, 9-10-21
-    // v2: Added variable min and max initialization - Nathan S, 9-10-21
-    // v3: Added constant read initializations - Nathan S, 9-10-21
-    // v4: Added parameter for system loop time - Nathan S, 9-12-21
-    // v5: Removed system loop time parameter - Nathan S, 1-12-22
-    // v6: Added a control constant - Nathan S, 1-27-22
+    // v1: Created the constructor - Nathan S, 3-8-22
+    //-------------------------------------------------------------------------
+    PID();
+
+    //-------------------------------------------------------------------------
+    // Builder constructor for PID class
     // v7: Converted to a builder constructor - Nathan S, 3-8-22
     //-------------------------------------------------------------------------
     PID(PIDBuilder* builder);

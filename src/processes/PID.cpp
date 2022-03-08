@@ -3,6 +3,20 @@
 #include "processes/PID.h"
 
 // Constructors ---------------------------------------------------------------
+PID::PID()
+{
+    kp = 0.0;
+    ki = 0.0;
+    kd = 0.0;
+    min = 0.0;
+    max = 0.0;
+    integralLimit = 0.0;
+    targetValue = 0.0;
+    pastTime = 0.0;
+    iValue = 0.0;
+    pastError = 0.0;
+}
+
 PID::PID(PIDBuilder* builder)
 {
     // Initialize KP

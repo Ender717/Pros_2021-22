@@ -5,7 +5,6 @@
 // Included libraries
 #include "./main.h"
 #include "./config/IntakeConfig.h"
-#include "./processes/PID.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the Intake subsystem of the robot

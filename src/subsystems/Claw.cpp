@@ -2,8 +2,11 @@
 #include "subsystems/Claw.h"
 
 // Constructor definitions ----------------------------------------------------
-Claw::Claw(bool startClosed) : clawPID(2.3, 0.05, 0.05, 0.0, -127.0, 127.0, 65.0, 0.0)
+Claw::Claw(bool startClosed)
 {
+    PIDBuilder builder;
+    clawPID = builder.WithKd(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
+
     isClosed = startClosed;
     if(isClosed)
         clawPID.SetTargetValue(ClawConfig::CLOSED_POSITION);

@@ -2,8 +2,11 @@
 #include "subsystems/Lift.h"
 
 // Constructor definitions ----------------------------------------------------
-Lift::Lift(float angle) : liftPID(5.0, 0.3, 0.25, 0.0, -127.0, 127.0, 70.0, angle)
+Lift::Lift(float angle)
 {
+    PIDBuilder builder;
+    liftPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(angle).Build();
+
     startAngle = angle;
 }
 

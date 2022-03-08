@@ -2,12 +2,13 @@
 #include "subsystems/Drive.h"
 
 // Constructor definitions ------------------------------------------------
-Drive::Drive() :
-    distancePID(11.3, 0.5, 0.15, 0.0, -127.0, 127.0, 40.0, 0.0),
-    anglePID(3.0, 0.2, 0.05, 0.0, -127.0, 127.0, 40.0, 0.0),
-    turnPID(5.3, 0.15, 0.10, 0.0, -127.0, 127.0, 40.0, 0.0),
-    position(0.0, 0.0, 0.0) 
+Drive::Drive() : position(0.0, 0.0, 0.0) 
 {
+    PIDBuilder builder;
+    distancePID = builder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
+    anglePID = builder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
+    turnPID = builder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
+    
     taskInitialized = false;
     taskCompleted = false;
     startDistance = 0.0;

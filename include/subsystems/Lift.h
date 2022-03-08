@@ -5,7 +5,7 @@
 // Included libraries
 #include "./main.h"
 #include "./config/LiftConfig.h"
-#include "./processes/PID.h"
+#include "./processes/PIDBuilder.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the lift subsystem of the robot
