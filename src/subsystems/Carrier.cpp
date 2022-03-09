@@ -73,7 +73,7 @@ void Carrier::Initialize()
     }
 
     // Initialize the PID controller
-    carrierPID.SetTargetValue(CarrierConfig::UP_POSITION);
+    carrierPID.SetTargetValue(CarrierConfig_Orange::UP_POSITION);
 }
 
 void Carrier::SetDown()
@@ -86,7 +86,7 @@ void Carrier::SetDown()
     }
 
     // Update the PID controller
-    carrierPID.SetTargetValue(CarrierConfig::DOWN_POSITION);
+    carrierPID.SetTargetValue(CarrierConfig_Orange::DOWN_POSITION);
 
     // Update the position
     isDown = true;
@@ -102,7 +102,7 @@ void Carrier::SetUp()
     }
 
     // Update the PID controller
-    carrierPID.SetTargetValue(CarrierConfig::UP_POSITION);
+    carrierPID.SetTargetValue(CarrierConfig_Orange::UP_POSITION);
 
     // Update the position
     isDown = false;
@@ -113,8 +113,8 @@ void Carrier::HoldPosition()
     if(motorList.size() > 0)
     {
         float position = motorList.front().get_position();
-        bool inPosition = (isDown && (position <= CarrierConfig::DOWN_POSITION)) ||
-                        (!isDown && (position >= CarrierConfig::UP_POSITION));
+        bool inPosition = (isDown && (position <= downPosition)) ||
+                        (!isDown && (position >= upPosition));
         if(!inPosition)
         {
             // Initialize the motors

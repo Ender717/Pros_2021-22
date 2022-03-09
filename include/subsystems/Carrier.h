@@ -4,7 +4,7 @@
 
 // Included libraries
 #include <list>
-#include "./config/CarrierConfig.h"
+#include "./config/CarrierConfig_Orange.h"
 #include "./processes/PID.h"
 #include "./main.h"
 
@@ -25,6 +25,8 @@ private:
     std::list<pros::Motor> motorList;
     std::list<pros::ADIDigitalOut> pistonList;
     PID carrierPID;
+    float upPosition;
+    float downPosition;
     bool isDown;
 
 public:
