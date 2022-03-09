@@ -12,9 +12,17 @@
 namespace CarrierConfig
 {
     //-------------------------------------------------------------------------
+    // Constants:
+    // DOWN_POSITION: The position of the carrier when it is down
+    // UP_POSITION: The position of the carrier when it is up
+    //-------------------------------------------------------------------------
+    extern const float DOWN_POSITION;
+    extern const float UP_POSITION;
+
+    //-------------------------------------------------------------------------
     // Ports
-    // LEFT_CARRIER_PORT: The port for the left carrier motor
-    // RIGHT_CARRIER_PORT: The port for the right carrier motor
+    // LEFT_CARRIER_PORT: The port for the left carrier piston
+    // RIGHT_CARRIER_PORT: The port for the right carrier piston
     //-------------------------------------------------------------------------
     extern const char LEFT_CARRIER_PORT;
     extern const char RIGHT_CARRIER_PORT;

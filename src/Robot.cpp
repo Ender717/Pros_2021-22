@@ -4,7 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 Robot::Robot() :
     drive(),
-	carrier(false),
+	carrier(),
 	lift(140.0),
 	claw(true),
 	intake(127.0)
