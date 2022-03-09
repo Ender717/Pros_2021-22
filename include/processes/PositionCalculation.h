@@ -3,7 +3,7 @@
 #define POSITIONCALCULATION_H
 
 // Included libraries
-#include "./config/DriveConfig.h"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the position tracking system of the robot

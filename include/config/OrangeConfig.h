@@ -63,12 +63,10 @@ namespace OrangeConfig
     
     //-------------------------------------------------------------------------
     // Sensor ports:
-    // CLAW_GOAL_SENSOR_PORT: The port the goal sensor for the claw is in
     // LEFT_DRIVE_TRACKING_PORT: The port the left rotation sensor is plugged into
     // RIGHT_DRIVE_TRACKING_PORT: The port the right rotation sensor is plugged into
     // STRAFE_DRIVE_TRACKING_PORT: The port the strafe rotation sensor is plugged into
     //-------------------------------------------------------------------------
-    extern const int CLAW_GOAL_SENSOR_PORT;
     extern const int LEFT_DRIVE_TRACKING_PORT;
     extern const int RIGHT_DRIVE_TRACKING_PORT;
     extern const int STRAFE_DRIVE_TRACKING_PORT;
@@ -115,12 +113,10 @@ namespace OrangeConfig
 
     //-------------------------------------------------------------------------
     // Sensors:
-    // goalSensor: The optical sensor in charge of detecting goals in the claw
     // leftDriveTrackingSensor: The rotation sensor on the left side of the drive
     // rightDriveTrackingSensor: The rotation sensor on the right side of the drive
     // strafeDriveTrackingSensor: The rotation sensor on the strafe wheel of the drive
     //-------------------------------------------------------------------------
-    extern pros::Optical clawGoalSensor;
     extern pros::Rotation leftDriveTrackingSensor;
     extern pros::Rotation rightDriveTrackingSensor;
     extern pros::Rotation strafeDriveTrackingSensor;

@@ -2,6 +2,9 @@
 #ifndef PID_H
 #define PID_H
 
+// Included libraries
+#include "main.h"
+
 //-----------------------------------------------------------------------------
 // This class manages a PID controller
 // v1: Created the class - Nathan S, 9-10-21

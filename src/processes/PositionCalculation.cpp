@@ -22,9 +22,6 @@ void PositionCalculation::SetPosition(float x, float y, float theta)
    currentY = y;
    currentTheta = theta;
    resetTheta = theta;
-   DriveConfig::leftTrackingSensor.set_position(0.0);
-   DriveConfig::rightTrackingSensor.set_position(0.0);
-   DriveConfig::strafeTrackingSensor.set_position(0.0);
 }
 
 void PositionCalculation::UpdatePosition(float leftValue, float rightValue, float strafeValue)
