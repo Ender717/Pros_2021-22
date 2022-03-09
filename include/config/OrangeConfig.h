@@ -15,7 +15,6 @@ namespace OrangeConfig
     // Constants:
     // OPEN_POSITION: The position of the claw when open
     // CLOSED_POSITION: The position of the claw when closed
-    // GOAL_THRESHOLD: The threshold the goal sensor passes when a goal is there
     // DRIVE_TRACKING_WHEEL_SIZE: The diameter of the tracking wheels on the drive
     // DRIVE_COUNTS_PER_ROTATION: The number of encoder counts in one rotation 
     //                            of a rotation sensor
@@ -26,7 +25,6 @@ namespace OrangeConfig
     //-------------------------------------------------------------------------
     extern const float CLAW_OPEN_POSITION;
     extern const float CLAW_CLOSED_POSITION;
-    extern const float CLAW_GOAL_THRESHOLD;
     extern const float DRIVE_TRACKING_WHEEL_SIZE;
     extern const float DRIVE_COUNTS_PER_ROTATION;
     extern const float LIFT_BOTTOM_POSITION;

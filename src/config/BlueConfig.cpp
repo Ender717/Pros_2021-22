@@ -6,7 +6,6 @@ namespace BlueConfig
     // Constants
     const float CLAW_OPEN_POSITION = 515.0;
     const float CLAW_CLOSED_POSITION = 5.0;
-    const float CLAW_GOAL_THRESHOLD = 100.0;
     const float DRIVE_TRACKING_WHEEL_SIZE = 2.75;
     const float DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const float LIFT_BOTTOM_POSITION = -8.5;
@@ -30,7 +29,6 @@ namespace BlueConfig
     const int RIGHT_LIFT_2_PORT = 8;
 
     // Sensor ports
-    const int CLAW_GOAL_SENSOR_PORT = -1;
     const int LEFT_DRIVE_TRACKING_PORT = -1;
     const int RIGHT_DRIVE_TRACKING_PORT = -1;
     const int STRAFE_DRIVE_TRACKING_PORT = -1;
@@ -64,7 +62,6 @@ namespace BlueConfig
     pros::Motor rightLift2Motor(RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 
     // Sensors
-    pros::Optical clawGoalSensor(CLAW_GOAL_SENSOR_PORT);
     pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
     pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
     pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);

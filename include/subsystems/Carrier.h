@@ -19,6 +19,7 @@ private:
     // Private data members
     // motorList: The list of motors
     // pistonList: The list of pistons
+    // carrierPID: The PID controller in charge of the carrier
     // upPosition: The position the carrier rests at when it is up
     // downPosition: The position the carrier rests at when it is down
     // isDown: Whether the carrier is down or not
@@ -33,6 +34,7 @@ private:
 public:
     //-------------------------------------------------------------------------
     // This is the builder class for the Carrier subsystem
+    // v1: Created the class - Nathan S, 3-9-22
     //-------------------------------------------------------------------------
     class CarrierBuilder
     {

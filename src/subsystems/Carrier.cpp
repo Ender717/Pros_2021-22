@@ -67,7 +67,7 @@ Carrier::Carrier(CarrierBuilder builder)
     }
 
     // Get the PID controller
-    carrierPID = builder.carrierPID;
+    this->carrierPID = builder.carrierPID;
 
     // Get the up position
     if(builder.upPosition != -1.0)

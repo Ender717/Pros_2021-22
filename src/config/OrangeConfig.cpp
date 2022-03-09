@@ -6,7 +6,6 @@ namespace OrangeConfig
     // Constants
     const float CLAW_OPEN_POSITION = 515.0;
     const float CLAW_CLOSED_POSITION = 5.0;
-    const float CLAW_GOAL_THRESHOLD = 100.0;
     const float DRIVE_TRACKING_WHEEL_SIZE = 2.75;
     const float DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const float LIFT_BOTTOM_POSITION = -10.0;
