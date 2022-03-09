@@ -4,7 +4,8 @@
 // Constructor definitions ----------------------------------------------------
 Carrier::CarrierBuilder::CarrierBuilder()
 {
-
+    upPosition = -1;
+    downPosition = -1;
 }
 
 // Public method definitions --------------------------------------------------
@@ -17,6 +18,24 @@ Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMotor(pros::Motor motor)
 Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPiston(pros::ADIDigitalOut piston)
 {
     pistonList.push_back(piston);
+    return *this;
+}
+
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPID(PID pid)
+{
+    this->carrierPID = pid;
+    return *this;
+}
+
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithUpPosition(float upPosition)
+{
+    this->upPosition = upPosition;
+    return *this;
+}
+
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithDownPosition(float downPosition)
+{
+    this->downPosition = downPosition;
     return *this;
 }
 
@@ -50,6 +69,18 @@ Carrier::Carrier(CarrierBuilder builder)
     // Get the PID controller
     carrierPID = builder.carrierPID;
 
+    // Get the up position
+    if(builder.upPosition != -1.0)
+        this->upPosition = builder.upPosition;
+    else
+        this->upPosition = 0.0;
+
+    // Get the down position
+    if(builder.downPosition != -1.0)
+        this->downPosition = builder.downPosition;
+    else
+        this->downPosition = 0.0;
+
     // Initialize the position
     isDown = false;
 }
@@ -73,7 +104,7 @@ void Carrier::Initialize()
     }
 
     // Initialize the PID controller
-    carrierPID.SetTargetValue(CarrierConfig_Orange::UP_POSITION);
+    carrierPID.SetTargetValue(upPosition);
 }
 
 void Carrier::SetDown()
@@ -86,7 +117,7 @@ void Carrier::SetDown()
     }
 
     // Update the PID controller
-    carrierPID.SetTargetValue(CarrierConfig_Orange::DOWN_POSITION);
+    carrierPID.SetTargetValue(downPosition);
 
     // Update the position
     isDown = true;
@@ -102,7 +133,7 @@ void Carrier::SetUp()
     }
 
     // Update the PID controller
-    carrierPID.SetTargetValue(CarrierConfig_Orange::UP_POSITION);
+    carrierPID.SetTargetValue(upPosition);
 
     // Update the position
     isDown = false;
