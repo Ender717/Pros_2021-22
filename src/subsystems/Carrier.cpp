@@ -107,6 +107,15 @@ void Carrier::Initialize()
     carrierPID.SetTargetValue(upPosition);
 }
 
+void Carrier::SetPower(float power)
+{
+    for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
+        iterator != motorList.end(); iterator++)
+    {
+        iterator->move(power);
+    }
+}
+
 void Carrier::SetDown()
 {
     // Set the pistons
@@ -146,15 +155,21 @@ void Carrier::HoldPosition()
         float position = motorList.front().get_position();
         bool inPosition = (isDown && (position <= downPosition)) ||
                         (!isDown && (position >= upPosition));
-        if(!inPosition)
+        //if(!inPosition)
+        if(true)
         {
-            // Initialize the motors
             for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
                 iterator != motorList.end(); iterator++)
             {
                 iterator->move(carrierPID.GetControlValue(position));
             }
         }
+        else
+            for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
+                iterator != motorList.end(); iterator++)
+            {
+                iterator->move(0.0);
+            }
     }
 }
 

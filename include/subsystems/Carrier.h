@@ -129,6 +129,8 @@ public:
     //-------------------------------------------------------------------------
     void Initialize();
 
+    void SetPower(float power);
+
     //-------------------------------------------------------------------------
     // Sets the position of the Carrier to down
     // v1: Created the method - Nathan S, 1-29-22

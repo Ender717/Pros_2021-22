@@ -11,6 +11,7 @@
 #include "subsystems/Intake.h"
 #include "config/BlueConfig.h"
 #include "config/OrangeConfig.h"
+#include "config/OldConfig.h"
 
 //-----------------------------------------------------------------------------
 // This class controls the robot container
