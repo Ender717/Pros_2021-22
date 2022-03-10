@@ -20,6 +20,7 @@ namespace BlueConfig
     //                            of a rotation sensor
     // LIFT_BOTTOM_POSITION: The minimum angle of the lift
     // LIFT_TOP_POSITION: The maximum angle of the lift
+    // LIFT_START_POSITION: The starting angle of the lift
     // LIFT_COUNTS_PER_DEGREE: The number of encoder counts the lift moves per 
     //                         degree of rotation it experiences
     //-------------------------------------------------------------------------
@@ -29,6 +30,7 @@ namespace BlueConfig
     extern const float DRIVE_COUNTS_PER_ROTATION;
     extern const float LIFT_BOTTOM_POSITION;
     extern const float LIFT_TOP_POSITION;
+    extern const float LIFT_START_POSITION;
     extern const float LIFT_COUNTS_PER_DEGREE;
 
     //-------------------------------------------------------------------------

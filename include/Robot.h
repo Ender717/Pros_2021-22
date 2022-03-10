@@ -22,6 +22,28 @@ class Robot
 {
 private:
     //-------------------------------------------------------------------------
+    // Data storage
+    //-------------------------------------------------------------------------
+    static Robot robot;
+
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured blue robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateBlueRobot();
+
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured orange robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateOrangeRobot();
+
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured old robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateOldRobot();
+    //-------------------------------------------------------------------------
     // Updates the carrier subsystem
     // master: The controller
     // v1: Created the method - Nathan S, 2-14-22
@@ -79,9 +101,10 @@ public:
 
     //-------------------------------------------------------------------------
     // Initializes the robot
+    // robotSelected: The robot which was selected
     // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    void Initialize();
+    void Initialize(std::string robotSelected);
 
     //-------------------------------------------------------------------------
     // Controls the robot during driver control mode

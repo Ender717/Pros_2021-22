@@ -4,7 +4,70 @@
 // Constructor definitions ----------------------------------------------------
 Robot::Robot()
 {
-	/*
+	*this = robot;
+}
+
+// Private method definitions -------------------------------------------------
+void Robot::CreateBlueRobot()
+{
+	PID::PIDBuilder pidBuilder;
+	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
+	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
+    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
+    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
+	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	
+	PositionCalculation position;
+
+	Carrier::CarrierBuilder carrierBuilder;
+	carrier = carrierBuilder.WithPiston(BlueConfig::carrier1Piston).
+							 WithPiston(BlueConfig::carrier2Piston).
+							 Build();
+	
+	Claw::ClawBuilder clawBuilder;
+	claw = clawBuilder.WithMotor(BlueConfig::claw1Motor).
+					   WithPID(clawPID).
+					   WithOpenPosition(BlueConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(BlueConfig::CLAW_CLOSED_POSITION).
+					   Build();
+
+	Drive::DriveBuilder driveBuilder;
+	drive = driveBuilder.WithLeftMotor(BlueConfig::leftDrive1Motor).
+						 WithLeftMotor(BlueConfig::leftDrive2Motor).
+						 WithLeftMotor(BlueConfig::leftDrive3Motor).
+						 WithLeftMotor(BlueConfig::leftDrive4Motor).
+						 WithRightMotor(BlueConfig::rightDrive1Motor).
+						 WithRightMotor(BlueConfig::rightDrive2Motor).
+						 WithRightMotor(BlueConfig::rightDrive3Motor).
+						 WithRightMotor(BlueConfig::rightDrive4Motor).
+						 WithTrackingSensor(BlueConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(BlueConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(BlueConfig::strafeDriveTrackingSensor).
+						 WithDistancePID(distancePID).
+						 WithAnglePID(anglePID).
+						 WithTurnPID(turnPID).
+						 WithPosition(position).
+						 WithWheelSize(BlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 Build();
+	
+	Intake::IntakeBuilder intakeBuilder;
+	intake = intakeBuilder.WithMotor(BlueConfig::intake1Motor).Build();
+
+	Lift::LiftBuilder liftBuilder;
+	lift = liftBuilder.WithLeftMotor(BlueConfig::leftLift1Motor).
+					   WithLeftMotor(BlueConfig::leftLift2Motor).
+					   WithRightMotor(BlueConfig::rightLift1Motor).
+					   WithRightMotor(BlueConfig::rightLift2Motor).
+					   WithPID(liftPID).
+					   WithTopAngle(BlueConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(BlueConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE).
+					   Build();
+}
+
+void Robot::CreateOrangeRobot()
+{
 	PID::PIDBuilder pidBuilder;
 	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
 	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
@@ -55,8 +118,10 @@ Robot::Robot()
 					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
 					   WithCountsPerDegree(OrangeConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
-	*/
+}
 
+void Robot::CreateOldRobot()
+{
 	PID::PIDBuilder pidBuilder;
 	PID carrierPID = pidBuilder.WithKp(5.3).WithKi(0.5).WithKd(0.25).WithIntegralLimit(65.0).Build();
 	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
@@ -113,7 +178,6 @@ Robot::Robot()
 					   Build();
 }
 
-// Private method definitions -------------------------------------------------
 void Robot::UpdateCarrier(pros::Controller& master)
 {
 	/*
@@ -186,13 +250,22 @@ void Robot::UpdateLift(pros::Controller& master)
 }
 
 // Public method definitions --------------------------------------------------
-void Robot::Initialize()
+void Robot::Initialize(std::string robotSelected)
 {
+	if (robotSelected == "BLUE")
+		CreateBlueRobot();
+	else if (robotSelected == "ORANGE")
+		CreateOrangeRobot();
+	else if (robotSelected == "OLD")
+		CreateOldRobot();
+	
 	carrier.Initialize();
 	claw.Initialize();
 	drive.Initialize();
 	intake.Initialize();
 	lift.Initialize();
+
+	robot = *this;
 }
 
 void Robot::RobotControl(pros::Controller& master)

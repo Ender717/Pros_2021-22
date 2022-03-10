@@ -4,8 +4,9 @@
 namespace Menu
 {
     bool autonSelected = false;
+    std::string robotSelected = "BLUE";
 
-    void DrawAutonSelect()
+    void DrawMenuSelect()
     {
         // Draw the buttons
         pros::screen::set_pen(COLOR_BLUE);
