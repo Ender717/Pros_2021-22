@@ -2,7 +2,7 @@
 #include "subsystems/Drive.h"
 
 // Constructor definitions ----------------------------------------------------
-Drive::DriveBuilder::DriveBuilder() : position(0.0, 0.0, 0.0)
+Drive::DriveBuilder::DriveBuilder()
 {
     wheelSize = -1.0;
 }
@@ -62,7 +62,7 @@ Drive Drive::DriveBuilder::Build()
 }
 
 // Constructor definitions ----------------------------------------------------
-Drive::Drive() : position(0.0, 0.0, 0.0) 
+Drive::Drive()
 {
     PID::PIDBuilder builder;
     distancePID = builder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
@@ -74,7 +74,7 @@ Drive::Drive() : position(0.0, 0.0, 0.0)
     startDistance = 0.0;
 }
 
-Drive::Drive(DriveBuilder builder) : position(0.0, 0.0, 0.0)
+Drive::Drive(DriveBuilder builder)
 {
     // Set the left motors
     while(builder.leftMotorList.size() > 0)

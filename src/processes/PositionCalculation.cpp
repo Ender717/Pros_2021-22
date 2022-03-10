@@ -2,14 +2,13 @@
 #include "processes/PositionCalculation.h"
 
 // Constructor Definitions ----------------------------------------------------
-PositionCalculation::PositionCalculation(float startX, float startY,
-   float startTheta)
+PositionCalculation::PositionCalculation()
 {
-   currentX = startX;
-   currentY = startY;
-   currentTheta = startTheta;
-   resetTheta = startTheta;
-   lastTheta = startTheta;
+   currentX = 0.0;
+   currentY = 0.0;
+   currentTheta = 0.0;
+   resetTheta = 0.0;
+   lastTheta = 0.0;
    lastLeft = 0.0;
    lastRight = 0.0;
    lastStrafe = 0.0;

@@ -47,13 +47,10 @@ private:
 
 public:
    //--------------------------------------------------------------------------
-   // Parameterized constructor for PositionCalculation class
-   // startX: The initial x-position of the robot
-   // startY: The initial y-position of the robot
-   // startTheta: The initial angle of the robot
+   // Default constructor for PositionCalculation class
    // v1: Created the constructor - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   PositionCalculation(float startX, float startY, float startTheta);
+   PositionCalculation();
 
    //--------------------------------------------------------------------------
    // Sets the coordinates in the tracking system to a new position
