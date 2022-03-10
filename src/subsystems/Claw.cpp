@@ -48,8 +48,7 @@ Claw Claw::ClawBuilder::Build()
 Claw::Claw()
 {
     PID::PIDBuilder builder;
-    clawPID = builder.WithKd(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-    openPosition = 0.0;
+    clawPID = builder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
     isClosed = true;
     clawPID.SetTargetValue(closedPosition);
 }
@@ -77,7 +76,7 @@ Claw::Claw(ClawBuilder builder)
     if(builder.openPosition != -1.0)
         this->openPosition = builder.openPosition;
     else
-        this->openPosition = 0.0;
+        this->openPosition = 515.0;
 
     // Get the down position
     if(builder.closedPosition != -1.0)

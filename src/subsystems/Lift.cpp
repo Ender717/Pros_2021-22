@@ -167,7 +167,8 @@ void Lift::Lower()
 
 void Lift::HoldPosition()
 {
-    if(!AtBottom() && !AtTop())
+    //if(!AtBottom() && !AtTop())
+    if(true)
     {
         float controlValue = liftPID.GetControlValue(GetAngle());
         SetLift(controlValue);

@@ -59,7 +59,7 @@ PID::PIDBuilder PID::PIDBuilder::WithStartTarget(float startTarget)
 
 PID PID::PIDBuilder::Build()
 {
-    return PID(this);
+    return PID(*this);
 }
 
 // Constructors ---------------------------------------------------------------
@@ -77,47 +77,38 @@ PID::PID()
     pastError = 0.0;
 }
 
-PID::PID(PIDBuilder* builder)
+PID::PID(PIDBuilder builder)
 {
     // Initialize KP
-    if(builder->kp != -1.0)
-        this->kp = builder->kp;
-    else
-        this->kp = 0.0;
+    this->kp = builder.kp;
 
     // Initialize KI
-    if(builder->ki != -1.0)
-        this->ki = builder->ki;
-    else
-        this->ki = 0.0;
+    this->ki = builder.ki;
 
     // Initialize KD
-    if(builder->kd != -1.0)
-        this->kd = builder->kd;
-    else
-        this->kd = 0.0;
+    this->kd = builder.kd;
 
     // Initialize min
-    if(builder->min != -1.0)
-        this->min = builder->min;
+    if(builder.min != -1.0)
+        this->min = builder.min;
     else
         this->min = MOTOR_MIN;
 
     // Initialize max
-    if(builder->max != -1.0)
-        this->max = builder->max;
+    if(builder.max != -1.0)
+        this->max = builder.max;
     else
         this->max = MOTOR_MAX;
 
     // Initialize integralLimit
-    if(builder->integralLimit != -1.0)
-        this->integralLimit = builder->integralLimit;
+    if(builder.integralLimit != -1.0)
+        this->integralLimit = builder.integralLimit;
     else
         this->integralLimit = 0.0;
 
     // Initialize targetValue
-    if(builder->startTarget != -1.0)
-        this->targetValue = builder->startTarget;
+    if(builder.startTarget != -1.0)
+        this->targetValue = builder.startTarget;
     else
         this->targetValue = 0.0;
 

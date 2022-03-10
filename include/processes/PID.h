@@ -158,7 +158,7 @@ public:
     // Builder constructor for PID class
     // v7: Converted to a builder constructor - Nathan S, 3-8-22
     //-------------------------------------------------------------------------
-    PID(PIDBuilder* builder);
+    PID(PIDBuilder builder);
 
     //-------------------------------------------------------------------------
     // Returns the control variable based on the target and current values
