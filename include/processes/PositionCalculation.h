@@ -21,9 +21,9 @@ private:
    // STRAFE_DISTANCE: The distance between the center tracking wheel and the 
    //                  center of the robot
    //--------------------------------------------------------------------------
-   const float LEFT_DISTANCE = 6.0313;
-   const float RIGHT_DISTANCE = 6.0313;
-   const float STRAFE_DISTANCE = 1.50;
+   static constexpr float LEFT_DISTANCE = 6.0313;
+   static constexpr float RIGHT_DISTANCE = 6.0313;
+   static constexpr float STRAFE_DISTANCE = 1.50;
 
    //--------------------------------------------------------------------------
    // Private data members

@@ -4,7 +4,6 @@
 
 // Included libraries
 #include "./main.h"
-#include "./config/IntakeConfig.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the Intake subsystem of the robot
@@ -16,8 +15,10 @@ class Intake
 private:
     //-------------------------------------------------------------------------
     // Private data members
+    // motorList: The list of motors on the intake
     // intakeSpeed: The speed the intake runs at
     //-------------------------------------------------------------------------
+    std::list<pros::Motor> motorList;
     float intakeSpeed;
 
 public:
