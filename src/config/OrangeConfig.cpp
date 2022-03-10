@@ -10,10 +10,11 @@ namespace OrangeConfig
     const float DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const float LIFT_BOTTOM_POSITION = -10.0;
     const float LIFT_TOP_POSITION = 110.0;
+    const float LIFT_START_POSITION = 75.0;
     const float LIFT_COUNTS_PER_DEGREE = 25.0;
 
     // Motor ports
-    const int CLAW_1_PORT = 6;
+    const int CLAW_1_PORT = 7;
     const int LEFT_DRIVE_1_PORT = 11;
     const int LEFT_DRIVE_2_PORT = 12;
     const int LEFT_DRIVE_3_PORT = 13;
@@ -22,7 +23,7 @@ namespace OrangeConfig
     const int RIGHT_DRIVE_3_PORT = 20;
     const int INTAKE_1_PORT = 8;
     const int LEFT_LIFT_1_PORT = 9;
-    const int RIGHT_LIFT_1_PORT = 7;
+    const int RIGHT_LIFT_1_PORT = 6;
 
     // Sensor ports
     const int LEFT_DRIVE_TRACKING_PORT = 14;

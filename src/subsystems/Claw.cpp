@@ -150,9 +150,10 @@ void Claw::HoldPosition()
         float position = motorList.front().get_position();
         bool inPosition = (isClosed && (position <= closedPosition)) ||
                         (!isClosed && (position >= openPosition));
-        if(!inPosition)
+        //if(!inPosition)
+        if(true)
         {
-            // Initialize the motors
+            // Set the motors
             for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
                 iterator != motorList.end(); iterator++)
             {

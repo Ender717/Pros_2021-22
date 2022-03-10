@@ -9,6 +9,8 @@
 #include "subsystems/Lift.h"
 #include "subsystems/Claw.h"
 #include "subsystems/Intake.h"
+#include "config/BlueConfig.h"
+#include "config/OrangeConfig.h"
 
 //-----------------------------------------------------------------------------
 // This class controls the robot container
