@@ -25,6 +25,7 @@ private:
     // Data storage
     //-------------------------------------------------------------------------
     static Robot robot;
+    static int robotType;
 
     //-------------------------------------------------------------------------
     // Creates a pre-configured blue robot

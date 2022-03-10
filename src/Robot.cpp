@@ -180,34 +180,71 @@ void Robot::CreateOldRobot()
 
 void Robot::UpdateCarrier(pros::Controller& master)
 {
-	/*
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+	switch(robotType)
 	{
-		if(carrier.IsDown())
-			carrier.SetUp();
-		else
-			carrier.SetDown();
+		case 0:
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+			{
+				if(carrier.IsDown())
+					carrier.SetUp();
+				else
+					carrier.SetDown();
+			}
+			carrier.HoldPosition();
+			break;
+		case 1:
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
+			{
+				if(carrier.IsDown())
+					carrier.SetUp();
+				else
+					carrier.SetDown();
+			}
+			carrier.HoldPosition();
+			break;
+		case 2:
+			if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
+				carrier.SetPower(-127);
+			else if (master.get_digital(E_CONTROLLER_DIGITAL_X))
+				carrier.SetPower(127);
+			else
+				carrier.HoldPosition();
 	}
-	carrier.HoldPosition();
-	*/
-	if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT))
-		carrier.SetPower(20);
-	else if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
-		carrier.SetPower(-20);
-	else
-		carrier.SetPower(0.0);
 }
 
 void Robot::UpdateClaw(pros::Controller& master)
 {
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+	switch(robotType)
 	{
-		if(claw.IsClosed())
-			claw.SetOpen();	
-		else
-			claw.SetClosed();
+		case 0:
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+			{
+				if(claw.IsClosed())
+					claw.SetOpen();	
+				else
+					claw.SetClosed();
+			}
+			claw.HoldPosition();
+			break;
+		case 1:
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+			{
+				if(claw.IsClosed())
+					claw.SetOpen();	
+				else
+					claw.SetClosed();
+			}
+			claw.HoldPosition();
+			break;
+		case 2:
+			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
+				claw.SetOpen();	
+			else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R2))
+				claw.SetClosed();
+			claw.HoldPosition();
+			break;
 	}
-	claw.HoldPosition();
+	
 }
 
 void Robot::UpdateDrive(pros::Controller& master)
@@ -264,6 +301,7 @@ void Robot::Initialize(int robotSelected)
 			CreateOldRobot();
 			break;
 	}
+	robotType = robotSelected;
 	
 	carrier.Initialize();
 	claw.Initialize();
