@@ -2,12 +2,7 @@
 #include "Robot.h"
 
 // Constructor definitions ----------------------------------------------------
-Robot::Robot() :
-    drive(),
-	carrier(),
-	lift(140.0),
-	claw(true),
-	intake(127.0)
+Robot::Robot()
 {
 	
 }

@@ -3,6 +3,7 @@
 #define INTAKE_H
 
 // Included libraries
+#include <list>
 #include "./processes/PID.h"
 #include "./main.h"
 

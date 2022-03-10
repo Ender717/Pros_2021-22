@@ -33,8 +33,7 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
         Menu::DrawPosition(robot);
         robot.drive.GoToPositionTask(targetX, targetY, drivePower);
         robot.lift.HoldPosition();
-        if(!clawClosed || (clawClosed && robot.claw.HasGoal()))
-            robot.claw.HoldPosition();
+        robot.claw.HoldPosition();
         pros::delay(10);
     }
 }
@@ -64,8 +63,7 @@ void AutonController::DoTurnTask(float targetAngle, float drivePower,
         Menu::DrawPosition(robot);
         robot.drive.TurnToAngleTask(targetAngle, drivePower);
         robot.lift.HoldPosition();
-        if(!clawClosed || (clawClosed && robot.claw.HasGoal()))
-            robot.claw.HoldPosition();
+        robot.claw.HoldPosition();
         pros::delay(10);
     }
 }
