@@ -250,14 +250,20 @@ void Robot::UpdateLift(pros::Controller& master)
 }
 
 // Public method definitions --------------------------------------------------
-void Robot::Initialize(std::string robotSelected)
+void Robot::Initialize(int robotSelected)
 {
-	if (robotSelected == "BLUE")
-		CreateBlueRobot();
-	else if (robotSelected == "ORANGE")
-		CreateOrangeRobot();
-	else if (robotSelected == "OLD")
-		CreateOldRobot();
+	switch(robotSelected)
+	{
+		case 0:
+			CreateBlueRobot();
+			break;
+		case 1:
+			CreateOrangeRobot();
+			break;
+		case 2:
+			CreateOldRobot();
+			break;
+	}
 	
 	carrier.Initialize();
 	claw.Initialize();

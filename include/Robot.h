@@ -104,7 +104,7 @@ public:
     // robotSelected: The robot which was selected
     // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    void Initialize(std::string robotSelected);
+    void Initialize(int robotSelected);
 
     //-------------------------------------------------------------------------
     // Controls the robot during driver control mode

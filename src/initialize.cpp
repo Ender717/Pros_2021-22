@@ -39,11 +39,13 @@ void disabled() {}
 void competition_initialize() 
 {
 	Menu::DrawMenuSelect();
-	
-
-	Robot robot;
-	robot.Initialize(Menu::robotSelected);
+	Menu::RobotSelect();
 
 	Menu::DrawMenuSelect();
 	Menu::AutonSelect();
+
+	pros::delay(3000);
+
+	Robot robot;
+	robot.Initialize(Menu::robot);
 }

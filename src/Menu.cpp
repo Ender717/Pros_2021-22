@@ -3,8 +3,9 @@
 
 namespace Menu
 {
+    bool robotSelected = false;
     bool autonSelected = false;
-    std::string robotSelected = "BLUE";
+    int robot = 0;
 
     void DrawMenuSelect()
     {
@@ -28,6 +29,61 @@ namespace Menu
             pros::screen::draw_line(125 + i, 140, 155 + i, 110);
             pros::screen::draw_line(375 - i, 140, 345 - i, 170);
             pros::screen::draw_line(375 - i, 140, 345 - i, 110);
+        }
+    }
+
+    void RobotSelect()
+    {
+        pros::screen::set_pen(COLOR_WHITE);
+
+        // Select an autonomous
+        pros::screen_touch_status_s status;
+        bool touched = false;
+
+        while (!autonSelected)
+        {
+            status = pros::screen::touch_status();
+            // Move the menu selection
+            if(status.touch_status == E_TOUCH_PRESSED)
+                touched = true;
+            if(touched && status.touch_status == E_TOUCH_RELEASED)
+            {
+                touched = false;
+                pros::screen::erase_rect(50, 50, 450, 90);
+                if(status.x >= 100 && status.x <= 180 && status.y >= 100 && status.y <= 180)
+                {
+                    robot--;
+                    if(robot < 0)
+                        robot = 2;
+                }
+                else if(status.x >= 320 && status.x <= 400 && status.y >= 100 && status.y <= 180)
+                {
+                    robot++;
+                    if(robot > 2)
+                        robot = 0;
+                }
+                else if (((status.x - 250) * (status.x - 250)) + ((status.y - 140) * (status.y - 140)) <= (40 * 40))
+                {
+                    robotSelected = true;
+                }
+            }
+            
+            // Display the auton selection
+            switch(robot)
+            {
+                case 0:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Blue Robot");
+                    break;
+                case 1:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Orange Robot");
+                    break;
+                case 2:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Old Robot");
+                    break;
+                default:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "No Robot Selected");
+                    break;
+            }
         }
     }
     
@@ -70,10 +126,10 @@ namespace Menu
             switch(auton)
             {
                 case 1:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 1");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Orange");
                     break;
                 case 2:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 2");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Old");
                     break;
                 case 3:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");
