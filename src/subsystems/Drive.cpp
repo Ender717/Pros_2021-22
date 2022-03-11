@@ -206,7 +206,7 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
 
         // Update the loop
-        //timer += 10;
+        timer += 10;
         pros::delay(10);
     }
     SetDrive(0.0, 0.0);
@@ -243,7 +243,7 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     float adjustValue = anglePID.GetControlValue(0.0);
 
     // Update the task
-    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 160))
+    if((distance > 0.5 || abs(controlValue) > 2.0) && timer < (startDistance * 100))
     {
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
         timer += 10;
@@ -265,7 +265,7 @@ void Drive::TurnToAngle(float targetAngle)
     float controlValue = turnPID.GetControlValue(angle);
 
     // Loop until the target is reached
-    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 160))
+    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 100))
     {
         UpdatePosition();
         angle = position.GetTheta() / 0.0175;
