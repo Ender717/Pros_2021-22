@@ -3,10 +3,10 @@
 #define DRIVE_H
 
 // Included libraries
-#include "./main.h"
-#include "./config/DriveConfig.h"
-#include "./processes/PositionCalculation.h"
+#include <list>
 #include "./processes/PID.h"
+#include "./processes/PositionCalculation.h"
+#include "./main.h"
     
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
@@ -18,6 +18,9 @@ class Drive
 private:
     //-------------------------------------------------------------------------
     // Private data members
+    // leftMotorList: The list of motors being used by the left side of the drive
+    // rightMotorList: The list of motors being used by the right side of the drive
+    // trackingList: The list of tracking sensors (left-right-strafe)
     // distancePID: The PID controller for distance
     // anglePID: The PID controller for angle
     // turnPID: The PID controller for turning
@@ -28,10 +31,14 @@ private:
     // startDistance: The distance a task started at from the target
     // startAngle: The difference in angle a task started at from the target
     //-------------------------------------------------------------------------
+    std::list<pros::Motor> leftMotorList;
+    std::list<pros::Motor> rightMotorList;
+    std::list<pros::Rotation> trackingList;
     PID distancePID;
     PID anglePID;
     PID turnPID;
     PositionCalculation position;
+    float wheelSize;
     bool taskInitialized;
     bool taskCompleted;
     int timer;
@@ -40,10 +47,121 @@ private:
 
 public:
     //-------------------------------------------------------------------------
+    // This is a builder class for the drive subsystem
+    // v1: Created the class - Nathan S, 3-9-22
+    //-------------------------------------------------------------------------
+    class DriveBuilder
+    {
+    public:
+        //---------------------------------------------------------------------
+        // Attributes:
+        // leftMotorList: The list of motors being used by the left side of the drive
+        // rightMotorList: The list of motors being used by the right side of the drive
+        // trackingList: The list of tracking sensors (left-right-strafe)
+        // distancePID: The PID controller for distance
+        // anglePID: The PID controller for angle
+        // turnPID: The PID controller for turning
+        // position: The position calculation system
+        // wheelSize: The size of the tracking wheels
+        //---------------------------------------------------------------------
+        std::list<pros::Motor> leftMotorList;
+        std::list<pros::Motor> rightMotorList;
+        std::list<pros::Rotation> trackingList;
+        PID distancePID;
+        PID anglePID;
+        PID turnPID;
+        PositionCalculation position;
+        float wheelSize;
+
+        //---------------------------------------------------------------------
+        // Default constructor for the DriveBuilder class
+        // v1: Created the constructor - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder();
+
+        //---------------------------------------------------------------------
+        // Wither method to add a motor to the left side of the drive build
+        // motor: The motor being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithLeftMotor(pros::Motor motor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a motor to the right side of the drive build
+        // motor: The motor being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithRightMotor(pros::Motor motor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a tracking sensor to the drive build
+        // sensor: The sensor being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithTrackingSensor(pros::Rotation sensor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a PID controller for distance to the build
+        // pid: The PID controller being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithDistancePID(PID pid);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a PID controller for angle to the build
+        // pid: The PID controller being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithAnglePID(PID pid);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a PID controller for turning to the build
+        // pid: The PID controller being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithTurnPID(PID pid);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a position calculator to the build
+        // position: The position calculation being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithPosition(PositionCalculation position);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a wheel size to the build
+        // wheelSize: The wheel size being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        DriveBuilder WithWheelSize(float wheelSize);
+
+        //---------------------------------------------------------------------
+        // Builder method for the DriveBuilder
+        // return: The drive
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
+        Drive Build();
+    };
+
+    //-------------------------------------------------------------------------
     // Default constructor for the drive class
     // v1: Created the constructor - Nathan S, 1-23-22
     //-------------------------------------------------------------------------
     Drive();
+
+    //-------------------------------------------------------------------------
+    // Builder constructor for the drive class
+    // v1: Created the constructor - Nathan S, 3-9-22
+    //-------------------------------------------------------------------------
+    Drive(DriveBuilder builder);
 
     //-------------------------------------------------------------------------
     // Initializes the drive

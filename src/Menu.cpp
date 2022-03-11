@@ -5,7 +5,7 @@ namespace Menu
 {
     bool autonSelected = false;
 
-    void DrawAutonSelect()
+    void DrawMenuSelect()
     {
         // Draw the buttons
         pros::screen::set_pen(COLOR_BLUE);
@@ -69,10 +69,10 @@ namespace Menu
             switch(auton)
             {
                 case 1:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 1");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Orange");
                     break;
                 case 2:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills 2");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Old");
                     break;
                 case 3:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");

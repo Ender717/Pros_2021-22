@@ -11,37 +11,29 @@ namespace Autons
     // Functions
     void ProgrammingSkills1()
     {
-        AutonController control(-55.0, -36.0, 0.0);
+        AutonController control(-60.0, 45.0, 90.0);
 
-        // Move forward
-        control.DoPositionTask(-25.0, -36.0, 110.0, -17.0, false, false, false);
+        // Grab the goal
+        control.DoPositionTask(-60.0, 42.0, 100.0, 110.0, true, true, false);
+        pros::delay(250);
 
-        // Grab the neutral goal
-        control.DoPositionTask(-22.0, -36.0, 30.0, -17.0, true, false, false);
+        control.DoPositionTask(-60.0, 56.0, 110.0, 110.0, true, false, false);
+        pros::delay(250);
 
-        // Move backward
-        control.DoPositionTask(-36.0, -36.0, 127.0, 110.0, true, false, false);
+        control.DoPositionTask(-30.0, 36.0, 110.0, 0.0, false, false, true);
+        pros::delay(250);
 
-        // Turn toward the alliance goal
-        control.DoTurnTask(90.0, 127.0, 110.0, true, true, false);
+        control.DoTurnTask(0.0, 110.0, 0.0, false, false, false);
+        pros::delay(250);
 
-        // Move backward
-        control.DoPositionTask(-36.0, -45.0, 127.0, 110.0, true, true, false);
+        control.DoPositionTask(-15.0, 36.0, 110.0, -17.0, false, false, false);
+        pros::delay(250);
 
-        // Grab the alliance goal
-        control.DoPositionTask(-36.0, -50.0, 30.0, 110.0, true, true, false);
+        control.DoPositionTask(-10.0, 36.0, 110.0, -17.0, true, false, false);
+        pros::delay(250);
 
-        // Align with the tiles
-        control.DoPositionTask(-36.0, -48.0, 30.0, 110.0, true, false, false);
-
-        // Turn toward the wall
-        control.DoTurnTask(180.0, 127.0, 110.0, true, false, false);
-
-        // Wait for the match loads
-        pros::delay(10000);
-
-        // Grab the match loads
-        control.DoPositionTask(-10.0, -48.0, 40.0, 110.0, true, false, true);
+        control.DoPositionTask(0.0, 36.0, 110.0, 110.0, true, false, false);
+        pros::delay(250);
     }
 
     void ProgrammingSkills2()

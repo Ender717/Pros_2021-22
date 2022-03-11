@@ -40,9 +40,6 @@ void disabled() {}
  */
 void competition_initialize() 
 {
-	if(!Menu::autonSelected)
-	{
-		Menu::DrawAutonSelect();
-		Menu::AutonSelect();
-	}
+	Menu::DrawMenuSelect();
+	Menu::AutonSelect();	
 }

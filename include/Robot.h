@@ -9,6 +9,9 @@
 #include "subsystems/Lift.h"
 #include "subsystems/Claw.h"
 #include "subsystems/Intake.h"
+#include "config/BlueConfig.h"
+#include "config/OrangeConfig.h"
+#include "config/OldConfig.h"
 
 //-----------------------------------------------------------------------------
 // This class controls the robot container
@@ -18,6 +21,23 @@
 class Robot
 {
 private:
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured blue robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateBlueRobot();
+
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured orange robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateOrangeRobot();
+
+    //-------------------------------------------------------------------------
+    // Creates a pre-configured old robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateOldRobot();
     //-------------------------------------------------------------------------
     // Updates the carrier subsystem
     // master: The controller
@@ -76,6 +96,7 @@ public:
 
     //-------------------------------------------------------------------------
     // Initializes the robot
+    // robotSelected: The robot which was selected
     // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
     void Initialize();

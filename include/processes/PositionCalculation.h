@@ -3,7 +3,7 @@
 #define POSITIONCALCULATION_H
 
 // Included libraries
-#include "./config/DriveConfig.h"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the position tracking system of the robot
@@ -21,9 +21,9 @@ private:
    // STRAFE_DISTANCE: The distance between the center tracking wheel and the 
    //                  center of the robot
    //--------------------------------------------------------------------------
-   const float LEFT_DISTANCE = 6.0313;
-   const float RIGHT_DISTANCE = 6.0313;
-   const float STRAFE_DISTANCE = 1.50;
+   static constexpr float LEFT_DISTANCE = 6.0313;
+   static constexpr float RIGHT_DISTANCE = 6.0313;
+   static constexpr float STRAFE_DISTANCE = 1.50;
 
    //--------------------------------------------------------------------------
    // Private data members
@@ -47,13 +47,10 @@ private:
 
 public:
    //--------------------------------------------------------------------------
-   // Parameterized constructor for PositionCalculation class
-   // startX: The initial x-position of the robot
-   // startY: The initial y-position of the robot
-   // startTheta: The initial angle of the robot
+   // Default constructor for PositionCalculation class
    // v1: Created the constructor - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   PositionCalculation(float startX, float startY, float startTheta);
+   PositionCalculation();
 
    //--------------------------------------------------------------------------
    // Sets the coordinates in the tracking system to a new position

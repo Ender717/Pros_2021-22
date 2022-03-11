@@ -2,17 +2,182 @@
 #include "Robot.h"
 
 // Constructor definitions ----------------------------------------------------
-Robot::Robot() :
-    drive(),
-	carrier(false),
-	lift(140.0),
-	claw(true),
-	intake(127.0)
+Robot::Robot()
 {
-	
+	CreateOrangeRobot();
 }
 
 // Private method definitions -------------------------------------------------
+void Robot::CreateBlueRobot()
+{
+	PID::PIDBuilder pidBuilder;
+	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
+	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
+    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
+    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
+	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	
+	PositionCalculation position;
+
+	Carrier::CarrierBuilder carrierBuilder;
+	carrier = carrierBuilder.WithPiston(BlueConfig::carrier1Piston).
+							 WithPiston(BlueConfig::carrier2Piston).
+							 Build();
+	
+	Claw::ClawBuilder clawBuilder;
+	claw = clawBuilder.WithMotor(BlueConfig::claw1Motor).
+					   WithPID(clawPID).
+					   WithOpenPosition(BlueConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(BlueConfig::CLAW_CLOSED_POSITION).
+					   Build();
+
+	Drive::DriveBuilder driveBuilder;
+	drive = driveBuilder.WithLeftMotor(BlueConfig::leftDrive1Motor).
+						 WithLeftMotor(BlueConfig::leftDrive2Motor).
+						 WithLeftMotor(BlueConfig::leftDrive3Motor).
+						 WithLeftMotor(BlueConfig::leftDrive4Motor).
+						 WithRightMotor(BlueConfig::rightDrive1Motor).
+						 WithRightMotor(BlueConfig::rightDrive2Motor).
+						 WithRightMotor(BlueConfig::rightDrive3Motor).
+						 WithRightMotor(BlueConfig::rightDrive4Motor).
+						 WithTrackingSensor(BlueConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(BlueConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(BlueConfig::strafeDriveTrackingSensor).
+						 WithDistancePID(distancePID).
+						 WithAnglePID(anglePID).
+						 WithTurnPID(turnPID).
+						 WithPosition(position).
+						 WithWheelSize(BlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 Build();
+	
+	Intake::IntakeBuilder intakeBuilder;
+	intake = intakeBuilder.WithMotor(BlueConfig::intake1Motor).Build();
+
+	Lift::LiftBuilder liftBuilder;
+	lift = liftBuilder.WithLeftMotor(BlueConfig::leftLift1Motor).
+					   WithLeftMotor(BlueConfig::leftLift2Motor).
+					   WithRightMotor(BlueConfig::rightLift1Motor).
+					   WithRightMotor(BlueConfig::rightLift2Motor).
+					   WithPID(liftPID).
+					   WithTopAngle(BlueConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(BlueConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE).
+					   Build();
+}
+
+void Robot::CreateOrangeRobot()
+{
+	PID::PIDBuilder pidBuilder;
+	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
+	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
+    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
+    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
+	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	
+	PositionCalculation position;
+
+	Carrier::CarrierBuilder carrierBuilder;
+	carrier = carrierBuilder.WithPiston(OrangeConfig::carrier1Piston).
+							 WithPiston(OrangeConfig::carrier2Piston).
+							 Build();
+	
+	Claw::ClawBuilder clawBuilder;
+	claw = clawBuilder.WithMotor(OrangeConfig::claw1Motor).
+					   WithPID(clawPID).
+					   WithOpenPosition(OrangeConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(OrangeConfig::CLAW_CLOSED_POSITION).
+					   Build();
+
+	Drive::DriveBuilder driveBuilder;
+	drive = driveBuilder.WithLeftMotor(OrangeConfig::leftDrive1Motor).
+						 WithLeftMotor(OrangeConfig::leftDrive2Motor).
+						 WithLeftMotor(OrangeConfig::leftDrive3Motor).
+						 WithRightMotor(OrangeConfig::rightDrive1Motor).
+						 WithRightMotor(OrangeConfig::rightDrive2Motor).
+						 WithRightMotor(OrangeConfig::rightDrive3Motor).
+						 WithTrackingSensor(OrangeConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(OrangeConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(OrangeConfig::strafeDriveTrackingSensor).
+						 WithDistancePID(distancePID).
+						 WithAnglePID(anglePID).
+						 WithTurnPID(turnPID).
+						 WithPosition(position).
+						 WithWheelSize(OrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 Build();
+	
+	Intake::IntakeBuilder intakeBuilder;
+	intake = intakeBuilder.WithMotor(OrangeConfig::intake1Motor).Build();
+
+	Lift::LiftBuilder liftBuilder;
+	lift = liftBuilder.WithLeftMotor(OrangeConfig::leftLift1Motor).
+					   WithRightMotor(OrangeConfig::rightLift1Motor).
+					   WithPID(liftPID).
+					   WithTopAngle(OrangeConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(OrangeConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(OrangeConfig::LIFT_COUNTS_PER_DEGREE).
+					   Build();
+}
+
+void Robot::CreateOldRobot()
+{
+	PID::PIDBuilder pidBuilder;
+	PID carrierPID = pidBuilder.WithKp(5.3).WithKi(0.5).WithKd(0.25).WithIntegralLimit(65.0).Build();
+	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
+	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
+    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
+    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
+	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	
+	PositionCalculation position;
+
+	Carrier::CarrierBuilder carrierBuilder;
+	carrier = carrierBuilder.WithMotor(OldConfig::carrier1Motor).
+							 WithMotor(OldConfig::carrier2Motor).
+							 WithPID(carrierPID).
+							 WithDownPosition(OldConfig::CARRIER_DOWN_POSITION).
+							 WithUpPosition(OldConfig::CARRIER_UP_POSITION).
+							 Build();
+	
+	Claw::ClawBuilder clawBuilder;
+	claw = clawBuilder.WithMotor(OldConfig::claw1Motor).
+					   WithPID(clawPID).
+					   WithOpenPosition(OldConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(OldConfig::CLAW_CLOSED_POSITION).
+					   Build();
+
+	Drive::DriveBuilder driveBuilder;
+	drive = driveBuilder.WithLeftMotor(OldConfig::leftDrive1Motor).
+						 WithLeftMotor(OldConfig::leftDrive2Motor).
+						 WithLeftMotor(OldConfig::leftDrive3Motor).
+						 WithRightMotor(OldConfig::rightDrive1Motor).
+						 WithRightMotor(OldConfig::rightDrive2Motor).
+						 WithRightMotor(OldConfig::rightDrive3Motor).
+						 WithTrackingSensor(OldConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(OldConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(OldConfig::strafeDriveTrackingSensor).
+						 WithDistancePID(distancePID).
+						 WithAnglePID(anglePID).
+						 WithTurnPID(turnPID).
+						 WithPosition(position).
+						 WithWheelSize(OldConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 Build();
+	
+	Intake::IntakeBuilder intakeBuilder;
+	intake = intakeBuilder.WithMotor(OldConfig::intake1Motor).Build();
+
+	Lift::LiftBuilder liftBuilder;
+	lift = liftBuilder.WithLeftMotor(OldConfig::leftLift1Motor).
+					   WithRightMotor(OldConfig::rightLift1Motor).
+					   WithPID(liftPID).
+					   WithTopAngle(OldConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(OldConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(OldConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(OldConfig::LIFT_COUNTS_PER_DEGREE).
+					   Build();
+}
+
 void Robot::UpdateCarrier(pros::Controller& master)
 {
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
@@ -22,6 +187,17 @@ void Robot::UpdateCarrier(pros::Controller& master)
 		else
 			carrier.SetDown();
 	}
+	carrier.HoldPosition();
+
+	/*
+	if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
+		carrier.SetPower(-127);
+	else if (master.get_digital(E_CONTROLLER_DIGITAL_X))
+		carrier.SetPower(127);
+	else
+		carrier.HoldPosition();
+	}
+	*/
 }
 
 void Robot::UpdateClaw(pros::Controller& master)
@@ -34,6 +210,23 @@ void Robot::UpdateClaw(pros::Controller& master)
 			claw.SetClosed();
 	}
 	claw.HoldPosition();
+
+	/*
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+	{
+		if(claw.IsClosed())
+			claw.SetOpen();	
+		else
+			claw.SetClosed();
+	}
+	claw.HoldPosition();
+
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
+		claw.SetOpen();	
+	else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R2))
+		claw.SetClosed();
+	claw.HoldPosition();
+	*/
 }
 
 void Robot::UpdateDrive(pros::Controller& master)

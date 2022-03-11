@@ -15,7 +15,9 @@ namespace Menu
 {
     //-------------------------------------------------------------------------
     // Variables
+    // robotSelected: True if an robot has been selected, false if not
     // autonSelected: True if an auton has been selected, false if not
+    // robotSelected: The robot which was selected to be used
     //-------------------------------------------------------------------------
     extern bool autonSelected;
     
@@ -23,7 +25,7 @@ namespace Menu
     // Draws the auton selection menu
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void DrawAutonSelect();
+    extern void DrawMenuSelect();
 
     //-------------------------------------------------------------------------
     // Runs the autonomous selection menu
