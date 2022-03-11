@@ -22,12 +22,6 @@ class Robot
 {
 private:
     //-------------------------------------------------------------------------
-    // Data storage
-    //-------------------------------------------------------------------------
-    static Robot robot;
-    static int robotType;
-
-    //-------------------------------------------------------------------------
     // Creates a pre-configured blue robot
     // v1: Created the method - Nathan S, 3-10-22
     //-------------------------------------------------------------------------
@@ -105,7 +99,7 @@ public:
     // robotSelected: The robot which was selected
     // v1: Created the method - Nathan S, 2-8-22
     //-------------------------------------------------------------------------
-    void Initialize(int robotSelected);
+    void Initialize();
 
     //-------------------------------------------------------------------------
     // Controls the robot during driver control mode

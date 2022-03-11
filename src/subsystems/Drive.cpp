@@ -243,7 +243,7 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     float adjustValue = anglePID.GetControlValue(0.0);
 
     // Update the task
-    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 40))
+    if((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 160))
     {
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
         timer += 10;
@@ -265,7 +265,7 @@ void Drive::TurnToAngle(float targetAngle)
     float controlValue = turnPID.GetControlValue(angle);
 
     // Loop until the target is reached
-    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 20))
+    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 160))
     {
         UpdatePosition();
         angle = position.GetTheta() / 0.0175;
@@ -358,7 +358,7 @@ float Drive::GetTheta() const
 void Drive::UpdatePosition()
 {
     // Get the left, right, and strafe values in inches
-    std::list<pros::Motor>::iterator iterator = leftMotorList.begin(); 
+    std::list<pros::Rotation>::iterator iterator = trackingList.begin(); 
     float leftValue = iterator->get_position() * wheelSize * 3.1415 / 36000.0;
     iterator++;
     float rightValue = iterator->get_position() * wheelSize * 3.1415 / -36000.0;

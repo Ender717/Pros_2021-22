@@ -19,21 +19,13 @@ namespace Menu
     // autonSelected: True if an auton has been selected, false if not
     // robotSelected: The robot which was selected to be used
     //-------------------------------------------------------------------------
-    extern bool robotSelected;
     extern bool autonSelected;
-    extern int robot;
     
     //-------------------------------------------------------------------------
     // Draws the auton selection menu
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
     extern void DrawMenuSelect();
-
-    //-------------------------------------------------------------------------
-    // Runs the robot selection menu
-    // v1: Created the function - Nathan S, 3-10-22
-    //-------------------------------------------------------------------------
-    extern void RobotSelect();
 
     //-------------------------------------------------------------------------
     // Runs the autonomous selection menu

@@ -18,6 +18,8 @@ void on_center_button() {
  */
 void initialize() 
 {
+	Robot robot;
+	robot.Initialize();
 }
 
 /**
@@ -39,13 +41,5 @@ void disabled() {}
 void competition_initialize() 
 {
 	Menu::DrawMenuSelect();
-	Menu::RobotSelect();
-
-	Menu::DrawMenuSelect();
-	Menu::AutonSelect();
-
-	pros::delay(3000);
-
-	Robot robot;
-	robot.Initialize(Menu::robot);
+	Menu::AutonSelect();	
 }

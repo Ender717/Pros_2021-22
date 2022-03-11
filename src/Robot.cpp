@@ -4,7 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 Robot::Robot()
 {
-	*this = robot;
+	CreateOrangeRobot();
 }
 
 // Private method definitions -------------------------------------------------
@@ -180,71 +180,53 @@ void Robot::CreateOldRobot()
 
 void Robot::UpdateCarrier(pros::Controller& master)
 {
-	switch(robotType)
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 	{
-		case 0:
-			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
-			{
-				if(carrier.IsDown())
-					carrier.SetUp();
-				else
-					carrier.SetDown();
-			}
-			carrier.HoldPosition();
-			break;
-		case 1:
-			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
-			{
-				if(carrier.IsDown())
-					carrier.SetUp();
-				else
-					carrier.SetDown();
-			}
-			carrier.HoldPosition();
-			break;
-		case 2:
-			if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
-				carrier.SetPower(-127);
-			else if (master.get_digital(E_CONTROLLER_DIGITAL_X))
-				carrier.SetPower(127);
-			else
-				carrier.HoldPosition();
+		if(carrier.IsDown())
+			carrier.SetUp();
+		else
+			carrier.SetDown();
 	}
+	carrier.HoldPosition();
+
+	/*
+	if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
+		carrier.SetPower(-127);
+	else if (master.get_digital(E_CONTROLLER_DIGITAL_X))
+		carrier.SetPower(127);
+	else
+		carrier.HoldPosition();
+	}
+	*/
 }
 
 void Robot::UpdateClaw(pros::Controller& master)
 {
-	switch(robotType)
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 	{
-		case 0:
-			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
-			{
-				if(claw.IsClosed())
-					claw.SetOpen();	
-				else
-					claw.SetClosed();
-			}
-			claw.HoldPosition();
-			break;
-		case 1:
-			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
-			{
-				if(claw.IsClosed())
-					claw.SetOpen();	
-				else
-					claw.SetClosed();
-			}
-			claw.HoldPosition();
-			break;
-		case 2:
-			if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
-				claw.SetOpen();	
-			else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R2))
-				claw.SetClosed();
-			claw.HoldPosition();
-			break;
+		if(claw.IsClosed())
+			claw.SetOpen();	
+		else
+			claw.SetClosed();
 	}
-	
+	claw.HoldPosition();
+
+	/*
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+	{
+		if(claw.IsClosed())
+			claw.SetOpen();	
+		else
+			claw.SetClosed();
+	}
+	claw.HoldPosition();
+
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
+		claw.SetOpen();	
+	else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R2))
+		claw.SetClosed();
+	claw.HoldPosition();
+	*/
 }
 
 void Robot::UpdateDrive(pros::Controller& master)
@@ -287,29 +269,13 @@ void Robot::UpdateLift(pros::Controller& master)
 }
 
 // Public method definitions --------------------------------------------------
-void Robot::Initialize(int robotSelected)
+void Robot::Initialize()
 {
-	switch(robotSelected)
-	{
-		case 0:
-			CreateBlueRobot();
-			break;
-		case 1:
-			CreateOrangeRobot();
-			break;
-		case 2:
-			CreateOldRobot();
-			break;
-	}
-	robotType = robotSelected;
-	
 	carrier.Initialize();
 	claw.Initialize();
 	drive.Initialize();
 	intake.Initialize();
 	lift.Initialize();
-
-	robot = *this;
 }
 
 void Robot::RobotControl(pros::Controller& master)
