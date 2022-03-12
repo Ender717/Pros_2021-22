@@ -18,6 +18,12 @@ namespace Autons
         pros::delay(50);
 
         control.DoPositionTask(-60.0, 51.0, 127.0, 110.0, true, false, false);
+        pros::delay(10000);
+
+        control.DoPositionTask(-60.0, 65.0, 40.0, 110.0, false, false, true);
+        pros::delay(50);
+
+        control.DoPositionTask(-60.0, 51.0, 127.0, 110.0, true, false, false);
         pros::delay(50);
 
         control.DoTurnTask(-5.0, 127.0, 110.0, false, false, false);
@@ -32,13 +38,13 @@ namespace Autons
         control.DoTurnTask(30.0, 127.0, 110.0, false, false, false);
         pros::delay(50);
 
-        control.DoPositionTask(60.0, 64.0, 127.0, 110.0, false, true, true);
+        control.DoPositionTask(60.0, 67.0, 127.0, 110.0, false, true, true);
         pros::delay(50);
 
         control.DoTurnTask(0.0, 127.0, 110.0, false, false, false);
         pros::delay(50);
 
-        control.DoPositionTask(-40.0, 64.0, 127.0, 110.0, false, false, true);
+        control.DoPositionTask(-40.0, 67.0, 127.0, 110.0, false, false, true);
         pros::delay(50);
 
         /*
