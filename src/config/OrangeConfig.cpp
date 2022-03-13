@@ -1,7 +1,7 @@
 // Defined library
 #include "config/OrangeConfig.h"
 
-namespace OrangeConfig
+namespace OldOrangeConfig
 {
     // Constants
     const float CLAW_OPEN_POSITION = 515.0;

@@ -1,7 +1,7 @@
 // Defined library
 #include "config/OldConfig.h"
 
-namespace OldConfig
+namespace OldBlueConfig
 {
     // Constants
     const float CARRIER_DOWN_POSITION = -3000.0;

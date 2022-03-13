@@ -78,45 +78,45 @@ void Robot::CreateOrangeRobot()
 	PositionCalculation position;
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(OrangeConfig::carrier1Piston).
-							 WithPiston(OrangeConfig::carrier2Piston).
+	carrier = carrierBuilder.WithPiston(OldOrangeConfig::carrier1Piston).
+							 WithPiston(OldOrangeConfig::carrier2Piston).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(OrangeConfig::claw1Motor).
+	claw = clawBuilder.WithMotor(OldOrangeConfig::claw1Motor).
 					   WithPID(clawPID).
-					   WithOpenPosition(OrangeConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(OrangeConfig::CLAW_CLOSED_POSITION).
+					   WithOpenPosition(OldOrangeConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(OldOrangeConfig::CLAW_CLOSED_POSITION).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(OrangeConfig::leftDrive1Motor).
-						 WithLeftMotor(OrangeConfig::leftDrive2Motor).
-						 WithLeftMotor(OrangeConfig::leftDrive3Motor).
-						 WithRightMotor(OrangeConfig::rightDrive1Motor).
-						 WithRightMotor(OrangeConfig::rightDrive2Motor).
-						 WithRightMotor(OrangeConfig::rightDrive3Motor).
-						 WithTrackingSensor(OrangeConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(OrangeConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(OrangeConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(OldOrangeConfig::leftDrive1Motor).
+						 WithLeftMotor(OldOrangeConfig::leftDrive2Motor).
+						 WithLeftMotor(OldOrangeConfig::leftDrive3Motor).
+						 WithRightMotor(OldOrangeConfig::rightDrive1Motor).
+						 WithRightMotor(OldOrangeConfig::rightDrive2Motor).
+						 WithRightMotor(OldOrangeConfig::rightDrive3Motor).
+						 WithTrackingSensor(OldOrangeConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(OldOrangeConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(OldOrangeConfig::strafeDriveTrackingSensor).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
 						 WithPosition(position).
-						 WithWheelSize(OrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 WithWheelSize(OldOrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(OrangeConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(OldOrangeConfig::intake1Motor).Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithLeftMotor(OrangeConfig::leftLift1Motor).
-					   WithRightMotor(OrangeConfig::rightLift1Motor).
+	lift = liftBuilder.WithLeftMotor(OldOrangeConfig::leftLift1Motor).
+					   WithRightMotor(OldOrangeConfig::rightLift1Motor).
 					   WithPID(liftPID).
-					   WithTopAngle(OrangeConfig::LIFT_TOP_POSITION).
-					   WithBottomAngle(OrangeConfig::LIFT_BOTTOM_POSITION).
-					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
-					   WithCountsPerDegree(OrangeConfig::LIFT_COUNTS_PER_DEGREE).
+					   WithTopAngle(OldOrangeConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(OldOrangeConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
 }
 
@@ -133,48 +133,48 @@ void Robot::CreateOldRobot()
 	PositionCalculation position;
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithMotor(OldConfig::carrier1Motor).
-							 WithMotor(OldConfig::carrier2Motor).
+	carrier = carrierBuilder.WithMotor(OldBlueConfig::carrier1Motor).
+							 WithMotor(OldBlueConfig::carrier2Motor).
 							 WithPID(carrierPID).
-							 WithDownPosition(OldConfig::CARRIER_DOWN_POSITION).
-							 WithUpPosition(OldConfig::CARRIER_UP_POSITION).
+							 WithDownPosition(OldBlueConfig::CARRIER_DOWN_POSITION).
+							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(OldConfig::claw1Motor).
+	claw = clawBuilder.WithMotor(OldBlueConfig::claw1Motor).
 					   WithPID(clawPID).
-					   WithOpenPosition(OldConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(OldConfig::CLAW_CLOSED_POSITION).
+					   WithOpenPosition(OldBlueConfig::CLAW_OPEN_POSITION).
+					   WithClosedPosition(OldBlueConfig::CLAW_CLOSED_POSITION).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(OldConfig::leftDrive1Motor).
-						 WithLeftMotor(OldConfig::leftDrive2Motor).
-						 WithLeftMotor(OldConfig::leftDrive3Motor).
-						 WithRightMotor(OldConfig::rightDrive1Motor).
-						 WithRightMotor(OldConfig::rightDrive2Motor).
-						 WithRightMotor(OldConfig::rightDrive3Motor).
-						 WithTrackingSensor(OldConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(OldConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(OldConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(OldBlueConfig::leftDrive1Motor).
+						 WithLeftMotor(OldBlueConfig::leftDrive2Motor).
+						 WithLeftMotor(OldBlueConfig::leftDrive3Motor).
+						 WithRightMotor(OldBlueConfig::rightDrive1Motor).
+						 WithRightMotor(OldBlueConfig::rightDrive2Motor).
+						 WithRightMotor(OldBlueConfig::rightDrive3Motor).
+						 WithTrackingSensor(OldBlueConfig::leftDriveTrackingSensor).
+						 WithTrackingSensor(OldBlueConfig::rightDriveTrackingSensor).
+						 WithTrackingSensor(OldBlueConfig::strafeDriveTrackingSensor).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
 						 WithPosition(position).
-						 WithWheelSize(OldConfig::DRIVE_TRACKING_WHEEL_SIZE).
+						 WithWheelSize(OldBlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(OldConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(OldBlueConfig::intake1Motor).Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithLeftMotor(OldConfig::leftLift1Motor).
-					   WithRightMotor(OldConfig::rightLift1Motor).
+	lift = liftBuilder.WithLeftMotor(OldBlueConfig::leftLift1Motor).
+					   WithRightMotor(OldBlueConfig::rightLift1Motor).
 					   WithPID(liftPID).
-					   WithTopAngle(OldConfig::LIFT_TOP_POSITION).
-					   WithBottomAngle(OldConfig::LIFT_BOTTOM_POSITION).
-					   WithStartAngle(OldConfig::LIFT_START_POSITION).
-					   WithCountsPerDegree(OldConfig::LIFT_COUNTS_PER_DEGREE).
+					   WithTopAngle(OldBlueConfig::LIFT_TOP_POSITION).
+					   WithBottomAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
+					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION).
+					   WithCountsPerDegree(OldBlueConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
 }
 
