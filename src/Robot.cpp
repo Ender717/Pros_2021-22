@@ -4,7 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 Robot::Robot()
 {
-	CreateOrangeRobot();
+	CreateOldOrangeRobot();
 }
 
 // Private method definitions -------------------------------------------------
@@ -54,19 +54,19 @@ void Robot::CreateBlueRobot()
 	intake = intakeBuilder.WithMotor(BlueConfig::intake1Motor).Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithLeftMotor(BlueConfig::leftLift1Motor).
-					   WithLeftMotor(BlueConfig::leftLift2Motor).
-					   WithRightMotor(BlueConfig::rightLift1Motor).
-					   WithRightMotor(BlueConfig::rightLift2Motor).
+	lift = liftBuilder.WithMotor(BlueConfig::leftLift1Motor).
+					   WithMotor(BlueConfig::leftLift2Motor).
+					   WithMotor(BlueConfig::rightLift1Motor).
+					   WithMotor(BlueConfig::rightLift2Motor).
 					   WithPID(liftPID).
-					   WithTopAngle(BlueConfig::LIFT_TOP_POSITION).
-					   WithBottomAngle(BlueConfig::LIFT_BOTTOM_POSITION).
 					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
+					   WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION).
+					   WithMaxAngle(BlueConfig::LIFT_TOP_POSITION).
 					   WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
 }
 
-void Robot::CreateOrangeRobot()
+void Robot::CreateOldOrangeRobot()
 {
 	PID::PIDBuilder pidBuilder;
 	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
@@ -110,17 +110,17 @@ void Robot::CreateOrangeRobot()
 	intake = intakeBuilder.WithMotor(OldOrangeConfig::intake1Motor).Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithLeftMotor(OldOrangeConfig::leftLift1Motor).
-					   WithRightMotor(OldOrangeConfig::rightLift1Motor).
+	lift = liftBuilder.WithMotor(OldOrangeConfig::leftLift1Motor).
+					   WithMotor(OldOrangeConfig::rightLift1Motor).
 					   WithPID(liftPID).
-					   WithTopAngle(OldOrangeConfig::LIFT_TOP_POSITION).
-					   WithBottomAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).
 					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION).
+					   WithMinAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).
+					   WithMaxAngle(OldOrangeConfig::LIFT_TOP_POSITION).
 					   WithCountsPerDegree(OldOrangeConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
 }
 
-void Robot::CreateOldRobot()
+void Robot::CreateOldBlueRobot()
 {
 	PID::PIDBuilder pidBuilder;
 	PID carrierPID = pidBuilder.WithKp(5.3).WithKi(0.5).WithKd(0.25).WithIntegralLimit(65.0).Build();
@@ -168,12 +168,12 @@ void Robot::CreateOldRobot()
 	intake = intakeBuilder.WithMotor(OldBlueConfig::intake1Motor).Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithLeftMotor(OldBlueConfig::leftLift1Motor).
-					   WithRightMotor(OldBlueConfig::rightLift1Motor).
+	lift = liftBuilder.WithMotor(OldBlueConfig::leftLift1Motor).
+					   WithMotor(OldBlueConfig::rightLift1Motor).
 					   WithPID(liftPID).
-					   WithTopAngle(OldBlueConfig::LIFT_TOP_POSITION).
-					   WithBottomAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
 					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION).
+					   WithMinAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
+					   WithMaxAngle(OldBlueConfig::LIFT_TOP_POSITION).
 					   WithCountsPerDegree(OldBlueConfig::LIFT_COUNTS_PER_DEGREE).
 					   Build();
 }

@@ -3,15 +3,15 @@
 #define ROBOT_H
 
 // Included libraries
-#include "./main.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Carrier.h"
 #include "subsystems/Lift.h"
 #include "subsystems/Claw.h"
 #include "subsystems/Intake.h"
 #include "config/BlueConfig.h"
-#include "config/OrangeConfig.h"
-#include "config/OldConfig.h"
+#include "config/OldOrangeConfig.h"
+#include "config/OldBlueConfig.h"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This class controls the robot container
@@ -28,16 +28,16 @@ private:
     void CreateBlueRobot();
 
     //-------------------------------------------------------------------------
-    // Creates a pre-configured orange robot
+    // Creates a pre-configured old orange robot
     // v1: Created the method - Nathan S, 3-10-22
     //-------------------------------------------------------------------------
-    void CreateOrangeRobot();
+    void CreateOldOrangeRobot();
 
     //-------------------------------------------------------------------------
-    // Creates a pre-configured old robot
+    // Creates a pre-configured old blue robot
     // v1: Created the method - Nathan S, 3-10-22
     //-------------------------------------------------------------------------
-    void CreateOldRobot();
+    void CreateOldBlueRobot();
     //-------------------------------------------------------------------------
     // Updates the carrier subsystem
     // master: The controller

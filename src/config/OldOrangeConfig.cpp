@@ -1,11 +1,9 @@
 // Defined library
-#include "config/OldConfig.h"
+#include "config/OldOrangeConfig.h"
 
-namespace OldBlueConfig
+namespace OldOrangeConfig
 {
     // Constants
-    const float CARRIER_DOWN_POSITION = -3000.0;
-    const float CARRIER_UP_POSITION = 0.0;
     const float CLAW_OPEN_POSITION = 515.0;
     const float CLAW_CLOSED_POSITION = 5.0;
     const float DRIVE_TRACKING_WHEEL_SIZE = 2.75;
@@ -16,27 +14,27 @@ namespace OldBlueConfig
     const float LIFT_COUNTS_PER_DEGREE = 25.0;
 
     // Motor ports
-    const int CARRIER_1_PORT = 6;
-    const int CARRIER_2_PORT = 16;
-    const int CLAW_1_PORT = 18;
+    const int CLAW_1_PORT = 7;
     const int LEFT_DRIVE_1_PORT = 11;
     const int LEFT_DRIVE_2_PORT = 12;
     const int LEFT_DRIVE_3_PORT = 13;
-    const int RIGHT_DRIVE_1_PORT = 1;
-    const int RIGHT_DRIVE_2_PORT = 2;
-    const int RIGHT_DRIVE_3_PORT = 3;
+    const int RIGHT_DRIVE_1_PORT = 18;
+    const int RIGHT_DRIVE_2_PORT = 19;
+    const int RIGHT_DRIVE_3_PORT = 20;
     const int INTAKE_1_PORT = 8;
-    const int LEFT_LIFT_1_PORT = 7;
-    const int RIGHT_LIFT_1_PORT = 17;
+    const int LEFT_LIFT_1_PORT = 9;
+    const int RIGHT_LIFT_1_PORT = 6;
 
     // Sensor ports
     const int LEFT_DRIVE_TRACKING_PORT = 14;
-    const int RIGHT_DRIVE_TRACKING_PORT = 4;
-    const int STRAFE_DRIVE_TRACKING_PORT = 5;
+    const int RIGHT_DRIVE_TRACKING_PORT = 17;
+    const int STRAFE_DRIVE_TRACKING_PORT = 16;
+
+    // Piston ports
+    const char CARRIER_1_PORT = 'A';
+    const char CARRIER_2_PORT = 'B';
 
     // Motors
-    pros::Motor carrier1Motor(CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor carrier2Motor(CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
     pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
     pros::Motor leftDrive1Motor(LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
                                 true, E_MOTOR_ENCODER_COUNTS);
@@ -58,4 +56,8 @@ namespace OldBlueConfig
     pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
     pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
     pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);
+
+    // Pistons
+    pros::ADIDigitalOut carrier1Piston(CARRIER_1_PORT);
+    pros::ADIDigitalOut carrier2Piston(CARRIER_2_PORT);
 }

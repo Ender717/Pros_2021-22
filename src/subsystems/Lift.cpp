@@ -164,7 +164,7 @@ Lift::Lift(LiftBuilder builder)
 }
 
 // Private method definitions -------------------------------------------------
-void Lift::SetLift(float power)
+void Lift::SetLift(double power)
 {
     for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
          iterator != motorList.end(); iterator++)
@@ -178,7 +178,7 @@ double Lift::GetPosition()
 
 double Lift::AngleToPosition(double angle)
 {
-    double position = (angle * countsPerDegree) - (startAngle * countsPerDegree)
+    double position = (angle * countsPerDegree) - (startAngle * countsPerDegree);
     return position;
 }
 
@@ -231,13 +231,13 @@ void Lift::HoldPosition()
         SetLift(0.0);
 }
 
-void Lift::SetAngle(float targetAngle)
+void Lift::SetAngle(double targetAngle)
 {
     double targetPosition = AngleToPosition(targetAngle);
     liftPID.SetTargetValue(targetPosition);
 }
 
-void Lift::SetHeight(float targetHeight)
+void Lift::SetHeight(double targetHeight)
 {
     double targetPosition = HeightToPosition(targetHeight);
     liftPID.SetTargetValue(targetPosition);

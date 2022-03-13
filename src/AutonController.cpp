@@ -13,7 +13,7 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
 {
     // Initialize the new positions
     robot.drive.NewTask();
-    robot.lift.SetTargetAngle(liftAngle);
+    robot.lift.SetAngle(liftAngle);
     if(clawClosed)
         robot.claw.SetClosed();
     else
@@ -43,7 +43,7 @@ void AutonController::DoTurnTask(float targetAngle, float drivePower,
 {
     // Initialize the new positions
     robot.drive.NewTask();
-    robot.lift.SetTargetAngle(liftAngle);
+    robot.lift.SetAngle(liftAngle);
     if (clawClosed)
         robot.claw.SetClosed();
     else

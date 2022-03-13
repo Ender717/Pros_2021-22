@@ -4,7 +4,7 @@
 
 // Included libraries
 #include <list>
-#include <float.h>
+#include <cfloat>
 #include "./processes/PID.h"
 #include "./main.h"
 
