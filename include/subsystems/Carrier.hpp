@@ -3,9 +3,9 @@
 #define CARRIER_H
 
 // Included libraries
-#include <list>
-#include "./processes/PID.h"
 #include "./main.h"
+#include <list>
+#include "./processes/PID.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the carrier subsystem of the robot

@@ -1,5 +1,5 @@
 // Included libraries
-#include "subsystems/Claw.h"
+#include "subsystems/Claw.hpp"
 
 // Constructor definitions ----------------------------------------------------
 Claw::ClawBuilder::ClawBuilder()

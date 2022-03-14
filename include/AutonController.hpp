@@ -3,9 +3,8 @@
 #define AUTON_CONTROLLER_H
 
 // Included libraries
-#include "Robot.h"
-#include "Menu.h"
-#include "./main.h"
+#include "main.h"
+#include "Robot.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the autonomous control system

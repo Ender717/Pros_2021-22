@@ -4,8 +4,7 @@
 
 // Included libraries
 #include "main.h"
-#include "Menu.h"
-#include "AutonController.h"
+#include "AutonController.hpp"
 
 //-----------------------------------------------------------------------------
 // This namespace contains all autonomous configurations and values

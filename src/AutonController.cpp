@@ -1,5 +1,5 @@
 // Library being defined
-#include "AutonController.h"
+#include "AutonController.hpp"
 
 // Constructor definitions ----------------------------------------------------
 AutonController::AutonController(float x, float y, float theta)
@@ -30,7 +30,7 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
     // Loop until the target is met
     while(!robot.drive.TaskComplete())
     {
-        Menu::DrawPosition(robot);
+        //Menu::DrawPosition(robot);
         robot.drive.GoToPositionTask(targetX, targetY, drivePower);
         robot.lift.HoldPosition();
         robot.claw.HoldPosition();
@@ -60,7 +60,7 @@ void AutonController::DoTurnTask(float targetAngle, float drivePower,
     // Loop until the target is met
     while (!robot.drive.TaskComplete())
     {
-        Menu::DrawPosition(robot);
+        //Menu::DrawPosition(robot);
         robot.drive.TurnToAngleTask(targetAngle, drivePower);
         robot.lift.HoldPosition();
         robot.claw.HoldPosition();

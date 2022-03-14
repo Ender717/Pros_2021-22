@@ -1,5 +1,5 @@
 // Defined library
-#include "config/OldOrangeConfig.h"
+#include "config/OldOrangeConfig.hpp"
 
 namespace OldOrangeConfig
 {

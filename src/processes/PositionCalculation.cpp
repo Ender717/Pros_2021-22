@@ -1,5 +1,4 @@
-#include "main.h"
-#include "processes/PositionCalculation.h"
+#include "processes/PositionCalculation.hpp"
 
 // Constructor Definitions ----------------------------------------------------
 PositionCalculation::PositionCalculation()

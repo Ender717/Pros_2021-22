@@ -1,5 +1,5 @@
 // Included libraries
-#include "Robot.h"
+#include "Robot.hpp"
 
 // Constructor definitions ----------------------------------------------------
 Robot::Robot()

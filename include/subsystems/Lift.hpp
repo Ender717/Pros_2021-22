@@ -3,10 +3,10 @@
 #define LIFT_H
 
 // Included libraries
+#include "./main.h"
 #include <list>
 #include <cfloat>
-#include "./processes/PID.h"
-#include "./main.h"
+#include "./processes/PID.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the lift subsystem of the robot

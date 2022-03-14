@@ -3,7 +3,7 @@
 #define OPCONTROL_H
 
 #include "main.h"
-#include "Menu.h"
-#include "Robot.h"
+#include "Menu.hpp"
+#include "Robot.hpp"
 
 #endif

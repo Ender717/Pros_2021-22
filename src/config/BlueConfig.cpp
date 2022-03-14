@@ -1,5 +1,5 @@
 // Defined library
-#include "config/BlueConfig.h"
+#include "config/BlueConfig.hpp"
 
 namespace BlueConfig
 {

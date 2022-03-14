@@ -3,7 +3,7 @@
 #define PID_H
 
 // Included libraries
-#include "main.h"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages a PID controller

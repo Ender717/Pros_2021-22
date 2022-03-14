@@ -1,6 +1,5 @@
 // Included libraries
-#include "processes/PID.h"
-#include "main.h"
+#include "processes/PID.hpp"
 
 // Constructor definitions ------------------------------------------------
 PID::PIDBuilder::PIDBuilder()

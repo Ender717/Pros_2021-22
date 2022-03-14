@@ -3,9 +3,9 @@
 #define MENU_H
 
 // Included libraries
-#include "Robot.h"
-#include "./main.h"
-#include "autons.h"
+#include "main.h"
+#include "Robot.hpp"
+#include "autons.hpp"
 
 //-----------------------------------------------------------------------------
 // This namespace manages the menu system for the robot

@@ -1,5 +1,5 @@
 // Included libraries
-#include "subsystems/Intake.h"
+#include "subsystems/Intake.hpp"
 
 // Constructor definitions ----------------------------------------------------
 Intake::IntakeBuilder::IntakeBuilder()

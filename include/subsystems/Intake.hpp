@@ -3,9 +3,9 @@
 #define INTAKE_H
 
 // Included libraries
-#include <list>
-#include "./processes/PID.h"
 #include "./main.h"
+#include <list>
+#include "./processes/PID.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the Intake subsystem of the robot

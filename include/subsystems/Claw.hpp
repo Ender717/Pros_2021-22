@@ -3,9 +3,9 @@
 #define CLAW_H
 
 // Included libraries
-#include <list>
-#include "./processes/PID.h"
 #include "./main.h"
+#include <list>
+#include "./processes/PID.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the claw subsystem of the robot
