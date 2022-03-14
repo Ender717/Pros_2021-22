@@ -7,6 +7,7 @@
 #include "./processes/PID.h"
 #include "./processes/PositionCalculation.h"
 #include "./main.h"
+#include "pros/rotation.hpp"
     
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
@@ -20,7 +21,7 @@ private:
     // Private data members
     // leftMotorList: The list of motors being used by the left side of the drive
     // rightMotorList: The list of motors being used by the right side of the drive
-    // trackingList: The list of tracking sensors (left-right-strafe)
+    // trackingList: The list of tracking sensors on the drive
     // distancePID: The PID controller for distance
     // anglePID: The PID controller for angle
     // turnPID: The PID controller for turning

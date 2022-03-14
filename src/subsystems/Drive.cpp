@@ -183,7 +183,7 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
 
     // Set the motors for the control motion
     int timer = 0;
-    while((distance > 1.5 || abs(controlValue) > 3.0) && timer < (startDistance * 80))
+    while((distance > 1.5 || std::abs(controlValue) > 3.0) && timer < (startDistance * 80))
     {
         // Calculate all the variables
         UpdatePosition();
@@ -243,7 +243,7 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     float adjustValue = anglePID.GetControlValue(0.0);
 
     // Update the task
-    if((distance > 0.5 || abs(controlValue) > 2.0) && timer < (startDistance * 100))
+    if((distance > 0.5 || std::abs(controlValue) > 2.0) && timer < (startDistance * 100))
     {
         SetDrive(controlValue - adjustValue, controlValue + adjustValue);
         timer += 10;
@@ -260,12 +260,12 @@ void Drive::TurnToAngle(float targetAngle)
     // Initialize variables
     timer = 0;
     float angle = position.GetTheta() / 0.0175;
-    float turnSize = abs(targetAngle - angle);
+    float turnSize = std::abs(targetAngle - angle);
     turnPID.SetTargetValue(targetAngle);
     float controlValue = turnPID.GetControlValue(angle);
 
     // Loop until the target is reached
-    while((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (turnSize * 100))
+    while((std::abs(targetAngle - angle) > 0.1 || std::abs(controlValue) > 1.0) && timer < (turnSize * 100))
     {
         UpdatePosition();
         angle = position.GetTheta() / 0.0175;
@@ -281,7 +281,7 @@ void Drive::TurnToAngleTask(float targetAngle, float power)
 {
     if(!taskInitialized)
     {
-        startAngle = abs(targetAngle - (position.GetTheta() / 0.0175));
+        startAngle = std::abs(targetAngle - (position.GetTheta() / 0.0175));
         turnPID.SetMin(-power);
         turnPID.SetMax(power);
         timer = 0;
@@ -297,7 +297,7 @@ void Drive::TurnToAngleTask(float targetAngle, float power)
     float controlValue = turnPID.GetControlValue(angle);
 
     // Update the task
-    if((abs(targetAngle - angle) > 0.1 || abs(controlValue) > 1.0) && timer < (startAngle * 20))
+    if((std::abs(targetAngle - angle) > 0.1 || std::abs(controlValue) > 1.0) && timer < (startAngle * 20))
     {
         SetDrive(-controlValue, controlValue);
         timer += 10;
