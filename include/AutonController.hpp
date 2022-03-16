@@ -5,7 +5,6 @@
 // Included libraries
 #include "main.h"
 #include "RobotSetup.hpp"
-#include "Robot.hpp"
 
 //-----------------------------------------------------------------------------
 // This class manages the autonomous control system
@@ -13,13 +12,6 @@
 //-----------------------------------------------------------------------------
 class AutonController
 {
-private:
-    //-------------------------------------------------------------------------
-    // Private data members
-    // robot: The robot
-    //-------------------------------------------------------------------------
-    Robot robot;
-
 public:
     //-------------------------------------------------------------------------
     // Default constructor for the auton controller class

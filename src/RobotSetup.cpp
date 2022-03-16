@@ -1,6 +1,8 @@
 // Included libraries
 #include "RobotSetup.hpp"
 
+Robot RobotSetup::robot;
+
 void RobotSetup::Initialize(int robotSelected)
 {
     switch(robotSelected)

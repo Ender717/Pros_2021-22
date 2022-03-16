@@ -17,13 +17,14 @@ void opcontrol()
 {
 	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	Robot robot = RobotSetup::robot;
 	
 	pros::screen::erase();
 	
 	while(true)
 	{
-		robot.RobotControl(master);
-		Menu::DrawPosition(robot.drive.GetX(), robot.drive.GetY(), robot.drive.GetTheta());
+		RobotSetup::robot.RobotControl(master);
+		Menu::DrawPosition(RobotSetup::robot.drive.GetX(), 
+						   RobotSetup::robot.drive.GetY(), 
+						   RobotSetup::robot.drive.GetTheta());
 	}
 }

@@ -4,8 +4,7 @@
 // Constructor definitions ----------------------------------------------------
 AutonController::AutonController(float x, float y, float theta)
 {
-    robot = RobotSetup::robot;
-    robot.drive.SetPosition(x, y, theta);
+    RobotSetup::robot.drive.SetPosition(x, y, theta);
 }
 
 // Public method definitions --------------------------------------------------
@@ -13,28 +12,28 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
     float liftAngle, bool clawClosed, bool carrierDown, bool intake)
 {
     // Initialize the new positions
-    robot.drive.NewTask();
-    robot.lift.SetAngle(liftAngle);
+    RobotSetup::robot.drive.NewTask();
+    RobotSetup::robot.lift.SetAngle(liftAngle);
     if(clawClosed)
-        robot.claw.SetClosed();
+        RobotSetup::robot.claw.SetClosed();
     else
-        robot.claw.SetOpen();
+        RobotSetup::robot.claw.SetOpen();
     if(carrierDown)
-        robot.carrier.SetDown();
+        RobotSetup::robot.carrier.SetDown();
     else
-        robot.carrier.SetUp();
+        RobotSetup::robot.carrier.SetUp();
     if(intake)
-        robot.intake.Suck();
+        RobotSetup::robot.intake.Suck();
     else
-        robot.intake.Stop();
+        RobotSetup::robot.intake.Stop();
 
     // Loop until the target is met
-    while(!robot.drive.TaskComplete())
+    while(!RobotSetup::robot.drive.TaskComplete())
     {
         //Menu::DrawPosition(robot);
-        robot.drive.GoToPositionTask(targetX, targetY, drivePower);
-        robot.lift.HoldPosition();
-        robot.claw.HoldPosition();
+        RobotSetup::robot.drive.GoToPositionTask(targetX, targetY, drivePower);
+        RobotSetup::robot.lift.HoldPosition();
+        RobotSetup::robot.claw.HoldPosition();
         pros::delay(10);
     }
 }
@@ -43,28 +42,28 @@ void AutonController::DoTurnTask(float targetAngle, float drivePower,
     float liftAngle, bool clawClosed, bool carrierDown, bool intake)
 {
     // Initialize the new positions
-    robot.drive.NewTask();
-    robot.lift.SetAngle(liftAngle);
+    RobotSetup::robot.drive.NewTask();
+    RobotSetup::robot.lift.SetAngle(liftAngle);
     if (clawClosed)
-        robot.claw.SetClosed();
+        RobotSetup::robot.claw.SetClosed();
     else
-        robot.claw.SetOpen();
+        RobotSetup::robot.claw.SetOpen();
     if (carrierDown)
-        robot.carrier.SetDown();
+        RobotSetup::robot.carrier.SetDown();
     else
-        robot.carrier.SetUp();
+        RobotSetup::robot.carrier.SetUp();
     if (intake)
-        robot.intake.Suck();
+        RobotSetup::robot.intake.Suck();
     else
-        robot.intake.Stop();
+        RobotSetup::robot.intake.Stop();
 
     // Loop until the target is met
-    while (!robot.drive.TaskComplete())
+    while (!RobotSetup::robot.drive.TaskComplete())
     {
         //Menu::DrawPosition(robot);
-        robot.drive.TurnToAngleTask(targetAngle, drivePower);
-        robot.lift.HoldPosition();
-        robot.claw.HoldPosition();
+        RobotSetup::robot.drive.TurnToAngleTask(targetAngle, drivePower);
+        RobotSetup::robot.lift.HoldPosition();
+        RobotSetup::robot.claw.HoldPosition();
         pros::delay(10);
     }
 }
