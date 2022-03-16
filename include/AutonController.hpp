@@ -4,6 +4,7 @@
 
 // Included libraries
 #include "main.h"
+#include "RobotSetup.hpp"
 #include "Robot.hpp"
 
 //-----------------------------------------------------------------------------
