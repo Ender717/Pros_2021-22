@@ -36,6 +36,12 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
 
    // Calculate the change in theta
    float thetaChange = currentTheta - lastTheta;
+   
+   // Cap current theta
+   if (currentTheta > 3.1415)
+      currentTheta -= 7.2830;
+   else if (currentTheta < -3.1415)
+      currentTheta += 7.2830;
 
    // Calculate the local offset
    float forwardDistance = 0.0;
