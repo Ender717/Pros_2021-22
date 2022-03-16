@@ -18,8 +18,7 @@ void on_center_button() {
  */
 void initialize() 
 {
-	Robot robot;
-	robot.Initialize();
+	
 }
 
 /**
@@ -41,5 +40,7 @@ void disabled() {}
 void competition_initialize() 
 {
 	Menu::DrawMenuSelect();
-	Menu::AutonSelect();	
+	Menu::RobotSelect();
+	Menu::AutonSelect();
+	RobotSetup::Initialize(Menu::selectedRobot);
 }

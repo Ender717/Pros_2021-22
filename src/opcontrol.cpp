@@ -24,6 +24,6 @@ void opcontrol()
 	while(true)
 	{
 		robot.RobotControl(master);
-		Menu::DrawPosition(robot);
+		Menu::DrawPosition(robot.drive.GetX(), robot.drive.GetY(), robot.drive.GetTheta());
 	}
 }

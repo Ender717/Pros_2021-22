@@ -14,7 +14,7 @@
 void autonomous() 
 {
     // Run the selected auton
-	switch(Autons::selectedAuton)
+	switch(Menu::selectedAuton)
 	{
 		case 1:
 			Autons::ProgrammingSkills1();
