@@ -7,41 +7,51 @@
 #include "AutonController.hpp"
 
 //-----------------------------------------------------------------------------
-// This class contains all autonomous configurations and values
-// v1: Created the class - Nathan S, 2-6-22
+// This namespace contains all autonomous configurations and values
 //-----------------------------------------------------------------------------
-class Autons
+namespace Autons
 {
-public:
     //-------------------------------------------------------------------------
-    // This method runs the programming skills 1 routine
-    // v1: Created the method - Nathan S, 2-6-22
+    // Constants
+    // NUM_AUTONS: The number of autonomous routines available
     //-------------------------------------------------------------------------
-    static void ProgrammingSkills1();
+    extern const int NUM_AUTONS;
 
     //-------------------------------------------------------------------------
-    // This method runs the programming skills 2 routine
-    // v1: Created the method - Nathan S, 2-6-22
+    // Variables
+    // selectedAuton: The number of the auton selected
     //-------------------------------------------------------------------------
-    static void ProgrammingSkills2();
+    extern int selectedAuton;
 
     //-------------------------------------------------------------------------
-    // This method runs the left auton routine
-    // v1: Created the method - Nathan S, 2-9-22
+    // This function runs the programming skills 1 routine
+    // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    static void LeftAuton();
+    extern void ProgrammingSkills1();
 
     //-------------------------------------------------------------------------
-    // This method runs the middle auton routine
-    // v1: Created the method - Nathan S, 2-9-22
+    // This function runs the programming skills 2 routine
+    // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    static void MiddleAuton();
+    extern void ProgrammingSkills2();
 
     //-------------------------------------------------------------------------
-    // This method runs the right auton routine
-    // v1: Created the method - Nathan S, 2-9-22
+    // This function runs the left auton routine
+    // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    static void RightAuton();
-};
+    extern void LeftAuton();
+
+    //-------------------------------------------------------------------------
+    // This function runs the middle auton routine
+    // v1: Created the function - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    extern void MiddleAuton();
+
+    //-------------------------------------------------------------------------
+    // This function runs the right auton routine
+    // v1: Created the function - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    extern void RightAuton();
+}
 
 #endif
