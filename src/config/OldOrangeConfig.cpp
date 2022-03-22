@@ -8,7 +8,7 @@ namespace OldOrangeConfig
     const float CLAW_CLOSED_POSITION = 5.0;
     const float DRIVE_TRACKING_WHEEL_SIZE = 2.75;
     const float DRIVE_COUNTS_PER_ROTATION = 36000.0;
-    const float LIFT_BOTTOM_POSITION = -10.0;
+    const float LIFT_BOTTOM_POSITION = -18.0;
     const float LIFT_TOP_POSITION = 110.0;
     const float LIFT_START_POSITION = 75.0;
     const float LIFT_COUNTS_PER_DEGREE = 25.0;

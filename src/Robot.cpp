@@ -73,7 +73,7 @@ void Robot::CreateOldOrangeRobot()
 	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
     PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
     PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	PID liftPID = pidBuilder.WithKp(1.0).WithKi(0.06).WithKd(0.05).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
 	
 	PositionCalculation position;
 
@@ -232,16 +232,16 @@ void Robot::UpdateClaw(pros::Controller& master)
 void Robot::UpdateDrive(pros::Controller& master)
 {
 	// Arcade drive mode
-	/*
 	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
 						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-	*/
 
 	// Tank drive mode
+	/*
 	float leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	float rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	*/
 
 	// Update
 	drive.SetDrive(leftDrivePower, rightDrivePower);
