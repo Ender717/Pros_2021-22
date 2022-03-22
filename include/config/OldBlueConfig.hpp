@@ -1,6 +1,6 @@
 // Inclusion guard
-#ifndef OLD_BLUE_CONFIG_H
-#define OLD_BLUE_CONFIG_H
+#ifndef OLD_CONFIG_H
+#define OLD_CONFIG_H
 
 // Included libraries
 #include "./main.h"
@@ -24,16 +24,16 @@ namespace OldBlueConfig
     // LIFT_COUNTS_PER_DEGREE: The number of encoder counts the lift moves per 
     //                         degree of rotation it experiences
     //-------------------------------------------------------------------------
-    extern const double CARRIER_DOWN_POSITION;
-    extern const double CARRIER_UP_POSITION;
-    extern const double CLAW_OPEN_POSITION;
-    extern const double CLAW_CLOSED_POSITION;
-    extern const double DRIVE_TRACKING_WHEEL_SIZE;
-    extern const double DRIVE_COUNTS_PER_ROTATION;
-    extern const double LIFT_BOTTOM_POSITION;
-    extern const double LIFT_TOP_POSITION;
-    extern const double LIFT_START_POSITION;
-    extern const double LIFT_COUNTS_PER_DEGREE;
+    const double CARRIER_DOWN_POSITION = -3000.0;
+    const double CARRIER_UP_POSITION = 0.0;
+    const double CLAW_OPEN_POSITION = 515.0;
+    const double CLAW_CLOSED_POSITION = 5.0;
+    const double DRIVE_TRACKING_WHEEL_SIZE = 2.75;
+    const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
+    const double LIFT_BOTTOM_POSITION = -10.0;
+    const double LIFT_TOP_POSITION = 110.0;
+    const double LIFT_START_POSITION = 75.0;
+    const double LIFT_COUNTS_PER_DEGREE = 25.0;
 
     //-------------------------------------------------------------------------
     // Motor ports:
@@ -52,18 +52,18 @@ namespace OldBlueConfig
     // RIGHT_LIFT_1_PORT: The port the first right lift motor is plugged into
     // RIGHT_LIFT_2_PORT: The port the second right lift motor is plugged into
     //-------------------------------------------------------------------------
-    extern const int CARRIER_1_PORT;
-    extern const int CARRIER_2_PORT;
-    extern const int CLAW_1_PORT;
-    extern const int LEFT_DRIVE_1_PORT;
-    extern const int LEFT_DRIVE_2_PORT;
-    extern const int LEFT_DRIVE_3_PORT;
-    extern const int RIGHT_DRIVE_1_PORT;
-    extern const int RIGHT_DRIVE_2_PORT;
-    extern const int RIGHT_DRIVE_3_PORT;
-    extern const int INTAKE_1_PORT;
-    extern const int LEFT_LIFT_1_PORT;
-    extern const int RIGHT_LIFT_1_PORT;
+    const int CARRIER_1_PORT = 6;
+    const int CARRIER_2_PORT = 16;
+    const int CLAW_1_PORT = 18;
+    const int LEFT_DRIVE_1_PORT = 11;
+    const int LEFT_DRIVE_2_PORT = 12;
+    const int LEFT_DRIVE_3_PORT = 13;
+    const int RIGHT_DRIVE_1_PORT = 1;
+    const int RIGHT_DRIVE_2_PORT = 2;
+    const int RIGHT_DRIVE_3_PORT = 3;
+    const int INTAKE_1_PORT = 8;
+    const int LEFT_LIFT_1_PORT = 7;
+    const int RIGHT_LIFT_1_PORT = 17;
     
     //-------------------------------------------------------------------------
     // Sensor ports:
@@ -71,9 +71,9 @@ namespace OldBlueConfig
     // RIGHT_DRIVE_TRACKING_PORT: The port the right rotation sensor is plugged into
     // STRAFE_DRIVE_TRACKING_PORT: The port the strafe rotation sensor is plugged into
     //-------------------------------------------------------------------------
-    extern const int LEFT_DRIVE_TRACKING_PORT;
-    extern const int RIGHT_DRIVE_TRACKING_PORT;
-    extern const int STRAFE_DRIVE_TRACKING_PORT;
+    const int LEFT_DRIVE_TRACKING_PORT = 14;
+    const int RIGHT_DRIVE_TRACKING_PORT = 4;
+    const int STRAFE_DRIVE_TRACKING_PORT = 5;
 
     //-------------------------------------------------------------------------
     // Motors:
@@ -90,18 +90,24 @@ namespace OldBlueConfig
     // leftLift1Motor: The first motor on the left side of the lift
     // rightLift1Motor: The first motor on the right side of the lift
     //-------------------------------------------------------------------------
-    extern pros::Motor carrier1Motor;
-    extern pros::Motor carrier2Motor;
-    extern pros::Motor claw1Motor;
-    extern pros::Motor leftDrive1Motor;
-    extern pros::Motor leftDrive2Motor;
-    extern pros::Motor leftDrive3Motor;
-    extern pros::Motor rightDrive1Motor;
-    extern pros::Motor rightDrive2Motor;
-    extern pros::Motor rightDrive3Motor;
-    extern pros::Motor intake1Motor;
-    extern pros::Motor leftLift1Motor;
-	extern pros::Motor rightLift1Motor;
+    pros::Motor carrier1Motor(CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor carrier2Motor(CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor leftDrive1Motor(LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor leftDrive2Motor(LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor leftDrive3Motor(LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
+                                true, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor rightDrive1Motor(RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                 false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor rightDrive2Motor(RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                 true, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor rightDrive3Motor(RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
+                                 false, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor intake1Motor(INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+    pros::Motor leftLift1Motor(LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+	pros::Motor rightLift1Motor(RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 
     //-------------------------------------------------------------------------
     // Sensors:
@@ -109,9 +115,9 @@ namespace OldBlueConfig
     // rightDriveTrackingSensor: The rotation sensor on the right side of the drive
     // strafeDriveTrackingSensor: The rotation sensor on the strafe wheel of the drive
     //-------------------------------------------------------------------------
-    extern pros::Rotation leftDriveTrackingSensor;
-    extern pros::Rotation rightDriveTrackingSensor;
-    extern pros::Rotation strafeDriveTrackingSensor;
+    pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
+    pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
+    pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);
 }
 
 #endif
