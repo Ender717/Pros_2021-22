@@ -1,10 +1,6 @@
 // Included libraries
 #include "Menu.hpp"
 
-// Static data member initialization
-int Menu::selectedAuton = 1;
-int Menu::selectedRobot = 1;
-
 // Public method definitions --------------------------------------------------
 void Menu::DrawMenuSelect()
 {
