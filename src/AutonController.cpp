@@ -4,7 +4,6 @@
 // Constructor definitions ----------------------------------------------------
 AutonController::AutonController(float x, float y, float theta)
 {
-    robot = RobotSetup::robot;
     robot.drive.SetPosition(x, y, theta);
 }
 
