@@ -35,7 +35,7 @@ namespace BlueConfig
     const int STRAFE_DRIVE_TRACKING_PORT = -1;
 
     // Piston ports
-    const char CARRIER_1_PORT = 'X';
+    const char CARRIER_1_PORT = 'A';
     const char CARRIER_2_PORT = 'X';
 
     // Motors
