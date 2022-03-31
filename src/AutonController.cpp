@@ -31,7 +31,7 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
     while(!robot.drive.TaskComplete())
     {
         //Menu::DrawPosition(robot);
-        robot.drive.GoToPositionTask(targetX, targetY, drivePower);
+        robot.drive.GoToPosition(targetX, targetY, drivePower);
         robot.lift.HoldPosition();
         robot.claw.HoldPosition();
         pros::delay(10);
@@ -61,7 +61,7 @@ void AutonController::DoTurnTask(float targetAngle, float drivePower,
     while (!robot.drive.TaskComplete())
     {
         //Menu::DrawPosition(robot);
-        robot.drive.TurnToAngleTask(targetAngle, drivePower);
+        robot.drive.TurnToAngle(targetAngle, drivePower);
         robot.lift.HoldPosition();
         robot.claw.HoldPosition();
         pros::delay(10);
