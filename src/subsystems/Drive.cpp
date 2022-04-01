@@ -152,67 +152,21 @@ void Drive::SetDrive(float leftPower, float rightPower)
     }
 }
 
-void Drive::GoToPosition(float targetX, float targetY, float power)
+void Drive::DriveStraight(double distance, double power)
 {
-    // Calculate the current polar position from the robot
-    float startDistance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-    float distance = startDistance;
-    float angle = atan2(targetX - position.GetX(), targetY - position.GetY());
-    float controlDistance = distance * cos(angle - position.GetTheta());
-    if (angle > (3.1415 / 2.0))
-        angle = 3.1415 - angle;
-    else if (angle < -(3.1415 / 2.0))
-        angle = -3.1415 - angle;
-    float controlAngle = distance * sin(angle - position.GetTheta());
-
-    // Set the PID controllers
-    distancePID.SetTargetValue(controlDistance);
-    anglePID.SetTargetValue(controlAngle);
-
-    // Get the control values
-    float controlValue = distancePID.GetControlValue(0.0);
-    float adjustValue = anglePID.GetControlValue(0.0);
-    if (controlValue > power)
-        controlValue = power;
-    else if (controlValue < -power)
-        controlValue = -power;
-    if (adjustValue > power)
-        adjustValue = power;
-    else if (adjustValue < -power)
-        adjustValue = -power;
-
-    // Set the motors for the control motion
-    int timer = 0;
-    while((distance > 1.5 || std::abs(controlValue) > 3.0) && timer < (startDistance * 80))
+    if(!taskInitialized)
     {
-        // Calculate all the variables
-        UpdatePosition();
-        distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-        angle = atan2(targetY - position.GetY(), targetX - position.GetX());
-        controlDistance = distance * cos(angle - position.GetTheta());
-        if (angle > (3.1415 / 2.0))
-            angle += 3.1415;
-        else if (angle < -(3.1415 / 2.0))
-            angle -= 3.1415;
-        controlAngle = distance * sin(angle - position.GetTheta());
-
-        // Set the PID controllers
-        distancePID.SetTargetValue(controlDistance);
-        anglePID.SetTargetValue(controlAngle);
-        controlValue = distancePID.GetControlValue(0.0);
-        adjustValue = anglePID.GetControlValue(0.0);
-
-        // Control the motors
-        SetDrive(controlValue - adjustValue, controlValue + adjustValue);
-
-        // Update the loop
-        timer += 10;
-        pros::delay(10);
+        startDistance = distance;
+        distancePID.SetMin(-power);
+        distancePID.SetMax(power);
+        anglePID.SetMin(-power);
+        anglePID.SetMax(power);
+        timer = 0;
+        taskInitialized = true;
     }
-    SetDrive(0.0, 0.0);
 }
 
-void Drive::GoToPositionTask(float targetX, float targetY, float power)
+void Drive::GoToPosition(float targetX, float targetY, float power)
 {
     if(!taskInitialized)
     {
@@ -251,29 +205,7 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     }
 }
 
-void Drive::TurnToAngle(float targetAngle)
-{
-    // Initialize variables
-    timer = 0;
-    float angle = position.GetTheta() / 0.0175;
-    float turnSize = std::abs(targetAngle - angle);
-    turnPID.SetTargetValue(targetAngle);
-    float controlValue = turnPID.GetControlValue(angle);
-
-    // Loop until the target is reached
-    while((std::abs(targetAngle - angle) > 0.1 || std::abs(controlValue) > 1.0) && timer < (turnSize * 100))
-    {
-        UpdatePosition();
-        angle = position.GetTheta() / 0.0175;
-        controlValue = turnPID.GetControlValue(angle);
-        SetDrive(-controlValue, controlValue);
-        timer += 10;
-        pros::delay(10);
-    }
-    SetDrive(0.0, 0.0);
-}
-
-void Drive::TurnToAngleTask(float targetAngle, float power)
+void Drive::TurnToAngle(float targetAngle, float power)
 {
     if(!taskInitialized)
     {

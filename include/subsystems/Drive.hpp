@@ -178,14 +178,12 @@ public:
     void SetDrive(float leftPower, float rightPower);
 
     //-------------------------------------------------------------------------
-    // Makes the drive move towards a target position
-    // targetX: The target position's x-coordinate
-    // targetY: The target position's y-coordinate
-    // power: The speed at which the robot moves to the target coordinate
-    // v1: Created the method - Nathan S, 2-13-22
-    // v2: Made the method work properly - Nathan S, 2-18-22
+    // Drives straight forward a designated distance
+    // distance: The distance being travelled
+    // power: The power of the motors
+    // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void GoToPosition(float targetX, float targetY, float power);
+    void DriveStraight(double distance, double power);
 
     //-------------------------------------------------------------------------
     // Makes the drive move towards a target position as a task
@@ -194,14 +192,7 @@ public:
     // power: The speed at which the robot moves to the target coordinate
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void GoToPositionTask(float targetX, float targetY, float power);
-
-    //-------------------------------------------------------------------------
-    // Makes the drive turn to the target angle
-    // targetAngle: The target angle in degrees
-    // v1: Created the method - Nathan S, 2-13-22
-    //-------------------------------------------------------------------------
-    void TurnToAngle(float targetAngle);
+    void GoToPosition(float targetX, float targetY, float power);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task
@@ -209,7 +200,7 @@ public:
     // power: The speed at which the drive will turn
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
-    void TurnToAngleTask(float targetAngle, float power);
+    void TurnToAngle(float targetAngle, float power);
 
     //-------------------------------------------------------------------------
     // Checks if the current task has been completed
