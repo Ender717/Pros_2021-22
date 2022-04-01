@@ -50,7 +50,7 @@ Drive::DriveBuilder Drive::DriveBuilder::WithPosition(Position position)
     return *this;
 }
 
-Drive::DriveBuilder Drive::DriveBuilder::WithWheelSize(float wheelSize)
+Drive::DriveBuilder Drive::DriveBuilder::WithWheelSize(double wheelSize)
 {
     this->wheelSize = wheelSize;
     return *this;
@@ -135,7 +135,7 @@ void Drive::Initialize()
     }
 }
 
-void Drive::SetDrive(float leftPower, float rightPower)
+void Drive::SetDrive(double leftPower, double rightPower)
 {
     // Move the left side of the drive
     for (std::list<pros::Motor>::iterator iterator = leftMotorList.begin(); 
@@ -162,7 +162,7 @@ void Drive::DriveStraight(double distance, double power)
     }
 }
 
-void Drive::GoToPosition(float targetX, float targetY, float power)
+void Drive::GoToPosition(double targetX, double targetY, double power)
 {
     if(!taskInitialized)
     {
@@ -173,20 +173,20 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
 
     // Calculate the current polar position from the robot
     UpdatePosition();
-    float distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-    float angle = atan2(targetY - position.GetY(), targetX - position.GetX());
-    float controlDistance = distance * cos(angle - position.GetTheta());
+    double distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
+    double angle = atan2(targetY - position.GetY(), targetX - position.GetX());
+    double controlDistance = distance * cos(angle - position.GetTheta());
     if (angle > (3.1415 / 2.0))
         angle += 3.1415;
     else if (angle < -(3.1415 / 2.0))
         angle -= 3.1415;
-    float controlAngle = distance * sin(angle - position.GetTheta());
+    double controlAngle = distance * sin(angle - position.GetTheta());
 
     // Set the PID controllers
     distancePID.SetTargetValue(controlDistance);
     anglePID.SetTargetValue(controlAngle);
-    float controlValue = distancePID.GetControlValue(0.0);
-    float adjustValue = anglePID.GetControlValue(0.0);
+    double controlValue = distancePID.GetControlValue(0.0);
+    double adjustValue = anglePID.GetControlValue(0.0);
 
     // Update the task
     if((distance > 0.5 || std::abs(controlValue) > 2.0) && timer < (startDistance * 100))
@@ -201,7 +201,7 @@ void Drive::GoToPosition(float targetX, float targetY, float power)
     }
 }
 
-void Drive::TurnToAngle(float targetAngle, float power)
+void Drive::TurnToAngle(double targetAngle, double power)
 {
     if(!taskInitialized)
     {
@@ -212,11 +212,11 @@ void Drive::TurnToAngle(float targetAngle, float power)
 
     // Calculate variables
     UpdatePosition();
-    float angle = position.GetAngle();
+    double angle = position.GetAngle();
 
     // Get the PID control value
     turnPID.SetTargetValue(targetAngle);
-    float controlValue = turnPID.GetControlValue(angle);
+    double controlValue = turnPID.GetControlValue(angle);
 
     // Update the task
     if((std::abs(targetAngle - angle) > 0.1 || std::abs(controlValue) > 1.0) && timer < (startAngle * 20))
@@ -242,37 +242,37 @@ void Drive::NewTask()
     taskCompleted = false;
 }
 
-void Drive::SetX(float x)
+void Drive::SetX(double x)
 {
     position.SetX(x);
 }
 
-void Drive::SetY(float y)
+void Drive::SetY(double y)
 {
     position.SetY(y);;
 }
 
-void Drive::SetTheta(float theta)
+void Drive::SetTheta(double theta)
 {
     position.SetAngle(theta);
 }
 
-void Drive::SetPosition(float x, float y, float theta)
+void Drive::SetPosition(double x, double y, double theta)
 {
     position.SetPosition(x, y, theta * 0.0175);
 }
 
-float Drive::GetX() const
+double Drive::GetX() const
 {
     return position.GetX();
 }
 
-float Drive::GetY() const
+double Drive::GetY() const
 {
     return position.GetY();
 }
 
-float Drive::GetTheta() const
+double Drive::GetTheta() const
 {
     return position.GetAngle() * 3.1415 / 180.0;
 }
@@ -281,11 +281,11 @@ void Drive::UpdatePosition()
 {
     // Get the left, right, and strafe values in inches
     std::list<pros::Rotation>::iterator iterator = trackingList.begin(); 
-    float leftValue = iterator->get_position() * wheelSize * 3.1415 / 36000.0;
+    double leftValue = iterator->get_position() * wheelSize * 3.1415 / 36000.0;
     iterator++;
-    float rightValue = iterator->get_position() * wheelSize * 3.1415 / -36000.0;
+    double rightValue = iterator->get_position() * wheelSize * 3.1415 / -36000.0;
     iterator++;
-    float strafeValue = iterator->get_position() * wheelSize * 3.1415 / -36000.0;
+    double strafeValue = iterator->get_position() * wheelSize * 3.1415 / -36000.0;
 
     // Input those values to the tracking algorithm
     position.UpdatePosition(leftValue, rightValue, strafeValue);

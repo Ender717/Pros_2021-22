@@ -2,14 +2,14 @@
 #include "AutonController.hpp"
 
 // Constructor definitions ----------------------------------------------------
-AutonController::AutonController(float x, float y, float theta)
+AutonController::AutonController(double x, double y, double theta)
 {
     robot.drive.SetPosition(x, y, theta);
 }
 
 // Public method definitions --------------------------------------------------
-void AutonController::DoPositionTask(float targetX, float targetY, float drivePower, 
-    float liftAngle, bool clawClosed, bool carrierDown, bool intake)
+void AutonController::DoPositionTask(double targetX, double targetY, double drivePower, 
+    double liftAngle, bool clawClosed, bool carrierDown, bool intake)
 {
     // Initialize the new positions
     robot.drive.NewTask();
@@ -38,8 +38,8 @@ void AutonController::DoPositionTask(float targetX, float targetY, float drivePo
     }
 }
 
-void AutonController::DoTurnTask(float targetAngle, float drivePower, 
-    float liftAngle, bool clawClosed, bool carrierDown, bool intake)
+void AutonController::DoTurnTask(double targetAngle, double drivePower, 
+    double liftAngle, bool clawClosed, bool carrierDown, bool intake)
 {
     // Initialize the new positions
     robot.drive.NewTask();

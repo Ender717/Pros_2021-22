@@ -27,8 +27,8 @@ private:
     std::list<pros::Motor> motorList;
     std::list<pros::ADIDigitalOut> pistonList;
     PID carrierPID;
-    float upPosition;
-    float downPosition;
+    double upPosition;
+    double downPosition;
     bool isDown;
 
 public:
@@ -50,8 +50,8 @@ public:
         std::list<pros::Motor> motorList;
         std::list<pros::ADIDigitalOut> pistonList;
         PID carrierPID;
-        float upPosition;
-        float downPosition;
+        double upPosition;
+        double downPosition;
 
         //---------------------------------------------------------------------
         // Default constructor for the CarrierBuilder
@@ -89,7 +89,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithUpPosition(float upPosition);
+        CarrierBuilder WithUpPosition(double upPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add a down position to the carrier build
@@ -97,7 +97,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithDownPosition(float downPosition);
+        CarrierBuilder WithDownPosition(double downPosition);
 
         //---------------------------------------------------------------------
         // Build method to construct the carrier
@@ -129,7 +129,7 @@ public:
     //-------------------------------------------------------------------------
     void Initialize();
 
-    void SetPower(float power);
+    void SetPower(double power);
 
     //-------------------------------------------------------------------------
     // Sets the position of the Carrier to down

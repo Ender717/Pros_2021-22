@@ -27,13 +27,13 @@ Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPID(PID pid)
     return *this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithUpPosition(float upPosition)
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithUpPosition(double upPosition)
 {
     this->upPosition = upPosition;
     return *this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithDownPosition(float downPosition)
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithDownPosition(double downPosition)
 {
     this->downPosition = downPosition;
     return *this;
@@ -107,7 +107,7 @@ void Carrier::Initialize()
     carrierPID.SetTargetValue(upPosition);
 }
 
-void Carrier::SetPower(float power)
+void Carrier::SetPower(double power)
 {
     for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
         iterator != motorList.end(); iterator++)
@@ -152,7 +152,7 @@ void Carrier::HoldPosition()
 {
     if(motorList.size() > 0)
     {
-        float position = motorList.front().get_position();
+        double position = motorList.front().get_position();
         bool inPosition = (isDown && (position <= downPosition)) ||
                         (!isDown && (position >= upPosition));
         //if(!inPosition)

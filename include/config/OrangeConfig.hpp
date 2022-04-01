@@ -24,14 +24,14 @@ namespace OrangeConfig
     // LIFT_COUNTS_PER_DEGREE: The number of encoder counts the lift moves per 
     //                         degree of rotation it experiences
     //-------------------------------------------------------------------------
-    extern const float CLAW_OPEN_POSITION;
-    extern const float CLAW_CLOSED_POSITION;
-    extern const float DRIVE_TRACKING_WHEEL_SIZE;
-    extern const float DRIVE_COUNTS_PER_ROTATION;
-    extern const float LIFT_BOTTOM_POSITION;
-    extern const float LIFT_TOP_POSITION;
-    extern const float LIFT_START_POSITION;
-    extern const float LIFT_COUNTS_PER_DEGREE;
+    extern const double CLAW_OPEN_POSITION;
+    extern const double CLAW_CLOSED_POSITION;
+    extern const double DRIVE_TRACKING_WHEEL_SIZE;
+    extern const double DRIVE_COUNTS_PER_ROTATION;
+    extern const double LIFT_BOTTOM_POSITION;
+    extern const double LIFT_TOP_POSITION;
+    extern const double LIFT_START_POSITION;
+    extern const double LIFT_COUNTS_PER_DEGREE;
 
     //-------------------------------------------------------------------------
     // Motor ports:

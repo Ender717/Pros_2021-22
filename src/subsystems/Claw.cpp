@@ -27,13 +27,13 @@ Claw::ClawBuilder Claw::ClawBuilder::WithPID(PID pid)
     return *this;
 }
 
-Claw::ClawBuilder Claw::ClawBuilder::WithOpenPosition(float openPosition)
+Claw::ClawBuilder Claw::ClawBuilder::WithOpenPosition(double openPosition)
 {
     this->openPosition = openPosition;
     return *this;
 }
 
-Claw::ClawBuilder Claw::ClawBuilder::WithClosedPosition(float closedPosition)
+Claw::ClawBuilder Claw::ClawBuilder::WithClosedPosition(double closedPosition)
 {
     this->closedPosition = closedPosition;
     return *this;
@@ -146,7 +146,7 @@ void Claw::HoldPosition()
 {
     if(motorList.size() > 0)
     {
-        float position = motorList.front().get_position();
+        double position = motorList.front().get_position();
         bool inPosition = (isClosed && (position <= closedPosition)) ||
                         (!isClosed && (position >= openPosition));
         //if(!inPosition)

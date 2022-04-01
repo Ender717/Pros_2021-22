@@ -58,7 +58,7 @@ void Intake::Initialize()
     }
 }
 
-void Intake::SetSpeed(float speed)
+void Intake::SetSpeed(double speed)
 {
     intakeSpeed = speed;
 }

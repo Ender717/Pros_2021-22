@@ -130,25 +130,25 @@ namespace Menu
 
         // Draw the robot
         pros::screen::set_pen(COLOR_ORANGE);
-        float robotX = 344 + (robot.drive.GetX() * 5.0 / 3.0);
-        float robotY = 136 - (robot.drive.GetY() * 5.0 / 3.0);
+        double robotX = 344 + (robot.drive.GetX() * 5.0 / 3.0);
+        double robotY = 136 - (robot.drive.GetY() * 5.0 / 3.0);
         pros::screen::fill_circle(robotX, robotY, 15);
         pros::screen::set_pen(COLOR_BLACK);
         pros::screen::draw_circle(robotX, robotY, 15);
 
         // Draw an arrow to show the direction of the robot
         pros::screen::set_pen(COLOR_DARK_BLUE);
-        float angle = robot.drive.GetTheta();
+        double angle = robot.drive.GetTheta();
 
-        float x1 = robotX - (12 * cos(angle));
-        float y1 = robotY + (12 * sin(angle));
-        float x2 = robotX + (12 * cos(angle));
-        float y2 = robotY - (12 * sin(angle));
+        double x1 = robotX - (12 * cos(angle));
+        double y1 = robotY + (12 * sin(angle));
+        double x2 = robotX + (12 * cos(angle));
+        double y2 = robotY - (12 * sin(angle));
 
-        float px1 = x2 - (12 * cos(angle + (3.1415 / 6.0)));
-        float py1 = y2 + (12 * sin(angle + (3.1415 / 6.0)));
-        float px2 = x2 - (12 * cos(angle - (3.1415 / 6.0)));
-        float py2 = y2 + (12 * sin(angle - (3.1415 / 6.0)));
+        double px1 = x2 - (12 * cos(angle + (3.1415 / 6.0)));
+        double py1 = y2 + (12 * sin(angle + (3.1415 / 6.0)));
+        double px2 = x2 - (12 * cos(angle - (3.1415 / 6.0)));
+        double py2 = y2 + (12 * sin(angle - (3.1415 / 6.0)));
 
         pros::screen::draw_line(x1, y1, x2, y2);
         pros::screen::draw_line(x2, y2, px1, py1);

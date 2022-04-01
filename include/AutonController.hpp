@@ -27,7 +27,7 @@ public:
     // theta: The starting angle
     // v1: Created the constructor - Nathan S, 2-17-22
     //-------------------------------------------------------------------------
-    AutonController(float x, float y, float theta);
+    AutonController(double x, double y, double theta);
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the position
@@ -39,8 +39,8 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void DoPositionTask(float targetX, float targetY, float drivePower,
-                        float liftAngle, bool clawClosed, bool carrierDown, bool intake);
+    void DoPositionTask(double targetX, double targetY, double drivePower,
+                        double liftAngle, bool clawClosed, bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by a turn
@@ -51,7 +51,7 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
-    void DoTurnTask(float targetAngle, float drivePower, float liftAngle, 
+    void DoTurnTask(double targetAngle, double drivePower, double liftAngle, 
                     bool clawClosed, bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
@@ -64,8 +64,8 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void DoLiftTask(float targetX, float targetY, float drivePower,
-                     float liftAngle, bool clawClosed, bool carrierDown, bool intake);
+    void DoLiftTask(double targetX, double targetY, double drivePower,
+                     double liftAngle, bool clawClosed, bool carrierDown, bool intake);
 };
 
 #endif

@@ -23,7 +23,7 @@ private:
     //-------------------------------------------------------------------------
     std::list<pros::Motor> motorList;
     PID intakePID;
-    float intakeSpeed;
+    double intakeSpeed;
 
 public:
     //-------------------------------------------------------------------------
@@ -97,7 +97,7 @@ public:
     // speed: The speed to set the intake to
     // v1: Created the method - Nathan S, 3-9-22
     //-------------------------------------------------------------------------
-    void SetSpeed(float speed);
+    void SetSpeed(double speed);
 
     //-------------------------------------------------------------------------
     // Runs the intake inwards

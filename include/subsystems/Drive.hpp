@@ -38,12 +38,12 @@ private:
     PID anglePID;
     PID turnPID;
     Position position;
-    float wheelSize;
+    double wheelSize;
     bool taskInitialized;
     bool taskCompleted;
     int timer;
-    float startDistance;
-    float startAngle;
+    double startDistance;
+    double startAngle;
 
 public:
     //-------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public:
         PID anglePID;
         PID turnPID;
         Position position;
-        float wheelSize;
+        double wheelSize;
 
         //---------------------------------------------------------------------
         // Default constructor for the DriveBuilder class
@@ -141,7 +141,7 @@ public:
         // return: The DriveBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        DriveBuilder WithWheelSize(float wheelSize);
+        DriveBuilder WithWheelSize(double wheelSize);
 
         //---------------------------------------------------------------------
         // Builder method for the DriveBuilder
@@ -175,7 +175,7 @@ public:
     // rightPower: The power being sent to the right side of the drive
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetDrive(float leftPower, float rightPower);
+    void SetDrive(double leftPower, double rightPower);
 
     //-------------------------------------------------------------------------
     // Drives straight forward a designated distance
@@ -192,7 +192,7 @@ public:
     // power: The speed at which the robot moves to the target coordinate
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void GoToPosition(float targetX, float targetY, float power);
+    void GoToPosition(double targetX, double targetY, double power);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task
@@ -200,7 +200,7 @@ public:
     // power: The speed at which the drive will turn
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
-    void TurnToAngle(float targetAngle, float power);
+    void TurnToAngle(double targetAngle, double power);
 
     //-------------------------------------------------------------------------
     // Checks if the current task has been completed
@@ -220,21 +220,21 @@ public:
     // x: The new x-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetX(float x);
+    void SetX(double x);
 
     //-------------------------------------------------------------------------
     // Sets the current y-coordinate of the drive
     // y: The new y-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetY(float y);
+    void SetY(double y);
 
     //-------------------------------------------------------------------------
     // Sets the current angle of the drive
     // theta: The new angle of the drive in degrees
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetTheta(float theta);
+    void SetTheta(double theta);
 
     //-------------------------------------------------------------------------
     // Sets the current position of the drive
@@ -243,28 +243,28 @@ public:
     // theta: The new angle of the drive in degrees
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    void SetPosition(float x, float y, float theta);
+    void SetPosition(double x, double y, double theta);
 
     //-------------------------------------------------------------------------
     // Gets the current x-coordinate of the drive
     // return: The x-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetX() const;
+    double GetX() const;
 
     //-------------------------------------------------------------------------
     // Gets the current y-coordinate of the drive
     // return: The y-coordinate of the drive in inches
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetY() const;
+    double GetY() const;
 
     //-------------------------------------------------------------------------
     // Gets the current angle of the drive
     // return: The angle of the drive in radians
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    float GetTheta() const;
+    double GetTheta() const;
 
     //-------------------------------------------------------------------------
     // Updates the position of the drive

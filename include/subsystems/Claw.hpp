@@ -27,8 +27,8 @@ private:
     std::list<pros::Motor> motorList;
     std::list<pros::ADIDigitalOut> pistonList;
     PID clawPID;
-    float openPosition;
-    float closedPosition;
+    double openPosition;
+    double closedPosition;
     bool isClosed;
 
 public:
@@ -50,8 +50,8 @@ public:
         std::list<pros::Motor> motorList;
         std::list<pros::ADIDigitalOut> pistonList;
         PID clawPID;
-        float openPosition;
-        float closedPosition;
+        double openPosition;
+        double closedPosition;
 
         //---------------------------------------------------------------------
         // Default constructor for the ClawBuilder
@@ -89,7 +89,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        ClawBuilder WithOpenPosition(float openPosition);
+        ClawBuilder WithOpenPosition(double openPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add a closed position to the claw build
@@ -97,7 +97,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        ClawBuilder WithClosedPosition(float closedPosition);
+        ClawBuilder WithClosedPosition(double closedPosition);
 
         //---------------------------------------------------------------------
         // Build method to construct the claw
