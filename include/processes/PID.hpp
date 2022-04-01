@@ -13,14 +13,6 @@ class PID
 {
 private:
     //-------------------------------------------------------------------------
-    // Constants
-    // MOTOR_MIN: The minimum control value of a motor
-    // MOTOR_MAX: The maximum control value of a motor
-    //-------------------------------------------------------------------------
-    static constexpr double MOTOR_MIN = -127.0;
-    static constexpr double MOTOR_MAX = 127.0;
-    
-    //-------------------------------------------------------------------------
     // Control constants:
     // kp: Proportional constant
     // ki: Integral constant
@@ -61,14 +53,22 @@ private:
     double iValue;
 
 public:
-    //-----------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     // This is a builder class for PID controllers
     // v1: Created the class - Nathan S, 3-8-22
-    //-----------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     class PIDBuilder
     {
     public:
         //-------------------------------------------------------------------------
+        // Constants
+        // MOTOR_MIN: The minimum control value of a motor
+        // MOTOR_MAX: The maximum control value of a motor
+        //-------------------------------------------------------------------------
+        static constexpr double MOTOR_MIN = -127.0;
+        static constexpr double MOTOR_MAX = 127.0;
+    
+        //---------------------------------------------------------------------
         // Attributes:
         // kp: The proportional constant
         // ki: The integral constant
@@ -77,7 +77,7 @@ public:
         // max: The maximum output of the controller
         // integralLimit: The maximum value of the integral controller output
         // startTarget: The initial target of the systems
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         double kp;
         double ki;
         double kd;
@@ -86,66 +86,73 @@ public:
         double integralLimit;
         double startTarget;
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Default constructor for the PIDBuilder class
         // v1: Created the constructor - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder();
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the kp attribute
         // kp: The value to set kp to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithKp(double kp);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the ki attribute
         // ki: The value to set ki to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithKi(double ki);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the kd attribute
         // kd: The value to set kd to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithKd(double kd);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the min attribute
         // min: The value to set min to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithMin(double min);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the max attribute
         // max: The value to set max to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithMax(double max);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the integralLimit attribute
         // integralLimit: The value to set integralLimit to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithIntegralLimit(double integralLimit);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Wither method for the startTarget attribute
         // startTarget: The value to set startTarget to
+        // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PIDBuilder WithStartTarget(double startTarget);
 
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         // Constructs and returns a new PID from the builder
         // return: The new PID controller
         // v1: Created the method - Nathan S, 3-8-22
-        //-------------------------------------------------------------------------
+        //---------------------------------------------------------------------
         PID Build();
     };
     //-------------------------------------------------------------------------

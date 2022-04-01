@@ -205,14 +205,14 @@ void Drive::TurnToAngle(float targetAngle, float power)
 {
     if(!taskInitialized)
     {
-        startAngle = std::abs(targetAngle - (position.GetTheta() / 0.0175));
+        startAngle = std::abs(targetAngle - position.GetAngle());
         timer = 0;
         taskInitialized = true;
     }
 
     // Calculate variables
     UpdatePosition();
-    float angle = position.GetTheta() / 0.0175;
+    float angle = position.GetAngle();
 
     // Get the PID control value
     turnPID.SetTargetValue(targetAngle);
@@ -244,17 +244,17 @@ void Drive::NewTask()
 
 void Drive::SetX(float x)
 {
-    position.SetPosition(x, position.GetY(), position.GetTheta());
+    position.SetX(x);
 }
 
 void Drive::SetY(float y)
 {
-    position.SetPosition(position.GetX(), y, position.GetTheta());
+    position.SetY(y);;
 }
 
 void Drive::SetTheta(float theta)
 {
-    position.SetPosition(position.GetX(), position.GetY(), theta * 0.0175);
+    position.SetAngle(theta);
 }
 
 void Drive::SetPosition(float x, float y, float theta)
@@ -274,7 +274,7 @@ float Drive::GetY() const
 
 float Drive::GetTheta() const
 {
-    return position.GetTheta();
+    return position.GetAngle() * 3.1415 / 180.0;
 }
 
 void Drive::UpdatePosition()
