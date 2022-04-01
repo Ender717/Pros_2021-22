@@ -29,6 +29,12 @@ private:
     void CreateBlueRobot();
 
     //-------------------------------------------------------------------------
+    // Creates a pre-configured orange robot
+    // v1: Created the method - Nathan S, 3-10-22
+    //-------------------------------------------------------------------------
+    void CreateOrangeRobot();
+
+    //-------------------------------------------------------------------------
     // Creates a pre-configured old orange robot
     // v1: Created the method - Nathan S, 3-10-22
     //-------------------------------------------------------------------------
