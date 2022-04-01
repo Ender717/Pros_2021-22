@@ -157,10 +157,6 @@ void Drive::DriveStraight(double distance, double power)
     if(!taskInitialized)
     {
         startDistance = distance;
-        distancePID.SetMin(-power);
-        distancePID.SetMax(power);
-        anglePID.SetMin(-power);
-        anglePID.SetMax(power);
         timer = 0;
         taskInitialized = true;
     }
