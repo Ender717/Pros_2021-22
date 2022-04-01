@@ -4,14 +4,17 @@
 namespace OldOrangeConfig
 {
     // Constants
-    const float CLAW_OPEN_POSITION = 515.0;
-    const float CLAW_CLOSED_POSITION = 5.0;
-    const float DRIVE_TRACKING_WHEEL_SIZE = 2.75;
-    const float DRIVE_COUNTS_PER_ROTATION = 36000.0;
-    const float LIFT_BOTTOM_POSITION = -18.0;
-    const float LIFT_TOP_POSITION = 110.0;
-    const float LIFT_START_POSITION = 75.0;
-    const float LIFT_COUNTS_PER_DEGREE = 25.0;
+    const double CLAW_OPEN_POSITION = 515.0;
+    const double CLAW_CLOSED_POSITION = 5.0;
+    const double DRIVE_TRACKING_WHEEL_SIZE = 2.75;
+    const double DRIVE_LEFT_TRACKING_DISTANCE = 6.0313;
+    const double DRIVE_RIGHT_TRACKING_DISTANCE = 6.0313;
+    const double DRIVE_STRAFE_TRACKING_DISTANCE = 1.50;
+    const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
+    const double LIFT_BOTTOM_POSITION = -18.0;
+    const double LIFT_TOP_POSITION = 110.0;
+    const double LIFT_START_POSITION = 75.0;
+    const double LIFT_COUNTS_PER_DEGREE = 25.0;
 
     // Motor ports
     const int CLAW_1_PORT = 7;

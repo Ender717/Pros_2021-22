@@ -16,6 +16,9 @@ namespace OldBlueConfig
     // OPEN_POSITION: The position of the claw when open
     // CLOSED_POSITION: The position of the claw when closed
     // DRIVE_TRACKING_WHEEL_SIZE: The diameter of the tracking wheels on the drive
+    // DRIVE_LEFT_TRACKING_DISTANCE: The left tracking wheel offset
+    // DRIVE_RIGHT_TRACKING_DISTANCE: The right tracking wheel offset
+    // DRIVE_STRAFE_TRACKING_DISTANCE: The strafe tracking wheel offset
     // DRIVE_COUNTS_PER_ROTATION: The number of encoder counts in one rotation 
     //                            of a rotation sensor
     // LIFT_BOTTOM_POSITION: The minimum angle of the lift
@@ -29,6 +32,9 @@ namespace OldBlueConfig
     extern const double CLAW_OPEN_POSITION;
     extern const double CLAW_CLOSED_POSITION;
     extern const double DRIVE_TRACKING_WHEEL_SIZE;
+    extern const double DRIVE_LEFT_TRACKING_DISTANCE;
+    extern const double DRIVE_RIGHT_TRACKING_DISTANCE;
+    extern const double DRIVE_STRAFE_TRACKING_DISTANCE;
     extern const double DRIVE_COUNTS_PER_ROTATION;
     extern const double LIFT_BOTTOM_POSITION;
     extern const double LIFT_TOP_POSITION;

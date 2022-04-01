@@ -1,7 +1,7 @@
 // Defined library
-#include "config/BlueConfig.hpp"
+#include "config/OrangeConfig.hpp"
 
-namespace BlueConfig
+namespace OrangeConfig
 {
     // Constants
     const double CLAW_OPEN_POSITION = 515.0;
