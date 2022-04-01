@@ -1,6 +1,6 @@
 // Standard inclusion guard
-#ifndef PID_H
-#define PID_H
+#ifndef PID_HPP
+#define PID_HPP
 
 // Included libraries
 #include "./main.h"
@@ -17,8 +17,8 @@ private:
     // MOTOR_MIN: The minimum control value of a motor
     // MOTOR_MAX: The maximum control value of a motor
     //-------------------------------------------------------------------------
-    static constexpr float MOTOR_MIN = -127.0;
-    static constexpr float MOTOR_MAX = 127.0;
+    static constexpr double MOTOR_MIN = -127.0;
+    static constexpr double MOTOR_MAX = 127.0;
     
     //-------------------------------------------------------------------------
     // Control constants:
@@ -26,9 +26,9 @@ private:
     // ki: Integral constant
     // kd: Derivative constant
     //-------------------------------------------------------------------------
-    float kp;
-    float ki;
-    float kd;
+    double kp;
+    double ki;
+    double kd;
 
     //-------------------------------------------------------------------------
     // Limiting values:
@@ -36,29 +36,29 @@ private:
     // max: Maximum output value
     // integralLimit: Maximum integral controller value
     //-------------------------------------------------------------------------
-    float min;
-    float max;
-    float integralLimit;
+    double min;
+    double max;
+    double integralLimit;
 
     //-------------------------------------------------------------------------
     // Time values:
     // pastTime: The previous time on the system clock
     //-------------------------------------------------------------------------
-    float pastTime;
+    double pastTime;
 
     //-------------------------------------------------------------------------
     // Input values:
     // targetValue: The target value of the external system
     // pastError: The error during the previous system loop
     //-------------------------------------------------------------------------
-    float targetValue;
-    float pastError;
+    double targetValue;
+    double pastError;
 
     //-------------------------------------------------------------------------
     // Control values:
     // iValue: The value of the integral controller
     //-------------------------------------------------------------------------
-    float iValue;
+    double iValue;
 
 public:
     //-----------------------------------------------------------------------------
@@ -78,13 +78,13 @@ public:
         // integralLimit: The maximum value of the integral controller output
         // startTarget: The initial target of the systems
         //-------------------------------------------------------------------------
-        float kp;
-        float ki;
-        float kd;
-        float min;
-        float max;
-        float integralLimit;
-        float startTarget;
+        double kp;
+        double ki;
+        double kd;
+        double min;
+        double max;
+        double integralLimit;
+        double startTarget;
 
         //-------------------------------------------------------------------------
         // Default constructor for the PIDBuilder class
@@ -97,49 +97,49 @@ public:
         // kp: The value to set kp to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithKp(float kp);
+        PIDBuilder WithKp(double kp);
 
         //-------------------------------------------------------------------------
         // Wither method for the ki attribute
         // ki: The value to set ki to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithKi(float ki);
+        PIDBuilder WithKi(double ki);
 
         //-------------------------------------------------------------------------
         // Wither method for the kd attribute
         // kd: The value to set kd to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithKd(float kd);
+        PIDBuilder WithKd(double kd);
 
         //-------------------------------------------------------------------------
         // Wither method for the min attribute
         // min: The value to set min to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithMin(float min);
+        PIDBuilder WithMin(double min);
 
         //-------------------------------------------------------------------------
         // Wither method for the max attribute
         // max: The value to set max to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithMax(float max);
+        PIDBuilder WithMax(double max);
 
         //-------------------------------------------------------------------------
         // Wither method for the integralLimit attribute
         // integralLimit: The value to set integralLimit to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithIntegralLimit(float integralLimit);
+        PIDBuilder WithIntegralLimit(double integralLimit);
 
         //-------------------------------------------------------------------------
         // Wither method for the startTarget attribute
         // startTarget: The value to set startTarget to
         // v1: Created the method - Nathan S, 3-8-22
         //-------------------------------------------------------------------------
-        PIDBuilder WithStartTarget(float startTarget);
+        PIDBuilder WithStartTarget(double startTarget);
 
         //-------------------------------------------------------------------------
         // Constructs and returns a new PID from the builder
@@ -162,32 +162,18 @@ public:
 
     //-------------------------------------------------------------------------
     // Returns the control variable based on the target and current values
-    // float currentValue - the current value of the system's output
+    // double currentValue - the current value of the system's output
     // returns: The value of the control variable (system output)
     // v1: Created the method - Nathan S, 9-10-21
     //-------------------------------------------------------------------------
-    float GetControlValue(float currentValue);
+    double GetControlValue(double currentValue);
 
     //-------------------------------------------------------------------------
     // Setter method for targetValue
-    // float targetValue - the value to set targetValue to
+    // double targetValue - the value to set targetValue to
     // v1: Created the method - Nathan S, 9-11-21
     //-------------------------------------------------------------------------
-    void SetTargetValue(float targetValue);
-
-    //-------------------------------------------------------------------------
-    // Setter method for min
-    // float min - the value to set min to
-    // v1: Created the method - Nathan S, 9-11-21
-    //-------------------------------------------------------------------------
-    void SetMin(float min);
-
-    //-------------------------------------------------------------------------
-    // Setter method for max
-    // float min - the value to set max to
-    // v1: Created the method - Nathan S, 9-11-21
-    //-------------------------------------------------------------------------
-    void SetMax(float max);
+    void SetTargetValue(double targetValue);
 };
 
 #endif

@@ -3,15 +3,16 @@
 #define ROBOT_H
 
 // Included libraries
-#include "main.h"
 #include "subsystems/Drive.hpp"
 #include "subsystems/Carrier.hpp"
 #include "subsystems/Lift.hpp"
 #include "subsystems/Claw.hpp"
 #include "subsystems/Intake.hpp"
 #include "config/BlueConfig.hpp"
-#include "config/OldOrangeConfig.hpp"
+#include "config/OrangeConfig.hpp"
 #include "config/OldBlueConfig.hpp"
+#include "config/OldOrangeConfig.hpp"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This class controls the robot container

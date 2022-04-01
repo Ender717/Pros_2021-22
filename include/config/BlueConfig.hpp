@@ -1,6 +1,6 @@
 // Inclusion guard
-#ifndef BLUE_CONFIG_H
-#define BLUE_CONFIG_H
+#ifndef BLUE_CONFIG_HPP
+#define BLUE_CONFIG_HPP
 
 // Included libraries
 #include "./main.h"

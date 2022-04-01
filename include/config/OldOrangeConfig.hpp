@@ -1,6 +1,6 @@
 // Inclusion guard
-#ifndef ORANGE_CONFIG_H
-#define ORANGE_CONFIG_H
+#ifndef OLD_ORANGE_CONFIG_HPP
+#define OLD_ORANGE_CONFIG_HPP
 
 // Included libraries
 #include "./main.h"

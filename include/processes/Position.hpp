@@ -1,6 +1,6 @@
 // Inclusion Guard
-#ifndef POSITIONCALCULATION_H
-#define POSITIONCALCULATION_H
+#ifndef POSITION_HPP
+#define POSITION_HPP
 
 // Included libraries
 #include "./main.h"
@@ -9,48 +9,66 @@
 // This class manages the position tracking system of the robot
 // v1: Created the class - Nathan S, 9-24-21
 //-----------------------------------------------------------------------------
-class PositionCalculation
+class Position
 {
 private:
    //--------------------------------------------------------------------------
-   // Private class member constants
-   // LEFT_DISTANCE: The distance between the left tracking wheel and the 
-   //                center of the robot
-   // RIGHT_DISTANCE: The distance between the right tracking wheel and the 
-   //                 center of the robot
-   // STRAFE_DISTANCE: The distance between the center tracking wheel and the 
-   //                  center of the robot
+   // Hardware constants:
+   // leftTrackingDistance: The left wheel's offset from the center
+   // rightTrackingDistance: The right wheel's offset from the center
+   // strafeTrackingDistance: The strafe wheel's offset from the center
    //--------------------------------------------------------------------------
-   static constexpr float LEFT_DISTANCE = 6.0313;
-   static constexpr float RIGHT_DISTANCE = 6.0313;
-   static constexpr float STRAFE_DISTANCE = 1.50;
+   double leftTrackingDistance;
+   double rightTrackingDistance;
+   double strafeTrackingDistance;
 
    //--------------------------------------------------------------------------
-   // Private data members
-   // currentX: The robot's current x-coordinate
-   // currentY: The robot's current y-coordinate
-   // currentTheta: The robot's current angle
-   // resetTheta: The robot's angle at the last reset
-   // lastTheta: The angle of the robot during the last cycle
-   // lastLeft: The position of the left tracking wheel during the last cycle
-   // lastRight: The position of the right tracking wheel during the last cycle
-   // lastStrafe: The position of the strafe tracking wheel during the last cycle
+   // Current position:
+   // currentX: The current x-coordinate
+   // currentY: The current y-coordinate
+   // currentTheta: The current angle
    //--------------------------------------------------------------------------
-   float currentX;
-   float currentY;
-   float currentTheta;
-   float resetTheta;
-   float lastTheta;
-   float lastLeft;
-   float lastRight;
-   float lastStrafe;
+   double currentX;
+   double currentY;
+   double currentTheta;
+
+   //--------------------------------------------------------------------------
+   // Previous position:
+   // lastLeft: The previous position of the left tracking wheel
+   // lastRight: The previous position of the right tracking wheel
+   // lastStrafe: The previous position of the strafe tracking wheel
+   // lastTheta: The previous angle of the robot
+   //--------------------------------------------------------------------------
+   double lastLeft;
+   double lastRight;
+   double lastStrafe;
+   double lastTheta;
+
+   //--------------------------------------------------------------------------
+   // Reset position:
+   // resetX: The x-coordinate at the last reset
+   // resetY: The y-coordinate at the last reset
+   // resetTheta: The angle at the last reset
+   //--------------------------------------------------------------------------
+   double resetX;
+   double resetY;
+   double resetTheta;
 
 public:
    //--------------------------------------------------------------------------
-   // Default constructor for PositionCalculation class
+   // Builder class for the position calculation
+   // v1: Created the class - Nathan S, 3-31-22
+   //--------------------------------------------------------------------------
+   class PositionBuilder
+   {
+
+   };
+
+   //--------------------------------------------------------------------------
+   // Default constructor for Position class
    // v1: Created the constructor - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   PositionCalculation();
+   Position();
 
    //--------------------------------------------------------------------------
    // Sets the coordinates in the tracking system to a new position
@@ -59,7 +77,7 @@ public:
    // theta: The value to set the angle to
    // v1: Created the method - Nathan S, 1-24-22
    //--------------------------------------------------------------------------
-   void SetPosition(float x, float y, float theta);
+   void SetPosition(double x, double y, double theta);
 
    //--------------------------------------------------------------------------
    // Updates the current position of the system
@@ -71,28 +89,28 @@ public:
    // v3: Reformatted the method - Nathan S, 1-26-22
    // Credit: Team 5225A - E-Bots Pilons
    //--------------------------------------------------------------------------
-   void UpdatePosition(float leftValue, float rightValue, float strafeValue);
+   void UpdatePosition(double leftValue, double rightValue, double strafeValue);
 
    //--------------------------------------------------------------------------
    // Returns the current x-coordinate of the robot
    // return: The current x-coordinate of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float GetX() const;
+   double GetX() const;
 
    //--------------------------------------------------------------------------
    // Returns the current y-coordinate of the robot
    // return: The current y-coordinate of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float GetY() const;
+   double GetY() const;
 
    //--------------------------------------------------------------------------
    // Returns the current angle of the robot
    // return: The current angle of the robot
    // v1: Created the method - Nathan S, 9-24-21
    //--------------------------------------------------------------------------
-   float GetTheta() const;
+   double GetTheta() const;
 };
 
 #endif

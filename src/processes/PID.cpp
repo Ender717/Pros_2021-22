@@ -4,53 +4,53 @@
 // Constructor definitions ------------------------------------------------
 PID::PIDBuilder::PIDBuilder()
 {
-    kp = -1.0;
-    ki = -1.0;
-    kd = -1.0;
-    min = -1.0;
-    max = -1.0;
-    integralLimit = -1.0;
-    startTarget = -1.0;
+    kp = 0.0;
+    ki = 0.0;
+    kd = 0.0;
+    min = MOTOR_MIN;
+    max = MOTOR_MAX;
+    integralLimit = 0.0;
+    startTarget = 0.0;
 }
 
 // Public method definitions ----------------------------------------------
-PID::PIDBuilder PID::PIDBuilder::WithKp(float kp)
+PID::PIDBuilder PID::PIDBuilder::WithKp(double kp)
 {
     this->kp = kp;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithKi(float ki)
+PID::PIDBuilder PID::PIDBuilder::WithKi(double ki)
 {
     this->ki = ki;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithKd(float kd)
+PID::PIDBuilder PID::PIDBuilder::WithKd(double kd)
 {
     this->kd = kd;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithMin(float min)
+PID::PIDBuilder PID::PIDBuilder::WithMin(double min)
 {
     this->min = min;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithMax(float max)
+PID::PIDBuilder PID::PIDBuilder::WithMax(double max)
 {
     this->max = max;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithIntegralLimit(float integralLimit)
+PID::PIDBuilder PID::PIDBuilder::WithIntegralLimit(double integralLimit)
 {
     this->integralLimit = integralLimit;
     return *this;
 }
 
-PID::PIDBuilder PID::PIDBuilder::WithStartTarget(float startTarget)
+PID::PIDBuilder PID::PIDBuilder::WithStartTarget(double startTarget)
 {
     this->startTarget = startTarget;
     return *this;
@@ -78,38 +78,14 @@ PID::PID()
 
 PID::PID(PIDBuilder builder)
 {
-    // Initialize KP
+    // Initialize builder variables
     this->kp = builder.kp;
-
-    // Initialize KI
     this->ki = builder.ki;
-
-    // Initialize KD
     this->kd = builder.kd;
-
-    // Initialize min
-    if(builder.min != -1.0)
-        this->min = builder.min;
-    else
-        this->min = MOTOR_MIN;
-
-    // Initialize max
-    if(builder.max != -1.0)
-        this->max = builder.max;
-    else
-        this->max = MOTOR_MAX;
-
-    // Initialize integralLimit
-    if(builder.integralLimit != -1.0)
-        this->integralLimit = builder.integralLimit;
-    else
-        this->integralLimit = 0.0;
-
-    // Initialize targetValue
-    if(builder.startTarget != -1.0)
-        this->targetValue = builder.startTarget;
-    else
-        this->targetValue = 0.0;
+    this->min = builder.min;
+    this->max = builder.max;
+    this->integralLimit = builder.integralLimit;
+    this->targetValue = builder.startTarget;
 
     // Initialize other variables
     pastTime = pros::c::millis();
@@ -118,17 +94,17 @@ PID::PID(PIDBuilder builder)
 }
 
 // Public methods -------------------------------------------------------------
-float PID::GetControlValue(float currentValue)
+double PID::GetControlValue(double currentValue)
 {
     // Calculate the current error
-    float error = targetValue - currentValue;
+    double error = targetValue - currentValue;
 
     // Calculate the loop time
-    float currentTime = pros::c::millis();
-    float loopTime = (currentTime - pastTime) / 1000;
+    double currentTime = pros::c::millis();
+    double loopTime = (currentTime - pastTime) / 1000;
 
     // Set the proportional control value
-    float pValue = error;
+    double pValue = error;
 
     // Set the integral control value
     if (pValue > min && pValue < max)
@@ -137,11 +113,11 @@ float PID::GetControlValue(float currentValue)
         iValue = (iValue / fabs(iValue)) * integralLimit;
 
     // Set the derivative control value
-    float dValue = (error - pastError) / loopTime;
+    double dValue = (error - pastError) / loopTime;
 
     // Calculate the control value
-    float rawValue = (kp * pValue) + (ki * iValue) + (kd * dValue);
-    float satValue = rawValue;
+    double rawValue = (kp * pValue) + (ki * iValue) + (kd * dValue);
+    double satValue = rawValue;
 
     // Saturate the control value
     if (satValue < min)
@@ -157,17 +133,7 @@ float PID::GetControlValue(float currentValue)
     return satValue;
 }
 
-void PID::SetTargetValue(float targetValue)
+void PID::SetTargetValue(double targetValue)
 {
     this->targetValue = targetValue;
-}
-
-void PID::SetMin(float min)
-{
-    this->min = min;
-}
-
-void PID::SetMax(float max)
-{
-    this->max = max;
 }

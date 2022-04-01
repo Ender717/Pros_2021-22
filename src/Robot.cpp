@@ -17,7 +17,7 @@ void Robot::CreateBlueRobot()
     PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
 	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
 	
-	PositionCalculation position;
+	Position position;
 
 	Carrier::CarrierBuilder carrierBuilder;
 	carrier = carrierBuilder.WithPiston(BlueConfig::carrier1Piston).
@@ -75,7 +75,7 @@ void Robot::CreateOldOrangeRobot()
     PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
 	PID liftPID = pidBuilder.WithKp(1.0).WithKi(0.06).WithKd(0.05).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
 	
-	PositionCalculation position;
+	Position position;
 
 	Carrier::CarrierBuilder carrierBuilder;
 	carrier = carrierBuilder.WithPiston(OldOrangeConfig::carrier1Piston).
@@ -130,7 +130,7 @@ void Robot::CreateOldBlueRobot()
     PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
 	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
 	
-	PositionCalculation position;
+	Position position;
 
 	Carrier::CarrierBuilder carrierBuilder;
 	carrier = carrierBuilder.WithMotor(OldBlueConfig::carrier1Motor).

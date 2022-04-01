@@ -1,7 +1,7 @@
-#include "processes/PositionCalculation.hpp"
+#include "processes/Position.hpp"
 
 // Constructor Definitions ----------------------------------------------------
-PositionCalculation::PositionCalculation()
+Position::Position()
 {
    currentX = 0.0;
    currentY = 0.0;
@@ -14,7 +14,7 @@ PositionCalculation::PositionCalculation()
 }
 
 // Public Method Definitions --------------------------------------------------
-void PositionCalculation::SetPosition(float x, float y, float theta)
+void Position::SetPosition(double x, double y, double theta)
 {
    currentX = x;
    currentY = y;
@@ -22,20 +22,20 @@ void PositionCalculation::SetPosition(float x, float y, float theta)
    resetTheta = theta;
 }
 
-void PositionCalculation::UpdatePosition(float leftValue, float rightValue, float strafeValue)
+void Position::UpdatePosition(double leftValue, double rightValue, double strafeValue)
 {
    // Calculate the distance moved by each wheel since the last cycle
-   float leftDistance = leftValue - lastLeft;
-   float rightDistance = rightValue - lastRight;
-   float strafeDistance = strafeValue - lastStrafe;
+   double leftDistance = leftValue - lastLeft;
+   double rightDistance = rightValue - lastRight;
+   double strafeDistance = strafeValue - lastStrafe;
 
    // Calculate absolute theta
-   float totalLeft = leftValue;
-   float totalRight = rightValue;
-   currentTheta = ((totalRight - totalLeft) / (LEFT_DISTANCE + RIGHT_DISTANCE)) + resetTheta;
+   double totalLeft = leftValue;
+   double totalRight = rightValue;
+   currentTheta = ((totalRight - totalLeft) / (leftTrackingDistance + rightTrackingDistance)) + resetTheta;
 
    // Calculate the change in theta
-   float thetaChange = currentTheta - lastTheta;
+   double thetaChange = currentTheta - lastTheta;
    
    // Cap current theta
    if (currentTheta > 3.1415)
@@ -44,8 +44,8 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
       currentTheta += 7.2830;
 
    // Calculate the local offset
-   float forwardDistance = 0.0;
-   float sidewaysDistance = 0.0;
+   double forwardDistance = 0.0;
+   double sidewaysDistance = 0.0;
    if (thetaChange == 0.0)
    {
       sidewaysDistance = strafeDistance;
@@ -53,16 +53,16 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    }
    else
    {
-      sidewaysDistance = (2.0 * sin(thetaChange / 2.0)) * ((strafeDistance / thetaChange) + STRAFE_DISTANCE);
-      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((leftDistance / thetaChange) + LEFT_DISTANCE);
+      sidewaysDistance = (2.0 * sin(thetaChange / 2.0)) * ((strafeDistance / thetaChange) + strafeTrackingDistance);
+      forwardDistance = (2.0 * sin(thetaChange / 2.0)) * ((leftDistance / thetaChange) + leftTrackingDistance);
    }
 
    // Calculate the average orientation
-   float averageTheta = lastTheta + (thetaChange / 2.0);
+   double averageTheta = lastTheta + (thetaChange / 2.0);
 
    // Calculate the global offset
-   float xChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
-   float yChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
+   double xChange = sidewaysDistance * -sin(averageTheta) + forwardDistance * cos(averageTheta);
+   double yChange = sidewaysDistance * cos(averageTheta) + forwardDistance * sin(averageTheta);
 
    // Calculate the new absolute position
    currentX += xChange;
@@ -75,17 +75,17 @@ void PositionCalculation::UpdatePosition(float leftValue, float rightValue, floa
    lastTheta = currentTheta;
 }
 
-float PositionCalculation::GetX() const
+double Position::GetX() const
 {
    return currentX;
 }
 
-float PositionCalculation::GetY() const
+double Position::GetY() const
 {
    return currentY;
 }
 
-float PositionCalculation::GetTheta() const
+double Position::GetTheta() const
 {
    return currentTheta;
 }

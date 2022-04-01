@@ -1,11 +1,11 @@
 // Inclusion guard
-#ifndef MENU_H
-#define MENU_H
+#ifndef MENU_HPP
+#define MENU_HPP
 
 // Included libraries
-#include "main.h"
 #include "Robot.hpp"
 #include "autons.hpp"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This namespace manages the menu system for the robot

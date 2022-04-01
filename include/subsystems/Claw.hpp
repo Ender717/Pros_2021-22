@@ -1,11 +1,11 @@
 // Inclusion guard
-#ifndef CLAW_H
-#define CLAW_H
+#ifndef CLAW_HPP
+#define CLAW_HPP
 
 // Included libraries
-#include "./main.h"
 #include <list>
 #include "./processes/PID.hpp"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the claw subsystem of the robot

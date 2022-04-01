@@ -44,7 +44,7 @@ Drive::DriveBuilder Drive::DriveBuilder::WithTurnPID(PID pid)
     return *this;
 }
 
-Drive::DriveBuilder Drive::DriveBuilder::WithPosition(PositionCalculation position)
+Drive::DriveBuilder Drive::DriveBuilder::WithPosition(Position position)
 {
     this->position = position;
     return *this;
@@ -217,10 +217,6 @@ void Drive::GoToPositionTask(float targetX, float targetY, float power)
     if(!taskInitialized)
     {
         startDistance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-        distancePID.SetMin(-power);
-        distancePID.SetMax(power);
-        anglePID.SetMin(-power);
-        anglePID.SetMax(power);
         timer = 0;
         taskInitialized = true;
     }
@@ -282,8 +278,6 @@ void Drive::TurnToAngleTask(float targetAngle, float power)
     if(!taskInitialized)
     {
         startAngle = std::abs(targetAngle - (position.GetTheta() / 0.0175));
-        turnPID.SetMin(-power);
-        turnPID.SetMax(power);
         timer = 0;
         taskInitialized = true;
     }

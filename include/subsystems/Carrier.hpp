@@ -1,11 +1,11 @@
 // Inclusion guard
-#ifndef CARRIER_H
-#define CARRIER_H
+#ifndef CARRIER_HPP
+#define CARRIER_HPP
 
 // Included libraries
-#include "./main.h"
 #include <list>
 #include "./processes/PID.hpp"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the carrier subsystem of the robot

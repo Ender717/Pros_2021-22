@@ -1,10 +1,10 @@
 // Inclusion guard
-#ifndef AUTONS_H
-#define AUTONS_H
+#ifndef AUTONS_HPP
+#define AUTONS_HPP
 
 // Included libraries
-#include "main.h"
 #include "AutonController.hpp"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This namespace contains all autonomous configurations and values

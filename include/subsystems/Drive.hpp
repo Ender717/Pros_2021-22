@@ -1,12 +1,12 @@
 // Inclusion guard
-#ifndef DRIVE_H
-#define DRIVE_H
+#ifndef DRIVE_HPP
+#define DRIVE_HPP
 
 // Included libraries
-#include "./main.h"
 #include <list>
 #include "./processes/PID.hpp"
-#include "./processes/PositionCalculation.hpp"
+#include "./processes/Position.hpp"
+#include "./main.h"
     
 //-----------------------------------------------------------------------------
 // This class controls the behaviors of the drive
@@ -37,7 +37,7 @@ private:
     PID distancePID;
     PID anglePID;
     PID turnPID;
-    PositionCalculation position;
+    Position position;
     float wheelSize;
     bool taskInitialized;
     bool taskCompleted;
@@ -70,7 +70,7 @@ public:
         PID distancePID;
         PID anglePID;
         PID turnPID;
-        PositionCalculation position;
+        Position position;
         float wheelSize;
 
         //---------------------------------------------------------------------
@@ -133,7 +133,7 @@ public:
         // return: The DriveBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        DriveBuilder WithPosition(PositionCalculation position);
+        DriveBuilder WithPosition(Position position);
 
         //---------------------------------------------------------------------
         // Wither method to add a wheel size to the build

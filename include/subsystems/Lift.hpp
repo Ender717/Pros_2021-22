@@ -1,12 +1,12 @@
 // Inclusion guard
-#ifndef LIFT_H
-#define LIFT_H
+#ifndef LIFT_HPP
+#define LIFT_HPP
 
 // Included libraries
-#include "./main.h"
 #include <list>
 #include <cfloat>
 #include "./processes/PID.hpp"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the lift subsystem of the robot

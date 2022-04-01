@@ -1,11 +1,11 @@
 // Inclusion guard
-#ifndef INTAKE_H
-#define INTAKE_H
+#ifndef INTAKE_HPP
+#define INTAKE_HPP
 
 // Included libraries
-#include "./main.h"
 #include <list>
 #include "./processes/PID.hpp"
+#include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the Intake subsystem of the robot

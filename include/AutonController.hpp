@@ -1,10 +1,10 @@
 // Inclusion guard
-#ifndef AUTON_CONTROLLER_H
-#define AUTON_CONTROLLER_H
+#ifndef AUTON_CONTROLLER_HPP
+#define AUTON_CONTROLLER_HPP
 
 // Included libraries
-#include "main.h"
 #include "Robot.hpp"
+#include "main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the autonomous control system
