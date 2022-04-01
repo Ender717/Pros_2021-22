@@ -67,6 +67,20 @@ private:
     //-------------------------------------------------------------------------
     double HeightToPosition(double height);
 
+    //-------------------------------------------------------------------------
+    // Checks if the lift is at the bottom of its range
+    // return: True if the lift is at the bottom of its range, false if not
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    bool AtBottom();
+
+    //-------------------------------------------------------------------------
+    // Checks if the lift is at the top of its range
+    // return: True if the lift is at the top of its range, false if not
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    bool AtTop();
+
 public:
     //-------------------------------------------------------------------------
     // Builder class for the lift
@@ -272,20 +286,6 @@ public:
     // v1: Created the method - Nathan S, 3-13-22
     //-------------------------------------------------------------------------
     double GetHeight();
-
-    //-------------------------------------------------------------------------
-    // Checks if the lift is at the bottom of its range
-    // return: True if the lift is at the bottom of its range, false if not
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
-    bool AtBottom();
-
-    //-------------------------------------------------------------------------
-    // Checks if the lift is at the top of its range
-    // return: True if the lift is at the top of its range, false if not
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
-    bool AtTop();
 };
 
 #endif

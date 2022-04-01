@@ -189,6 +189,16 @@ double Lift::HeightToPosition(double height)
     return position;
 }
 
+bool Lift::AtBottom()
+{
+    return GetPosition() <= minPosition;
+}
+
+bool Lift::AtTop()
+{
+    return GetPosition() >= maxPosition;
+}
+
 // Public method definitions --------------------------------------------------
 void Lift::Initialize()
 {
@@ -257,14 +267,4 @@ double Lift::GetHeight()
     if(countsPerInch > 0.1)
         height += GetPosition() / countsPerInch;
     return height;
-}
-
-bool Lift::AtBottom()
-{
-    return GetPosition() <= minPosition;
-}
-
-bool Lift::AtTop()
-{
-    return GetPosition() >= maxPosition;
 }

@@ -4,157 +4,342 @@
 
 // Included libraries
 #include <list>
+#include <cfloat>
 #include "./processes/PID.hpp"
 #include "./main.h"
 
 //-----------------------------------------------------------------------------
 // This class manages the carrier subsystem of the robot
-// v1: Created the class - Nathan S, 1-29-22
-// v2: Refactored the class for data management - Nathan S, 2-13-22
+// v1: Created the class - Nathan S, 1-30-22
+// v2: Refactored - Nathan S, 2-14-22
+// v3: Converted to generalized class - Nathan S, 4-1-22
 //-----------------------------------------------------------------------------
 class Carrier
 {
 private:
     //-------------------------------------------------------------------------
-    // Private data members
-    // motorList: The list of motors
-    // pistonList: The list of pistons
+    // Private data members:
+    // motorList: The motors on the carrier
+    // pistonList: The pistons on the carrier
     // carrierPID: The PID controller in charge of the carrier
-    // upPosition: The position the carrier rests at when it is up
-    // downPosition: The position the carrier rests at when it is down
+    // startAngle: The starting angle of the carrier in degrees
+    // startHeight: The starting height of the carrier in inches
+    // countsPerDegree: The number of encoder counts per degree
+    // countsPerInch: The number of encoder counts per inch
+    // armLength: The length of the arm on the carrier in inches
+    // minPosition: The minimum position of the carrier in encoder counts
+    // maxPosition: The maximum position of the carrier in encoder counts
+    // downPosition: The position of the carrier when it is down
+    // upPosition: The position of the carrier when it is up
     // isDown: Whether the carrier is down or not
     //-------------------------------------------------------------------------
     std::list<pros::Motor> motorList;
     std::list<pros::ADIDigitalOut> pistonList;
     PID carrierPID;
-    double upPosition;
+    double startAngle;
+    double startHeight;
+    double countsPerDegree;
+    double countsPerInch;
+    double armLength;
+    double minPosition;
+    double maxPosition;
     double downPosition;
+    double upPosition;
     bool isDown;
+
+    //-------------------------------------------------------------------------
+    // Sets the carrier to the designated power level
+    // power: The power level to set the carrier to
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void SetCarrier(double power);
+
+    //-------------------------------------------------------------------------
+    // Finds the current position of the carrier
+    // return: The current position of the carrier encoders
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double GetPosition();
+
+    //-------------------------------------------------------------------------
+    // Converts an angle in degrees to a position in encoder counts
+    // return: The equivalent position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double AngleToPosition(double angle);
+
+    //-------------------------------------------------------------------------
+    // Converts a height in inches to a position in encoder counts
+    // return: The equivalent position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double HeightToPosition(double height);
+
+    //-------------------------------------------------------------------------
+    // Checks if the carrier is at the bottom of its range
+    // return: True if the carrier is at the bottom of its range, false if not
+    // v1: Created the method - Nathan S, 2-31-22
+    //-------------------------------------------------------------------------
+    bool AtBottom();
+
+    //-------------------------------------------------------------------------
+    // Checks if the carrier is at the top of its range
+    // return: True if the carrier is at the top of its range, false if not
+    // v1: Created the method - Nathan S, 2-31-22
+    //-------------------------------------------------------------------------
+    bool AtTop();
 
 public:
     //-------------------------------------------------------------------------
-    // This is the builder class for the Carrier subsystem
-    // v1: Created the class - Nathan S, 3-9-22
+    // Builder class for the carrier
+    // v1: Created the class - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
     class CarrierBuilder
     {
     public:
         //---------------------------------------------------------------------
         // Attributes:
-        // motorList: The list of motors for the carrier
-        // pistonList: The list of pistons for the carrier
-        // carrierPID: The PID controller for the carrier
-        // upPosition: The position the carrier rests at when it is up
-        // downPosition: The position the carrier rests at when it is down
-        //---------------------------------------------------------------------
+        // motorList: The motors on the carrier
+        // pistonList: The pistons on the carrier
+        // carrierPID: The PID controller in charge of the carrier
+        // minPosition: The minimum position of the carrier in encoder counts
+        // maxPosition: The maximum position of the carrier in encoder counts
+        // startAngle: The starting angle of the carrier in degrees
+        // minAngle: The minimum angle of the carrier in degrees
+        // maxAngle: The maximum angle of the carrier in degrees
+        // startHeight: The starting height of the carrier in inches
+        // minHeight: The minimum height of the carrier in inches
+        // maxHeight: The maximum height of the carrier in inches
+        // countsPerDegree: The number of encoder counts per degree
+        // countsPerInch: The number of encoder counts per inch
+        // armLength: The length of the arm on the carrier in inches
+        //-------------------------------------------------------------------------
         std::list<pros::Motor> motorList;
         std::list<pros::ADIDigitalOut> pistonList;
         PID carrierPID;
-        double upPosition;
+        double startAngle;
+        double minAngle;
+        double maxAngle;
+        double startHeight;
+        double minHeight;
+        double maxHeight;
+        double countsPerDegree;
+        double countsPerInch;
+        double armLength;
         double downPosition;
+        double upPosition;
 
         //---------------------------------------------------------------------
-        // Default constructor for the CarrierBuilder
-        // v1: Created the constructor - Nathan S, 3-9-22
+        // Default constructor for the CarrierBuilder class
+        // v1: Created the constructor - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         CarrierBuilder();
 
         //---------------------------------------------------------------------
-        // Wither method to add a motor to the carrier build
-        // motor: The motor being added to the build
+        // Wither method to add a motor to the build
+        // motor: The motor being added
         // return: The CarrierBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         CarrierBuilder WithMotor(pros::Motor motor);
 
         //---------------------------------------------------------------------
-        // Wither method to add a piston to the carrier build
-        // piston: The piston being added to the build
+        // Wither method to add a piston to the build
+        // piston: The piston being added
         // return: The CarrierBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         CarrierBuilder WithPiston(pros::ADIDigitalOut piston);
 
         //---------------------------------------------------------------------
-        // Wither method to add a PID controller to the carrier build
-        // pid: The PID controller being added to the build
+        // Wither method to add a pid controller to the build
+        // pid: The PID controller being added
         // return: The CarrierBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         CarrierBuilder WithPID(PID pid);
 
         //---------------------------------------------------------------------
-        // Wither method to add an up position to the carrier build
-        // upPosition: The upPosition being added to the build
+        // Wither method to add a starting angle to the build
+        // startAngle: The starting angle being added
         // return: The CarrierBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithUpPosition(double upPosition);
+        CarrierBuilder WithStartAngle(double startAngle);
 
         //---------------------------------------------------------------------
-        // Wither method to add a down position to the carrier build
-        // downPosition: The downPosition being added to the build
+        // Wither method to add a minimum angle to the build
+        // minAngle: The minimum angle being added
         // return: The CarrierBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithMinAngle(double minAngle);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a maximum angle to the build
+        // maxAngle: The maximum angle being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithMaxAngle(double maxAngle);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a starting height to the build
+        // startHeight: The starting height being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithStartHeight(double startHeight);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a minimum height to the build
+        // minHeight: The minimum height being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithMinHeight(double minHeight);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a maximum height to the build
+        // maxHeight: The maximum height being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithMaxHeight(double maxHeight);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a number of counts per degree to the build
+        // countsPerDegree: The number of counts per degree being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithCountsPerDegree(double countsPerDegree);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a number of counts per inch to the build
+        // countsPerInch: The number of counts per inch being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithCountsPerInch(double countsPerInch);
+
+        //---------------------------------------------------------------------
+        // Wither method to add an arm length to the build
+        // armLength: The arm length being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithArmLength(double armLength);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a down position to the build
+        // downPosition: The down position being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         CarrierBuilder WithDownPosition(double downPosition);
 
         //---------------------------------------------------------------------
-        // Build method to construct the carrier
+        // Wither method to add an up position to the build
+        // upPosition: The up position being added
+        // return: The CarrierBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
+        CarrierBuilder WithUpPosition(double upPosition);
+
+        //---------------------------------------------------------------------
+        // Builder method for the builder class
         // return: The carrier
-        // v1: Created the method - Nathan S, 3-9-22
+        // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         Carrier Build();
     };
 
     //-------------------------------------------------------------------------
     // Default constructor for the Carrier class
-    // startDown: Whether the carrier starts down or not
-    // v1: Created the constructor - Nathan S, 1-29-22
-    // v2: Added a parameter to control start position - Nathan S, 2-13-22
-    // v3: Removed start position parameter for initialization - Nathan S, 3-9-22
+    // angle: The angle the carrier is starting at
+    // v1: Created the constructor - Nathan S, 1-30-22
+    // v2: Added an angle parameter - Nathan S, 2-14-22
+    // v3: Changed angle to builder - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
     Carrier();
 
     //-------------------------------------------------------------------------
     // Builder constructor for the Carrier class
-    // builder: The CarrierBuilder
-    // v1: Created the constructor - Nathan S, 3-9-22
+    // builder: The builder being used for construction
+    // v1: Created the constructor - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
     Carrier(CarrierBuilder builder);
 
     //-------------------------------------------------------------------------
     // Initializes the carrier
-    // v1: Created the method - Nathan S, 1-29-22
+    // v1: Created the method - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
     void Initialize();
 
-    void SetPower(double power);
+    //-------------------------------------------------------------------------
+    // Raises the carrier
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void Raise();
 
     //-------------------------------------------------------------------------
-    // Sets the position of the Carrier to down
-    // v1: Created the method - Nathan S, 1-29-22
+    // Lowers the carrier
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    void SetDown();
+    void Lower();
 
     //-------------------------------------------------------------------------
-    // Sets the position of the Carrier to up
-    // v1: Created the method - Nathan S, 1-29-22
-    //-------------------------------------------------------------------------
-    void SetUp();
-
-    //-------------------------------------------------------------------------
-    // Holds the position of the Carrier
-    // v1: Created the method - Nathan S, 3-9-22
+    // Holds the carrier at its current position
+    // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
     void HoldPosition();
 
     //-------------------------------------------------------------------------
-    // Checks if the carrier is down or not
-    // return: True if the carrier is down, false if not
-    // v1: Created the method - Nathan S, 2-13-22
+    // Sets the carrier to the desired angle
+    // targetAngle: The target angle in degrees
+    // v1: Created the method - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
-    bool IsDown() const;
+    void SetAngle(double targetAngle);
+
+    //-------------------------------------------------------------------------
+    // Sets the carrier to the desired height
+    // targetHeight: The target height in inches
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    void SetHeight(double targetHeight);
+
+    //-------------------------------------------------------------------------
+    // Calculates the current angle of the carrier
+    // return: The current angle of the carrier in degrees
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double GetAngle();
+
+    //-------------------------------------------------------------------------
+    // Calculates the current height of the carrier
+    // return: The current height of the carrier in inches
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double GetHeight();
+
+    //-------------------------------------------------------------------------
+    // Sets the carrier to the down position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    void SetDown();
+
+    //-------------------------------------------------------------------------
+    // Sets the carrier to the up position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    void SetUp();
+
+    //-------------------------------------------------------------------------
+    // Toggles the position of the carrier between down and up
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    void TogglePosition();
 };
 
 #endif
