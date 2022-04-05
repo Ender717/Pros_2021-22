@@ -4,8 +4,6 @@
 namespace BlueConfig
 {
     // Constants
-    const double CLAW_OPEN_POSITION = 515.0;
-    const double CLAW_CLOSED_POSITION = 5.0;
     const double DRIVE_TRACKING_WHEEL_SIZE = 2.75;
     const double DRIVE_LEFT_TRACKING_DISTANCE = 6.0313;
     const double DRIVE_RIGHT_TRACKING_DISTANCE = 6.0313;
@@ -17,7 +15,6 @@ namespace BlueConfig
     const double LIFT_COUNTS_PER_DEGREE = 12.5;
 
     // Motor ports
-    const int CLAW_1_PORT = -1;
     const int LEFT_DRIVE_1_PORT = 14;
     const int LEFT_DRIVE_2_PORT = 13;
     const int LEFT_DRIVE_3_PORT = 12;
@@ -40,6 +37,10 @@ namespace BlueConfig
     // Piston ports
     const char CARRIER_1_PORT = 'A';
     const char CARRIER_2_PORT = 'X';
+    const char CLAW_1_PORT = 'X';
+    const char CLAW_2_PORT = 'X';
+
+    /*
 
     // Motors
     pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
@@ -73,4 +74,6 @@ namespace BlueConfig
     // Pistons
     pros::ADIDigitalOut carrier1Piston(CARRIER_1_PORT);
     pros::ADIDigitalOut carrier2Piston(CARRIER_2_PORT);
+
+    */
 }

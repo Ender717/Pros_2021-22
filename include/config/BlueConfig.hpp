@@ -13,8 +13,6 @@ namespace BlueConfig
 {
     //-------------------------------------------------------------------------
     // Constants:
-    // OPEN_POSITION: The position of the claw when open
-    // CLOSED_POSITION: The position of the claw when closed
     // DRIVE_TRACKING_WHEEL_SIZE: The diameter of the tracking wheels on the drive
     // DRIVE_LEFT_TRACKING_DISTANCE: The left tracking wheel offset
     // DRIVE_RIGHT_TRACKING_DISTANCE: The right tracking wheel offset
@@ -27,8 +25,6 @@ namespace BlueConfig
     // LIFT_COUNTS_PER_DEGREE: The number of encoder counts the lift moves per 
     //                         degree of rotation it experiences
     //-------------------------------------------------------------------------
-    extern const double CLAW_OPEN_POSITION;
-    extern const double CLAW_CLOSED_POSITION;
     extern const double DRIVE_TRACKING_WHEEL_SIZE;
     extern const double DRIVE_LEFT_TRACKING_DISTANCE;
     extern const double DRIVE_RIGHT_TRACKING_DISTANCE;
@@ -41,7 +37,6 @@ namespace BlueConfig
 
     //-------------------------------------------------------------------------
     // Motor ports:
-    // CLAW_1_PORT: The port the claw motor is plugged into
     // LEFT_DRIVE_1_PORT: The port the first left drive motor is plugged into
     // LEFT_DRIVE_2_PORT: The port the second left drive motor is plugged into
     // LEFT_DRIVE_3_PORT: The port the third left drive motor is plugged into
@@ -56,7 +51,6 @@ namespace BlueConfig
     // RIGHT_LIFT_1_PORT: The port the first right lift motor is plugged into
     // RIGHT_LIFT_2_PORT: The port the second right lift motor is plugged into
     //-------------------------------------------------------------------------
-    extern const int CLAW_1_PORT;
     extern const int LEFT_DRIVE_1_PORT;
     extern const int LEFT_DRIVE_2_PORT;
     extern const int LEFT_DRIVE_3_PORT;
@@ -85,9 +79,15 @@ namespace BlueConfig
     // 3-wire ports:
     // CARRIER_1_PORT: The port for the first carrier piston
     // CARRIER_2_PORT: The port for the second carrier piston
+    // CLAW_1_PORT: The port for the first claw piston
+    // CLAW_2_PORT: The port for the second claw piston
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
-    extern const char CARRIER_1_PORT;
+    extern const char CARRIER_2_PORT;
+    extern const char CLAW_1_PORT;
+    extern const char CLAW_2_PORT;
+
+    /*
 
     //-------------------------------------------------------------------------
     // Motors:
@@ -138,6 +138,8 @@ namespace BlueConfig
     //-------------------------------------------------------------------------
     extern pros::ADIDigitalOut carrier1Piston;
     extern pros::ADIDigitalOut carrier2Piston;
+
+    */
 }
 
 #endif

@@ -37,6 +37,8 @@ namespace OldOrangeConfig
     const char CARRIER_1_PORT = 'A';
     const char CARRIER_2_PORT = 'B';
 
+    /*
+
     // Motors
     pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
     pros::Motor leftDrive1Motor(LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -63,4 +65,6 @@ namespace OldOrangeConfig
     // Pistons
     pros::ADIDigitalOut carrier1Piston(CARRIER_1_PORT);
     pros::ADIDigitalOut carrier2Piston(CARRIER_2_PORT);
+
+    */
 }

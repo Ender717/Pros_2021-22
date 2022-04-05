@@ -25,29 +25,35 @@ void Robot::CreateBlueRobot()
 										Build();
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(BlueConfig::carrier1Piston).
-							 WithPiston(BlueConfig::carrier2Piston).
+	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(BlueConfig::CARRIER_1_PORT)).
+							 WithPiston(pros::ADIDigitalOut(BlueConfig::CARRIER_2_PORT)).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(BlueConfig::claw1Motor).
-					   WithPID(clawPID).
-					   WithOpenPosition(BlueConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(BlueConfig::CLAW_CLOSED_POSITION).
+	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT)).
+					   WithPiston(pros::ADIDigitalOut(BlueConfig::CLAW_2_PORT)).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(BlueConfig::leftDrive1Motor).
-						 WithLeftMotor(BlueConfig::leftDrive2Motor).
-						 WithLeftMotor(BlueConfig::leftDrive3Motor).
-						 WithLeftMotor(BlueConfig::leftDrive4Motor).
-						 WithRightMotor(BlueConfig::rightDrive1Motor).
-						 WithRightMotor(BlueConfig::rightDrive2Motor).
-						 WithRightMotor(BlueConfig::rightDrive3Motor).
-						 WithRightMotor(BlueConfig::rightDrive4Motor).
-						 WithTrackingSensor(BlueConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(BlueConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(BlueConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                        		true, E_MOTOR_ENCODER_COUNTS)).
+						 WithTrackingSensor(pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
@@ -56,13 +62,19 @@ void Robot::CreateBlueRobot()
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(BlueConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(pros::Motor(BlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+								E_MOTOR_ENCODER_COUNTS)).
+						   Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(BlueConfig::leftLift1Motor).
-					   WithMotor(BlueConfig::leftLift2Motor).
-					   WithMotor(BlueConfig::rightLift1Motor).
-					   WithMotor(BlueConfig::rightLift2Motor).
+	lift = liftBuilder.WithMotor(pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(BlueConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(BlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(liftPID).
 					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
 					   WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION).
@@ -87,29 +99,35 @@ void Robot::CreateOrangeRobot()
 										Build();
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(OrangeConfig::carrier1Piston).
-							 WithPiston(OrangeConfig::carrier2Piston).
+	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(OrangeConfig::CARRIER_1_PORT)).
+							 WithPiston(pros::ADIDigitalOut(OrangeConfig::CARRIER_2_PORT)).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(OrangeConfig::claw1Motor).
-					   WithPID(clawPID).
-					   WithOpenPosition(OrangeConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(OrangeConfig::CLAW_CLOSED_POSITION).
+	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(OrangeConfig::CLAW_1_PORT)).
+					   WithPiston(pros::ADIDigitalOut(OrangeConfig::CLAW_2_PORT)).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(OrangeConfig::leftDrive1Motor).
-						 WithLeftMotor(OrangeConfig::leftDrive2Motor).
-						 WithLeftMotor(OrangeConfig::leftDrive3Motor).
-						 WithLeftMotor(OrangeConfig::leftDrive4Motor).
-						 WithRightMotor(OrangeConfig::rightDrive1Motor).
-						 WithRightMotor(OrangeConfig::rightDrive2Motor).
-						 WithRightMotor(OrangeConfig::rightDrive3Motor).
-						 WithRightMotor(OrangeConfig::rightDrive4Motor).
-						 WithTrackingSensor(OrangeConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(OrangeConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(OrangeConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                        		true, E_MOTOR_ENCODER_COUNTS)).
+						 WithTrackingSensor(pros::Rotation(OrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
@@ -118,13 +136,19 @@ void Robot::CreateOrangeRobot()
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(OrangeConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(pros::Motor(OrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+								E_MOTOR_ENCODER_COUNTS)).
+						   Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(OrangeConfig::leftLift1Motor).
-					   WithMotor(OrangeConfig::leftLift2Motor).
-					   WithMotor(OrangeConfig::rightLift1Motor).
-					   WithMotor(OrangeConfig::rightLift2Motor).
+	lift = liftBuilder.WithMotor(pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(OrangeConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(OrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(liftPID).
 					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
 					   WithMinAngle(OrangeConfig::LIFT_BOTTOM_POSITION).
@@ -150,30 +174,39 @@ void Robot::CreateOldBlueRobot()
 										Build();
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithMotor(OldBlueConfig::carrier1Motor).
-							 WithMotor(OldBlueConfig::carrier2Motor).
+	carrier = carrierBuilder.WithMotor(pros::Motor(OldBlueConfig::CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, 
+									true, E_MOTOR_ENCODER_COUNTS)).
+							 WithMotor(pros::Motor(OldBlueConfig::CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, 
+									false, E_MOTOR_ENCODER_COUNTS)).
 							 WithPID(carrierPID).
 							 WithDownPosition(OldBlueConfig::CARRIER_DOWN_POSITION).
 							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(OldBlueConfig::claw1Motor).
+	claw = clawBuilder.WithMotor(pros::Motor(OldBlueConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false,
+								E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(clawPID).
 					   WithOpenPosition(OldBlueConfig::CLAW_OPEN_POSITION).
 					   WithClosedPosition(OldBlueConfig::CLAW_CLOSED_POSITION).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(OldBlueConfig::leftDrive1Motor).
-						 WithLeftMotor(OldBlueConfig::leftDrive2Motor).
-						 WithLeftMotor(OldBlueConfig::leftDrive3Motor).
-						 WithRightMotor(OldBlueConfig::rightDrive1Motor).
-						 WithRightMotor(OldBlueConfig::rightDrive2Motor).
-						 WithRightMotor(OldBlueConfig::rightDrive3Motor).
-						 WithTrackingSensor(OldBlueConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(OldBlueConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(OldBlueConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithTrackingSensor(pros::Rotation(OldBlueConfig::LEFT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OldBlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OldBlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
@@ -182,11 +215,15 @@ void Robot::CreateOldBlueRobot()
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(OldBlueConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(pros::Motor(OldBlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+									E_MOTOR_ENCODER_COUNTS))
+						  .Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(OldBlueConfig::leftLift1Motor).
-					   WithMotor(OldBlueConfig::rightLift1Motor).
+	lift = liftBuilder.WithMotor(pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								true, E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(liftPID).
 					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION).
 					   WithMinAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
@@ -211,27 +248,34 @@ void Robot::CreateOldOrangeRobot()
 										Build();
 
 	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(OldOrangeConfig::carrier1Piston).
-							 WithPiston(OldOrangeConfig::carrier2Piston).
+	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(OldOrangeConfig::CARRIER_1_PORT)).
+							 WithPiston(pros::ADIDigitalOut(OldOrangeConfig::CARRIER_2_PORT)).
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(OldOrangeConfig::claw1Motor).
+	claw = clawBuilder.WithMotor(pros::Motor(OldOrangeConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(clawPID).
 					   WithOpenPosition(OldOrangeConfig::CLAW_OPEN_POSITION).
 					   WithClosedPosition(OldOrangeConfig::CLAW_CLOSED_POSITION).
 					   Build();
 
 	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(OldOrangeConfig::leftDrive1Motor).
-						 WithLeftMotor(OldOrangeConfig::leftDrive2Motor).
-						 WithLeftMotor(OldOrangeConfig::leftDrive3Motor).
-						 WithRightMotor(OldOrangeConfig::rightDrive1Motor).
-						 WithRightMotor(OldOrangeConfig::rightDrive2Motor).
-						 WithRightMotor(OldOrangeConfig::rightDrive3Motor).
-						 WithTrackingSensor(OldOrangeConfig::leftDriveTrackingSensor).
-						 WithTrackingSensor(OldOrangeConfig::rightDriveTrackingSensor).
-						 WithTrackingSensor(OldOrangeConfig::strafeDriveTrackingSensor).
+	drive = driveBuilder.WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS)).
+						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS)).
+						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
+						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
 						 WithDistancePID(distancePID).
 						 WithAnglePID(anglePID).
 						 WithTurnPID(turnPID).
@@ -240,11 +284,15 @@ void Robot::CreateOldOrangeRobot()
 						 Build();
 	
 	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(OldOrangeConfig::intake1Motor).Build();
+	intake = intakeBuilder.WithMotor(pros::Motor(OldOrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+									E_MOTOR_ENCODER_COUNTS)).
+						   Build();
 
 	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(OldOrangeConfig::leftLift1Motor).
-					   WithMotor(OldOrangeConfig::rightLift1Motor).
+	lift = liftBuilder.WithMotor(pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS)).
+					   WithMotor(pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								true, E_MOTOR_ENCODER_COUNTS)).
 					   WithPID(liftPID).
 					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION).
 					   WithMinAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).

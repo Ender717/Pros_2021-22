@@ -81,6 +81,8 @@ namespace OldBlueConfig
     extern const int RIGHT_DRIVE_TRACKING_PORT;
     extern const int STRAFE_DRIVE_TRACKING_PORT;
 
+    /*
+
     //-------------------------------------------------------------------------
     // Motors:
     // carrier1Motor: The first motor for the carrier
@@ -118,6 +120,8 @@ namespace OldBlueConfig
     extern pros::Rotation leftDriveTrackingSensor;
     extern pros::Rotation rightDriveTrackingSensor;
     extern pros::Rotation strafeDriveTrackingSensor;
+
+    */
 }
 
 #endif

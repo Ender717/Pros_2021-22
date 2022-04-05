@@ -37,6 +37,8 @@ namespace OldBlueConfig
     const int RIGHT_DRIVE_TRACKING_PORT = 4;
     const int STRAFE_DRIVE_TRACKING_PORT = 5;
 
+    /*
+
     // Motors
     pros::Motor carrier1Motor(CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
     pros::Motor carrier2Motor(CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
@@ -61,4 +63,6 @@ namespace OldBlueConfig
     pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
     pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
     pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);
+
+    */
 }

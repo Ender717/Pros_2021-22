@@ -83,7 +83,9 @@ namespace OldOrangeConfig
     // CARRIER_2_PORT: The port for the second carrier piston
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
-    extern const char CARRIER_1_PORT;
+    extern const char CARRIER_2_PORT;
+
+    /*
 
     //-------------------------------------------------------------------------
     // Motors:
@@ -126,6 +128,8 @@ namespace OldOrangeConfig
     extern pros::Rotation leftDriveTrackingSensor;
     extern pros::Rotation rightDriveTrackingSensor;
     extern pros::Rotation strafeDriveTrackingSensor;
+
+    */
 }
 
 #endif
