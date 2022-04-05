@@ -39,11 +39,6 @@ private:
     PID turnPID;
     Position position;
     double wheelSize;
-    bool taskInitialized;
-    bool taskCompleted;
-    int timer;
-    double startDistance;
-    double startAngle;
 
 public:
     //-------------------------------------------------------------------------
@@ -183,16 +178,7 @@ public:
     // power: The power of the motors
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void DriveStraight(double distance, double power);
-
-    //-------------------------------------------------------------------------
-    // Makes the drive move towards a target position as a task
-    // targetX: The target position's x-coordinate
-    // targetY: The target position's y-coordinate
-    // power: The speed at which the robot moves to the target coordinate
-    // v1: Created the method - Nathan S, 2-18-22
-    //-------------------------------------------------------------------------
-    void GoToPosition(double targetX, double targetY, double power);
+    void DriveStraight(double distance);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task
@@ -201,19 +187,6 @@ public:
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
     void TurnToAngle(double targetAngle, double power);
-
-    //-------------------------------------------------------------------------
-    // Checks if the current task has been completed
-    // return: True if the task is complete, false if not
-    // v1: Created the method - Nathan S, 2-18-22
-    //-------------------------------------------------------------------------
-    bool TaskComplete();
-
-    //-------------------------------------------------------------------------
-    // Sets the drive to accept a new task
-    // v1: Created the method - Nathan S, 2-18-22
-    //-------------------------------------------------------------------------
-    void NewTask();
 
     //-------------------------------------------------------------------------
     // Sets the current x-coordinate of the drive

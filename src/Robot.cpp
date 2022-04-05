@@ -5,6 +5,7 @@
 Robot::Robot()
 {
 	CreateOldOrangeRobot();
+	//CreateOldBlueRobot();
 }
 
 // Private method definitions -------------------------------------------------
@@ -255,12 +256,7 @@ void Robot::CreateOldOrangeRobot()
 void Robot::UpdateCarrier(pros::Controller& master)
 {
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
-	{
-		if(carrier.IsDown())
-			carrier.SetUp();
-		else
-			carrier.SetDown();
-	}
+		carrier.TogglePosition();
 	carrier.HoldPosition();
 
 	/*

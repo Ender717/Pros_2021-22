@@ -68,10 +68,6 @@ Drive::Drive()
     distancePID = builder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
     anglePID = builder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
     turnPID = builder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-    
-    taskInitialized = false;
-    taskCompleted = false;
-    startDistance = 0.0;
 }
 
 Drive::Drive(DriveBuilder builder)
@@ -152,94 +148,45 @@ void Drive::SetDrive(double leftPower, double rightPower)
     }
 }
 
-void Drive::DriveStraight(double distance, double power)
+void Drive::DriveStraight(double distance)
 {
-    if(!taskInitialized)
-    {
-        startDistance = distance;
-        timer = 0;
-        taskInitialized = true;
-    }
-}
+    // Create and initialize variables
+    double startPosition = trackingList.front().get_position() / 36000.0 * 3.1415 * wheelSize;
+    double targetPosition = startPosition + distance;
+    double startAngle = position.GetAngle();
+    double currentPosition = startPosition;
+    double currentAngle = startAngle;
+    double power = 127.0;
 
-void Drive::GoToPosition(double targetX, double targetY, double power)
-{
-    if(!taskInitialized)
+    // Initialize the PID controllers
+    distancePID.SetTargetValue(targetPosition);
+    anglePID.SetTargetValue(startAngle);
+
+    // Loop until finished
+    while(abs(currentPosition - targetPosition) > 0.5)
     {
-        startDistance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-        timer = 0;
-        taskInitialized = true;
+        // Update the current position
+        currentPosition = trackingList.front().get_position() / 36000.0 * 3.1415 * wheelSize;
+        currentAngle = position.GetAngle();
+
+        // Update the control values
+        double distanceControl = distancePID.GetControlValue(currentPosition);
+        double angleControl = anglePID.GetControlValue(currentAngle);
+        distanceControl *= (power / 127.0);
+        angleControl *= (power / 127.0);
+
+        // Update the motor power levels
+        SetDrive(distanceControl - angleControl, distanceControl + angleControl);
+        pros::delay(5);
     }
 
-    // Calculate the current polar position from the robot
-    UpdatePosition();
-    double distance = sqrt(pow(targetX - position.GetX(), 2) + pow(targetY - position.GetY(), 2));
-    double angle = atan2(targetY - position.GetY(), targetX - position.GetX());
-    double controlDistance = distance * cos(angle - position.GetTheta());
-    if (angle > (3.1415 / 2.0))
-        angle += 3.1415;
-    else if (angle < -(3.1415 / 2.0))
-        angle -= 3.1415;
-    double controlAngle = distance * sin(angle - position.GetTheta());
-
-    // Set the PID controllers
-    distancePID.SetTargetValue(controlDistance);
-    anglePID.SetTargetValue(controlAngle);
-    double controlValue = distancePID.GetControlValue(0.0);
-    double adjustValue = anglePID.GetControlValue(0.0);
-
-    // Update the task
-    if((distance > 0.5 || std::abs(controlValue) > 2.0) && timer < (startDistance * 100))
-    {
-        SetDrive(controlValue - adjustValue, controlValue + adjustValue);
-        timer += 10;
-    }
-    else
-    {
-        taskCompleted = true;
-        SetDrive(0.0, 0.0);
-    }
+    // Cut the power
+    SetDrive(0.0, 0.0);
 }
 
 void Drive::TurnToAngle(double targetAngle, double power)
 {
-    if(!taskInitialized)
-    {
-        startAngle = std::abs(targetAngle - position.GetAngle());
-        timer = 0;
-        taskInitialized = true;
-    }
 
-    // Calculate variables
-    UpdatePosition();
-    double angle = position.GetAngle();
-
-    // Get the PID control value
-    turnPID.SetTargetValue(targetAngle);
-    double controlValue = turnPID.GetControlValue(angle);
-
-    // Update the task
-    if((std::abs(targetAngle - angle) > 0.1 || std::abs(controlValue) > 1.0) && timer < (startAngle * 20))
-    {
-        SetDrive(-controlValue, controlValue);
-        timer += 10;
-    }
-    else
-    {
-        taskCompleted = true;
-        SetDrive(0.0, 0.0);
-    }
-}
-
-bool Drive::TaskComplete()
-{
-    return taskCompleted;
-}
-
-void Drive::NewTask()
-{
-    taskInitialized = false;
-    taskCompleted = false;
 }
 
 void Drive::SetX(double x)
