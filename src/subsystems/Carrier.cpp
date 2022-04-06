@@ -237,10 +237,13 @@ void Carrier::Lower()
 
 void Carrier::HoldPosition()
 {
-    if(!AtBottom() && !AtTop())
-        SetCarrier(carrierPID.GetControlValue(GetPosition()));
-    else
-        SetCarrier(0.0);
+    if (motorList.size() > 0)
+    {
+        if(!AtBottom() && !AtTop())
+            SetCarrier(carrierPID.GetControlValue(GetPosition()));
+        else
+            SetCarrier(0.0);
+    }
 }
 
 void Carrier::SetAngle(double targetAngle)

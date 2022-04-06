@@ -15,19 +15,19 @@ namespace BlueConfig
     const double LIFT_COUNTS_PER_DEGREE = 12.5;
 
     // Motor ports
-    const int LEFT_DRIVE_1_PORT = 14;
-    const int LEFT_DRIVE_2_PORT = 13;
-    const int LEFT_DRIVE_3_PORT = 12;
-    const int LEFT_DRIVE_4_PORT = 11;
-    const int RIGHT_DRIVE_1_PORT = 6;
-    const int RIGHT_DRIVE_2_PORT = 3;
-    const int RIGHT_DRIVE_3_PORT = 2;
-    const int RIGHT_DRIVE_4_PORT = 1;
-    const int INTAKE_1_PORT = -1;
-    const int LEFT_LIFT_1_PORT = 15;
-    const int LEFT_LIFT_2_PORT = 16;
-    const int RIGHT_LIFT_1_PORT = 7;
-    const int RIGHT_LIFT_2_PORT = 8;
+    const int LEFT_DRIVE_1_PORT = 12;
+    const int LEFT_DRIVE_2_PORT = 11;
+    const int LEFT_DRIVE_3_PORT = 13;
+    const int LEFT_DRIVE_4_PORT = 14;
+    const int RIGHT_DRIVE_1_PORT = 20;
+    const int RIGHT_DRIVE_2_PORT = 17;
+    const int RIGHT_DRIVE_3_PORT = 15;
+    const int RIGHT_DRIVE_4_PORT = 16;
+    const int INTAKE_1_PORT = 19;
+    const int LEFT_LIFT_1_PORT = -1;
+    const int LEFT_LIFT_2_PORT = -1;
+    const int RIGHT_LIFT_1_PORT = -1;
+    const int RIGHT_LIFT_2_PORT = -1;
 
     // Sensor ports
     const int LEFT_DRIVE_TRACKING_PORT = -1;
