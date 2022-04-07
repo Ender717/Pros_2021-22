@@ -22,14 +22,14 @@ private:
     // clawPID: The PID controller in charge of the claw
     // openPosition: The position the claw rests at when it is open
     // closedPosition: The position the claw rests at when it is closed
-    // isClosed: Whether the claw is closed or not
+    // isOpen: Whether the claw is open or not
     //-------------------------------------------------------------------------
     std::list<pros::Motor> motorList;
     std::list<pros::ADIDigitalOut> pistonList;
     PID clawPID;
     double openPosition;
     double closedPosition;
-    bool isClosed;
+    bool isOpen;
 
 public:
     //-------------------------------------------------------------------------
@@ -145,11 +145,11 @@ public:
     void HoldPosition();
 
     //-------------------------------------------------------------------------
-    // Checks if the claw is closed or not
-    // return: True if the claw is closed, false if not
+    // Checks if the claw is open or not
+    // return: True if the claw is open, false if not
     // v1: Created the method - Nathan S, 2-13-22
     //-------------------------------------------------------------------------
-    bool IsClosed() const;
+    bool IsOpen() const;
 };
 
 #endif

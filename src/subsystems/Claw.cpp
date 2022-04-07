@@ -49,7 +49,7 @@ Claw::Claw()
 {
     PID::PIDBuilder builder;
     clawPID = builder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-    isClosed = true;
+    isOpen = true;
     clawPID.SetTargetValue(closedPosition);
 }
 
@@ -85,7 +85,7 @@ Claw::Claw(ClawBuilder builder)
         this->closedPosition = 0.0;
 
     // Initialize the position
-    isClosed = false;
+    isOpen = true;
 }
 
 // Public method definitions --------------------------------------------------
@@ -103,7 +103,7 @@ void Claw::Initialize()
     for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
         iterator != pistonList.end(); iterator++)
     {
-        iterator->set_value(isClosed);
+        iterator->set_value(isOpen);
     }
 
     // Initialize the PID controller
@@ -116,14 +116,14 @@ void Claw::SetClosed()
     for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
         iterator != pistonList.end(); iterator++)
     {
-        iterator->set_value(true);
+        iterator->set_value(false);
     }
 
     // Update the PID controller
     clawPID.SetTargetValue(closedPosition);
 
     // Update the position
-    isClosed = true;
+    isOpen = false;
 }
 
 void Claw::SetOpen()
@@ -132,14 +132,14 @@ void Claw::SetOpen()
     for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
         iterator != pistonList.end(); iterator++)
     {
-        iterator->set_value(false);
+        iterator->set_value(true);
     }
 
     // Update the PID controller
     clawPID.SetTargetValue(openPosition);
 
     // Update the position
-    isClosed = false;
+    isOpen = true;
 }
 
 void Claw::HoldPosition()
@@ -147,8 +147,8 @@ void Claw::HoldPosition()
     if(motorList.size() > 0)
     {
         double position = motorList.front().get_position();
-        bool inPosition = (isClosed && (position <= closedPosition)) ||
-                        (!isClosed && (position >= openPosition));
+        bool inPosition = (!isOpen && (position <= closedPosition)) ||
+                        (isOpen && (position >= openPosition));
         //if(!inPosition)
         if(true)
         {
@@ -162,7 +162,7 @@ void Claw::HoldPosition()
     }
 }
 
-bool Claw::IsClosed() const
+bool Claw::IsOpen() const
 {
-    return isClosed;
+    return isOpen;
 }

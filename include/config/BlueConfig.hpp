@@ -78,14 +78,10 @@ namespace BlueConfig
     //-------------------------------------------------------------------------
     // 3-wire ports:
     // CARRIER_1_PORT: The port for the first carrier piston
-    // CARRIER_2_PORT: The port for the second carrier piston
     // CLAW_1_PORT: The port for the first claw piston
-    // CLAW_2_PORT: The port for the second claw piston
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
-    extern const char CARRIER_2_PORT;
     extern const char CLAW_1_PORT;
-    extern const char CLAW_2_PORT;
 
     /*
 
