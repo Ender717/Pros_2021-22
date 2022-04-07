@@ -5,8 +5,8 @@
 Robot::Robot()
 {
 	//CreateOldOrangeRobot();
-	//CreateOldBlueRobot();
-	CreateBlueRobot();
+	CreateOldBlueRobot();
+	//CreateBlueRobot();
 }
 
 // Private method definitions -------------------------------------------------
@@ -164,7 +164,7 @@ void Robot::CreateOldBlueRobot()
 	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
     PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
     PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	PID liftPID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.15).WithIntegralLimit(70.0).WithStartTarget(OldBlueConfig::LIFT_START_POSITION).Build();
 	
 	Position::PositionBuilder positionBuilder;
 	Position position = positionBuilder.WithLeftDistance(OldBlueConfig::DRIVE_LEFT_TRACKING_DISTANCE).

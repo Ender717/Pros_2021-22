@@ -36,33 +36,4 @@ namespace OldBlueConfig
     const int LEFT_DRIVE_TRACKING_PORT = 14;
     const int RIGHT_DRIVE_TRACKING_PORT = 4;
     const int STRAFE_DRIVE_TRACKING_PORT = 5;
-
-    /*
-
-    // Motors
-    pros::Motor carrier1Motor(CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor carrier2Motor(CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive1Motor(LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive2Motor(LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive3Motor(LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
-                                true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive1Motor(RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                 false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive2Motor(RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                 true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive3Motor(RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
-                                 false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor intake1Motor(INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftLift1Motor(LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-	pros::Motor rightLift1Motor(RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-
-    // Sensors
-    pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
-    pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
-    pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);
-
-    */
 }

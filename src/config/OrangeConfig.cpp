@@ -39,41 +39,4 @@ namespace OrangeConfig
     const char CARRIER_2_PORT = 'X';
     const char CLAW_1_PORT = 'X';
     const char CLAW_2_PORT = 'X';
-
-    /*
-
-    // Motors
-    pros::Motor claw1Motor(CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive1Motor(LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive2Motor(LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive3Motor(LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
-                                true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftDrive4Motor(LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive1Motor(RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                 false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive2Motor(RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                 true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive3Motor(RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06,
-                                 false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightDrive4Motor(RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                                 true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor intake1Motor(INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftLift1Motor(LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor leftLift2Motor(LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-	pros::Motor rightLift1Motor(RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
-    pros::Motor rightLift2Motor(RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
-
-    // Sensors
-    pros::Rotation leftDriveTrackingSensor(LEFT_DRIVE_TRACKING_PORT);
-    pros::Rotation rightDriveTrackingSensor(RIGHT_DRIVE_TRACKING_PORT);
-    pros::Rotation strafeDriveTrackingSensor(STRAFE_DRIVE_TRACKING_PORT);
-
-    // Pistons
-    pros::ADIDigitalOut carrier1Piston(CARRIER_1_PORT);
-    pros::ADIDigitalOut carrier2Piston(CARRIER_2_PORT);
-
-    */
 }

@@ -82,60 +82,6 @@ namespace BlueConfig
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
     extern const char CLAW_1_PORT;
-
-    /*
-
-    //-------------------------------------------------------------------------
-    // Motors:
-    // claw1Motor: The first motor for the claw
-    // leftDrive1Motor: The first left drive motor
-    // leftDrive2Motor: The second left drive motor
-    // leftDrive3Motor: The third left drive motor
-    // leftDrive4Motor: The fourth left drive motor
-    // rightDrive1Motor: The first right drive motor
-    // rightDrive2Motor: The second right drive motor
-    // rightDrive3Motor: The third right drive motor
-    // rightDrive4Motor: The fourth right drive motor
-    // intake1Motor: The first motor for the intake
-    // leftLift1Motor: The first motor on the left side of the lift
-    // leftLift2Motor: The second motor on the left side of the lift
-    // rightLift1Motor: The first motor on the right side of the lift
-    // rightLift2Motor: The second motor on the right side of the lift
-    //-------------------------------------------------------------------------
-    extern pros::Motor claw1Motor;
-    extern pros::Motor leftDrive1Motor;
-    extern pros::Motor leftDrive2Motor;
-    extern pros::Motor leftDrive3Motor;
-    extern pros::Motor leftDrive4Motor;
-    extern pros::Motor rightDrive1Motor;
-    extern pros::Motor rightDrive2Motor;
-    extern pros::Motor rightDrive3Motor;
-    extern pros::Motor rightDrive4Motor;
-    extern pros::Motor intake1Motor;
-    extern pros::Motor leftLift1Motor;
-    extern pros::Motor leftLift2Motor;
-    extern pros::Motor rightLift1Motor;
-    extern pros::Motor rightLift2Motor;
-
-    //-------------------------------------------------------------------------
-    // Sensors:
-    // leftDriveTrackingSensor: The rotation sensor on the left side of the drive
-    // rightDriveTrackingSensor: The rotation sensor on the right side of the drive
-    // strafeDriveTrackingSensor: The rotation sensor on the strafe wheel of the drive
-    //-------------------------------------------------------------------------
-    extern pros::Rotation leftDriveTrackingSensor;
-    extern pros::Rotation rightDriveTrackingSensor;
-    extern pros::Rotation strafeDriveTrackingSensor;
-
-    //-------------------------------------------------------------------------
-    // Pistons:
-    // carrier1Piston: The first carrier piston
-    // carrier2Piston: The second carrier piston
-    //-------------------------------------------------------------------------
-    extern pros::ADIDigitalOut carrier1Piston;
-    extern pros::ADIDigitalOut carrier2Piston;
-
-    */
 }
 
 #endif
