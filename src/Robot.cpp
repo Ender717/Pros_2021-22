@@ -320,12 +320,7 @@ void Robot::UpdateCarrier(pros::Controller& master)
 void Robot::UpdateClaw(pros::Controller& master)
 {
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
-	{
-		if(claw.IsOpen())
-			claw.SetClosed();	
-		else
-			claw.SetOpen();
-	}
+		claw.TogglePosition();
 	claw.HoldPosition();
 
 	/*

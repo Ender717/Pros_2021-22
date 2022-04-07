@@ -1,11 +1,15 @@
 // Included libraries
 #include "subsystems/Claw.hpp"
 
+// CLAW BUILDER
+
 // Constructor definitions ----------------------------------------------------
 Claw::ClawBuilder::ClawBuilder()
 {
-    openPosition = -1;
-    closedPosition = -1;
+    maxPosition = DBL_MAX;
+    minPosition = -DBL_MAX;
+    openPosition = DBL_MAX;
+    closedPosition = -DBL_MAX;
 }
 
 // Public method definitions --------------------------------------------------
@@ -23,7 +27,19 @@ Claw::ClawBuilder Claw::ClawBuilder::WithPiston(pros::ADIDigitalOut piston)
 
 Claw::ClawBuilder Claw::ClawBuilder::WithPID(PID pid)
 {
-    this->clawPID = pid;
+    clawPID = pid;
+    return *this;
+}
+
+Claw::ClawBuilder Claw::ClawBuilder::WithMinPosition(double minPosition)
+{
+    this->minPosition = minPosition;
+    return *this;
+}
+
+Claw::ClawBuilder Claw::ClawBuilder::WithMaxPosition(double maxPosition)
+{
+    this->maxPosition = maxPosition;
     return *this;
 }
 
@@ -44,54 +60,72 @@ Claw Claw::ClawBuilder::Build()
     return Claw(*this);
 }
 
+// CLAW
+
 // Constructor definitions ----------------------------------------------------
 Claw::Claw()
 {
     PID::PIDBuilder builder;
-    clawPID = builder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-    isOpen = true;
-    clawPID.SetTargetValue(closedPosition);
+    clawPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+    minPosition = -DBL_MAX;
+    maxPosition = DBL_MAX;
+    openPosition = DBL_MAX;
+    closedPosition = -DBL_MAX;
 }
 
 Claw::Claw(ClawBuilder builder)
 {
-    // Get the motors
-    while(builder.motorList.size() > 0)
-    {
-        this->motorList.push_back(builder.motorList.front());
-        builder.motorList.pop_front();
-    }
+    // Set the motors
+    for (std::list<pros::Motor>::iterator iterator = builder.motorList.begin(); 
+         iterator != builder.motorList.end(); iterator++)
+        this->motorList.push_back(*iterator);
     
-    // Get the pistons
-    while(builder.pistonList.size() > 0)
-    {
-        this->pistonList.push_back(builder.pistonList.front());
-        builder.pistonList.pop_front();
-    }
+    // Set the motors
+    for (std::list<pros::ADIDigitalOut>::iterator iterator = builder.pistonList.begin(); 
+         iterator != builder.pistonList.end(); iterator++)
+        this->pistonList.push_back(*iterator);
 
-    // Get the PID controller
+    // Set the direct transfer variables
     this->clawPID = builder.clawPID;
+    this->minPosition = builder.minPosition;
+    this->maxPosition = builder.maxPosition;
+    this->openPosition = builder.openPosition;
+    this->closedPosition = builder.closedPosition;
 
-    // Get the up position
-    if(builder.openPosition != -1.0)
-        this->openPosition = builder.openPosition;
+    // Set non-builder defaults
+    isOpen = false;
+}
+
+// Private method definitions -------------------------------------------------
+void Claw::SetClaw(double power)
+{
+    for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
+         iterator != motorList.end(); iterator++)
+        iterator->move(power);
+}
+
+double Claw::GetPosition()
+{
+    if (!motorList.empty())
+        return motorList.front().get_position();
     else
-        this->openPosition = 515.0;
+        return 0.0;
+}
 
-    // Get the down position
-    if(builder.closedPosition != -1.0)
-        this->closedPosition = builder.closedPosition;
-    else
-        this->closedPosition = 0.0;
+bool Claw::IsOpened()
+{
+    return GetPosition() <= minPosition;
+}
 
-    // Initialize the position
-    isOpen = true;
+bool Claw::IsClosed()
+{
+    return GetPosition() >= maxPosition;
 }
 
 // Public method definitions --------------------------------------------------
 void Claw::Initialize()
 {
-    // Initialize the motors
+    // Set the positions to 0
     for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
         iterator != motorList.end(); iterator++)
     {
@@ -99,70 +133,63 @@ void Claw::Initialize()
         iterator->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     }
 
-    // Initialize the pistons
-    for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
-        iterator != pistonList.end(); iterator++)
-    {
-        iterator->set_value(isOpen);
-    }
-
-    // Initialize the PID controller
-    clawPID.SetTargetValue(closedPosition);
+    clawPID.SetTargetValue(0.0);
 }
 
-void Claw::SetClosed()
+void Claw::Open()
 {
-    // Set the pistons
-    for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
-        iterator != pistonList.end(); iterator++)
-    {
-        iterator->set_value(false);
-    }
+    if(!IsOpened())
+        SetClaw(127.0);
+    else
+        SetClaw(0.0);
 
-    // Update the PID controller
-    clawPID.SetTargetValue(closedPosition);
+    clawPID.SetTargetValue(GetPosition());
+}
 
-    // Update the position
-    isOpen = false;
+void Claw::Close()
+{
+    if(!IsClosed())
+        SetClaw(-127.0);
+    else
+        SetClaw(0.0);
+
+    clawPID.SetTargetValue(GetPosition());
+}
+
+void Claw::HoldPosition()
+{
+    if(!IsOpened() && !IsClosed())
+        SetClaw(clawPID.GetControlValue(GetPosition()));
+    else
+        SetClaw(0.0);
 }
 
 void Claw::SetOpen()
 {
-    // Set the pistons
+    clawPID.SetTargetValue(openPosition);
     for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
         iterator != pistonList.end(); iterator++)
     {
         iterator->set_value(true);
     }
-
-    // Update the PID controller
-    clawPID.SetTargetValue(openPosition);
-
-    // Update the position
     isOpen = true;
 }
 
-void Claw::HoldPosition()
+void Claw::SetClosed()
 {
-    if(motorList.size() > 0)
+    clawPID.SetTargetValue(closedPosition);
+    for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
+        iterator != pistonList.end(); iterator++)
     {
-        double position = motorList.front().get_position();
-        bool inPosition = (!isOpen && (position <= closedPosition)) ||
-                        (isOpen && (position >= openPosition));
-        //if(!inPosition)
-        if(true)
-        {
-            // Set the motors
-            for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
-                iterator != motorList.end(); iterator++)
-            {
-                iterator->move(clawPID.GetControlValue(position));
-            }
-        }
+        iterator->set_value(false);
     }
+    isOpen = false;
 }
 
-bool Claw::IsOpen() const
+void Claw::TogglePosition()
 {
-    return isOpen;
+    if (isOpen)
+        SetClosed();
+    else
+        SetOpen();
 }

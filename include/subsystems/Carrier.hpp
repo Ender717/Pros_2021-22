@@ -102,8 +102,6 @@ public:
         // motorList: The motors on the carrier
         // pistonList: The pistons on the carrier
         // carrierPID: The PID controller in charge of the carrier
-        // minPosition: The minimum position of the carrier in encoder counts
-        // maxPosition: The maximum position of the carrier in encoder counts
         // startAngle: The starting angle of the carrier in degrees
         // minAngle: The minimum angle of the carrier in degrees
         // maxAngle: The maximum angle of the carrier in degrees

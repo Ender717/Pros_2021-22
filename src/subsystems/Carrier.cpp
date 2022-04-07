@@ -175,7 +175,10 @@ void Carrier::SetCarrier(double power)
 
 double Carrier::GetPosition()
 {
-    return motorList.front().get_position();
+    if (!motorList.empty())
+        return motorList.front().get_position();
+    else
+        return 0.0;
 }
 
 double Carrier::AngleToPosition(double angle)
