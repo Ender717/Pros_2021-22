@@ -18,9 +18,9 @@ private:
     // rightTrackingDistance: The right wheel's offset from the center
     // strafeTrackingDistance: The strafe wheel's offset from the center
     //-------------------------------------------------------------------------
-    double leftTrackingDistance;
-    double rightTrackingDistance;
-    double strafeTrackingDistance;
+    double* leftTrackingDistance;
+    double* rightTrackingDistance;
+    double* strafeTrackingDistance;
 
     //-------------------------------------------------------------------------
     // Current position:
@@ -28,9 +28,9 @@ private:
     // currentY: The current y-coordinate
     // currentTheta: The current angle
     //-------------------------------------------------------------------------
-    double currentX;
-    double currentY;
-    double currentTheta;
+    double* currentX;
+    double* currentY;
+    double* currentTheta;
 
     //-------------------------------------------------------------------------
     // Previous position:
@@ -39,10 +39,10 @@ private:
     // lastStrafe: The previous position of the strafe tracking wheel
     // lastTheta: The previous angle of the robot
     //-------------------------------------------------------------------------
-    double lastLeft;
-    double lastRight;
-    double lastStrafe;
-    double lastTheta;
+    double* lastLeft;
+    double* lastRight;
+    double* lastStrafe;
+    double* lastTheta;
 
     //-------------------------------------------------------------------------
     // Reset position:
@@ -50,9 +50,9 @@ private:
     // resetY: The y-coordinate at the last reset
     // resetTheta: The angle at the last reset
     //-------------------------------------------------------------------------
-    double resetX;
-    double resetY;
-    double resetTheta;
+    double* resetX;
+    double* resetY;
+    double* resetTheta;
 
     //-------------------------------------------------------------------------
     // Sets a reset position for the position tracker
@@ -69,16 +69,6 @@ public:
     {
     public:
         //---------------------------------------------------------------------
-        // Constants:
-        // DEFAULT_LEFT: The default left wheel offset
-        // DEFAULT_RIGHT: The default right wheel offset
-        // DEFAULT_STRAFE: The default strafe wheel offset
-        //---------------------------------------------------------------------
-        static constexpr double DEFAULT_LEFT = 6.0;
-        static constexpr double DEFAULT_RIGHT = 6.0;
-        static constexpr double DEFAULT_STRAFE = 0.0;
-
-        //---------------------------------------------------------------------
         // Private data members:
         // leftTrackingDistance: The left wheel's offset from the center
         // rightTrackingDistance: The right wheel's offset from the center
@@ -87,12 +77,12 @@ public:
         // startY: The starting y-coordinate
         // startTheta: The starting angle
         //---------------------------------------------------------------------
-        double leftTrackingDistance;
-        double rightTrackingDistance;
-        double strafeTrackingDistance;
-        double startX;
-        double startY;
-        double startTheta;
+        double* leftTrackingDistance;
+        double* rightTrackingDistance;
+        double* strafeTrackingDistance;
+        double* startX;
+        double* startY;
+        double* startTheta;
 
         //---------------------------------------------------------------------
         // Default constructor for the PositionBuilder class
@@ -168,6 +158,12 @@ public:
     // v1: Created the constructor - Nathan S, 3-31-22
     //-------------------------------------------------------------------------
     Position(PositionBuilder* builder);
+
+    //-------------------------------------------------------------------------
+    // Default destructor for Position class
+    // v1: Created the destructor - Nathan S, 4-11-22
+    //-------------------------------------------------------------------------
+    ~Position();
 
     //-------------------------------------------------------------------------
     // Updates the current position of the system
