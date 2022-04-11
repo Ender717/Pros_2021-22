@@ -3,6 +3,7 @@
 #define PID_HPP
 
 // Included libraries
+#include <cfloat>
 #include "./main.h"
 
 //-----------------------------------------------------------------------------
@@ -13,14 +14,20 @@ class PID
 {
 private:
     //-------------------------------------------------------------------------
+    // Class constants:
+    // MILLISECONDS_PER_SECOND: The number of milliseconds per second
+    //-------------------------------------------------------------------------
+    static constexpr int MILLISECONDS_PER_SECOND = 1000;
+
+    //-------------------------------------------------------------------------
     // Control constants:
     // kp: Proportional constant
     // ki: Integral constant
     // kd: Derivative constant
     //-------------------------------------------------------------------------
-    double kp;
-    double ki;
-    double kd;
+    double* kp;
+    double* ki;
+    double* kd;
 
     //-------------------------------------------------------------------------
     // Limiting values:
@@ -28,29 +35,29 @@ private:
     // max: Maximum output value
     // integralLimit: Maximum integral controller value
     //-------------------------------------------------------------------------
-    double min;
-    double max;
-    double integralLimit;
+    double* min;
+    double* max;
+    double* integralLimit;
 
     //-------------------------------------------------------------------------
     // Time values:
     // pastTime: The previous time on the system clock
     //-------------------------------------------------------------------------
-    double pastTime;
+    double* pastTime;
 
     //-------------------------------------------------------------------------
     // Input values:
     // targetValue: The target value of the external system
     // pastError: The error during the previous system loop
     //-------------------------------------------------------------------------
-    double targetValue;
-    double pastError;
+    double* targetValue;
+    double* pastError;
 
     //-------------------------------------------------------------------------
     // Control values:
     // iValue: The value of the integral controller
     //-------------------------------------------------------------------------
-    double iValue;
+    double* iValue;
 
 public:
     //-------------------------------------------------------------------------
@@ -59,15 +66,7 @@ public:
     //-------------------------------------------------------------------------
     class PIDBuilder
     {
-    public:
-        //-------------------------------------------------------------------------
-        // Constants
-        // MOTOR_MIN: The minimum control value of a motor
-        // MOTOR_MAX: The maximum control value of a motor
-        //-------------------------------------------------------------------------
-        static constexpr double MOTOR_MIN = -127.0;
-        static constexpr double MOTOR_MAX = 127.0;
-    
+    public:    
         //---------------------------------------------------------------------
         // Attributes:
         // kp: The proportional constant
@@ -78,13 +77,13 @@ public:
         // integralLimit: The maximum value of the integral controller output
         // startTarget: The initial target of the systems
         //---------------------------------------------------------------------
-        double kp;
-        double ki;
-        double kd;
-        double min;
-        double max;
-        double integralLimit;
-        double startTarget;
+        double* kp;
+        double* ki;
+        double* kd;
+        double* min;
+        double* max;
+        double* integralLimit;
+        double* startTarget;
 
         //---------------------------------------------------------------------
         // Default constructor for the PIDBuilder class
@@ -93,12 +92,18 @@ public:
         PIDBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the PIDBuilder class
+        // v1: Created the destructor - Nathan S, 4-11-22
+        //---------------------------------------------------------------------
+        ~PIDBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method for the kp attribute
         // kp: The value to set kp to
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithKp(double kp);
+        PIDBuilder* WithKp(double kp);
 
         //---------------------------------------------------------------------
         // Wither method for the ki attribute
@@ -106,7 +111,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithKi(double ki);
+        PIDBuilder* WithKi(double ki);
 
         //---------------------------------------------------------------------
         // Wither method for the kd attribute
@@ -114,7 +119,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithKd(double kd);
+        PIDBuilder* WithKd(double kd);
 
         //---------------------------------------------------------------------
         // Wither method for the min attribute
@@ -122,7 +127,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithMin(double min);
+        PIDBuilder* WithMin(double min);
 
         //---------------------------------------------------------------------
         // Wither method for the max attribute
@@ -130,7 +135,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithMax(double max);
+        PIDBuilder* WithMax(double max);
 
         //---------------------------------------------------------------------
         // Wither method for the integralLimit attribute
@@ -138,7 +143,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithIntegralLimit(double integralLimit);
+        PIDBuilder* WithIntegralLimit(double integralLimit);
 
         //---------------------------------------------------------------------
         // Wither method for the startTarget attribute
@@ -146,26 +151,27 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PIDBuilder WithStartTarget(double startTarget);
+        PIDBuilder* WithStartTarget(double startTarget);
 
         //---------------------------------------------------------------------
         // Constructs and returns a new PID from the builder
         // return: The new PID controller
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        PID Build();
+        PID* Build();
     };
-    //-------------------------------------------------------------------------
-    // Default constructor for PID class
-    // v1: Created the constructor - Nathan S, 3-8-22
-    //-------------------------------------------------------------------------
-    PID();
 
     //-------------------------------------------------------------------------
     // Builder constructor for PID class
     // v7: Converted to a builder constructor - Nathan S, 3-8-22
     //-------------------------------------------------------------------------
-    PID(PIDBuilder builder);
+    PID(PIDBuilder* builder);
+
+    //-------------------------------------------------------------------------
+    // Default destructor for PID class
+    // v1: Created the destructor - Nathan S, 4-11-22
+    //-------------------------------------------------------------------------
+    ~PID();
 
     //-------------------------------------------------------------------------
     // Returns the control variable based on the target and current values

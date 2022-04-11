@@ -101,12 +101,18 @@ public:
         PositionBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the PositionBuilder class
+        // v1: Created the destructor - Nathan S, 3-31-22
+        //---------------------------------------------------------------------
+        ~PositionBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method for the leftTrackingDistance attribute
         // leftTrackingDistance: The value to set leftTrackingDistance to
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithLeftDistance(double leftTrackingDistance);
+        PositionBuilder* WithLeftDistance(double leftTrackingDistance);
 
         //---------------------------------------------------------------------
         // Wither method for the rightTrackingDistance attribute
@@ -114,7 +120,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithRightDistance(double rightTrackingDistance);
+        PositionBuilder* WithRightDistance(double rightTrackingDistance);
 
         //---------------------------------------------------------------------
         // Wither method for the strafeTrackingDistance attribute
@@ -122,7 +128,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithStrafeDistance(double strafeTrackingDistance);
+        PositionBuilder* WithStrafeDistance(double strafeTrackingDistance);
 
         //---------------------------------------------------------------------
         // Wither method for the startX attribute
@@ -130,7 +136,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithStartX(double startX);
+        PositionBuilder* WithStartX(double startX);
 
         //---------------------------------------------------------------------
         // Wither method for the startY attribute
@@ -138,7 +144,7 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithStartY(double startY);
+        PositionBuilder* WithStartY(double startY);
 
         //---------------------------------------------------------------------
         // Wither method for the startTheta attribute
@@ -146,28 +152,22 @@ public:
         // return: The builder for build chaining
         // v1: Created the method - Nathan S, 3-31-22
         //---------------------------------------------------------------------
-        PositionBuilder WithStartAngle(double startAngle);
+        PositionBuilder* WithStartAngle(double startAngle);
 
         //---------------------------------------------------------------------
         // Constructs and returns a new Position from the builder
         // return: The new Position
         // v1: Created the method - Nathan S, 3-8-22
         //---------------------------------------------------------------------
-        Position Build();
+        Position* Build();
     };
-
-    //-------------------------------------------------------------------------
-    // Default constructor for Position class
-    // v1: Created the constructor - Nathan S, 9-24-21
-    //-------------------------------------------------------------------------
-    Position();
 
     //-------------------------------------------------------------------------
     // Builder constructor for Position class
     // builder: The builder being used for construction
     // v1: Created the constructor - Nathan S, 3-31-22
     //-------------------------------------------------------------------------
-    Position(PositionBuilder builder);
+    Position(PositionBuilder* builder);
 
     //-------------------------------------------------------------------------
     // Updates the current position of the system

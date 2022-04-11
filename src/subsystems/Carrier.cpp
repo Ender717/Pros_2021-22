@@ -6,6 +6,7 @@
 // Constructor definitions ----------------------------------------------------
 Carrier::CarrierBuilder::CarrierBuilder()
 {
+    carrierPID = nullptr;
     startAngle = 0.0;
     minAngle = -1.0;
     maxAngle = -1.0;
@@ -20,19 +21,19 @@ Carrier::CarrierBuilder::CarrierBuilder()
 }
 
 // Public method definitions --------------------------------------------------
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMotor(pros::Motor motor)
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMotor(pros::Motor* motor)
 {
     motorList.push_back(motor);
     return *this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPiston(pros::ADIDigitalOut piston)
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPiston(pros::ADIDigitalOut* piston)
 {
     pistonList.push_back(piston);
     return *this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPID(PID pid)
+Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPID(PID* pid)
 {
     carrierPID = pid;
     return *this;
@@ -106,7 +107,7 @@ Carrier::CarrierBuilder Carrier::CarrierBuilder::WithUpPosition(double upPositio
 
 Carrier Carrier::CarrierBuilder::Build()
 {
-    return Carrier(*this);
+    return Carrier(this);
 }
 
 // CARRIER
@@ -115,7 +116,7 @@ Carrier Carrier::CarrierBuilder::Build()
 Carrier::Carrier()
 {
     PID::PIDBuilder builder;
-    carrierPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+    *carrierPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
 
     startAngle = 0.0;
     startHeight = 0.0;
@@ -126,20 +127,20 @@ Carrier::Carrier()
     maxPosition = DBL_MAX;
 }
 
-Carrier::Carrier(CarrierBuilder builder)
+Carrier::Carrier(CarrierBuilder* builder)
 {
     // Set the motors
-    for (std::list<pros::Motor>::iterator iterator = builder.motorList.begin(); 
-         iterator != builder.motorList.end(); iterator++)
+    for (std::list<pros::Motor*>::iterator iterator = builder->motorList.begin(); 
+         iterator != builder->motorList.end(); iterator++)
         this->motorList.push_back(*iterator);
     
     // Set the motors
-    for (std::list<pros::ADIDigitalOut>::iterator iterator = builder.pistonList.begin(); 
-         iterator != builder.pistonList.end(); iterator++)
+    for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList.begin(); 
+         iterator != builder->pistonList.end(); iterator++)
         this->pistonList.push_back(*iterator);
 
     // Set the direct transfer variables
-    this->carrierPID = builder.carrierPID;
+    this->carrierPID = builder->carrierPID;
     this->startAngle = builder.startAngle;
     this->startHeight = builder.startHeight;
     this->countsPerDegree = builder.countsPerDegree;

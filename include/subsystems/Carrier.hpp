@@ -33,9 +33,9 @@ private:
     // upPosition: The position of the carrier when it is up
     // isDown: Whether the carrier is down or not
     //-------------------------------------------------------------------------
-    std::list<pros::Motor> motorList;
-    std::list<pros::ADIDigitalOut> pistonList;
-    PID carrierPID;
+    std::list<pros::Motor*>* motorList;
+    std::list<pros::ADIDigitalOut*>* pistonList;
+    PID* carrierPID;
     double startAngle;
     double startHeight;
     double countsPerDegree;
@@ -112,9 +112,9 @@ public:
         // countsPerInch: The number of encoder counts per inch
         // armLength: The length of the arm on the carrier in inches
         //-------------------------------------------------------------------------
-        std::list<pros::Motor> motorList;
-        std::list<pros::ADIDigitalOut> pistonList;
-        PID carrierPID;
+        std::list<pros::Motor*>* motorList;
+        std::list<pros::ADIDigitalOut*>* pistonList;
+        PID* carrierPID;
         double startAngle;
         double minAngle;
         double maxAngle;
@@ -134,12 +134,18 @@ public:
         CarrierBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the CarrierBuilder class
+        // v1: Created the destructor - Nathan S, 4-11-22
+        //---------------------------------------------------------------------
+        ~CarrierBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method to add a motor to the build
         // motor: The motor being added
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithMotor(pros::Motor motor);
+        CarrierBuilder* WithMotor(pros::Motor* motor);
 
         //---------------------------------------------------------------------
         // Wither method to add a piston to the build
@@ -147,7 +153,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithPiston(pros::ADIDigitalOut piston);
+        CarrierBuilder* WithPiston(pros::ADIDigitalOut* piston);
 
         //---------------------------------------------------------------------
         // Wither method to add a pid controller to the build
@@ -155,7 +161,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithPID(PID pid);
+        CarrierBuilder* WithPID(PID* pid);
 
         //---------------------------------------------------------------------
         // Wither method to add a starting angle to the build
@@ -163,7 +169,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithStartAngle(double startAngle);
+        CarrierBuilder* WithStartAngle(double startAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a minimum angle to the build
@@ -171,7 +177,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithMinAngle(double minAngle);
+        CarrierBuilder* WithMinAngle(double minAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a maximum angle to the build
@@ -179,7 +185,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithMaxAngle(double maxAngle);
+        CarrierBuilder* WithMaxAngle(double maxAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a starting height to the build
@@ -187,7 +193,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithStartHeight(double startHeight);
+        CarrierBuilder* WithStartHeight(double startHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a minimum height to the build
@@ -195,7 +201,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithMinHeight(double minHeight);
+        CarrierBuilder* WithMinHeight(double minHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a maximum height to the build
@@ -203,7 +209,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithMaxHeight(double maxHeight);
+        CarrierBuilder* WithMaxHeight(double maxHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a number of counts per degree to the build
@@ -211,7 +217,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithCountsPerDegree(double countsPerDegree);
+        CarrierBuilder* WithCountsPerDegree(double countsPerDegree);
 
         //---------------------------------------------------------------------
         // Wither method to add a number of counts per inch to the build
@@ -219,7 +225,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithCountsPerInch(double countsPerInch);
+        CarrierBuilder* WithCountsPerInch(double countsPerInch);
 
         //---------------------------------------------------------------------
         // Wither method to add an arm length to the build
@@ -227,7 +233,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithArmLength(double armLength);
+        CarrierBuilder* WithArmLength(double armLength);
 
         //---------------------------------------------------------------------
         // Wither method to add a down position to the build
@@ -235,7 +241,7 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithDownPosition(double downPosition);
+        CarrierBuilder* WithDownPosition(double downPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add an up position to the build
@@ -243,31 +249,28 @@ public:
         // return: The CarrierBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        CarrierBuilder WithUpPosition(double upPosition);
+        CarrierBuilder* WithUpPosition(double upPosition);
 
         //---------------------------------------------------------------------
         // Builder method for the builder class
         // return: The carrier
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        Carrier Build();
+        Carrier* Build();
     };
-
-    //-------------------------------------------------------------------------
-    // Default constructor for the Carrier class
-    // angle: The angle the carrier is starting at
-    // v1: Created the constructor - Nathan S, 1-30-22
-    // v2: Added an angle parameter - Nathan S, 2-14-22
-    // v3: Changed angle to builder - Nathan S, 4-1-22
-    //-------------------------------------------------------------------------
-    Carrier();
 
     //-------------------------------------------------------------------------
     // Builder constructor for the Carrier class
     // builder: The builder being used for construction
     // v1: Created the constructor - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
-    Carrier(CarrierBuilder builder);
+    Carrier(CarrierBuilder* builder);
+
+    //-------------------------------------------------------------------------
+    // Default destructor for the Carrier class
+    // v1: Created the destructor - Nathan S, 4-11-22
+    //-------------------------------------------------------------------------
+    ~Carrier();
 
     //-------------------------------------------------------------------------
     // Initializes the carrier
