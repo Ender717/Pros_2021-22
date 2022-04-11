@@ -126,6 +126,9 @@ PID::PID(PIDBuilder* builder)
     max = new double;
     integralLimit = new double;
     targetValue = new double;
+    pastTime = new double;
+    iValue = new double;
+    pastError = new double;
 
     // Initialize builder variables
     if (builder->kp != nullptr)
@@ -167,6 +170,61 @@ PID::PID(PIDBuilder* builder)
     *pastTime = pros::c::millis();
     *iValue = 0.0;
     *pastError = 0.0;
+}
+
+// Destructor definitions -------------------------------------------------
+PID::~PID()
+{
+    if (kp != nullptr)
+    {
+        delete kp;
+        kp = nullptr;
+    }
+    if (ki != nullptr)
+    {
+        delete ki;
+        ki = nullptr;
+    }
+    if (kd != nullptr)
+    {
+        delete kd;
+        kd = nullptr;
+    }
+    if (min != nullptr)
+    {
+        delete min;
+        min = nullptr;
+    }
+    if (max != nullptr)
+    {
+        delete max;
+        max = nullptr;
+    }
+    if (integralLimit != nullptr)
+    {
+        delete integralLimit;
+        integralLimit = nullptr;
+    }
+    if (targetValue != nullptr)
+    {
+        delete targetValue;
+        targetValue = nullptr;
+    }
+    if (pastTime != nullptr)
+    {
+        delete pastTime;
+        pastTime = nullptr;
+    }
+    if (iValue != nullptr)
+    {
+        delete iValue;
+        iValue = nullptr;
+    }
+    if (pastError != nullptr)
+    {
+        delete pastError;
+        pastError = nullptr;
+    }
 }
 
 // Public methods -------------------------------------------------------------
