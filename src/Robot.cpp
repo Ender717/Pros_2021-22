@@ -41,37 +41,41 @@ void Robot::CreateBlueRobot()
 	delete clawBuilder;
 	clawBuilder = nullptr;
 
-	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(BlueConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                        		true, E_MOTOR_ENCODER_COUNTS)).
-						 WithTrackingSensor(pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(*distancePID).
-						 WithAnglePID(*anglePID).
-						 WithTurnPID(*turnPID).
-						 WithPosition(*position).
-						 WithWheelSize(BlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
+	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
+	drive = driveBuilder->WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                        		true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftTrackingSensor(new pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT))->
+						 WithRightTrackingSensor(new pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT))->
+						 WithStrafeTrackingSensor(new pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT))->
+						 WithDistancePID(distancePID)->
+						 WithAnglePID(anglePID)->
+						 WithTurnPID(turnPID)->
+						 WithPosition(position)->
+						 WithWheelSize(BlueConfig::DRIVE_TRACKING_WHEEL_SIZE)->
 						 Build();
+	delete driveBuilder;
+	driveBuilder = nullptr;
 	
-	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(pros::Motor(BlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
-								E_MOTOR_ENCODER_COUNTS)).
+	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
+	intake = intakeBuilder->WithMotor(new pros::Motor(BlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+								E_MOTOR_ENCODER_COUNTS))->
 						   Build();
+	delete intakeBuilder;
+	intakeBuilder = nullptr;
 
 	Lift::LiftBuilder liftBuilder;
 	lift = liftBuilder.WithMotor(pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
@@ -123,37 +127,41 @@ void Robot::CreateOrangeRobot()
 	delete clawBuilder;
 	clawBuilder = nullptr;
 
-	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OrangeConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-                        		true, E_MOTOR_ENCODER_COUNTS)).
-						 WithTrackingSensor(pros::Rotation(OrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(*distancePID).
-						 WithAnglePID(*anglePID).
-						 WithTurnPID(*turnPID).
-						 WithPosition(*position).
-						 WithWheelSize(OrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
+	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
+	drive = driveBuilder->WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+                        		true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftTrackingSensor(new pros::Rotation(OrangeConfig::LEFT_DRIVE_TRACKING_PORT))->
+						 WithRightTrackingSensor(new pros::Rotation(OrangeConfig::RIGHT_DRIVE_TRACKING_PORT))->
+						 WithStrafeTrackingSensor(new pros::Rotation(OrangeConfig::STRAFE_DRIVE_TRACKING_PORT))->
+						 WithDistancePID(distancePID)->
+						 WithAnglePID(anglePID)->
+						 WithTurnPID(turnPID)->
+						 WithPosition(position)->
+						 WithWheelSize(OrangeConfig::DRIVE_TRACKING_WHEEL_SIZE)->
 						 Build();
+	delete driveBuilder;
+	driveBuilder = nullptr;
 	
-	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(pros::Motor(OrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
-								E_MOTOR_ENCODER_COUNTS)).
+	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
+	intake = intakeBuilder->WithMotor(new pros::Motor(OrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+								E_MOTOR_ENCODER_COUNTS))->
 						   Build();
+	delete intakeBuilder;
+	intakeBuilder = nullptr;
 
 	Lift::LiftBuilder liftBuilder;
 	lift = liftBuilder.WithMotor(pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
@@ -201,6 +209,8 @@ void Robot::CreateOldBlueRobot()
 							 WithDownPosition(OldBlueConfig::CARRIER_DOWN_POSITION)->
 							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION)->
 							 Build();
+	delete carrierBuilder;
+	carrierBuilder = nullptr;
 	
 	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
 	claw = clawBuilder->WithMotor(new pros::Motor(OldBlueConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false,
@@ -212,33 +222,37 @@ void Robot::CreateOldBlueRobot()
 	delete clawBuilder;
 	clawBuilder = nullptr;
 
-	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldBlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithTrackingSensor(pros::Rotation(OldBlueConfig::LEFT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OldBlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OldBlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(*distancePID).
-						 WithAnglePID(*anglePID).
-						 WithTurnPID(*turnPID).
-						 WithPosition(*position).
-						 WithWheelSize(OldBlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
+	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
+	drive = driveBuilder->WithLeftMotor(new pros::Motor(OldBlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OldBlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OldBlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldBlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldBlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldBlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftTrackingSensor(new pros::Rotation(OldBlueConfig::LEFT_DRIVE_TRACKING_PORT))->
+						 WithRightTrackingSensor(new pros::Rotation(OldBlueConfig::RIGHT_DRIVE_TRACKING_PORT))->
+						 WithStrafeTrackingSensor(new pros::Rotation(OldBlueConfig::STRAFE_DRIVE_TRACKING_PORT))->
+						 WithDistancePID(distancePID)->
+						 WithAnglePID(anglePID)->
+						 WithTurnPID(turnPID)->
+						 WithPosition(position)->
+						 WithWheelSize(OldBlueConfig::DRIVE_TRACKING_WHEEL_SIZE)->
 						 Build();
+	delete driveBuilder;
+	driveBuilder = nullptr;
 	
-	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(pros::Motor(OldBlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
-									E_MOTOR_ENCODER_COUNTS))
-						  .Build();
+	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
+	intake = intakeBuilder->WithMotor(new pros::Motor(OldBlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+									E_MOTOR_ENCODER_COUNTS))->
+						   Build();
+	delete intakeBuilder;
+	intakeBuilder = nullptr;
 
 	Lift::LiftBuilder liftBuilder;
 	lift = liftBuilder.WithMotor(pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
@@ -289,33 +303,37 @@ void Robot::CreateOldOrangeRobot()
 	delete clawBuilder;
 	clawBuilder = nullptr;
 
-	Drive::DriveBuilder driveBuilder;
-	drive = driveBuilder.WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-                                true, E_MOTOR_ENCODER_COUNTS)).
-						 WithRightMotor(pros::Motor(OldOrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-                                false, E_MOTOR_ENCODER_COUNTS)).
-						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
-						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(*distancePID).
-						 WithAnglePID(*anglePID).
-						 WithTurnPID(*turnPID).
-						 WithPosition(*position).
-						 WithWheelSize(OldOrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
+	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
+	drive = driveBuilder->WithLeftMotor(new pros::Motor(OldOrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OldOrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftMotor(new pros::Motor(OldOrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldOrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldOrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+                                true, E_MOTOR_ENCODER_COUNTS))->
+						 WithRightMotor(new pros::Motor(OldOrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
+                                false, E_MOTOR_ENCODER_COUNTS))->
+						 WithLeftTrackingSensor(new pros::Rotation(OldOrangeConfig::LEFT_DRIVE_TRACKING_PORT))->
+						 WithRightTrackingSensor(new pros::Rotation(OldOrangeConfig::RIGHT_DRIVE_TRACKING_PORT))->
+						 WithStrafeTrackingSensor(new pros::Rotation(OldOrangeConfig::STRAFE_DRIVE_TRACKING_PORT))->
+						 WithDistancePID(distancePID)->
+						 WithAnglePID(anglePID)->
+						 WithTurnPID(turnPID)->
+						 WithPosition(position)->
+						 WithWheelSize(OldOrangeConfig::DRIVE_TRACKING_WHEEL_SIZE)->
 						 Build();
+	delete driveBuilder;
+	driveBuilder = nullptr;
 	
-	Intake::IntakeBuilder intakeBuilder;
-	intake = intakeBuilder.WithMotor(pros::Motor(OldOrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
-									E_MOTOR_ENCODER_COUNTS)).
+	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
+	intake = intakeBuilder->WithMotor(new pros::Motor(OldOrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
+									E_MOTOR_ENCODER_COUNTS))->
 						   Build();
+	delete intakeBuilder;
+	intakeBuilder = nullptr;
 
 	Lift::LiftBuilder liftBuilder;
 	lift = liftBuilder.WithMotor(pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
@@ -384,18 +402,18 @@ void Robot::UpdateDrive(pros::Controller& master)
 	//double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 
 	// Update
-	drive.SetDrive(leftDrivePower, rightDrivePower);
-	drive.UpdatePosition();
+	drive->SetDrive(leftDrivePower, rightDrivePower);
+	drive->UpdatePosition();
 }
 
 void Robot::UpdateIntake(pros::Controller& master)
 {
 	if (master.get_digital(E_CONTROLLER_DIGITAL_L1))
-		intake.Suck();
+		intake->Suck();
 	else if (master.get_digital(E_CONTROLLER_DIGITAL_L2))
-		intake.Blow();
+		intake->Blow();
 	else
-		intake.Stop();
+		intake->Stop();
 }
 
 void Robot::UpdateLift(pros::Controller& master)
@@ -413,8 +431,8 @@ void Robot::Initialize()
 {
 	carrier->Initialize();
 	claw->Initialize();
-	drive.Initialize();
-	intake.Initialize();
+	drive->Initialize();
+	intake->Initialize();
 	lift.Initialize();
 }
 

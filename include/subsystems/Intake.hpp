@@ -21,9 +21,9 @@ private:
     // intakePID: The PID controller in charge of the intake
     // intakeSpeed: The speed the intake runs at
     //-------------------------------------------------------------------------
-    std::list<pros::Motor> motorList;
-    PID intakePID;
-    double intakeSpeed;
+    std::list<pros::Motor*>* motorList;
+    PID* intakePID;
+    double* intakeSpeed;
 
 public:
     //-------------------------------------------------------------------------
@@ -37,8 +37,8 @@ public:
         // motorList: The list of motors
         // intakePID: The PID controller
         //---------------------------------------------------------------------
-        std::list<pros::Motor> motorList;
-        PID intakePID;
+        std::list<pros::Motor*>* motorList;
+        PID* intakePID;
 
         //---------------------------------------------------------------------
         // Default constructor for the IntakeBuilder class
@@ -47,12 +47,18 @@ public:
         IntakeBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the IntakeBuilder class
+        // v1: Created the destructor - Nathan S, 4-12-22
+        //---------------------------------------------------------------------
+        ~IntakeBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method to add a motor to the build
         // motor: The motor being added to the build
         // return: The IntakeBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        IntakeBuilder WithMotor(pros::Motor motor);
+        IntakeBuilder* WithMotor(pros::Motor* motor);
 
         //---------------------------------------------------------------------
         // Wither method to add a PID controller to the build
@@ -60,31 +66,28 @@ public:
         // return: The IntakeBuilder for build chaining
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        IntakeBuilder WithPID(PID pid);
+        IntakeBuilder* WithPID(PID* pid);
 
         //---------------------------------------------------------------------
         // Build method for the IntakeBuilder
         // return: The intake
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
-        Intake Build();
+        Intake* Build();
     };
-
-    //-------------------------------------------------------------------------
-    // Default constructor for the intake class
-    // speed: The speed this intake runs at
-    // v1: Created the constructor - Nathan S, 2-2-22
-    // v2: Added a speed parameter - Nathan S, 2-14-22
-    // v3: Changed the speed parameter to a setter - Nathan S, 3-9-22
-    //-------------------------------------------------------------------------
-    Intake();
 
     //-------------------------------------------------------------------------
     // Builder constructor for the intake class
     // builder: The builder being used for construction
-    // v1: Created the method - Nathan S 3-9-22
+    // v1: Created the constructor - Nathan S, 3-9-22
     //-------------------------------------------------------------------------
-    Intake(IntakeBuilder builder);
+    Intake(IntakeBuilder* builder);
+
+    //-------------------------------------------------------------------------
+    // Default destructor for the Intake class
+    // v1: Created the destructor - Nathan S, 4-12-22
+    //-------------------------------------------------------------------------
+    ~Intake();
     
     //-------------------------------------------------------------------------
     // Initializes the intake system

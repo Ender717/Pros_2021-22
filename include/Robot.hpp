@@ -90,11 +90,11 @@ public:
     // claw: The claw subsystem
     // intake: The intake subsystem
     //-------------------------------------------------------------------------
-    Drive drive;
+    Drive* drive;
 	Carrier* carrier;
 	Lift lift;
 	Claw* claw;
-	Intake intake;
+	Intake* intake;
 
     //-------------------------------------------------------------------------
     // Default constructor for the robot class

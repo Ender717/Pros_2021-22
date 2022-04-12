@@ -290,6 +290,91 @@ Carrier::Carrier(CarrierBuilder* builder)
         *maxPosition = DBL_MAX;
 }
 
+//-----------------------------------------------------------------------------
+// Default destructor for the Carrier class
+// v1: Created the destructor - Nathan S, 4-11-22
+//-----------------------------------------------------------------------------
+Carrier::~Carrier()
+{
+    if (motorList != nullptr)
+    {
+        for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+            iterator != motorList->end(); iterator++)
+        {
+            delete *iterator;
+            *iterator = nullptr;
+        }
+        delete motorList;
+        motorList = nullptr;
+    }
+    if (pistonList != nullptr)
+    {
+        for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
+            iterator != pistonList->end(); iterator++)
+        {
+            delete *iterator;
+            *iterator = nullptr;
+        }
+        delete pistonList;
+        pistonList = nullptr;
+    }
+    if (carrierPID != nullptr)
+    {
+        delete carrierPID;
+        carrierPID = nullptr;
+    }
+    if (startAngle != nullptr)
+    {
+        delete startAngle;
+        startAngle = nullptr;
+    }
+    if (startHeight != nullptr)
+    {
+        delete startHeight;
+        startAngle = nullptr;
+    }
+    if (countsPerDegree != nullptr)
+    {
+        delete countsPerDegree;
+        countsPerDegree = nullptr;
+    }
+    if (countsPerInch != nullptr)
+    {
+        delete countsPerInch;
+        countsPerInch = nullptr;
+    }
+    if (armLength != nullptr)
+    {
+        delete armLength;
+        armLength = nullptr;
+    }
+    if (minPosition != nullptr)
+    {
+        delete minPosition;
+        minPosition = nullptr;
+    }
+    if (maxPosition != nullptr)
+    {
+        delete maxPosition;
+        maxPosition = nullptr;
+    }
+    if (downPosition != nullptr)
+    {
+        delete downPosition;
+        downPosition = nullptr;
+    }
+    if (upPosition != nullptr)
+    {
+        delete upPosition;
+        upPosition = nullptr;
+    }
+    if (isDown != nullptr)
+    {
+        delete isDown;
+        isDown = nullptr;
+    }
+}
+
 // Private method definitions -------------------------------------------------
 void Carrier::SetCarrier(double power)
 {

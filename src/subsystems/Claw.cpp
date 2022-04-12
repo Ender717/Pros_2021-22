@@ -15,6 +15,42 @@ Claw::ClawBuilder::ClawBuilder()
     closedPosition = nullptr;
 }
 
+// Destructor definitions -----------------------------------------------------
+Claw::ClawBuilder::~ClawBuilder()
+{
+    if (motorList != nullptr)
+    {
+        delete motorList;
+        motorList = nullptr;
+    }
+    if (pistonList != nullptr)
+    {
+        delete pistonList;
+        pistonList = nullptr;
+    }
+    clawPID = nullptr;
+    if (maxPosition != nullptr)
+    {
+        delete maxPosition;
+        maxPosition = nullptr;
+    }
+    if (minPosition != nullptr)
+    {
+        delete minPosition;
+        minPosition = nullptr;
+    }
+    if (openPosition != nullptr)
+    {
+        delete openPosition;
+        openPosition = nullptr;
+    }
+    if (closedPosition != nullptr)
+    {
+        delete closedPosition;
+        closedPosition = nullptr;
+    }
+}
+
 // Public method definitions --------------------------------------------------
 Claw::ClawBuilder* Claw::ClawBuilder::WithMotor(pros::Motor* motor)
 {
@@ -115,6 +151,63 @@ Claw::Claw(ClawBuilder* builder)
 
     // Set non-builder defaults
     *isOpen = false;
+}
+
+// Destructor definitions -----------------------------------------------------
+Claw::~Claw()
+{
+    if (motorList != nullptr)
+    {
+        for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+            iterator != motorList->end(); iterator++)
+        {
+            delete *iterator;
+            *iterator = nullptr;
+        }
+        delete motorList;
+        motorList = nullptr;
+    }
+    if (pistonList != nullptr)
+    {
+        for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
+            iterator != pistonList->end(); iterator++)
+        {
+            delete *iterator;
+            *iterator = nullptr;
+        }
+        delete pistonList;
+        pistonList = nullptr;
+    }
+    if (clawPID != nullptr)
+    {
+        delete clawPID;
+        clawPID = nullptr;
+    }
+    if (minPosition != nullptr)
+    {
+        delete minPosition;
+        minPosition = nullptr;
+    }
+    if (maxPosition != nullptr)
+    {
+        delete maxPosition;
+        maxPosition = nullptr;
+    }
+    if (openPosition != nullptr)
+    {
+        delete openPosition;
+        openPosition = nullptr;
+    }
+    if (closedPosition != nullptr)
+    {
+        delete closedPosition;
+        closedPosition = nullptr;
+    }
+    if (isOpen != nullptr)
+    {
+        delete isOpen;
+        isOpen = nullptr;
+    }
 }
 
 // Private method definitions -------------------------------------------------
