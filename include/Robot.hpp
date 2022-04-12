@@ -91,7 +91,7 @@ public:
     // intake: The intake subsystem
     //-------------------------------------------------------------------------
     Drive drive;
-	Carrier carrier;
+	Carrier* carrier;
 	Lift lift;
 	Claw claw;
 	Intake intake;

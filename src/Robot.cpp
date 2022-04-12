@@ -12,22 +12,28 @@ Robot::Robot()
 // Private method definitions -------------------------------------------------
 void Robot::CreateBlueRobot()
 {
-	PID::PIDBuilder pidBuilder;
-	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
-    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
-    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(1.0).WithKi(0.1).WithKd(0.1).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
+	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
+    PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(1.0)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(70.0)->WithStartTarget(140.0)->Build();
+	delete pidBuilder;
+	pidBuilder = nullptr;
 	
-	Position::PositionBuilder positionBuilder;
-	Position position = positionBuilder.WithLeftDistance(BlueConfig::DRIVE_LEFT_TRACKING_DISTANCE).
-										WithRightDistance(BlueConfig::DRIVE_RIGHT_TRACKING_DISTANCE).
-										WithStrafeDistance(BlueConfig::DRIVE_STRAFE_TRACKING_DISTANCE).
+	Position::PositionBuilder* positionBuilder = new Position::PositionBuilder();
+	Position* position = positionBuilder->WithLeftDistance(BlueConfig::DRIVE_LEFT_TRACKING_DISTANCE)->
+										WithRightDistance(BlueConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
+										WithStrafeDistance(BlueConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
 										Build();
+	delete positionBuilder;
+	positionBuilder = nullptr;
 
-	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(BlueConfig::CARRIER_1_PORT)).
+	Carrier::CarrierBuilder* carrierBuilder = new Carrier::CarrierBuilder();
+	carrier = carrierBuilder->WithPiston(new pros::ADIDigitalOut(BlueConfig::CARRIER_1_PORT))->
 							 Build();
+	delete carrierBuilder;
+	carrierBuilder = nullptr;
 	
 	Claw::ClawBuilder clawBuilder;
 	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT)).
@@ -53,10 +59,10 @@ void Robot::CreateBlueRobot()
 						 WithTrackingSensor(pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(distancePID).
-						 WithAnglePID(anglePID).
-						 WithTurnPID(turnPID).
-						 WithPosition(position).
+						 WithDistancePID(*distancePID).
+						 WithAnglePID(*anglePID).
+						 WithTurnPID(*turnPID).
+						 WithPosition(*position).
 						 WithWheelSize(BlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
@@ -74,7 +80,7 @@ void Robot::CreateBlueRobot()
 								E_MOTOR_ENCODER_COUNTS)).
 					   WithMotor(pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
 								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(liftPID).
+					   WithPID(*liftPID).
 					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
 					   //WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION).
 					   //WithMaxAngle(BlueConfig::LIFT_TOP_POSITION).
@@ -84,23 +90,29 @@ void Robot::CreateBlueRobot()
 
 void Robot::CreateOrangeRobot()
 {
-	PID::PIDBuilder pidBuilder;
-	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
-    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
-    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
+	PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
+	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
+    PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(5.0)->WithKi(0.3)->WithKd(0.25)->WithIntegralLimit(70.0)->WithStartTarget(140.0)->Build();
+	delete pidBuilder;
+	pidBuilder = nullptr;
 	
-	Position::PositionBuilder positionBuilder;
-	Position position = positionBuilder.WithLeftDistance(OrangeConfig::DRIVE_LEFT_TRACKING_DISTANCE).
-										WithRightDistance(OrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE).
-										WithStrafeDistance(OrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE).
+	Position::PositionBuilder* positionBuilder = new Position::PositionBuilder();
+	Position* position = positionBuilder->WithLeftDistance(OrangeConfig::DRIVE_LEFT_TRACKING_DISTANCE)->
+										WithRightDistance(OrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
+										WithStrafeDistance(OrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
 										Build();
+	delete positionBuilder;
+	positionBuilder = nullptr;
 
-	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(OrangeConfig::CARRIER_1_PORT)).
-							 WithPiston(pros::ADIDigitalOut(OrangeConfig::CARRIER_2_PORT)).
+	Carrier::CarrierBuilder* carrierBuilder = new Carrier::CarrierBuilder();
+	carrier = carrierBuilder->WithPiston(new pros::ADIDigitalOut(OrangeConfig::CARRIER_1_PORT))->
+							 WithPiston(new pros::ADIDigitalOut(OrangeConfig::CARRIER_2_PORT))->
 							 Build();
+	delete carrierBuilder;
+	carrierBuilder = nullptr;
 	
 	Claw::ClawBuilder clawBuilder;
 	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(OrangeConfig::CLAW_1_PORT)).
@@ -127,10 +139,10 @@ void Robot::CreateOrangeRobot()
 						 WithTrackingSensor(pros::Rotation(OrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(distancePID).
-						 WithAnglePID(anglePID).
-						 WithTurnPID(turnPID).
-						 WithPosition(position).
+						 WithDistancePID(*distancePID).
+						 WithAnglePID(*anglePID).
+						 WithTurnPID(*turnPID).
+						 WithPosition(*position).
 						 WithWheelSize(OrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
@@ -148,7 +160,7 @@ void Robot::CreateOrangeRobot()
 								E_MOTOR_ENCODER_COUNTS)).
 					   WithMotor(pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
 								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(liftPID).
+					   WithPID(*liftPID).
 					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
 					   WithMinAngle(OrangeConfig::LIFT_BOTTOM_POSITION).
 					   WithMaxAngle(OrangeConfig::LIFT_TOP_POSITION).
@@ -158,34 +170,38 @@ void Robot::CreateOrangeRobot()
 
 void Robot::CreateOldBlueRobot()
 {
-	PID::PIDBuilder pidBuilder;
-	PID carrierPID = pidBuilder.WithKp(5.3).WithKi(0.5).WithKd(0.25).WithIntegralLimit(65.0).Build();
-	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
-    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
-    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.15).WithIntegralLimit(70.0).WithStartTarget(OldBlueConfig::LIFT_START_POSITION).Build();
-	
-	Position::PositionBuilder positionBuilder;
-	Position position = positionBuilder.WithLeftDistance(OldBlueConfig::DRIVE_LEFT_TRACKING_DISTANCE).
-										WithRightDistance(OldBlueConfig::DRIVE_RIGHT_TRACKING_DISTANCE).
-										WithStrafeDistance(OldBlueConfig::DRIVE_STRAFE_TRACKING_DISTANCE).
-										Build();
+	PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
+	PID* carrierPID = pidBuilder->WithKp(5.3)->WithKi(0.5)->WithKd(0.25)->WithIntegralLimit(65.0)->Build();
+	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
+    PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.15)->WithIntegralLimit(70.0)->WithStartTarget(OldBlueConfig::LIFT_START_POSITION)->Build();
+	delete pidBuilder;
+	pidBuilder = nullptr;
 
-	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithMotor(pros::Motor(OldBlueConfig::CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, 
-									true, E_MOTOR_ENCODER_COUNTS)).
-							 WithMotor(pros::Motor(OldBlueConfig::CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, 
-									false, E_MOTOR_ENCODER_COUNTS)).
-							 WithPID(carrierPID).
-							 WithDownPosition(OldBlueConfig::CARRIER_DOWN_POSITION).
-							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION).
+	Position::PositionBuilder* positionBuilder = new Position::PositionBuilder();
+	Position* position = positionBuilder->WithLeftDistance(OldBlueConfig::DRIVE_LEFT_TRACKING_DISTANCE)->
+										WithRightDistance(OldBlueConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
+										WithStrafeDistance(OldBlueConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
+										Build();
+	delete positionBuilder;
+	positionBuilder = nullptr;
+
+	Carrier::CarrierBuilder* carrierBuilder = new Carrier::CarrierBuilder();
+	carrier = carrierBuilder->WithMotor(new pros::Motor(OldBlueConfig::CARRIER_1_PORT, pros::E_MOTOR_GEARSET_36, 
+									true, E_MOTOR_ENCODER_COUNTS))->
+							 WithMotor(new pros::Motor(OldBlueConfig::CARRIER_2_PORT, pros::E_MOTOR_GEARSET_36, 
+									false, E_MOTOR_ENCODER_COUNTS))->
+							 WithPID(carrierPID)->
+							 WithDownPosition(OldBlueConfig::CARRIER_DOWN_POSITION)->
+							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION)->
 							 Build();
 	
 	Claw::ClawBuilder clawBuilder;
 	claw = clawBuilder.WithMotor(pros::Motor(OldBlueConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false,
 								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(clawPID).
+					   WithPID(*clawPID).
 					   WithOpenPosition(OldBlueConfig::CLAW_OPEN_POSITION).
 					   WithClosedPosition(OldBlueConfig::CLAW_CLOSED_POSITION).
 					   Build();
@@ -206,10 +222,10 @@ void Robot::CreateOldBlueRobot()
 						 WithTrackingSensor(pros::Rotation(OldBlueConfig::LEFT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OldBlueConfig::RIGHT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OldBlueConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(distancePID).
-						 WithAnglePID(anglePID).
-						 WithTurnPID(turnPID).
-						 WithPosition(position).
+						 WithDistancePID(*distancePID).
+						 WithAnglePID(*anglePID).
+						 WithTurnPID(*turnPID).
+						 WithPosition(*position).
 						 WithWheelSize(OldBlueConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
@@ -223,7 +239,7 @@ void Robot::CreateOldBlueRobot()
 								false, E_MOTOR_ENCODER_COUNTS)).
 					   WithMotor(pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
 								true, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(liftPID).
+					   WithPID(*liftPID).
 					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION).
 					   WithMinAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
 					   WithMaxAngle(OldBlueConfig::LIFT_TOP_POSITION).
@@ -233,28 +249,34 @@ void Robot::CreateOldBlueRobot()
 
 void Robot::CreateOldOrangeRobot()
 {
-	PID::PIDBuilder pidBuilder;
-	PID clawPID = pidBuilder.WithKp(2.3).WithKi(0.05).WithKd(0.05).WithIntegralLimit(65.0).Build();
-	PID distancePID = pidBuilder.WithKp(11.3).WithKi(0.5).WithKd(0.5).WithIntegralLimit(40.0).Build();
-    PID anglePID = pidBuilder.WithKp(3.0).WithKi(0.2).WithKd(0.05).WithIntegralLimit(40.0).Build();
-    PID turnPID = pidBuilder.WithKp(5.3).WithKi(0.15).WithKd(0.10).WithIntegralLimit(40.0).Build();
-	PID liftPID = pidBuilder.WithKp(1.0).WithKi(0.06).WithKd(0.05).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
-	
-	Position::PositionBuilder positionBuilder;
-	Position position = positionBuilder.WithLeftDistance(OldOrangeConfig::DRIVE_LEFT_TRACKING_DISTANCE).
-										WithRightDistance(OldOrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE).
-										WithStrafeDistance(OldOrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE).
-										Build();
+	PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
+	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
+    PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(1.0)->WithKi(0.06)->WithKd(0.05)->WithIntegralLimit(70.0)->WithStartTarget(140.0)->Build();
+	delete pidBuilder;
+	pidBuilder = nullptr;
 
-	Carrier::CarrierBuilder carrierBuilder;
-	carrier = carrierBuilder.WithPiston(pros::ADIDigitalOut(OldOrangeConfig::CARRIER_1_PORT)).
-							 WithPiston(pros::ADIDigitalOut(OldOrangeConfig::CARRIER_2_PORT)).
+	Position::PositionBuilder* positionBuilder = new Position::PositionBuilder();
+	Position* position = positionBuilder->WithLeftDistance(OldOrangeConfig::DRIVE_LEFT_TRACKING_DISTANCE)->
+										WithRightDistance(OldOrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
+										WithStrafeDistance(OldOrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
+										Build();
+	delete positionBuilder;
+	positionBuilder = nullptr;
+
+	Carrier::CarrierBuilder* carrierBuilder = new Carrier::CarrierBuilder();
+	carrier = carrierBuilder->WithPiston(new pros::ADIDigitalOut(OldOrangeConfig::CARRIER_1_PORT))->
+							 WithPiston(new pros::ADIDigitalOut(OldOrangeConfig::CARRIER_2_PORT))->
 							 Build();
-	
+	delete carrierBuilder;
+	carrierBuilder = nullptr;
+
 	Claw::ClawBuilder clawBuilder;
 	claw = clawBuilder.WithMotor(pros::Motor(OldOrangeConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, 
 								false, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(clawPID).
+					   WithPID(*clawPID).
 					   WithOpenPosition(OldOrangeConfig::CLAW_OPEN_POSITION).
 					   WithClosedPosition(OldOrangeConfig::CLAW_CLOSED_POSITION).
 					   Build();
@@ -275,10 +297,10 @@ void Robot::CreateOldOrangeRobot()
 						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::LEFT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::RIGHT_DRIVE_TRACKING_PORT)).
 						 WithTrackingSensor(pros::Rotation(OldOrangeConfig::STRAFE_DRIVE_TRACKING_PORT)).
-						 WithDistancePID(distancePID).
-						 WithAnglePID(anglePID).
-						 WithTurnPID(turnPID).
-						 WithPosition(position).
+						 WithDistancePID(*distancePID).
+						 WithAnglePID(*anglePID).
+						 WithTurnPID(*turnPID).
+						 WithPosition(*position).
 						 WithWheelSize(OldOrangeConfig::DRIVE_TRACKING_WHEEL_SIZE).
 						 Build();
 	
@@ -292,7 +314,7 @@ void Robot::CreateOldOrangeRobot()
 								false, E_MOTOR_ENCODER_COUNTS)).
 					   WithMotor(pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
 								true, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(liftPID).
+					   WithPID(*liftPID).
 					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION).
 					   WithMinAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).
 					   WithMaxAngle(OldOrangeConfig::LIFT_TOP_POSITION).
@@ -303,8 +325,8 @@ void Robot::CreateOldOrangeRobot()
 void Robot::UpdateCarrier(pros::Controller& master)
 {
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
-		carrier.TogglePosition();
-	carrier.HoldPosition();
+		carrier->TogglePosition();
+	carrier->HoldPosition();
 
 	/*
 	if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
@@ -381,7 +403,7 @@ void Robot::UpdateLift(pros::Controller& master)
 // Public method definitions --------------------------------------------------
 void Robot::Initialize()
 {
-	carrier.Initialize();
+	carrier->Initialize();
 	claw.Initialize();
 	drive.Initialize();
 	intake.Initialize();
