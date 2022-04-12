@@ -28,14 +28,14 @@ private:
     // closedPosition: The position of the claw when it is closed
     // isOpen: Whether the claw is open or not
     //-------------------------------------------------------------------------
-    std::list<pros::Motor> motorList;
-    std::list<pros::ADIDigitalOut> pistonList;
-    PID clawPID;
-    double minPosition;
-    double maxPosition;
-    double openPosition;
-    double closedPosition;
-    bool isOpen;
+    std::list<pros::Motor*>* motorList;
+    std::list<pros::ADIDigitalOut*>* pistonList;
+    PID* clawPID;
+    double* minPosition;
+    double* maxPosition;
+    double* openPosition;
+    double* closedPosition;
+    bool* isOpen;
 
     //-------------------------------------------------------------------------
     // Sets the claw to the designated power level
@@ -83,13 +83,13 @@ public:
         // openPosition: The position of the claw when it is open
         // closedPosition: The position of the claw when it is closed
         //-------------------------------------------------------------------------
-        std::list<pros::Motor> motorList;
-        std::list<pros::ADIDigitalOut> pistonList;
-        PID clawPID;
-        double minPosition;
-        double maxPosition;
-        double openPosition;
-        double closedPosition;
+        std::list<pros::Motor*>* motorList;
+        std::list<pros::ADIDigitalOut*>* pistonList;
+        PID* clawPID;
+        double* minPosition;
+        double* maxPosition;
+        double* openPosition;
+        double* closedPosition;
 
         //---------------------------------------------------------------------
         // Default constructor for the ClawBuilder class
@@ -98,12 +98,18 @@ public:
         ClawBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the ClawBuilder class
+        // v1: Created the destructor - Nathan S, 4-11-22
+        //---------------------------------------------------------------------
+        ~ClawBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method to add a motor to the build
         // motor: The motor being added
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithMotor(pros::Motor motor);
+        ClawBuilder* WithMotor(pros::Motor* motor);
 
         //---------------------------------------------------------------------
         // Wither method to add a piston to the build
@@ -111,7 +117,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithPiston(pros::ADIDigitalOut piston);
+        ClawBuilder* WithPiston(pros::ADIDigitalOut* piston);
 
         //---------------------------------------------------------------------
         // Wither method to add a pid controller to the build
@@ -119,7 +125,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithPID(PID pid);
+        ClawBuilder* WithPID(PID* pid);
 
         //---------------------------------------------------------------------
         // Wither method to add a minimum position to the build
@@ -127,7 +133,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithMinPosition(double minPosition);
+        ClawBuilder* WithMinPosition(double minPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add a maximum position to the build
@@ -135,7 +141,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithMaxPosition(double maxPosition);
+        ClawBuilder* WithMaxPosition(double maxPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add an open position to the build
@@ -143,7 +149,7 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithOpenPosition(double openPosition);
+        ClawBuilder* WithOpenPosition(double openPosition);
 
         //---------------------------------------------------------------------
         // Wither method to add a closed position to the build
@@ -151,31 +157,22 @@ public:
         // return: The ClawBuilder for build chaining
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        ClawBuilder WithClosedPosition(double closedPosition);
+        ClawBuilder* WithClosedPosition(double closedPosition);
 
         //---------------------------------------------------------------------
         // Builder method for the builder class
         // return: The claw
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
-        Claw Build();
+        Claw* Build();
     };
-
-    //-------------------------------------------------------------------------
-    // Default constructor for the Claw class
-    // angle: The angle the claw is starting at
-    // v1: Created the constructor - Nathan S, 1-30-22
-    // v2: Added an angle parameter - Nathan S, 2-14-22
-    // v3: Changed angle to builder - Nathan S, 4-1-22
-    //-------------------------------------------------------------------------
-    Claw();
 
     //-------------------------------------------------------------------------
     // Builder constructor for the Claw class
     // builder: The builder being used for construction
     // v1: Created the constructor - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
-    Claw(ClawBuilder builder);
+    Claw(ClawBuilder* builder);
 
     //-------------------------------------------------------------------------
     // Initializes the claw

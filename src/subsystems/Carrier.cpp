@@ -421,7 +421,7 @@ void Carrier::SetUp()
     {
         (*iterator)->set_value(false);
     }
-    isDown = false;
+    *isDown = false;
 }
 
 void Carrier::TogglePosition()
