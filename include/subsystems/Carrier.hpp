@@ -36,16 +36,16 @@ private:
     std::list<pros::Motor*>* motorList;
     std::list<pros::ADIDigitalOut*>* pistonList;
     PID* carrierPID;
-    double startAngle;
-    double startHeight;
-    double countsPerDegree;
-    double countsPerInch;
-    double armLength;
-    double minPosition;
-    double maxPosition;
-    double downPosition;
-    double upPosition;
-    bool isDown;
+    double* startAngle;
+    double* startHeight;
+    double* countsPerDegree;
+    double* countsPerInch;
+    double* armLength;
+    double* minPosition;
+    double* maxPosition;
+    double* downPosition;
+    double* upPosition;
+    bool* isDown;
 
     //-------------------------------------------------------------------------
     // Sets the carrier to the designated power level
@@ -115,17 +115,17 @@ public:
         std::list<pros::Motor*>* motorList;
         std::list<pros::ADIDigitalOut*>* pistonList;
         PID* carrierPID;
-        double startAngle;
-        double minAngle;
-        double maxAngle;
-        double startHeight;
-        double minHeight;
-        double maxHeight;
-        double countsPerDegree;
-        double countsPerInch;
-        double armLength;
-        double downPosition;
-        double upPosition;
+        double* startAngle;
+        double* minAngle;
+        double* maxAngle;
+        double* startHeight;
+        double* minHeight;
+        double* maxHeight;
+        double* countsPerDegree;
+        double* countsPerInch;
+        double* armLength;
+        double* downPosition;
+        double* upPosition;
 
         //---------------------------------------------------------------------
         // Default constructor for the CarrierBuilder class

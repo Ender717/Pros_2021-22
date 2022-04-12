@@ -6,217 +6,341 @@
 // Constructor definitions ----------------------------------------------------
 Carrier::CarrierBuilder::CarrierBuilder()
 {
+    motorList = nullptr;
+    pistonList = nullptr;
     carrierPID = nullptr;
-    startAngle = 0.0;
-    minAngle = -1.0;
-    maxAngle = -1.0;
-    startHeight = 0.0;
-    minHeight = -1.0;
-    maxHeight = -1.0;
-    countsPerDegree = DBL_MIN;
-    countsPerInch = DBL_MIN;
-    armLength = DBL_MIN;
-    downPosition = -DBL_MAX;
-    upPosition = DBL_MAX;
+    startAngle = nullptr;
+    minAngle = nullptr;
+    maxAngle = nullptr;
+    startHeight = nullptr;
+    minHeight = nullptr;
+    maxHeight = nullptr;
+    countsPerDegree = nullptr;
+    countsPerInch = nullptr;
+    armLength = nullptr;
+    downPosition = nullptr;
+    upPosition = nullptr;
+}
+
+// Destructor definitions -----------------------------------------------------
+Carrier::CarrierBuilder::~CarrierBuilder()
+{
+    if (motorList != nullptr)
+    {
+        delete motorList;
+        motorList = nullptr;
+    }
+    if (pistonList != nullptr)
+    {
+        delete pistonList;
+        pistonList = nullptr;
+    }
+    carrierPID = nullptr;
+    if (startAngle != nullptr)
+    {
+        delete startAngle;
+        startAngle = nullptr;
+    }
+    if (minAngle != nullptr)
+    {
+        delete minAngle;
+        minAngle = nullptr;
+    }
+    if (maxAngle != nullptr)
+    {
+        delete maxAngle;
+        maxAngle = nullptr;
+    }
+    if (startHeight != nullptr)
+    {
+        delete startHeight;
+        startHeight = nullptr;
+    }
+    if (minHeight != nullptr)
+    {
+        delete minHeight;
+        minHeight = nullptr;
+    }
+    if (maxHeight != nullptr)
+    {
+        delete maxHeight;
+        maxHeight = nullptr;
+    }
+    if (countsPerDegree != nullptr)
+    {
+        delete countsPerDegree;
+        countsPerDegree = nullptr;
+    }
+    if (countsPerInch != nullptr)
+    {
+        delete countsPerInch;
+        countsPerInch = nullptr;
+    }
+    if (armLength != nullptr)
+    {
+        delete armLength;
+        armLength = nullptr;
+    }
+    if (downPosition != nullptr)
+    {
+        delete downPosition;
+        downPosition = nullptr;
+    }
+    if (upPosition != nullptr)
+    {
+        delete upPosition;
+        upPosition = nullptr;
+    }
 }
 
 // Public method definitions --------------------------------------------------
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMotor(pros::Motor* motor)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithMotor(pros::Motor* motor)
 {
-    motorList.push_back(motor);
-    return *this;
+    if (motorList == nullptr)
+        motorList = new std::list<pros::Motor*>();
+    motorList->push_back(motor);
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPiston(pros::ADIDigitalOut* piston)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithPiston(pros::ADIDigitalOut* piston)
 {
-    pistonList.push_back(piston);
-    return *this;
+    if (pistonList == nullptr)
+        pistonList = new std::list<pros::ADIDigitalOut*>();
+    pistonList->push_back(piston);
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithPID(PID* pid)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithPID(PID* pid)
 {
     carrierPID = pid;
-    return *this;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithStartAngle(double startAngle)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithStartAngle(double startAngle)
 {
-    this->startAngle = startAngle;
-    return *this;
+    if (this->startAngle == nullptr)
+        this->startAngle = new double;
+    *this->startAngle = startAngle;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMinAngle(double minAngle)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithMinAngle(double minAngle)
 {
-    this->minAngle = minAngle;
-    return *this;
+    if (this->minAngle == nullptr)
+        this->minAngle = new double;
+    *this->minAngle = minAngle;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMaxAngle(double maxAngle)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithMaxAngle(double maxAngle)
 {
-    this->maxAngle = maxAngle;
-    return *this;
+    if (this->maxAngle == nullptr)
+        this->maxAngle = new double;
+    *this->maxAngle = maxAngle;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithStartHeight(double startHeight)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithStartHeight(double startHeight)
 {
-    this->startHeight = startHeight;
-    return *this;
+    if (this->startHeight == nullptr)
+        this->startHeight = new double;
+    *this->startHeight = startHeight;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMinHeight(double minHeight)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithMinHeight(double minHeight)
 {
-    this->minHeight = minHeight;
-    return *this;
+    if (this->minHeight == nullptr)
+        this->minHeight = new double;
+    *this->minHeight = minHeight;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithMaxHeight(double maxHeight)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithMaxHeight(double maxHeight)
 {
-    this->maxHeight = maxHeight;
-    return *this;
+    if (this->maxHeight == nullptr)
+        this->maxHeight = new double;
+    *this->maxHeight = maxHeight;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithCountsPerDegree(double countsPerDegree)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithCountsPerDegree(double countsPerDegree)
 {
-    this->countsPerDegree = countsPerDegree;
-    return *this;
+    if (this->countsPerDegree == nullptr)
+        this->countsPerDegree = new double;
+    *this->countsPerDegree = countsPerDegree;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithCountsPerInch(double countsPerInch)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithCountsPerInch(double countsPerInch)
 {
-    this->countsPerInch = countsPerInch;
-    return *this;
+    if (this->countsPerInch == nullptr)
+        this->countsPerInch = new double;
+    *this->countsPerInch = countsPerInch;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithArmLength(double armLength)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithArmLength(double armLength)
 {
-    this->armLength = armLength;
-    return *this;
+    if (this->armLength == nullptr)
+        this->armLength = new double;
+    *this->armLength = armLength;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithDownPosition(double downPosition)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithDownPosition(double downPosition)
 {
-    this->downPosition = downPosition;
-    return *this;
+    if (this->downPosition == nullptr)
+        this->downPosition = new double;
+    *this->downPosition = downPosition;
+    return this;
 }
 
-Carrier::CarrierBuilder Carrier::CarrierBuilder::WithUpPosition(double upPosition)
+Carrier::CarrierBuilder* Carrier::CarrierBuilder::WithUpPosition(double upPosition)
 {
-    this->upPosition = upPosition;
-    return *this;
+    if (this->upPosition == nullptr)
+        this->upPosition = new double;
+    *this->upPosition = upPosition;
+    return this;
 }
 
-Carrier Carrier::CarrierBuilder::Build()
+Carrier* Carrier::CarrierBuilder::Build()
 {
-    return Carrier(this);
+    return new Carrier(this);
 }
 
 // CARRIER
 
 // Constructor definitions ----------------------------------------------------
-Carrier::Carrier()
-{
-    PID::PIDBuilder builder;
-    *carrierPID = builder.WithKp(5.0).WithKi(0.3).WithKd(0.25).WithIntegralLimit(70.0).WithStartTarget(140.0).Build();
-
-    startAngle = 0.0;
-    startHeight = 0.0;
-    countsPerDegree = 10.0;
-    countsPerInch = 10.0;
-    armLength = 10.0;
-    minPosition = -DBL_MAX;
-    maxPosition = DBL_MAX;
-}
-
 Carrier::Carrier(CarrierBuilder* builder)
 {
+    // Initialize the pointers
+    motorList = new std::list<pros::Motor*>();
+    pistonList = new std::list<pros::ADIDigitalOut*>();
+    startAngle = new double;
+    startHeight = new double;
+    countsPerDegree = new double;
+    countsPerInch = new double;
+    armLength = new double;
+    downPosition = new double;
+    upPosition = new double;
+
     // Set the motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->motorList.begin(); 
-         iterator != builder->motorList.end(); iterator++)
-        this->motorList.push_back(*iterator);
+    for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
+         iterator != builder->motorList->end(); iterator++)
+        this->motorList->push_back(*iterator);
     
-    // Set the motors
-    for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList.begin(); 
-         iterator != builder->pistonList.end(); iterator++)
-        this->pistonList.push_back(*iterator);
+    // Set the pistons
+    for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList->begin(); 
+         iterator != builder->pistonList->end(); iterator++)
+        this->pistonList->push_back(*iterator);
 
     // Set the direct transfer variables
     this->carrierPID = builder->carrierPID;
-    this->startAngle = builder.startAngle;
-    this->startHeight = builder.startHeight;
-    this->countsPerDegree = builder.countsPerDegree;
-    this->countsPerInch = builder.countsPerInch;
-    this->armLength = builder.armLength;
-    this->downPosition = builder.downPosition;
-    this->upPosition = builder.upPosition;
+
+    if (builder->startAngle != nullptr)
+        *this->startAngle = *builder->startAngle;
+    else
+        *this->startAngle = 0.0;
+
+    if (builder->startHeight != nullptr)
+        *this->startHeight = *builder->startHeight;
+    else
+        *this->startHeight = 0.0;
+
+    if (builder->countsPerDegree != nullptr)
+        *this->countsPerDegree = *builder->countsPerDegree;
+    else
+        *this->countsPerDegree = DBL_MIN;
+
+    if (builder->countsPerInch != nullptr)
+        *this->countsPerInch = *builder->countsPerInch;
+    else
+        *this->countsPerInch = DBL_MIN;
+
+    if (builder->armLength != nullptr)
+        *this->armLength = *builder->armLength;
+    else
+        *this->armLength = DBL_MIN;
+    
+    if (builder->downPosition != nullptr)
+        *this->downPosition = *builder->downPosition;
+    else
+        *this->downPosition = -DBL_MAX;
+    
+    if (builder->upPosition != nullptr)
+        *this->upPosition = *builder->upPosition;
+    else
+        *this->upPosition = DBL_MAX;
 
     // Set the minimum position
-    if (builder.minAngle != -1.0)
-        minPosition = AngleToPosition(builder.minAngle);
-    else if (builder.minHeight != -1.0)
-        minPosition = HeightToPosition(builder.minHeight);
+    if (builder->minAngle != nullptr)
+        *minPosition = AngleToPosition(*builder->minAngle);
+    else if (builder->minHeight != nullptr)
+        *minPosition = HeightToPosition(*builder->minHeight);
     else
-        minPosition = -DBL_MAX;
+        *minPosition = -DBL_MAX;
 
     // Set the maximum position
-    if (builder.maxAngle != -1.0)
-        maxPosition = AngleToPosition(builder.maxAngle);
-    else if (builder.maxHeight != -1.0)
-        maxPosition = HeightToPosition(builder.maxHeight);
+    if (builder->maxAngle != nullptr)
+        *maxPosition = AngleToPosition(*builder->maxAngle);
+    else if (builder->maxHeight != nullptr)
+        *maxPosition = HeightToPosition(*builder->maxHeight);
     else
-        maxPosition = DBL_MAX;
+        *maxPosition = DBL_MAX;
 }
 
 // Private method definitions -------------------------------------------------
 void Carrier::SetCarrier(double power)
 {
-    for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
-         iterator != motorList.end(); iterator++)
-        iterator->move(power);
+    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+         iterator != motorList->end(); iterator++)
+        (*iterator)->move(power);
 }
 
 double Carrier::GetPosition()
 {
-    if (!motorList.empty())
-        return motorList.front().get_position();
+    if (!motorList->empty())
+        return motorList->front()->get_position();
     else
         return 0.0;
 }
 
 double Carrier::AngleToPosition(double angle)
 {
-    double position = (angle * countsPerDegree) - (startAngle * countsPerDegree);
+    double position = (angle * *countsPerDegree) - (*startAngle * *countsPerDegree);
     return position;
 }
 
 double Carrier::HeightToPosition(double height)
 {
-    double position = (height * countsPerInch) - (startHeight * countsPerInch);
-    position += armLength * sin(GetAngle());
+    double position = (height * *countsPerInch) - (*startHeight * *countsPerInch);
+    position += *armLength * sin(GetAngle());
     return position;
 }
 
 bool Carrier::AtBottom()
 {
-    return GetPosition() <= minPosition;
+    return GetPosition() <= *minPosition;
 }
 
 bool Carrier::AtTop()
 {
-    return GetPosition() >= maxPosition;
+    return GetPosition() >= *maxPosition;
 }
 
 // Public method definitions --------------------------------------------------
 void Carrier::Initialize()
 {
     // Set the positions to 0
-    for (std::list<pros::Motor>::iterator iterator = motorList.begin(); 
-        iterator != motorList.end(); iterator++)
+    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+        iterator != motorList->end(); iterator++)
     {
-        iterator->tare_position();
-        iterator->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+        (*iterator)->tare_position();
+        (*iterator)->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     }
 
-    carrierPID.SetTargetValue(0.0);
+    carrierPID->SetTargetValue(0.0);
 }
 
 void Carrier::Raise()
@@ -226,7 +350,7 @@ void Carrier::Raise()
     else
         SetCarrier(0.0);
 
-    carrierPID.SetTargetValue(GetPosition());
+    carrierPID->SetTargetValue(GetPosition());
 }
 
 void Carrier::Lower()
@@ -236,15 +360,15 @@ void Carrier::Lower()
     else
         SetCarrier(0.0);
 
-    carrierPID.SetTargetValue(GetPosition());
+    carrierPID->SetTargetValue(GetPosition());
 }
 
 void Carrier::HoldPosition()
 {
-    if (motorList.size() > 0)
+    if (motorList->size() > 0)
     {
         if(!AtBottom() && !AtTop())
-            SetCarrier(carrierPID.GetControlValue(GetPosition()));
+            SetCarrier(carrierPID->GetControlValue(GetPosition()));
         else
             SetCarrier(0.0);
     }
@@ -253,49 +377,49 @@ void Carrier::HoldPosition()
 void Carrier::SetAngle(double targetAngle)
 {
     double targetPosition = AngleToPosition(targetAngle);
-    carrierPID.SetTargetValue(targetPosition);
+    carrierPID->SetTargetValue(targetPosition);
 }
 
 void Carrier::SetHeight(double targetHeight)
 {
     double targetPosition = HeightToPosition(targetHeight);
-    carrierPID.SetTargetValue(targetPosition);
+    carrierPID->SetTargetValue(targetPosition);
 }
 
 double Carrier::GetAngle()
 {
-    double angle = startAngle;
-    if(countsPerDegree > 0.1)
-        angle += GetPosition() / countsPerDegree;
+    double angle = *startAngle;
+    if(*countsPerDegree > 0.1)
+        angle += GetPosition() / *countsPerDegree;
     return angle;
 }
 
 double Carrier::GetHeight()
 {
-    double height = startHeight + (armLength * sin(GetAngle()));
-    if(countsPerInch > 0.1)
-        height += GetPosition() / countsPerInch;
+    double height = *startHeight + (*armLength * sin(GetAngle()));
+    if(*countsPerInch > 0.1)
+        height += GetPosition() / *countsPerInch;
     return height;
 }
 
 void Carrier::SetDown()
 {
-    carrierPID.SetTargetValue(downPosition);
-    for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
-        iterator != pistonList.end(); iterator++)
+    carrierPID->SetTargetValue(*downPosition);
+    for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
+        iterator != pistonList->end(); iterator++)
     {
-        iterator->set_value(true);
+        (*iterator)->set_value(true);
     }
-    isDown = true;
+    *isDown = true;
 }
 
 void Carrier::SetUp()
 {
-    carrierPID.SetTargetValue(upPosition);
-    for (std::list<pros::ADIDigitalOut>::iterator iterator = pistonList.begin(); 
-        iterator != pistonList.end(); iterator++)
+    carrierPID->SetTargetValue(*upPosition);
+    for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
+        iterator != pistonList->end(); iterator++)
     {
-        iterator->set_value(false);
+        (*iterator)->set_value(false);
     }
     isDown = false;
 }
