@@ -35,9 +35,11 @@ void Robot::CreateBlueRobot()
 	delete carrierBuilder;
 	carrierBuilder = nullptr;
 	
-	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT)).
+	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
+	claw = clawBuilder->WithPiston(new pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT))->
 					   Build();
+	delete clawBuilder;
+	clawBuilder = nullptr;
 
 	Drive::DriveBuilder driveBuilder;
 	drive = driveBuilder.WithLeftMotor(pros::Motor(BlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -114,10 +116,12 @@ void Robot::CreateOrangeRobot()
 	delete carrierBuilder;
 	carrierBuilder = nullptr;
 	
-	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithPiston(pros::ADIDigitalOut(OrangeConfig::CLAW_1_PORT)).
-					   WithPiston(pros::ADIDigitalOut(OrangeConfig::CLAW_2_PORT)).
+	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
+	claw = clawBuilder->WithPiston(new pros::ADIDigitalOut(OrangeConfig::CLAW_1_PORT))->
+					   WithPiston(new pros::ADIDigitalOut(OrangeConfig::CLAW_2_PORT))->
 					   Build();
+	delete clawBuilder;
+	clawBuilder = nullptr;
 
 	Drive::DriveBuilder driveBuilder;
 	drive = driveBuilder.WithLeftMotor(pros::Motor(OrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -198,13 +202,15 @@ void Robot::CreateOldBlueRobot()
 							 WithUpPosition(OldBlueConfig::CARRIER_UP_POSITION)->
 							 Build();
 	
-	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(pros::Motor(OldBlueConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false,
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*clawPID).
-					   WithOpenPosition(OldBlueConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(OldBlueConfig::CLAW_CLOSED_POSITION).
+	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
+	claw = clawBuilder->WithMotor(new pros::Motor(OldBlueConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, false,
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(clawPID)->
+					   WithOpenPosition(OldBlueConfig::CLAW_OPEN_POSITION)->
+					   WithClosedPosition(OldBlueConfig::CLAW_CLOSED_POSITION)->
 					   Build();
+	delete clawBuilder;
+	clawBuilder = nullptr;
 
 	Drive::DriveBuilder driveBuilder;
 	drive = driveBuilder.WithLeftMotor(pros::Motor(OldBlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -273,13 +279,15 @@ void Robot::CreateOldOrangeRobot()
 	delete carrierBuilder;
 	carrierBuilder = nullptr;
 
-	Claw::ClawBuilder clawBuilder;
-	claw = clawBuilder.WithMotor(pros::Motor(OldOrangeConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, 
-								false, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*clawPID).
-					   WithOpenPosition(OldOrangeConfig::CLAW_OPEN_POSITION).
-					   WithClosedPosition(OldOrangeConfig::CLAW_CLOSED_POSITION).
+	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
+	claw = clawBuilder->WithMotor(new pros::Motor(OldOrangeConfig::CLAW_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(clawPID)->
+					   WithOpenPosition(OldOrangeConfig::CLAW_OPEN_POSITION)->
+					   WithClosedPosition(OldOrangeConfig::CLAW_CLOSED_POSITION)->
 					   Build();
+	delete clawBuilder;
+	clawBuilder = nullptr;
 
 	Drive::DriveBuilder driveBuilder;
 	drive = driveBuilder.WithLeftMotor(pros::Motor(OldOrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
@@ -342,8 +350,8 @@ void Robot::UpdateCarrier(pros::Controller& master)
 void Robot::UpdateClaw(pros::Controller& master)
 {
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
-		claw.TogglePosition();
-	claw.HoldPosition();
+		claw->TogglePosition();
+	claw->HoldPosition();
 
 	/*
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
@@ -404,7 +412,7 @@ void Robot::UpdateLift(pros::Controller& master)
 void Robot::Initialize()
 {
 	carrier->Initialize();
-	claw.Initialize();
+	claw->Initialize();
 	drive.Initialize();
 	intake.Initialize();
 	lift.Initialize();

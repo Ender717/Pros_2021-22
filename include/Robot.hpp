@@ -93,7 +93,7 @@ public:
     Drive drive;
 	Carrier* carrier;
 	Lift lift;
-	Claw claw;
+	Claw* claw;
 	Intake intake;
 
     //-------------------------------------------------------------------------
