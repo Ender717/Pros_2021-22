@@ -44,7 +44,7 @@ Intake::Intake(IntakeBuilder* builder)
 {
     // Create the pointers
     motorList = new std::list<pros::Motor*>();
-    intakeSpeed = nullptr;
+    intakeSpeed = new double;
 
     // Set the motors
     for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 

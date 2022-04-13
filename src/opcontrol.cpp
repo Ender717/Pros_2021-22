@@ -17,13 +17,14 @@ void opcontrol()
 {
 	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	Robot robot;
+	Robot* robot = new Robot();
 
 	pros::screen::erase();
 	
 	while(true)
 	{
-		robot.RobotControl(master);
+		robot->RobotControl(master);
 		Menu::DrawPosition(robot);
 	}
+	delete robot;
 }

@@ -38,7 +38,7 @@ namespace Menu
     // robot: The robot
     // v1: Created the method - Nathan S, 2-14-22
     //-------------------------------------------------------------------------
-    extern void DrawPosition(const Robot& robot);
+    extern void DrawPosition(Robot* robot);
 }
 
 #endif

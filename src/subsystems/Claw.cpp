@@ -116,6 +116,15 @@ Claw* Claw::ClawBuilder::Build()
 // Constructor definitions ----------------------------------------------------
 Claw::Claw(ClawBuilder* builder)
 {
+    // Create the pointers
+    motorList = new std::list<pros::Motor*>();
+    pistonList = new std::list<pros::ADIDigitalOut*>();
+    minPosition = new double;
+    maxPosition = new double;
+    openPosition = new double;
+    closedPosition = new double;
+    isOpen = new bool;
+
     // Set the motors
     for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
          iterator != builder->motorList->end(); iterator++)

@@ -4,9 +4,44 @@
 // Constructor definitions ----------------------------------------------------
 Robot::Robot()
 {
+	carrier = nullptr;
+	claw = nullptr;
+	drive = nullptr;
+	intake = nullptr;
+	lift = nullptr;
+
 	//CreateOldOrangeRobot();
 	CreateOldBlueRobot();
 	//CreateBlueRobot();
+}
+
+Robot::~Robot()
+{
+	if (carrier != nullptr)
+	{
+		delete carrier;
+		carrier = nullptr;
+	}
+	if (claw != nullptr)
+	{
+		delete claw;
+		claw = nullptr;
+	}
+	if (drive != nullptr)
+	{
+		delete drive;
+		drive = nullptr;
+	}
+	if (intake != nullptr)
+	{
+		delete intake;
+		intake = nullptr;
+	}
+	if (lift != nullptr)
+	{
+		delete lift;
+		lift = nullptr;
+	}
 }
 
 // Private method definitions -------------------------------------------------
@@ -77,21 +112,23 @@ void Robot::CreateBlueRobot()
 	delete intakeBuilder;
 	intakeBuilder = nullptr;
 
-	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(BlueConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(BlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*liftPID).
-					   WithStartAngle(BlueConfig::LIFT_START_POSITION).
-					   //WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION).
-					   //WithMaxAngle(BlueConfig::LIFT_TOP_POSITION).
-					   WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE).
+	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
+	lift = liftBuilder->WithMotor(new pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(BlueConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(liftPID)->
+					   WithStartAngle(BlueConfig::LIFT_START_POSITION)->
+					   //WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION)->
+					   //WithMaxAngle(BlueConfig::LIFT_TOP_POSITION)->
+					   WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE)->
 					   Build();
+	delete liftBuilder;
+	liftBuilder = nullptr;
 }
 
 void Robot::CreateOrangeRobot()
@@ -163,21 +200,23 @@ void Robot::CreateOrangeRobot()
 	delete intakeBuilder;
 	intakeBuilder = nullptr;
 
-	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(OrangeConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(OrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
-								E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*liftPID).
-					   WithStartAngle(OrangeConfig::LIFT_START_POSITION).
-					   WithMinAngle(OrangeConfig::LIFT_BOTTOM_POSITION).
-					   WithMaxAngle(OrangeConfig::LIFT_TOP_POSITION).
-					   WithCountsPerDegree(OrangeConfig::LIFT_COUNTS_PER_DEGREE).
+	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
+	lift = liftBuilder->WithMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+								E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(liftPID)->
+					   WithStartAngle(OrangeConfig::LIFT_START_POSITION)->
+					   WithMinAngle(OrangeConfig::LIFT_BOTTOM_POSITION)->
+					   WithMaxAngle(OrangeConfig::LIFT_TOP_POSITION)->
+					   WithCountsPerDegree(OrangeConfig::LIFT_COUNTS_PER_DEGREE)->
 					   Build();
+	delete liftBuilder;
+	liftBuilder = nullptr;
 }
 
 void Robot::CreateOldBlueRobot()
@@ -254,17 +293,19 @@ void Robot::CreateOldBlueRobot()
 	delete intakeBuilder;
 	intakeBuilder = nullptr;
 
-	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
-								false, E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
-								true, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*liftPID).
-					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION).
-					   WithMinAngle(OldBlueConfig::LIFT_BOTTOM_POSITION).
-					   WithMaxAngle(OldBlueConfig::LIFT_TOP_POSITION).
-					   WithCountsPerDegree(OldBlueConfig::LIFT_COUNTS_PER_DEGREE).
+	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
+	lift = liftBuilder->WithMotor(new pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								true, E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(liftPID)->
+					   WithStartAngle(OldBlueConfig::LIFT_START_POSITION)->
+					   WithMinAngle(OldBlueConfig::LIFT_BOTTOM_POSITION)->
+					   WithMaxAngle(OldBlueConfig::LIFT_TOP_POSITION)->
+					   WithCountsPerDegree(OldBlueConfig::LIFT_COUNTS_PER_DEGREE)->
 					   Build();
+	delete liftBuilder;
+	liftBuilder = nullptr;
 }
 
 void Robot::CreateOldOrangeRobot()
@@ -335,17 +376,19 @@ void Robot::CreateOldOrangeRobot()
 	delete intakeBuilder;
 	intakeBuilder = nullptr;
 
-	Lift::LiftBuilder liftBuilder;
-	lift = liftBuilder.WithMotor(pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
-								false, E_MOTOR_ENCODER_COUNTS)).
-					   WithMotor(pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
-								true, E_MOTOR_ENCODER_COUNTS)).
-					   WithPID(*liftPID).
-					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION).
-					   WithMinAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION).
-					   WithMaxAngle(OldOrangeConfig::LIFT_TOP_POSITION).
-					   WithCountsPerDegree(OldOrangeConfig::LIFT_COUNTS_PER_DEGREE).
+	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
+	lift = liftBuilder->WithMotor(new pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								false, E_MOTOR_ENCODER_COUNTS))->
+					   WithMotor(new pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+								true, E_MOTOR_ENCODER_COUNTS))->
+					   WithPID(liftPID)->
+					   WithStartAngle(OldOrangeConfig::LIFT_START_POSITION)->
+					   WithMinAngle(OldOrangeConfig::LIFT_BOTTOM_POSITION)->
+					   WithMaxAngle(OldOrangeConfig::LIFT_TOP_POSITION)->
+					   WithCountsPerDegree(OldOrangeConfig::LIFT_COUNTS_PER_DEGREE)->
 					   Build();
+	delete liftBuilder;
+	liftBuilder = nullptr;
 }
 
 void Robot::UpdateCarrier(pros::Controller& master)
@@ -419,11 +462,11 @@ void Robot::UpdateIntake(pros::Controller& master)
 void Robot::UpdateLift(pros::Controller& master)
 {
 	if(master.get_digital(E_CONTROLLER_DIGITAL_R1))
-		lift.Raise();
+		lift->Raise();
 	else if (master.get_digital(E_CONTROLLER_DIGITAL_R2))
-		lift.Lower();
+		lift->Lower();
 	else
-		lift.HoldPosition();
+		lift->HoldPosition();
 }
 
 // Public method definitions --------------------------------------------------
@@ -433,7 +476,7 @@ void Robot::Initialize()
 	claw->Initialize();
 	drive->Initialize();
 	intake->Initialize();
-	lift.Initialize();
+	lift->Initialize();
 }
 
 void Robot::RobotControl(pros::Controller& master)

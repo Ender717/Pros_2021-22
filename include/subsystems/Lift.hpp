@@ -29,15 +29,15 @@ private:
     // minPosition: The minimum position of the lift in encoder counts
     // maxPosition: The maximum position of the lift in encoder counts
     //-------------------------------------------------------------------------
-    std::list<pros::Motor> motorList;
-    PID liftPID;
-    double startAngle;
-    double startHeight;
-    double countsPerDegree;
-    double countsPerInch;
-    double armLength;
-    double minPosition;
-    double maxPosition;
+    std::list<pros::Motor*>* motorList;
+    PID* liftPID;
+    double* startAngle;
+    double* startHeight;
+    double* countsPerDegree;
+    double* countsPerInch;
+    double* armLength;
+    double* minPosition;
+    double* maxPosition;
 
     //-------------------------------------------------------------------------
     // Sets the lift to the designated power level
@@ -105,17 +105,17 @@ public:
         // countsPerInch: The number of encoder counts per inch
         // armLength: The length of the arm on the lift in inches
         //-------------------------------------------------------------------------
-        std::list<pros::Motor> motorList;
-        PID liftPID;
-        double startAngle;
-        double minAngle;
-        double maxAngle;
-        double startHeight;
-        double minHeight;
-        double maxHeight;
-        double countsPerDegree;
-        double countsPerInch;
-        double armLength;
+        std::list<pros::Motor*>* motorList;
+        PID* liftPID;
+        double* startAngle;
+        double* minAngle;
+        double* maxAngle;
+        double* startHeight;
+        double* minHeight;
+        double* maxHeight;
+        double* countsPerDegree;
+        double* countsPerInch;
+        double* armLength;
 
         //---------------------------------------------------------------------
         // Default constructor for the LiftBuilder class
@@ -124,12 +124,18 @@ public:
         LiftBuilder();
 
         //---------------------------------------------------------------------
+        // Default destructor for the LiftBuilder class
+        // v1: Created the destructor - Nathan S, 4-12-22
+        //---------------------------------------------------------------------
+        ~LiftBuilder();
+
+        //---------------------------------------------------------------------
         // Wither method to add a motor to the build
         // motor: The motor being added
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithMotor(pros::Motor motor);
+        LiftBuilder* WithMotor(pros::Motor* motor);
 
         //---------------------------------------------------------------------
         // Wither method to add a pid controller to the build
@@ -137,7 +143,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithPID(PID pid);
+        LiftBuilder* WithPID(PID* pid);
 
         //---------------------------------------------------------------------
         // Wither method to add a starting angle to the build
@@ -145,7 +151,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithStartAngle(double startAngle);
+        LiftBuilder* WithStartAngle(double startAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a minimum angle to the build
@@ -153,7 +159,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithMinAngle(double minAngle);
+        LiftBuilder* WithMinAngle(double minAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a maximum angle to the build
@@ -161,7 +167,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithMaxAngle(double maxAngle);
+        LiftBuilder* WithMaxAngle(double maxAngle);
 
         //---------------------------------------------------------------------
         // Wither method to add a starting height to the build
@@ -169,7 +175,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithStartHeight(double startHeight);
+        LiftBuilder* WithStartHeight(double startHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a minimum height to the build
@@ -177,7 +183,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithMinHeight(double minHeight);
+        LiftBuilder* WithMinHeight(double minHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a maximum height to the build
@@ -185,7 +191,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithMaxHeight(double maxHeight);
+        LiftBuilder* WithMaxHeight(double maxHeight);
 
         //---------------------------------------------------------------------
         // Wither method to add a number of counts per degree to the build
@@ -193,7 +199,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithCountsPerDegree(double countsPerDegree);
+        LiftBuilder* WithCountsPerDegree(double countsPerDegree);
 
         //---------------------------------------------------------------------
         // Wither method to add a number of counts per inch to the build
@@ -201,7 +207,7 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithCountsPerInch(double countsPerInch);
+        LiftBuilder* WithCountsPerInch(double countsPerInch);
 
         //---------------------------------------------------------------------
         // Wither method to add an arm length to the build
@@ -209,31 +215,28 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder WithArmLength(double armLength);
+        LiftBuilder* WithArmLength(double armLength);
 
         //---------------------------------------------------------------------
         // Builder method for the builder class
         // return: The lift
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        Lift Build();
+        Lift* Build();
     };
-
-    //-------------------------------------------------------------------------
-    // Default constructor for the Lift class
-    // angle: The angle the lift is starting at
-    // v1: Created the constructor - Nathan S, 1-30-22
-    // v2: Added an angle parameter - Nathan S, 2-14-22
-    // v3: Changed angle to builder - Nathan S, 3-9-22
-    //-------------------------------------------------------------------------
-    Lift();
 
     //-------------------------------------------------------------------------
     // Builder constructor for the Lift class
     // builder: The builder being used for construction
     // v1: Created the constructor - Nathan S, 3-9-22
     //-------------------------------------------------------------------------
-    Lift(LiftBuilder builder);
+    Lift(LiftBuilder* builder);
+
+    //-------------------------------------------------------------------------
+    // Default destructor for the Lift class
+    // v1: Created the destructor - Nathan S, 4-12-22
+    //-------------------------------------------------------------------------
+    ~Lift();
 
     //-------------------------------------------------------------------------
     // Initializes the lift
