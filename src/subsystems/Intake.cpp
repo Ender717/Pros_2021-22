@@ -47,9 +47,10 @@ Intake::Intake(IntakeBuilder* builder)
     intakeSpeed = new double;
 
     // Set the motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
-         iterator != builder->motorList->end(); iterator++)
-        this->motorList->push_back(*iterator);
+    if (builder->motorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
+            iterator != builder->motorList->end(); iterator++)
+            this->motorList->push_back(*iterator);
 
     // Set the PID controller
     this->intakePID = builder->intakePID;
@@ -118,7 +119,5 @@ void Intake::Stop()
 {
     for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
         iterator != motorList->end(); iterator++)
-    {
         (*iterator)->move(0.0);
-    }
 }

@@ -126,14 +126,16 @@ Claw::Claw(ClawBuilder* builder)
     isOpen = new bool;
 
     // Set the motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
-         iterator != builder->motorList->end(); iterator++)
-        this->motorList->push_back(*iterator);
+    if (builder->motorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
+            iterator != builder->motorList->end(); iterator++)
+            this->motorList->push_back(*iterator);
     
-    // Set the motors
-    for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList->begin(); 
-         iterator != builder->pistonList->end(); iterator++)
-        this->pistonList->push_back(*iterator);
+    // Set the pistons
+    if (builder->pistonList != nullptr)
+        for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList->begin(); 
+            iterator != builder->pistonList->end(); iterator++)
+            this->pistonList->push_back(*iterator);
 
     // Set the direct transfer variables
     this->clawPID = builder->clawPID;
@@ -255,8 +257,8 @@ void Claw::Initialize()
         (*iterator)->tare_position();
         (*iterator)->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     }
-
-    clawPID->SetTargetValue(0.0);
+    if (clawPID != nullptr)
+        clawPID->SetTargetValue(0.0);
 }
 
 void Claw::Open()
@@ -266,7 +268,8 @@ void Claw::Open()
     else
         SetClaw(0.0);
 
-    clawPID->SetTargetValue(GetPosition());
+    if (clawPID != nullptr)
+        clawPID->SetTargetValue(GetPosition());
 }
 
 void Claw::Close()
@@ -276,42 +279,42 @@ void Claw::Close()
     else
         SetClaw(0.0);
 
-    clawPID->SetTargetValue(GetPosition());
+    if (clawPID != nullptr)
+        clawPID->SetTargetValue(GetPosition());
 }
 
 void Claw::HoldPosition()
 {
     if(!IsOpened() && !IsClosed())
-        SetClaw(clawPID->GetControlValue(GetPosition()));
+        if (clawPID != nullptr)
+            SetClaw(clawPID->GetControlValue(GetPosition()));
     else
         SetClaw(0.0);
 }
 
 void Claw::SetOpen()
 {
-    clawPID->SetTargetValue(*openPosition);
+    if (clawPID != nullptr)
+        clawPID->SetTargetValue(*openPosition);
     for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
         iterator != pistonList->end(); iterator++)
-    {
         (*iterator)->set_value(true);
-    }
     *isOpen = true;
 }
 
 void Claw::SetClosed()
 {
-    clawPID->SetTargetValue(*closedPosition);
+    if (clawPID != nullptr)
+        clawPID->SetTargetValue(*closedPosition);
     for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
         iterator != pistonList->end(); iterator++)
-    {
         (*iterator)->set_value(false);
-    }
-    isOpen = false;
+    *isOpen = false;
 }
 
 void Claw::TogglePosition()
 {
-    if (isOpen)
+    if (*isOpen)
         SetClosed();
     else
         SetOpen();

@@ -136,14 +136,16 @@ Drive::Drive(DriveBuilder* builder)
     wheelSize = new double;
 
     // Set the left motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->leftMotorList->begin(); 
-         iterator != builder->leftMotorList->end(); iterator++)
-        this->leftMotorList->push_back(*iterator);
+    if (builder->leftMotorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->leftMotorList->begin(); 
+            iterator != builder->leftMotorList->end(); iterator++)
+            this->leftMotorList->push_back(*iterator);
 
     // Set the right motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->rightMotorList->begin(); 
-         iterator != builder->rightMotorList->end(); iterator++)
-        this->rightMotorList->push_back(*iterator);
+    if (builder->rightMotorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->rightMotorList->begin(); 
+            iterator != builder->rightMotorList->end(); iterator++)
+            this->rightMotorList->push_back(*iterator);
 
     // Set the tracking sensors
     this->leftTrackingSensor = builder->leftTrackingSensor;
@@ -250,9 +252,11 @@ void Drive::Initialize()
     }
 
     // Initialize the tracking wheels
+    /*
     leftTrackingSensor->set_position(0.0);
     rightTrackingSensor->set_position(0.0);
     strafeTrackingSensor->set_position(0.0);
+    */
 }
 
 void Drive::SetDrive(double leftPower, double rightPower)

@@ -11,8 +11,8 @@ Robot::Robot()
 	lift = nullptr;
 
 	//CreateOldOrangeRobot();
-	CreateOldBlueRobot();
-	//CreateBlueRobot();
+	//CreateOldBlueRobot();
+	CreateBlueRobot();
 }
 
 Robot::~Robot()
@@ -69,7 +69,7 @@ void Robot::CreateBlueRobot()
 							 Build();
 	delete carrierBuilder;
 	carrierBuilder = nullptr;
-	
+
 	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
 	claw = clawBuilder->WithPiston(new pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT))->
 					   Build();
@@ -104,7 +104,7 @@ void Robot::CreateBlueRobot()
 						 Build();
 	delete driveBuilder;
 	driveBuilder = nullptr;
-	
+
 	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
 	intake = intakeBuilder->WithMotor(new pros::Motor(BlueConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
 								E_MOTOR_ENCODER_COUNTS))->
@@ -446,7 +446,7 @@ void Robot::UpdateDrive(pros::Controller& master)
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);
-	drive->UpdatePosition();
+	//drive->UpdatePosition();
 }
 
 void Robot::UpdateIntake(pros::Controller& master)

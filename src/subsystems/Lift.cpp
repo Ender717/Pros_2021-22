@@ -183,9 +183,10 @@ Lift::Lift(LiftBuilder* builder)
     maxPosition = new double;
 
     // Set the motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
-         iterator != builder->motorList->end(); iterator++)
-        this->motorList->push_back(*iterator);
+    if (builder->motorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
+            iterator != builder->motorList->end(); iterator++)
+            this->motorList->push_back(*iterator);
 
     // Set the PID controller
     this->liftPID = builder->liftPID;
@@ -346,7 +347,7 @@ void Lift::Initialize()
 void Lift::Raise()
 {
     if(!AtTop())
-        SetLift(127.0);
+        SetLift(60.0);
     else
         SetLift(0.0);
 
@@ -356,7 +357,7 @@ void Lift::Raise()
 void Lift::Lower()
 {
     if(!AtBottom())
-        SetLift(-127.0);
+        SetLift(-60.0);
     else
         SetLift(0.0);
 

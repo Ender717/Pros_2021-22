@@ -18,6 +18,7 @@ void opcontrol()
 	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	Robot* robot = new Robot();
+	robot->Initialize();
 
 	pros::screen::erase();
 	
@@ -26,5 +27,6 @@ void opcontrol()
 		robot->RobotControl(master);
 		Menu::DrawPosition(robot);
 	}
+
 	delete robot;
 }

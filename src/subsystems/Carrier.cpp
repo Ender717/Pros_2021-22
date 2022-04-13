@@ -222,18 +222,23 @@ Carrier::Carrier(CarrierBuilder* builder)
     countsPerDegree = new double;
     countsPerInch = new double;
     armLength = new double;
+    minPosition = new double;
+    maxPosition = new double;
     downPosition = new double;
     upPosition = new double;
+    isDown = new bool;
 
     // Set the motors
-    for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
-         iterator != builder->motorList->end(); iterator++)
-        this->motorList->push_back(*iterator);
+    if (builder->motorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
+            iterator != builder->motorList->end(); iterator++)
+            this->motorList->push_back(*iterator);
     
     // Set the pistons
-    for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList->begin(); 
-         iterator != builder->pistonList->end(); iterator++)
-        this->pistonList->push_back(*iterator);
+    if (builder->pistonList != nullptr)
+        for (std::list<pros::ADIDigitalOut*>::iterator iterator = builder->pistonList->begin(); 
+            iterator != builder->pistonList->end(); iterator++)
+            this->pistonList->push_back(*iterator);
 
     // Set the direct transfer variables
     this->carrierPID = builder->carrierPID;
@@ -272,7 +277,7 @@ Carrier::Carrier(CarrierBuilder* builder)
         *this->upPosition = *builder->upPosition;
     else
         *this->upPosition = DBL_MAX;
-
+    
     // Set the minimum position
     if (builder->minAngle != nullptr)
         *minPosition = AngleToPosition(*builder->minAngle);
@@ -288,6 +293,9 @@ Carrier::Carrier(CarrierBuilder* builder)
         *maxPosition = HeightToPosition(*builder->maxHeight);
     else
         *maxPosition = DBL_MAX;
+
+   // Set the starting position
+   *isDown = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -425,7 +433,8 @@ void Carrier::Initialize()
         (*iterator)->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     }
 
-    carrierPID->SetTargetValue(0.0);
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(0.0);
 }
 
 void Carrier::Raise()
@@ -435,7 +444,8 @@ void Carrier::Raise()
     else
         SetCarrier(0.0);
 
-    carrierPID->SetTargetValue(GetPosition());
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(GetPosition());
 }
 
 void Carrier::Lower()
@@ -445,7 +455,8 @@ void Carrier::Lower()
     else
         SetCarrier(0.0);
 
-    carrierPID->SetTargetValue(GetPosition());
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(GetPosition());
 }
 
 void Carrier::HoldPosition()
@@ -453,7 +464,8 @@ void Carrier::HoldPosition()
     if (motorList->size() > 0)
     {
         if(!AtBottom() && !AtTop())
-            SetCarrier(carrierPID->GetControlValue(GetPosition()));
+            if (carrierPID != nullptr)
+                SetCarrier(carrierPID->GetControlValue(GetPosition()));
         else
             SetCarrier(0.0);
     }
@@ -462,13 +474,15 @@ void Carrier::HoldPosition()
 void Carrier::SetAngle(double targetAngle)
 {
     double targetPosition = AngleToPosition(targetAngle);
-    carrierPID->SetTargetValue(targetPosition);
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(targetPosition);
 }
 
 void Carrier::SetHeight(double targetHeight)
 {
     double targetPosition = HeightToPosition(targetHeight);
-    carrierPID->SetTargetValue(targetPosition);
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(targetPosition);
 }
 
 double Carrier::GetAngle()
@@ -489,23 +503,21 @@ double Carrier::GetHeight()
 
 void Carrier::SetDown()
 {
-    carrierPID->SetTargetValue(*downPosition);
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(*downPosition);
     for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
         iterator != pistonList->end(); iterator++)
-    {
         (*iterator)->set_value(true);
-    }
     *isDown = true;
 }
 
 void Carrier::SetUp()
 {
-    carrierPID->SetTargetValue(*upPosition);
+    if (carrierPID != nullptr)
+        carrierPID->SetTargetValue(*upPosition);
     for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
         iterator != pistonList->end(); iterator++)
-    {
         (*iterator)->set_value(false);
-    }
     *isDown = false;
 }
 

@@ -18,8 +18,8 @@ void on_center_button() {
  */
 void initialize() 
 {
-	Robot* robot = new Robot();
-	robot->Initialize();
+	//Robot* robot = new Robot();
+	//robot->Initialize();
 }
 
 /**
