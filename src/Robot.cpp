@@ -1,14 +1,74 @@
 // Included libraries
 #include "Robot.hpp"
 
+// ROBOTBUILDER CLASS
+
 // Constructor definitions ----------------------------------------------------
-Robot::Robot()
+Robot::RobotBuilder::RobotBuilder()
 {
 	carrier = nullptr;
 	claw = nullptr;
 	drive = nullptr;
 	intake = nullptr;
 	lift = nullptr;
+}
+
+// Destructor definitions -----------------------------------------------------
+Robot::RobotBuilder::~RobotBuilder()
+{
+	carrier = nullptr;
+	claw = nullptr;
+	drive = nullptr;
+	intake = nullptr;
+	lift = nullptr;
+}
+
+// Public method definitions --------------------------------------------------
+Robot::RobotBuilder* Robot::RobotBuilder::WithCarrier(Carrier* carrier)
+{
+	this->carrier = carrier;
+	return this;
+}
+
+Robot::RobotBuilder* Robot::RobotBuilder::WithClaw(Claw* claw)
+{
+	this->claw = claw;
+	return this;
+}
+
+Robot::RobotBuilder* Robot::RobotBuilder::WithDrive(Drive* drive)
+{
+	this->drive = drive;
+	return this;
+}
+
+Robot::RobotBuilder* Robot::RobotBuilder::WithIntake(Intake* intake)
+{
+	this->intake = intake;
+	return this;
+}
+
+Robot::RobotBuilder* Robot::RobotBuilder::WithLift(Lift* lift)
+{
+	this->lift = lift;
+	return this;
+}
+
+Robot* Robot::RobotBuilder::Build()
+{
+	return new Robot(this);
+}
+
+// ROBOT CLASS
+
+// Constructor definitions ----------------------------------------------------
+Robot::Robot(RobotBuilder* builder)
+{
+	this->carrier = builder->carrier;
+	this->claw = builder->claw;
+	this->drive = builder->drive;
+	this->intake = builder->intake;
+	this->lift = builder->lift;
 
 	//CreateOldOrangeRobot();
 	//CreateOldBlueRobot();
@@ -52,7 +112,7 @@ void Robot::CreateBlueRobot()
 	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
     PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
     PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
-	PID* liftPID = pidBuilder->WithKp(1.0)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(70.0)->WithStartTarget(140.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(1.5)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(90.0)->WithStartTarget(140.0)->Build();
 	delete pidBuilder;
 	pidBuilder = nullptr;
 	

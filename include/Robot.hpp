@@ -97,10 +97,92 @@ public:
 	Intake* intake;
 
     //-------------------------------------------------------------------------
-    // Default constructor for the robot class
-    // v1: Created the constructor - Nathan S, 2-8-22
+    // This class builds a robot
+    // v1: Created the class - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    Robot();
+    class RobotBuilder
+    {
+    public:
+        //---------------------------------------------------------------------
+        // Subsystems
+        // carrier: The carrier subsystems
+        // claw: The claw subsystem
+        // drive: The drive subsystem
+        // intake: The intake subsystem
+        // lift: The lift subsystem
+        //---------------------------------------------------------------------
+        Carrier* carrier;
+        Claw* claw;
+        Drive* drive;
+        Intake* intake;
+        Lift* lift;
+
+        //---------------------------------------------------------------------
+        // Default constructor for the RobotBuilder class
+        // v1: Created the constructor - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder();
+
+        //---------------------------------------------------------------------
+        // Default destructor for the RobotBuilder class
+        // v1: Created the destructor - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        ~RobotBuilder();
+
+        //---------------------------------------------------------------------
+        // Wither method to add a carrier to the build
+        // carrier: The carrier being added to the build
+        // return: The builder for build chaining
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder* WithCarrier(Carrier* carrier);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a claw to the build
+        // claw: The claw being added to the build
+        // return: The builder for build chaining
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder* WithClaw(Claw* claw);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a drive to the build
+        // drive: The drive being added to the build
+        // return: The builder for build chaining
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder* WithDrive(Drive* drive);
+
+        //---------------------------------------------------------------------
+        // Wither method to add an intake to the build
+        // intake: The intake being added to the build
+        // return: The builder for build chaining
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder* WithIntake(Intake* intake);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a lift to the build
+        // lift: The lift being added to the build
+        // return: The builder for build chaining
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        RobotBuilder* WithLift(Lift* lift);
+
+        //---------------------------------------------------------------------
+        // Build method to build the robot
+        // return: The robot which was built
+        // v1: Created the method - Nathan S, 4-13-22
+        //---------------------------------------------------------------------
+        Robot* Build();
+    };
+
+    //-------------------------------------------------------------------------
+    // Builder constructor for the robot class
+    // builder: The builder being used for construction
+    // v1: Created the constructor - Nathan S, 4-13-22
+    //-------------------------------------------------------------------------
+    Robot(RobotBuilder* builder);
 
     //-------------------------------------------------------------------------
     // Default destructor for the Robot class
