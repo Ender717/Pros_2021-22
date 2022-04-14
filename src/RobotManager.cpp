@@ -1,6 +1,12 @@
 // Included libraries
 #include "RobotManager.hpp"
 
+// Constructor definitions -----------------------------------------------------
+RobotManager::RobotManager()
+{
+    robot = nullptr;
+}
+
 // Private method definitions --------------------------------------------------
 void RobotManager::CreateBlueRobot()
 {
@@ -103,7 +109,7 @@ void RobotManager::CreateBlueRobot()
 
     // Create the robot
     Robot::RobotBuilder* robotBuilder = new Robot::RobotBuilder();
-    robot = robotBuilder->WithCarrier(carrier)->
+    Robot* robot = robotBuilder->WithCarrier(carrier)->
         WithClaw(claw)->
         WithDrive(drive)->
         WithIntake(intake)->
@@ -476,11 +482,6 @@ void RobotManager::CreateOldOrangeRobot()
 }
 
 // Public method definitions --------------------------------------------------
-void RobotManager::Intialize()
-{
-    robot = nullptr;
-}
-
 void RobotManager::CreateRobot(RobotConfigs config)
 {
     switch (config)

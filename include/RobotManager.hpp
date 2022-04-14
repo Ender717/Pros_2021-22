@@ -33,52 +33,52 @@ private:
     // Attributes:
     // robot: The robot being stored in the manager
     //-------------------------------------------------------------------------
-    static Robot* robot;
+    Robot* robot;
 
     //-------------------------------------------------------------------------
     // Creates a pre-configured blue robot
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void CreateBlueRobot();
+    void CreateBlueRobot();
 
     //-------------------------------------------------------------------------
     // Creates a pre-configured orange robot
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void CreateOrangeRobot();
+    void CreateOrangeRobot();
 
     //-------------------------------------------------------------------------
     // Creates a pre-configured old blue robot
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void CreateOldBlueRobot();
+    void CreateOldBlueRobot();
 
     //-------------------------------------------------------------------------
     // Creates a pre-configured old orange robot
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void CreateOldOrangeRobot();
+    void CreateOldOrangeRobot();
 
 public:
     //-------------------------------------------------------------------------
-    // Initializes the robot attribute to nullptr
-    // v1: Created the method - Nathan S, 4-13-22
+    // Default constructor for the RobotManager class
+    // v1: Created the constructor - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void Intialize();
+    RobotManager();
 
     //-------------------------------------------------------------------------
     // Creates a robot with the specified configuration
     // config: The specified configuration
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static void CreateRobot(RobotConfigs config);
+    void CreateRobot(RobotConfigs config);
 
     //-------------------------------------------------------------------------
     // Gets the current instance of the robot
     // return: The current robot instance
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
-    static Robot* GetRobot();
+    Robot* GetRobot();
 };
 
 #endif

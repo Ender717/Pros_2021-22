@@ -18,10 +18,10 @@ void on_center_button() {
  */
 void initialize() 
 {
-	RobotManager::Intialize();
-	RobotManager::CreateRobot(RobotConfigs::BLUE);
-	Robot* robot = RobotManager::GetRobot();
-	robot->Initialize();
+	RobotManager manager;
+	manager.CreateRobot(RobotConfigs::BLUE);
+	RobotState::robot = manager.GetRobot();
+	RobotState::robot->Initialize();
 }
 
 /**

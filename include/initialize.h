@@ -4,6 +4,7 @@
 
 #include "Menu.hpp"
 #include "RobotManager.hpp"
+#include "RobotState.hpp"
 #include "main.h"
 
 #endif
