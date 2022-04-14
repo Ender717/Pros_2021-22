@@ -17,8 +17,7 @@ void opcontrol()
 {
 	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	Robot* robot = new Robot();
-	robot->Initialize();
+	Robot* robot = RobotManager::GetRobot();
 
 	pros::screen::erase();
 	

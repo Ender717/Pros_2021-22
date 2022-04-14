@@ -8,10 +8,6 @@
 #include "subsystems/Lift.hpp"
 #include "subsystems/Claw.hpp"
 #include "subsystems/Intake.hpp"
-#include "config/BlueConfig.hpp"
-#include "config/OrangeConfig.hpp"
-#include "config/OldBlueConfig.hpp"
-#include "config/OldOrangeConfig.hpp"
 #include "main.h"
 
 //-----------------------------------------------------------------------------
