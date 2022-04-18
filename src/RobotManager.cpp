@@ -109,7 +109,7 @@ void RobotManager::CreateBlueRobot()
 
     // Create the robot
     Robot::RobotBuilder* robotBuilder = new Robot::RobotBuilder();
-    Robot* robot = robotBuilder->WithCarrier(carrier)->
+    robot = robotBuilder->WithCarrier(carrier)->
         WithClaw(claw)->
         WithDrive(drive)->
         WithIntake(intake)->
