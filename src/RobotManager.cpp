@@ -53,21 +53,21 @@ void RobotManager::CreateBlueRobot()
     // Create the drive
 	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
 	Drive* drive = driveBuilder->WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
+            false, E_MOTOR_ENCODER_COUNTS))->
 		WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-            false, E_MOTOR_ENCODER_COUNTS))->
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
+            false, E_MOTOR_ENCODER_COUNTS))->
         WithLeftMotor(new pros::Motor(BlueConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-            false, E_MOTOR_ENCODER_COUNTS))->
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-            false, E_MOTOR_ENCODER_COUNTS))->
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
-        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
             false, E_MOTOR_ENCODER_COUNTS))->
-        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
             true, E_MOTOR_ENCODER_COUNTS))->
+        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+            false, E_MOTOR_ENCODER_COUNTS))->
         WithLeftTrackingSensor(new pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT))->
         WithRightTrackingSensor(new pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT))->
         WithStrafeTrackingSensor(new pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT))->

@@ -433,6 +433,10 @@ void Carrier::Initialize()
         (*iterator)->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     }
 
+    for (std::list<pros::ADIDigitalOut*>::iterator iterator = pistonList->begin(); 
+        iterator != pistonList->end(); iterator++)
+        (*iterator)->set_value(*isDown);
+
     if (carrierPID != nullptr)
         carrierPID->SetTargetValue(0.0);
 }
@@ -523,7 +527,7 @@ void Carrier::SetUp()
 
 void Carrier::TogglePosition()
 {
-    if (isDown)
+    if (*isDown)
         SetUp();
     else
         SetDown();

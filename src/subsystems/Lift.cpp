@@ -347,7 +347,7 @@ void Lift::Initialize()
 void Lift::Raise()
 {
     if(!AtTop())
-        SetLift(80.0);
+        SetLift(127.0);
     else
         SetLift(0.0);
 
@@ -357,7 +357,7 @@ void Lift::Raise()
 void Lift::Lower()
 {
     if(!AtBottom())
-        SetLift(-80.0);
+        SetLift(-127.0);
     else
         SetLift(0.0);
 
