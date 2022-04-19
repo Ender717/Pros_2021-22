@@ -181,6 +181,7 @@ Lift::Lift(LiftBuilder* builder)
     armLength = new double;
     minPosition = new double;
     maxPosition = new double;
+    holdPosition = new double;
 
     // Set the motors
     if (builder->motorList != nullptr)
@@ -236,6 +237,8 @@ Lift::Lift(LiftBuilder* builder)
         *maxPosition = HeightToPosition(*builder->maxHeight);
     else
         *maxPosition = DBL_MAX;
+
+    *holdPosition = 0.0;
 }
 
 // Destructor definitions -----------------------------------------------------
@@ -302,6 +305,16 @@ void Lift::SetLift(double power)
         (*iterator)->move(power);
 }
 
+void Lift::SetHalfLift(double power)
+{
+    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+         iterator != motorList->end(); iterator++)
+        {
+            (*iterator)->move(power);
+            iterator++;
+        } 
+}
+
 double Lift::GetPosition()
 {
     return motorList->front()->get_position();
@@ -338,7 +351,7 @@ void Lift::Initialize()
         iterator != motorList->end(); iterator++)
     {
         (*iterator)->tare_position();
-        (*iterator)->set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+        (*iterator)->set_brake_mode(E_MOTOR_BRAKE_COAST);
     }
 
     liftPID->SetTargetValue(0.0);
@@ -357,7 +370,7 @@ void Lift::Raise()
 void Lift::Lower()
 {
     if(!AtBottom())
-        SetLift(-127.0);
+        SetHalfLift(-127.0);
     else
         SetLift(0.0);
 
@@ -366,8 +379,14 @@ void Lift::Lower()
 
 void Lift::HoldPosition()
 {
+    /*
     if(!AtBottom() && !AtTop())
         SetLift(liftPID->GetControlValue(GetPosition()));
+    else
+        SetLift(0.0);
+    */
+    if (holdPosition > maxPosition && !AtTop())
+        Raise();
     else
         SetLift(0.0);
 }
