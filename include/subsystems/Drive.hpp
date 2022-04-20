@@ -213,10 +213,9 @@ public:
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task
     // targetAngle: The target angle in degrees
-    // power: The speed at which the drive will turn
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
-    void TurnToAngle(double targetAngle, double power);
+    void TurnToAngle(double targetAngle);
 
     //-------------------------------------------------------------------------
     // Sets the current x-coordinate of the drive

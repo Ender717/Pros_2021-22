@@ -301,7 +301,7 @@ void Drive::DriveStraight(double distance)
     SetDrive(0.0, 0.0);
 }
 
-void Drive::TurnToAngle(double targetAngle, double power)
+void Drive::TurnToAngle(double targetAngle)
 {
 
 }
