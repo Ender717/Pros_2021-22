@@ -151,12 +151,14 @@ void Robot::UpdateDrive(pros::Controller& master)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
 	// Tank drive mode
-	//double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-	//double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	/*
+	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	*/
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);
-	//drive->UpdatePosition();
+	drive->UpdatePosition();
 }
 
 void Robot::UpdateIntake(pros::Controller& master)

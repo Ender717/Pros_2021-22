@@ -29,7 +29,8 @@ private:
     // minPosition: The minimum position of the lift in encoder counts
     // maxPosition: The maximum position of the lift in encoder counts
     //-------------------------------------------------------------------------
-    std::list<pros::Motor*>* motorList;
+    std::list<pros::Motor*>* leftMotorList;
+    std::list<pros::Motor*>* rightMotorList;
     PID* liftPID;
     double* startAngle;
     double* startHeight;
@@ -113,7 +114,8 @@ public:
         // countsPerInch: The number of encoder counts per inch
         // armLength: The length of the arm on the lift in inches
         //-------------------------------------------------------------------------
-        std::list<pros::Motor*>* motorList;
+        std::list<pros::Motor*>* leftMotorList;
+        std::list<pros::Motor*>* rightMotorList;
         PID* liftPID;
         double* startAngle;
         double* minAngle;
@@ -143,7 +145,15 @@ public:
         // return: The LiftBuilder for build chaining
         // v1: Created the method - Nathan S, 3-13-22
         //---------------------------------------------------------------------
-        LiftBuilder* WithMotor(pros::Motor* motor);
+        LiftBuilder* WithLeftMotor(pros::Motor* motor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a motor to the build
+        // motor: The motor being added
+        // return: The LiftBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-13-22
+        //---------------------------------------------------------------------
+        LiftBuilder* WithRightMotor(pros::Motor* motor);
 
         //---------------------------------------------------------------------
         // Wither method to add a pid controller to the build

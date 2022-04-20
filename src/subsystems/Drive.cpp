@@ -29,21 +29,9 @@ Drive::DriveBuilder::~DriveBuilder()
         delete rightMotorList;
         rightMotorList = nullptr;
     }
-    if (leftTrackingSensor != nullptr)
-    {
-        delete leftTrackingSensor;
-        leftTrackingSensor = nullptr;
-    }
-    if (rightTrackingSensor != nullptr)
-    {
-        delete rightTrackingSensor;
-        rightTrackingSensor = nullptr;
-    }
-    if (strafeTrackingSensor != nullptr)
-    {
-        delete strafeTrackingSensor;
-        strafeTrackingSensor = nullptr;
-    }
+    leftTrackingSensor = nullptr;
+    rightTrackingSensor = nullptr;
+    strafeTrackingSensor = nullptr;
     distancePID = nullptr;
     anglePID = nullptr;
     turnPID = nullptr;
@@ -252,11 +240,9 @@ void Drive::Initialize()
     }
 
     // Initialize the tracking wheels
-    /*
     leftTrackingSensor->set_position(0.0);
     rightTrackingSensor->set_position(0.0);
     strafeTrackingSensor->set_position(0.0);
-    */
 }
 
 void Drive::SetDrive(double leftPower, double rightPower)
@@ -281,13 +267,14 @@ void Drive::DriveStraight(double distance)
     double currentPosition = startPosition;
     double currentAngle = startAngle;
     double power = 127.0;
+    int timer = 0;
 
     // Initialize the PID controllers
     distancePID->SetTargetValue(targetPosition);
     anglePID->SetTargetValue(startAngle);
 
     // Loop until finished
-    while(abs(currentPosition - targetPosition) > 0.5)
+    while(timer < 5000)
     {
         // Update the current position
         currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
@@ -301,7 +288,13 @@ void Drive::DriveStraight(double distance)
 
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
-        pros::delay(5);
+
+        // Update the timer
+        if (abs(currentPosition - targetPosition) < 0.1)
+            timer += 5;
+        else
+            timer = 0;
+        pros::delay(10);
     }
 
     // Cut the power
@@ -351,9 +344,9 @@ double Drive::GetTheta() const
 void Drive::UpdatePosition()
 {
     // Get the left, right, and strafe values in inches
-    double leftValue = leftTrackingSensor->get_position() * *wheelSize * 3.1415 / 36000.0;
-    double rightValue = rightTrackingSensor->get_position() * *wheelSize * 3.1415 / -36000.0;
-    double strafeValue = strafeTrackingSensor->get_position() * *wheelSize * 3.1415 / -36000.0;
+    double leftValue = leftTrackingSensor->get_position() * (*wheelSize) * 3.1415 / 36000.0;
+    double rightValue = rightTrackingSensor->get_position() * (*wheelSize) * 3.1415 / -36000.0;
+    double strafeValue = strafeTrackingSensor->get_position() * (*wheelSize) * 3.1415 / 36000.0;
 
     // Input those values to the tracking algorithm
     position->UpdatePosition(leftValue, rightValue, strafeValue);

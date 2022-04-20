@@ -6,7 +6,8 @@
 // Constructor definitions ----------------------------------------------------
 Lift::LiftBuilder::LiftBuilder()
 {
-    motorList = nullptr;
+    leftMotorList = nullptr;
+    rightMotorList = nullptr;
     liftPID = nullptr;
     startAngle = nullptr;
     minAngle = nullptr;
@@ -22,10 +23,15 @@ Lift::LiftBuilder::LiftBuilder()
 // Destructor definitions -----------------------------------------------------
 Lift::LiftBuilder::~LiftBuilder()
 {
-    if (motorList != nullptr)
+    if (leftMotorList != nullptr)
     {
-        delete motorList;
-        motorList = nullptr;
+        delete leftMotorList;
+        leftMotorList = nullptr;
+    }
+    if (rightMotorList != nullptr)
+    {
+        delete rightMotorList;
+        rightMotorList = nullptr;
     }
     liftPID = nullptr;
     if (startAngle != nullptr)
@@ -76,11 +82,19 @@ Lift::LiftBuilder::~LiftBuilder()
 }
 
 // Public method definitions --------------------------------------------------
-Lift::LiftBuilder* Lift::LiftBuilder::WithMotor(pros::Motor* motor)
+Lift::LiftBuilder* Lift::LiftBuilder::WithLeftMotor(pros::Motor* motor)
 {
-    if (motorList == nullptr)
-        motorList = new std::list<pros::Motor*>();
-    motorList->push_back(motor);
+    if (leftMotorList == nullptr)
+        leftMotorList = new std::list<pros::Motor*>();
+    leftMotorList->push_back(motor);
+    return this;
+}
+
+Lift::LiftBuilder* Lift::LiftBuilder::WithRightMotor(pros::Motor* motor)
+{
+    if (rightMotorList == nullptr)
+        rightMotorList = new std::list<pros::Motor*>();
+    rightMotorList->push_back(motor);
     return this;
 }
 
@@ -173,7 +187,8 @@ Lift* Lift::LiftBuilder::Build()
 Lift::Lift(LiftBuilder* builder)
 {
     // Initialize the pointers
-    motorList = new std::list<pros::Motor*>();
+    leftMotorList = new std::list<pros::Motor*>();
+    rightMotorList = new std::list<pros::Motor*>();
     startAngle = new double;
     startHeight = new double;
     countsPerDegree = new double;
@@ -184,10 +199,15 @@ Lift::Lift(LiftBuilder* builder)
     holdPosition = new double;
 
     // Set the motors
-    if (builder->motorList != nullptr)
-        for (std::list<pros::Motor*>::iterator iterator = builder->motorList->begin(); 
-            iterator != builder->motorList->end(); iterator++)
-            this->motorList->push_back(*iterator);
+    if (builder->leftMotorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->leftMotorList->begin(); 
+            iterator != builder->leftMotorList->end(); iterator++)
+            this->leftMotorList->push_back(*iterator);
+
+    if (builder->rightMotorList != nullptr)
+        for (std::list<pros::Motor*>::iterator iterator = builder->rightMotorList->begin(); 
+            iterator != builder->rightMotorList->end(); iterator++)
+            this->rightMotorList->push_back(*iterator);
 
     // Set the PID controller
     this->liftPID = builder->liftPID;
@@ -244,16 +264,27 @@ Lift::Lift(LiftBuilder* builder)
 // Destructor definitions -----------------------------------------------------
 Lift::~Lift()
 {
-    if (motorList != nullptr)
+    if (leftMotorList != nullptr)
     {
-        for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-            iterator != motorList->end(); iterator++)
+        for (std::list<pros::Motor*>::iterator iterator = leftMotorList->begin(); 
+            iterator != leftMotorList->end(); iterator++)
         {
             delete *iterator;
             *iterator = nullptr;
         }
-        delete motorList;
-        motorList = nullptr;
+        delete leftMotorList;
+        leftMotorList = nullptr;
+    }
+    if (rightMotorList != nullptr)
+    {
+        for (std::list<pros::Motor*>::iterator iterator = rightMotorList->begin(); 
+            iterator != rightMotorList->end(); iterator++)
+        {
+            delete *iterator;
+            *iterator = nullptr;
+        }
+        delete rightMotorList;
+        rightMotorList = nullptr;
     }
     if (liftPID != nullptr)
     {
@@ -300,24 +331,29 @@ Lift::~Lift()
 // Private method definitions -------------------------------------------------
 void Lift::SetLift(double power)
 {
-    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-         iterator != motorList->end(); iterator++)
+    for (std::list<pros::Motor*>::iterator iterator = leftMotorList->begin(); 
+         iterator != leftMotorList->end(); iterator++)
+        (*iterator)->move(power);
+    for (std::list<pros::Motor*>::iterator iterator = rightMotorList->begin(); 
+         iterator != rightMotorList->end(); iterator++)
         (*iterator)->move(power);
 }
 
 void Lift::SetHalfLift(double power)
 {
-    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-         iterator != motorList->end(); iterator++)
-        {
-            (*iterator)->move(power);
-            iterator++;
-        } 
+    leftMotorList->front()->move(power);
+    rightMotorList->front()->move(power);
+    for (std::list<pros::Motor*>::iterator iterator = ++leftMotorList->begin(); 
+         iterator != leftMotorList->end(); iterator++)
+        (*iterator)->move(0.0);
+    for (std::list<pros::Motor*>::iterator iterator = ++rightMotorList->begin(); 
+         iterator != rightMotorList->end(); iterator++)
+        (*iterator)->move(0.0);
 }
 
 double Lift::GetPosition()
 {
-    return motorList->front()->get_position();
+    return leftMotorList->front()->get_position();
 }
 
 double Lift::AngleToPosition(double angle)
@@ -347,8 +383,14 @@ bool Lift::AtTop()
 void Lift::Initialize()
 {
     // Set the positions to 0
-    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-        iterator != motorList->end(); iterator++)
+    for (std::list<pros::Motor*>::iterator iterator = leftMotorList->begin(); 
+        iterator != leftMotorList->end(); iterator++)
+    {
+        (*iterator)->tare_position();
+        (*iterator)->set_brake_mode(E_MOTOR_BRAKE_COAST);
+    }
+    for (std::list<pros::Motor*>::iterator iterator = rightMotorList->begin(); 
+        iterator != rightMotorList->end(); iterator++)
     {
         (*iterator)->tare_position();
         (*iterator)->set_brake_mode(E_MOTOR_BRAKE_COAST);
@@ -365,16 +407,20 @@ void Lift::Raise()
         SetLift(0.0);
 
     liftPID->SetTargetValue(GetPosition());
+    *holdPosition = GetPosition();
 }
 
 void Lift::Lower()
 {
-    if(!AtBottom())
+    if (AtTop())
+        SetLift(-127.0);
+    else if(!AtBottom())
         SetHalfLift(-127.0);
     else
         SetLift(0.0);
 
     liftPID->SetTargetValue(GetPosition());
+    *holdPosition = GetPosition();
 }
 
 void Lift::HoldPosition()
@@ -385,10 +431,11 @@ void Lift::HoldPosition()
     else
         SetLift(0.0);
     */
-    if (holdPosition > maxPosition && !AtTop())
-        Raise();
+    if (*holdPosition > *maxPosition && !AtTop())
+        SetLift(127.0);
     else
         SetLift(0.0);
+    
 }
 
 void Lift::SetAngle(double targetAngle)

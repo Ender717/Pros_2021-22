@@ -20,6 +20,7 @@ void opcontrol()
 	Robot* robot = RobotState::robot;
 
 	pros::screen::erase();
+	robot->drive->DriveStraight(30);
 	
 	while(true)
 	{

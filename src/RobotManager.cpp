@@ -20,7 +20,7 @@ void RobotManager::CreateBlueRobot()
     // Create the PID controllers
     PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
 	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
-	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(17.3)->WithKi(1.5)->WithKd(1.5)->WithIntegralLimit(60.0)->Build();
     PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
     PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
 	PID* liftPID = pidBuilder->WithKp(1.5)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(90.0)->WithStartTarget(140.0)->Build();
@@ -90,18 +90,18 @@ void RobotManager::CreateBlueRobot()
 
     // Create the lift
 	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
-	Lift* lift = liftBuilder->WithMotor(new pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+	Lift* lift = liftBuilder->WithLeftMotor(new pros::Motor(BlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(BlueConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+        WithLeftMotor(new pros::Motor(BlueConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+        WithRightMotor(new pros::Motor(BlueConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
             E_MOTOR_ENCODER_COUNTS))->
         WithPID(liftPID)->
         WithStartAngle(BlueConfig::LIFT_START_POSITION)->
-        //WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION)->
-        //WithMaxAngle(BlueConfig::LIFT_TOP_POSITION)->
+        WithMinAngle(BlueConfig::LIFT_BOTTOM_POSITION)->
+        WithMaxAngle(BlueConfig::LIFT_TOP_POSITION)->
         WithCountsPerDegree(BlueConfig::LIFT_COUNTS_PER_DEGREE)->
         Build();
 	delete liftBuilder;
@@ -209,13 +209,13 @@ void RobotManager::CreateOrangeRobot()
 
     // Create the lift
 	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
-	Lift* lift = liftBuilder->WithMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
+	Lift* lift = liftBuilder->WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, true, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
+        WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, false, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
+        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, false, 
             E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
+        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_LIFT_2_PORT, pros::E_MOTOR_GEARSET_36, true, 
             E_MOTOR_ENCODER_COUNTS))->
         WithPID(liftPID)->
         WithStartAngle(OrangeConfig::LIFT_START_POSITION)->
@@ -334,9 +334,9 @@ void RobotManager::CreateOldBlueRobot()
 
     // Create the lift
 	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
-	Lift* lift = liftBuilder->WithMotor(new pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+	Lift* lift = liftBuilder->WithLeftMotor(new pros::Motor(OldBlueConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
             false, E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+        WithRightMotor(new pros::Motor(OldBlueConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
             true, E_MOTOR_ENCODER_COUNTS))->
         WithPID(liftPID)->
         WithStartAngle(OldBlueConfig::LIFT_START_POSITION)->
@@ -449,9 +449,9 @@ void RobotManager::CreateOldOrangeRobot()
 
     // Create the lift
 	Lift::LiftBuilder* liftBuilder = new Lift::LiftBuilder();
-	Lift* lift = liftBuilder->WithMotor(new pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+	Lift* lift = liftBuilder->WithLeftMotor(new pros::Motor(OldOrangeConfig::LEFT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
             false, E_MOTOR_ENCODER_COUNTS))->
-        WithMotor(new pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
+        WithRightMotor(new pros::Motor(OldOrangeConfig::RIGHT_LIFT_1_PORT, pros::E_MOTOR_GEARSET_36, 
             true, E_MOTOR_ENCODER_COUNTS))->
         WithPID(liftPID)->
         WithStartAngle(OldOrangeConfig::LIFT_START_POSITION)->
