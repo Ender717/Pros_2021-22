@@ -12,28 +12,6 @@
 //-----------------------------------------------------------------------------
 class AutonController
 {
-private:
-    //-------------------------------------------------------------------------
-    // Drives forward a set distance as a task
-    // distance: The distance being driven
-    // v1: Created the method - Nathan S, 4-20-22
-    //-------------------------------------------------------------------------
-    //void DistanceDriveTask(void* distance);
-
-    //-------------------------------------------------------------------------
-    // Turns to a target angle as a task
-    // angle: The target angle
-    // v1: Created the method - Nathan S, 4-20-22
-    //-------------------------------------------------------------------------
-    void TurnDriveTask(void* angle);
-
-    //-------------------------------------------------------------------------
-    // Lifts to a target angle as a task
-    // liftAngle: The target angle for the lift
-    // v1: Created the method - Nathan S, 4-20-22
-    //-------------------------------------------------------------------------
-    void LiftTask(void* liftAngle);
-
 public:
     //-------------------------------------------------------------------------
     // Private data members
