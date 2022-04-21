@@ -23,7 +23,10 @@ void opcontrol()
 
 	if (master.get_digital(E_CONTROLLER_DIGITAL_Y))
 	{
-		AutonController::DoDistanceTask(30, 40, true, true, true);
+		AutonController::DoDistanceTask(30, -8.0, false, false, false);
+		AutonController::DoDistanceTask(1, -10.0, false, false, false);
+		AutonController::DoDistanceTask(4, -10.0, true, false, false);
+		AutonController::DoDistanceTask(-34, -10.0, true, false, false);
 	}
 		
 	while(true)

@@ -145,16 +145,16 @@ void Robot::UpdateClaw(pros::Controller& master)
 void Robot::UpdateDrive(pros::Controller& master)
 {
 	// Arcade drive mode
+	/*
 	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
 						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	*/
 
 	// Tank drive mode
-	/*
 	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-	*/
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);

@@ -287,7 +287,7 @@ void Drive::DriveStraight(double distance)
 
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
-        pros::Task::delay(10);
+        pros::Task::delay(100);
     }
 
     // Cut the power

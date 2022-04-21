@@ -430,7 +430,11 @@ void Lift::Stop()
 
 void Lift::HoldPosition()
 {
-    SetLift(liftPID->GetControlValue(GetPosition()));
+    if (GetPosition() > *holdPosition)
+        SetHalfLift(-127.0);
+    else
+        SetLift(127.0);
+    //SetLift(liftPID->GetControlValue(GetPosition()));
 }
 
 void Lift::HoldUp()
