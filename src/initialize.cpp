@@ -22,6 +22,7 @@ void initialize()
 	manager.CreateRobot(RobotConfigs::BLUE);
 	RobotState::robot = manager.GetRobot();
 	RobotState::robot->Initialize();
+	AutonController::robot = RobotState::robot;
 }
 
 /**

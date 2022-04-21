@@ -18,10 +18,14 @@ void opcontrol()
 	// Create the robot and controller
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	Robot* robot = RobotState::robot;
-
+	AutonController::robot = RobotState::robot;
 	pros::screen::erase();
-	robot->drive->DriveStraight(30);
-	
+
+	if (master.get_digital(E_CONTROLLER_DIGITAL_Y))
+	{
+		AutonController::DoDistanceTask(30, 40, true, true, true);
+	}
+		
 	while(true)
 	{
 		robot->RobotControl(master);

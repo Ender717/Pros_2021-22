@@ -20,7 +20,7 @@ void RobotManager::CreateBlueRobot()
     // Create the PID controllers
     PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
 	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
-	PID* distancePID = pidBuilder->WithKp(17.3)->WithKi(1.5)->WithKd(1.5)->WithIntegralLimit(60.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(17.3)->WithKi(4.5)->WithKd(1.5)->WithIntegralLimit(60.0)->Build();
     PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
     PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
 	PID* liftPID = pidBuilder->WithKp(1.5)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(90.0)->WithStartTarget(140.0)->Build();

@@ -1,13 +1,7 @@
 // Library being defined
 #include "AutonController.hpp"
 
-// Constructor definitions ----------------------------------------------------
-AutonController::AutonController(Robot* robot)
-{
-    this->robot = robot;
-}
-
-// Private method definitions -------------------------------------------------
+// Task function definitions --------------------------------------------------
 void DistanceDriveTask(void* distance)
 {
     double value = *(double*)distance;
@@ -24,51 +18,65 @@ void LiftTask(void* liftAngle)
 {
     double value = *(double*)liftAngle;
     AutonController::robot->lift->SetAngle(value);
-    AutonController::robot->lift->HoldPosition();
+    while (true)
+    {
+        AutonController::robot->lift->HoldPosition();
+        pros::Task::delay(5);
+    }
 }
 
-// Public method definitions --------------------------------------------------
-void AutonController::DoDistanceTask(double distance, double liftAngle, 
-    bool clawClosed, bool carrierDown, bool intake)
+namespace AutonController
 {
-    if (clawClosed)
-        robot->claw->SetClosed();
-    else
-        robot->claw->SetOpen();
+    Robot* robot = nullptr;
 
-    if (carrierDown)
-        robot->carrier->SetDown();
-    else
-        robot->carrier->SetUp();
+    // Public method definitions ----------------------------------------------
+    void DoDistanceTask(double distance, double liftAngle, 
+        bool clawClosed, bool carrierDown, bool intake)
+    {
+        if (clawClosed)
+            robot->claw->SetClosed();
+        else
+            robot->claw->SetOpen();
 
-    if (intake)
-        robot->intake->Suck();
-    else
+        if (carrierDown)
+            robot->carrier->SetDown();
+        else
+            robot->carrier->SetUp();
+
+        if (intake)
+            robot->intake->Suck();
+        else
+            robot->intake->Stop();
+
+        void* parameter = nullptr;
+        parameter = &liftAngle;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+
+        robot->drive->DriveStraight(distance);
+
+        liftTask.suspend();
+        liftTask.remove();
+
+        robot->lift->Stop();
         robot->intake->Stop();
+        parameter = nullptr;
+    }
 
-    void* parameter = nullptr;
+    void DoTurnTask(double targetAngle, double liftAngle,
+        bool clawClosed, bool carrierDown, bool intake)
+    {
 
-    parameter = &distance;
-    pros::Task driveTask(DistanceDriveTask, parameter, "Drive task");
+    }
 
-    parameter = &liftAngle;
-    pros::Task liftTask(LiftTask, parameter, "Lift task");
-}
+    void DoLiftDistanceTask(double distance, double liftAngle,
+        bool clawClosed, bool carrierDown, bool intake)
+    {
 
-void AutonController::DoTurnTask(double targetAngle, double liftAngle,
-    bool clawClosed, bool carrierDown, bool intake)
-{
+    }
 
-}
+    void DoLiftTurnTask(double targetAngle, double liftAngle,
+        bool clawClosed, bool carrierDown, bool intake)
+    {
 
-void AutonController::DoLiftDistanceTask(double distance, double liftAngle,
-    bool clawClosed, bool carrierDown, bool intake)
-{
-
-}
-
-void AutonController::DoLiftTurnTask(double targetAngle, double liftAngle,
-    bool clawClosed, bool carrierDown, bool intake)
-{
-
+    }
 }

@@ -267,14 +267,13 @@ void Drive::DriveStraight(double distance)
     double currentPosition = startPosition;
     double currentAngle = startAngle;
     double power = 127.0;
-    int timer = 0;
 
     // Initialize the PID controllers
     distancePID->SetTargetValue(targetPosition);
     anglePID->SetTargetValue(startAngle);
 
     // Loop until finished
-    while(timer < 5000)
+    while(abs(currentPosition - targetPosition) > 0.1)
     {
         // Update the current position
         currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
@@ -288,13 +287,7 @@ void Drive::DriveStraight(double distance)
 
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
-
-        // Update the timer
-        if (abs(currentPosition - targetPosition) < 0.1)
-            timer += 5;
-        else
-            timer = 0;
-        pros::delay(10);
+        pros::Task::delay(10);
     }
 
     // Cut the power

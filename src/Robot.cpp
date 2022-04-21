@@ -178,7 +178,7 @@ void Robot::UpdateLift(pros::Controller& master)
 	else if (master.get_digital(E_CONTROLLER_DIGITAL_R2))
 		lift->Lower();
 	else
-		lift->HoldPosition();
+		lift->HoldUp();
 }
 
 // Public method definitions --------------------------------------------------

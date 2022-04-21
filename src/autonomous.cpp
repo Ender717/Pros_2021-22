@@ -13,6 +13,7 @@
  */
 void autonomous() 
 {
+	AutonController::robot = RobotState::robot;
     // Run the selected auton
 	switch(Autons::selectedAuton)
 	{

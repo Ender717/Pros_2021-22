@@ -423,30 +423,35 @@ void Lift::Lower()
     *holdPosition = GetPosition();
 }
 
+void Lift::Stop()
+{
+    SetLift(0.0);
+}
+
 void Lift::HoldPosition()
 {
-    /*
-    if(!AtBottom() && !AtTop())
-        SetLift(liftPID->GetControlValue(GetPosition()));
-    else
-        SetLift(0.0);
-    */
+    SetLift(liftPID->GetControlValue(GetPosition()));
+}
+
+void Lift::HoldUp()
+{
     if (*holdPosition > *maxPosition && !AtTop())
         SetLift(127.0);
     else
         SetLift(0.0);
-    
 }
 
 void Lift::SetAngle(double targetAngle)
 {
     double targetPosition = AngleToPosition(targetAngle);
+    *holdPosition = targetPosition;
     liftPID->SetTargetValue(targetPosition);
 }
 
 void Lift::SetHeight(double targetHeight)
 {
     double targetPosition = HeightToPosition(targetHeight);
+    *holdPosition = targetPosition;
     liftPID->SetTargetValue(targetPosition);
 }
 

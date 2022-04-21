@@ -10,23 +10,13 @@
 // This class manages the autonomous control system
 // v1: Created the class - Nathan S, 2-17-22
 //-----------------------------------------------------------------------------
-class AutonController
+namespace AutonController
 {
-public:
     //-------------------------------------------------------------------------
     // Private data members
     // robot: The robot
     //-------------------------------------------------------------------------
-    static Robot* robot;
-
-    //-------------------------------------------------------------------------
-    // Default constructor for the auton controller class
-    // x: The starting x-coordinate
-    // y: The starting y-coordinate
-    // theta: The starting angle
-    // v1: Created the constructor - Nathan S, 2-17-22
-    //-------------------------------------------------------------------------
-    AutonController(Robot* robot);
+    extern Robot* robot;
 
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the drive
@@ -36,7 +26,7 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void DoDistanceTask(double distance, double liftAngle, bool clawClosed, 
+    extern void DoDistanceTask(double distance, double liftAngle, bool clawClosed, 
         bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
@@ -47,7 +37,7 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-22-22
     //-------------------------------------------------------------------------
-    void DoTurnTask(double targetAngle, double liftAngle, bool clawClosed,
+    extern void DoTurnTask(double targetAngle, double liftAngle, bool clawClosed,
         bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
@@ -58,7 +48,7 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void DoLiftDistanceTask(double distance, double liftAngle, bool clawClosed, 
+    extern void DoLiftDistanceTask(double distance, double liftAngle, bool clawClosed, 
         bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
@@ -69,7 +59,7 @@ public:
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    void DoLiftTurnTask(double targetAngle, double liftAngle, bool clawClosed, 
+    extern void DoLiftTurnTask(double targetAngle, double liftAngle, bool clawClosed, 
         bool carrierDown, bool intake);
 };
 

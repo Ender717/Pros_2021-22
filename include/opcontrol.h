@@ -5,6 +5,7 @@
 #include "Menu.hpp"
 #include "RobotManager.hpp"
 #include "RobotState.hpp"
+#include "AutonController.hpp"
 #include "main.h"
 
 #endif
