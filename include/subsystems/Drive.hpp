@@ -205,10 +205,16 @@ public:
     //-------------------------------------------------------------------------
     // Drives straight forward a designated distance
     // distance: The distance being travelled
-    // power: The power of the motors
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
     void DriveStraight(double distance);
+
+    //-------------------------------------------------------------------------
+    // Drives straight forward through a designated distance
+    // distance: The distance being travelled
+    // v1: Created the method - Nathan S, 3-30-22
+    //-------------------------------------------------------------------------
+    void DriveStraightThrough(double distance);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task

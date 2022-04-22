@@ -266,7 +266,6 @@ void Drive::DriveStraight(double distance)
     double startAngle = position->GetAngle();
     double currentPosition = startPosition;
     double currentAngle = startAngle;
-    double power = 127.0;
 
     // Initialize the PID controllers
     distancePID->SetTargetValue(targetPosition);
@@ -282,8 +281,6 @@ void Drive::DriveStraight(double distance)
         // Update the control values
         double distanceControl = distancePID->GetControlValue(currentPosition);
         double angleControl = anglePID->GetControlValue(currentAngle);
-        distanceControl *= (power / 127.0);
-        angleControl *= (power / 127.0);
 
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
@@ -292,6 +289,44 @@ void Drive::DriveStraight(double distance)
 
     // Cut the power
     SetDrive(0.0, 0.0);
+}
+
+void Drive::DriveStraightThrough(double distance)
+{
+    // Create and initialize variables
+    double startPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+    double targetPosition = startPosition + distance;
+    double startAngle = position->GetAngle();
+    double currentPosition = startPosition;
+    double currentAngle = startAngle;
+    bool reversed = false;
+    if (distance < 0)
+        reversed = true;
+
+    // Initialize the PID controllers
+    distancePID->SetTargetValue(targetPosition);
+    anglePID->SetTargetValue(startAngle);
+
+    // Loop until finished
+    while((!reversed && currentPosition < targetPosition) ||
+        (reversed && currentPosition > targetPosition))
+    {
+        // Update the current position
+        currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+        currentAngle = position->GetAngle();
+
+        // Update the control values
+        //double angleControl = anglePID->GetControlValue(currentAngle);
+        double angleControl = startAngle - currentAngle;
+
+        double power = 127.0;
+        if (reversed)
+            power *= -1;
+
+        // Update the motor power levels
+        SetDrive(power - angleControl, power + angleControl);
+        pros::Task::delay(10);
+    }
 }
 
 void Drive::TurnToAngle(double targetAngle)

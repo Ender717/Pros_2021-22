@@ -30,6 +30,26 @@ namespace AutonController
     Robot* robot = nullptr;
 
     // Public method definitions ----------------------------------------------
+    void DoStartTask()
+    {
+        robot->claw->SetOpen();
+
+        double liftHeight = -18.0;
+        void* parameter = &liftHeight;
+        pros::Task liftTask1(LiftTask, parameter, "Lift task");
+
+        robot->drive->DriveStraightThrough(31.2);
+        robot->claw->SetClosed();
+        robot->drive->DriveStraightThrough(1.0);
+
+        liftTask1.remove();
+        robot->lift->Stop();
+
+        robot->drive->DriveStraight(-30.0);
+
+        robot->lift->Stop();
+    }
+
     void DoDistanceTask(double distance, double liftAngle, 
         bool clawClosed, bool carrierDown, bool intake)
     {

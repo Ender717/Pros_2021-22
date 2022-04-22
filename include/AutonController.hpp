@@ -19,6 +19,12 @@ namespace AutonController
     extern Robot* robot;
 
     //-------------------------------------------------------------------------
+    // Runs a custom autonomous task routine to start the autonomous
+    // v1: Created the method - Nathan S, 4-21-22
+    //-------------------------------------------------------------------------
+    extern void DoStartTask();
+
+    //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the drive
     // distance: The distance to drive forward
     // liftAngle: The angle to set the lift to

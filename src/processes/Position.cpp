@@ -257,12 +257,6 @@ void Position::UpdatePosition(double leftValue, double rightValue, double strafe
     // Calculate the change in theta
     double thetaChange = *currentTheta - *lastTheta;
 
-    // Cap current theta
-    if (*currentTheta > 3.1415)
-        *currentTheta -= 7.2830;
-    else if (*currentTheta < -3.1415)
-        *currentTheta += 7.2830;
-
     // Calculate the local offset
     double forwardDistance = 0.0;
     double sidewaysDistance = 0.0;

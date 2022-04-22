@@ -11,7 +11,7 @@ namespace BlueConfig
     const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const double LIFT_BOTTOM_POSITION = -8.5;
     const double LIFT_TOP_POSITION = 100.0;
-    const double LIFT_START_POSITION = 110.0;
+    const double LIFT_START_POSITION = 150.0;
     const double LIFT_COUNTS_PER_DEGREE = 10.0;
 
     // Motor ports

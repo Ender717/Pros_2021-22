@@ -99,6 +99,7 @@ namespace Menu
         pros::screen::print(text_format_e_t::E_TEXT_SMALL, 32, 32, "X: %.2f", robot->drive->GetX());
         pros::screen::print(text_format_e_t::E_TEXT_SMALL, 32, 52, "Y: %.2f", robot->drive->GetY());
         pros::screen::print(text_format_e_t::E_TEXT_SMALL, 32, 72, "Theta: %.2f", (robot->drive->GetTheta() * 180.0 / 3.1415));
+        pros::screen::print(text_format_e_t::E_TEXT_SMALL, 32, 92, "Lift Angle: %.2f", robot->lift->GetAngle());
 
         // Draw the field
         pros::screen::set_pen(COLOR_LIGHT_GRAY);
