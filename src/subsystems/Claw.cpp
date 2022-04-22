@@ -8,6 +8,7 @@ Claw::ClawBuilder::ClawBuilder()
 {
     motorList = nullptr;
     pistonList = nullptr;
+    objectSensor = nullptr;
     clawPID = nullptr;
     maxPosition = nullptr;
     minPosition = nullptr;
@@ -28,6 +29,7 @@ Claw::ClawBuilder::~ClawBuilder()
         delete pistonList;
         pistonList = nullptr;
     }
+    objectSensor = nullptr;
     clawPID = nullptr;
     if (maxPosition != nullptr)
     {
@@ -65,6 +67,12 @@ Claw::ClawBuilder* Claw::ClawBuilder::WithPiston(pros::ADIDigitalOut* piston)
     if (pistonList == nullptr)
         pistonList = new std::list<pros::ADIDigitalOut*>();
     pistonList->push_back(piston);
+    return this;
+}
+
+Claw::ClawBuilder* Claw::ClawBuilder::WithSensor(pros::ADIDigitalIn* sensor)
+{
+    objectSensor = sensor;
     return this;
 }
 
@@ -138,6 +146,7 @@ Claw::Claw(ClawBuilder* builder)
             this->pistonList->push_back(*iterator);
 
     // Set the direct transfer variables
+    this->objectSensor = builder->objectSensor;
     this->clawPID = builder->clawPID;
 
     if (builder->minPosition != nullptr)
@@ -188,6 +197,11 @@ Claw::~Claw()
         }
         delete pistonList;
         pistonList = nullptr;
+    }
+    if (objectSensor != nullptr)
+    {
+        delete objectSensor;
+        objectSensor = nullptr;
     }
     if (clawPID != nullptr)
     {
@@ -318,4 +332,16 @@ void Claw::TogglePosition()
         SetClosed();
     else
         SetOpen();
+}
+
+void Claw::GrabObject()
+{
+    while (!HasObject())
+        pros::Task::delay(50);
+    SetClosed();
+}
+
+bool Claw::HasObject()
+{
+    return objectSensor->get_value();
 }

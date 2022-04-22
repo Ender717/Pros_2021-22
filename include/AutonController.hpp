@@ -15,8 +15,10 @@ namespace AutonController
     //-------------------------------------------------------------------------
     // Private data members
     // robot: The robot
+    // taskComplete: Whether or not the current task is complete
     //-------------------------------------------------------------------------
     extern Robot* robot;
+    extern bool* taskComplete;
 
     //-------------------------------------------------------------------------
     // Runs a custom autonomous task routine to start the autonomous

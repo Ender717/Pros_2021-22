@@ -2,16 +2,25 @@
 #include "AutonController.hpp"
 
 // Task function definitions --------------------------------------------------
+void ThroughDriveTask(void* distance)
+{
+    double value = *(double*)distance;
+    AutonController::robot->drive->DriveStraightThrough(value);
+    *AutonController::taskComplete = true;
+}
+
 void DistanceDriveTask(void* distance)
 {
     double value = *(double*)distance;
     AutonController::robot->drive->DriveStraight(value);
+    *AutonController::taskComplete = true;
 }
 
 void TurnDriveTask(void* angle)
 {
     double value = *(double*)angle;
     AutonController::robot->drive->TurnToAngle(value);
+    *AutonController::taskComplete = true;
 }
 
 void LiftTask(void* liftAngle)
@@ -25,29 +34,43 @@ void LiftTask(void* liftAngle)
     }
 }
 
+void ClawTask()
+{
+    AutonController::robot->claw->GrabObject();
+    *AutonController::taskComplete = true;
+}
+
 namespace AutonController
 {
     Robot* robot = nullptr;
+    bool* taskComplete = new bool(false);
 
     // Public method definitions ----------------------------------------------
     void DoStartTask()
     {
+        *AutonController::taskComplete = false;
         robot->claw->SetOpen();
 
+        double distance = 33.0;
+        void* parameter = &distance;
+        pros::Task driveTask(ThroughDriveTask, parameter, "Drive Task");
+
         double liftHeight = -18.0;
-        void* parameter = &liftHeight;
-        pros::Task liftTask1(LiftTask, parameter, "Lift task");
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(31.2);
+        pros::Task clawTask(ClawTask, "Claw Task");
+
+        while (!*taskComplete)
+            pros::Task::delay(50);
+        
+        driveTask.remove();
+        liftTask.remove();
+        clawTask.remove();
+
         robot->claw->SetClosed();
-        robot->drive->DriveStraightThrough(1.0);
-
-        liftTask1.remove();
         robot->lift->Stop();
-
         robot->drive->DriveStraight(-30.0);
-
-        robot->lift->Stop();
     }
 
     void DoDistanceTask(double distance, double liftAngle, 

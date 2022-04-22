@@ -21,6 +21,7 @@ private:
     // Private data members:
     // motorList: The motors on the claw
     // pistonList: The pistons on the claw
+    // objectSensor: The sensor used to determine if the claw is holding an object
     // clawPID: The PID controller in charge of the claw
     // minPosition: The minimum position of the claw in encoder counts
     // maxPosition: The maximum position of the claw in encoder counts
@@ -30,6 +31,7 @@ private:
     //-------------------------------------------------------------------------
     std::list<pros::Motor*>* motorList;
     std::list<pros::ADIDigitalOut*>* pistonList;
+    pros::ADIDigitalIn* objectSensor;
     PID* clawPID;
     double* minPosition;
     double* maxPosition;
@@ -77,6 +79,7 @@ public:
         // Attributes:
         // motorList: The motors on the claw
         // pistonList: The pistons on the claw
+        // objectSensor: The sensor on the claw
         // clawPID: The PID controller in charge of the claw
         // minPosition: The minimum position of the claw in encoder counts
         // maxPosition: The maximum position of the claw in encoder counts
@@ -85,6 +88,7 @@ public:
         //-------------------------------------------------------------------------
         std::list<pros::Motor*>* motorList;
         std::list<pros::ADIDigitalOut*>* pistonList;
+        pros::ADIDigitalIn* objectSensor;
         PID* clawPID;
         double* minPosition;
         double* maxPosition;
@@ -118,6 +122,14 @@ public:
         // v1: Created the method - Nathan S, 4-1-22
         //---------------------------------------------------------------------
         ClawBuilder* WithPiston(pros::ADIDigitalOut* piston);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a sensor to the build
+        // sensor: The sensor being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-22-22
+        //---------------------------------------------------------------------
+        ClawBuilder* WithSensor(pros::ADIDigitalIn* sensor);
 
         //---------------------------------------------------------------------
         // Wither method to add a pid controller to the build
@@ -221,6 +233,19 @@ public:
     // v1: Created the method - Nathan S, 4-1-22
     //-------------------------------------------------------------------------
     void TogglePosition();
+
+    //-------------------------------------------------------------------------
+    // Runs the claw to grab any objects it sees
+    // v1: Created the method - Nathan S, 4-22-22
+    //-------------------------------------------------------------------------
+    void GrabObject();
+
+    //-------------------------------------------------------------------------
+    // Checks if the claw has an object
+    // return: True if the claw has an object, false if not
+    // v1: Created the method - Nathan S, 4-22-22
+    //-------------------------------------------------------------------------
+    bool HasObject();
 };
 
 #endif
