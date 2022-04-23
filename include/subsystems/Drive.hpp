@@ -38,6 +38,7 @@ private:
     pros::Rotation* leftTrackingSensor;
     pros::Rotation* rightTrackingSensor;
     pros::Rotation* strafeTrackingSensor;
+    pros::Imu* inertialSensor;
     PID* distancePID;
     PID* anglePID;
     PID* turnPID;
@@ -70,6 +71,7 @@ public:
         pros::Rotation* leftTrackingSensor;
         pros::Rotation* rightTrackingSensor;
         pros::Rotation* strafeTrackingSensor;
+        pros::Imu* inertialSensor;
         PID* distancePID;
         PID* anglePID;
         PID* turnPID;
@@ -127,6 +129,14 @@ public:
         // v1: Created the method - Nathan S, 3-9-22
         //---------------------------------------------------------------------
         DriveBuilder* WithStrafeTrackingSensor(pros::Rotation* sensor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add an inertial sensor to the drive build
+        // sensor: The sensor being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-22-22
+        //---------------------------------------------------------------------
+        DriveBuilder* WithInertialSensor(pros::Imu* sensor);
 
         //---------------------------------------------------------------------
         // Wither method to add a PID controller for distance to the build
@@ -207,14 +217,14 @@ public:
     // distance: The distance being travelled
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void DriveStraight(double distance);
+    void DriveStraight(double distance, double angle);
 
     //-------------------------------------------------------------------------
     // Drives straight forward through a designated distance
     // distance: The distance being travelled
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void DriveStraightThrough(double distance);
+    void DriveStraightThrough(double distance, double angle);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task

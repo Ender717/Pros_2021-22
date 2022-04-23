@@ -74,6 +74,7 @@ namespace BlueConfig
     extern const int LEFT_DRIVE_TRACKING_PORT;
     extern const int RIGHT_DRIVE_TRACKING_PORT;
     extern const int STRAFE_DRIVE_TRACKING_PORT;
+    extern const int INERTIAL_PORT;
 
     //-------------------------------------------------------------------------
     // 3-wire ports:

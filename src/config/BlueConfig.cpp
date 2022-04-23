@@ -7,7 +7,7 @@ namespace BlueConfig
     const double DRIVE_TRACKING_WHEEL_SIZE = 2.81;
     const double DRIVE_LEFT_TRACKING_DISTANCE = 3.53125;
     const double DRIVE_RIGHT_TRACKING_DISTANCE = 3.53125;
-    const double DRIVE_STRAFE_TRACKING_DISTANCE = 3.0;
+    const double DRIVE_STRAFE_TRACKING_DISTANCE = 3.125;
     const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const double LIFT_BOTTOM_POSITION = -8.5;
     const double LIFT_TOP_POSITION = 100.0;
@@ -15,7 +15,7 @@ namespace BlueConfig
     const double LIFT_COUNTS_PER_DEGREE = 10.0;
 
     // Motor ports
-    const int LEFT_DRIVE_1_PORT = 1;
+    const int LEFT_DRIVE_1_PORT = 10;
     const int LEFT_DRIVE_2_PORT = 2;
     const int LEFT_DRIVE_3_PORT = 4;
     const int LEFT_DRIVE_4_PORT = 5;
@@ -33,6 +33,7 @@ namespace BlueConfig
     const int LEFT_DRIVE_TRACKING_PORT = 8;
     const int RIGHT_DRIVE_TRACKING_PORT = 17;
     const int STRAFE_DRIVE_TRACKING_PORT = 9;
+    const int INERTIAL_PORT = 20;
 
     // Piston ports
     const char CARRIER_1_PORT = 'H';

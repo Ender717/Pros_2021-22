@@ -337,7 +337,7 @@ void Claw::TogglePosition()
 void Claw::GrabObject()
 {
     while (!HasObject())
-        pros::Task::delay(50);
+        pros::Task::delay(10);
     SetClosed();
 }
 

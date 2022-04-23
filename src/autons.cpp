@@ -5,7 +5,7 @@ void PositionTask()
     while (true)
     {
         AutonController::robot->drive->UpdatePosition();
-        pros::Task::delay(10);
+        pros::Task::delay(20);
     }
 }
 

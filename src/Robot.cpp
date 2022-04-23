@@ -200,5 +200,5 @@ void Robot::RobotControl(pros::Controller& master)
 	UpdateLift(master);
 
 	// Delay for the next loop
-	pros::delay(5);
+	pros::Task::delay(30);
 }

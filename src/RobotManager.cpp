@@ -21,7 +21,7 @@ void RobotManager::CreateBlueRobot()
     PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
 	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
 	PID* distancePID = pidBuilder->WithKp(15.3)->WithKi(2.5)->WithKd(1.5)->WithIntegralLimit(60.0)->Build();
-    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.5)->WithKi(0.0)->WithKd(0.0)->Build();
     PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
 	PID* liftPID = pidBuilder->WithKp(1.5)->WithKi(0.1)->WithKd(0.1)->WithIntegralLimit(90.0)->WithStartTarget(140.0)->Build();
 	delete pidBuilder;
@@ -46,6 +46,7 @@ void RobotManager::CreateBlueRobot()
     // Create the claw
 	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
 	Claw* claw = clawBuilder->WithPiston(new pros::ADIDigitalOut(BlueConfig::CLAW_1_PORT))->
+        WithSensor(new pros::ADIDigitalIn(BlueConfig::CLAW_SENSOR_PORT))->
 		Build();
 	delete clawBuilder;
 	clawBuilder = nullptr;
@@ -71,6 +72,7 @@ void RobotManager::CreateBlueRobot()
         WithLeftTrackingSensor(new pros::Rotation(BlueConfig::LEFT_DRIVE_TRACKING_PORT))->
         WithRightTrackingSensor(new pros::Rotation(BlueConfig::RIGHT_DRIVE_TRACKING_PORT))->
         WithStrafeTrackingSensor(new pros::Rotation(BlueConfig::STRAFE_DRIVE_TRACKING_PORT))->
+        WithInertialSensor(new pros::Imu(BlueConfig::INERTIAL_PORT))->
         WithDistancePID(distancePID)->
         WithAnglePID(anglePID)->
         WithTurnPID(turnPID)->

@@ -175,7 +175,7 @@ public:
     // v3: Reformatted the method - Nathan S, 1-26-22
     // Credit: Team 5225A - E-Bots Pilons
     //-------------------------------------------------------------------------
-    void UpdatePosition(double leftValue, double rightValue, double strafeValue);
+    void UpdatePosition(double leftValue, double rightValue, double strafeValue, double newTheta);
 
     //-------------------------------------------------------------------------
     // Sets the x-coordinate to the specified value

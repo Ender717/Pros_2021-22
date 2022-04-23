@@ -242,7 +242,7 @@ void Position::SetResetPosition()
 }
 
 // Public Method Definitions --------------------------------------------------
-void Position::UpdatePosition(double leftValue, double rightValue, double strafeValue)
+void Position::UpdatePosition(double leftValue, double rightValue, double strafeValue, double newTheta)
 {
     // Calculate the distance moved by each wheel since the last cycle
     double leftDistance = leftValue - *lastLeft;
@@ -252,7 +252,8 @@ void Position::UpdatePosition(double leftValue, double rightValue, double strafe
     // Calculate absolute theta
     double totalLeft = leftValue;
     double totalRight = rightValue;
-    *currentTheta = ((totalRight - totalLeft) / (*leftTrackingDistance + *rightTrackingDistance)) + *resetTheta;
+    //*currentTheta = ((totalRight - totalLeft) / (*leftTrackingDistance + *rightTrackingDistance)) + *resetTheta;
+    *currentTheta = newTheta;
 
     // Calculate the change in theta
     double thetaChange = *currentTheta - *lastTheta;
