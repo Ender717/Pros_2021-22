@@ -74,18 +74,17 @@ namespace OrangeConfig
     extern const int LEFT_DRIVE_TRACKING_PORT;
     extern const int RIGHT_DRIVE_TRACKING_PORT;
     extern const int STRAFE_DRIVE_TRACKING_PORT;
+    extern const int INERTIAL_PORT;
 
     //-------------------------------------------------------------------------
     // 3-wire ports:
     // CARRIER_1_PORT: The port for the first carrier piston
-    // CARRIER_2_PORT: The port for the second carrier piston
     // CLAW_1_PORT: The port for the first claw piston
-    // CLAW_2_PORT: The port for the second claw piston
+    // CLAW_SENSOR_PORT: The port for the sensor on the claw
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
-    extern const char CARRIER_2_PORT;
     extern const char CLAW_1_PORT;
-    extern const char CLAW_2_PORT;
+    extern const char CLAW_SENSOR_PORT;
 }
 
 #endif

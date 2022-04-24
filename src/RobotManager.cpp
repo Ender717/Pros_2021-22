@@ -138,60 +138,61 @@ void RobotManager::CreateOrangeRobot()
     }
 
     // Create the PID controllers
-	PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
+    PID::PIDBuilder* pidBuilder = new PID::PIDBuilder();
 	PID* clawPID = pidBuilder->WithKp(2.3)->WithKi(0.05)->WithKd(0.05)->WithIntegralLimit(65.0)->Build();
-	PID* distancePID = pidBuilder->WithKp(11.3)->WithKi(0.5)->WithKd(0.5)->WithIntegralLimit(40.0)->Build();
-    PID* anglePID = pidBuilder->WithKp(3.0)->WithKi(0.2)->WithKd(0.05)->WithIntegralLimit(40.0)->Build();
-    PID* turnPID = pidBuilder->WithKp(5.3)->WithKi(0.15)->WithKd(0.10)->WithIntegralLimit(40.0)->Build();
-	PID* liftPID = pidBuilder->WithKp(5.0)->WithKi(0.3)->WithKd(0.25)->WithIntegralLimit(70.0)->WithStartTarget(140.0)->Build();
+	PID* distancePID = pidBuilder->WithKp(10.3)->WithKi(0.0)->WithKd(1.3)->Build();
+    PID* anglePID = pidBuilder->WithKp(3.9)->WithKi(0.0)->WithKd(0.0)->Build();
+    PID* turnPID = pidBuilder->WithKp(9.5)->WithKi(0.0)->WithKd(0.5)->Build();
+	PID* liftPID = pidBuilder->WithKp(13.3)->WithKi(0.1)->WithKd(1.32)->WithIntegralLimit(90.0)->WithStartTarget(140.0)->Build();
 	delete pidBuilder;
 	pidBuilder = nullptr;
 	
-    // Create the postion tracking
+    // Create the position tracking
 	Position::PositionBuilder* positionBuilder = new Position::PositionBuilder();
 	Position* position = positionBuilder->WithLeftDistance(OrangeConfig::DRIVE_LEFT_TRACKING_DISTANCE)->
-        WithRightDistance(OrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
-        WithStrafeDistance(OrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
-        Build();
+		WithRightDistance(OrangeConfig::DRIVE_RIGHT_TRACKING_DISTANCE)->
+		WithStrafeDistance(OrangeConfig::DRIVE_STRAFE_TRACKING_DISTANCE)->
+		Build();
 	delete positionBuilder;
 	positionBuilder = nullptr;
 
     // Create the carrier
 	Carrier::CarrierBuilder* carrierBuilder = new Carrier::CarrierBuilder();
 	Carrier* carrier = carrierBuilder->WithPiston(new pros::ADIDigitalOut(OrangeConfig::CARRIER_1_PORT))->
-		WithPiston(new pros::ADIDigitalOut(OrangeConfig::CARRIER_2_PORT))->
-        Build();
+		Build();
 	delete carrierBuilder;
 	carrierBuilder = nullptr;
-	
+
     // Create the claw
 	Claw::ClawBuilder* clawBuilder = new Claw::ClawBuilder();
 	Claw* claw = clawBuilder->WithPiston(new pros::ADIDigitalOut(OrangeConfig::CLAW_1_PORT))->
-        WithPiston(new pros::ADIDigitalOut(OrangeConfig::CLAW_2_PORT))->
-        Build();
+        WithSensor(new pros::ADIDigitalIn(OrangeConfig::CLAW_SENSOR_PORT))->
+		Build();
 	delete clawBuilder;
 	clawBuilder = nullptr;
 
+    // Create the drive
 	Drive::DriveBuilder* driveBuilder = new Drive::DriveBuilder();
 	Drive* drive = driveBuilder->WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
-        WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
             false, E_MOTOR_ENCODER_COUNTS))->
+		WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
+            false, E_MOTOR_ENCODER_COUNTS))->
         WithLeftMotor(new pros::Motor(OrangeConfig::LEFT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
-            false, E_MOTOR_ENCODER_COUNTS))->
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_1_PORT, pros::E_MOTOR_GEARSET_06, 
-            false, E_MOTOR_ENCODER_COUNTS))->
+            true, E_MOTOR_ENCODER_COUNTS))->
         WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_2_PORT, pros::E_MOTOR_GEARSET_06, 
-            true, E_MOTOR_ENCODER_COUNTS))->
-        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
             false, E_MOTOR_ENCODER_COUNTS))->
-        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_3_PORT, pros::E_MOTOR_GEARSET_06, 
             true, E_MOTOR_ENCODER_COUNTS))->
+        WithRightMotor(new pros::Motor(OrangeConfig::RIGHT_DRIVE_4_PORT, pros::E_MOTOR_GEARSET_06, 
+            false, E_MOTOR_ENCODER_COUNTS))->
         WithLeftTrackingSensor(new pros::Rotation(OrangeConfig::LEFT_DRIVE_TRACKING_PORT))->
         WithRightTrackingSensor(new pros::Rotation(OrangeConfig::RIGHT_DRIVE_TRACKING_PORT))->
         WithStrafeTrackingSensor(new pros::Rotation(OrangeConfig::STRAFE_DRIVE_TRACKING_PORT))->
+        WithInertialSensor(new pros::Imu(OrangeConfig::INERTIAL_PORT))->
         WithDistancePID(distancePID)->
         WithAnglePID(anglePID)->
         WithTurnPID(turnPID)->
@@ -200,7 +201,7 @@ void RobotManager::CreateOrangeRobot()
         Build();
 	delete driveBuilder;
 	driveBuilder = nullptr;
-	
+
     // Create the intake
 	Intake::IntakeBuilder* intakeBuilder = new Intake::IntakeBuilder();
 	Intake* intake = intakeBuilder->WithMotor(new pros::Motor(OrangeConfig::INTAKE_1_PORT, E_MOTOR_GEARSET_06, true, 
