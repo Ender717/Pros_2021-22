@@ -259,7 +259,8 @@ void Drive::Initialize()
     strafeTrackingSensor->set_position(0.0);
     inertialSensor->reset();
     while(inertialSensor->is_calibrating())
-        pros::Task::delay(10);
+        pros::delay(10);
+    pros::delay(500);
     inertialSensor->set_rotation(0.0);
 }
 
@@ -284,13 +285,14 @@ void Drive::DriveStraight(double distance, double angle)
     double startAngle = position->GetAngle();
     double currentPosition = startPosition;
     double currentAngle = startAngle;
+    int timer = 0;
 
     // Initialize the PID controllers
     distancePID->SetTargetValue(targetPosition);
     anglePID->SetTargetValue(startAngle);
 
     // Loop until finished
-    while(abs(currentPosition - targetPosition) > 0.1)
+    while(timer < 150)
     {
         // Update the current position
         currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
@@ -302,7 +304,10 @@ void Drive::DriveStraight(double distance, double angle)
 
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
-        pros::Task::delay(100);
+
+        if (abs(currentPosition - targetPosition) < 0.1)
+            timer += 60;
+        pros::Task::delay(60);
     }
 
     // Cut the power
@@ -315,7 +320,6 @@ void Drive::DriveStraightThrough(double distance, double angle)
     double startPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
     double targetPosition = startPosition + distance;
     double currentPosition = startPosition;
-    double currentAngle = angle;
     bool reversed = false;
     if (distance < 0)
         reversed = true;
@@ -327,13 +331,13 @@ void Drive::DriveStraightThrough(double distance, double angle)
     while((!reversed && currentPosition < targetPosition) ||
         (reversed && currentPosition > targetPosition))
     {
-        double power = 127.0;
+        double power = 60.0;
         if (reversed)
             power *= -1;
         
         // Update the current position
         currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
-        currentAngle = position->GetAngle();
+        double currentAngle = -inertialSensor->get_rotation();//position->GetAngle();
 
         // Update the control values
         double angleControl = anglePID->GetControlValue(currentAngle);
@@ -346,7 +350,20 @@ void Drive::DriveStraightThrough(double distance, double angle)
 
 void Drive::TurnToAngle(double targetAngle)
 {
+    double currentAngle = -inertialSensor->get_rotation();
+    turnPID->SetTargetValue(targetAngle);
+    int timer = 0;
+    while (timer < 500)
+    {
+        currentAngle = -inertialSensor->get_rotation();
+        double controlValue = turnPID->GetControlValue(currentAngle);
+        SetDrive(-controlValue, controlValue);
 
+        if (abs(targetAngle - currentAngle) < 0.5)
+            timer += 20;
+        pros::Task::delay(20);
+    }
+    SetDrive(0.0, 0.0);
 }
 
 void Drive::SetX(double x)

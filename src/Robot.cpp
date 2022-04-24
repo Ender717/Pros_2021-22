@@ -158,7 +158,7 @@ void Robot::UpdateDrive(pros::Controller& master)
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);
-	drive->UpdatePosition();
+	//drive->UpdatePosition();
 }
 
 void Robot::UpdateIntake(pros::Controller& master)

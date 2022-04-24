@@ -27,6 +27,12 @@ namespace AutonController
     extern void DoStartTask();
 
     //-------------------------------------------------------------------------
+    // Runs a custom autonomous task routine to grab the alliance goal
+    // v1: Created the method - Nathan S, 4-23-22
+    //-------------------------------------------------------------------------
+    extern void DoGoalTask();
+
+    //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the drive
     // distance: The distance to drive forward
     // liftAngle: The angle to set the lift to
@@ -34,7 +40,7 @@ namespace AutonController
     // carrierDown: Whether the carrier should be down or not
     // v1: Created the method - Nathan S, 2-18-22
     //-------------------------------------------------------------------------
-    extern void DoDistanceTask(double distance, double liftAngle, bool clawClosed, 
+    extern void DoDistanceTask(double distance, double angle, double liftAngle, bool clawClosed, 
         bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------

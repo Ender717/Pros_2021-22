@@ -27,7 +27,7 @@ void opcontrol()
 	AutonController::robot = RobotState::robot;
 	pros::screen::erase();
 
-	if (master.get_digital(E_CONTROLLER_DIGITAL_Y))
+	if (master.get_digital(E_CONTROLLER_DIGITAL_X))
 	{
 		Autons::LeftAuton();
 	}
@@ -35,7 +35,7 @@ void opcontrol()
 	while(true)
 	{
 		robot->RobotControl(master);
-		Menu::DrawPosition(robot);
+		//Menu::DrawPosition(robot);
 	}
 
 	delete robot;

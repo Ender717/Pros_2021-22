@@ -9,7 +9,7 @@ namespace BlueConfig
     const double DRIVE_RIGHT_TRACKING_DISTANCE = 3.53125;
     const double DRIVE_STRAFE_TRACKING_DISTANCE = 3.125;
     const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
-    const double LIFT_BOTTOM_POSITION = -8.5;
+    const double LIFT_BOTTOM_POSITION = -12.5;
     const double LIFT_TOP_POSITION = 100.0;
     const double LIFT_START_POSITION = 150.0;
     const double LIFT_COUNTS_PER_DEGREE = 10.0;

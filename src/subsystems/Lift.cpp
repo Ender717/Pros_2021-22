@@ -412,13 +412,10 @@ void Lift::Raise()
 
 void Lift::Lower()
 {
-    if (AtTop())
+    if(!AtBottom())
         SetLift(-127.0);
-    else if(!AtBottom())
-        SetHalfLift(-127.0);
     else
         SetLift(0.0);
-   
 
     liftPID->SetTargetValue(GetPosition());
     *holdPosition = GetPosition();
@@ -431,11 +428,10 @@ void Lift::Stop()
 
 void Lift::HoldPosition()
 {
-    if (GetPosition() > *holdPosition)
-        SetLift(-127.0);
+    if (*holdPosition < *maxPosition || !AtTop())
+        SetLift(liftPID->GetControlValue(GetPosition()));
     else
-        SetLift(127.0);
-    //SetLift(liftPID->GetControlValue(GetPosition()));
+        SetLift(0.0);
 }
 
 void Lift::HoldUp()

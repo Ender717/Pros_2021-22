@@ -20,7 +20,7 @@ namespace Autons
     // Functions
     void ProgrammingSkills1()
     {
-        pros::Task positionTask(PositionTask);
+        //pros::Task positionTask(PositionTask);
     }
 
     void ProgrammingSkills2()
@@ -30,13 +30,17 @@ namespace Autons
 
     void LeftAuton()
     {
-        AutonController::robot->drive->SetPosition(17.5, -36.0, 0.0);
-        pros::Task positionTask(PositionTask);
+        //AutonController::robot->drive->SetPosition(-54.5, -36.0, 0.0);
+        //pros::Task positionTask(PositionTask);
 
         AutonController::DoStartTask();
-        //AutonController::DoDistanceTask(30.1, -18.0, false, false, false);
+        AutonController::DoDistanceTask(27.5, 0.0, 110.0, true, false, false);
+        AutonController::DoTurnTask(90.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(-8.0, 90.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(-2.0, 90.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(0.0, 90.0, 110.0, true, false, false);
 
-        positionTask.remove();
+        //positionTask.remove();
     }
 
     void MiddleAuton()
