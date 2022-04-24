@@ -331,7 +331,7 @@ void Drive::DriveStraightThrough(double distance, double angle)
     while((!reversed && currentPosition < targetPosition) ||
         (reversed && currentPosition > targetPosition))
     {
-        double power = 60.0;
+        double power = 127.0;
         if (reversed)
             power *= -1;
         
@@ -359,7 +359,7 @@ void Drive::TurnToAngle(double targetAngle)
         double controlValue = turnPID->GetControlValue(currentAngle);
         SetDrive(-controlValue, controlValue);
 
-        if (abs(targetAngle - currentAngle) < 0.5)
+        if (abs(targetAngle - currentAngle) < 0.8)
             timer += 20;
         pros::Task::delay(20);
     }

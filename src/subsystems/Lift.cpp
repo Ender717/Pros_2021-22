@@ -329,28 +329,6 @@ Lift::~Lift()
 }
 
 // Private method definitions -------------------------------------------------
-void Lift::SetLift(double power)
-{
-    for (std::list<pros::Motor*>::iterator iterator = leftMotorList->begin(); 
-         iterator != leftMotorList->end(); iterator++)
-        (*iterator)->move(power);
-    for (std::list<pros::Motor*>::iterator iterator = rightMotorList->begin(); 
-         iterator != rightMotorList->end(); iterator++)
-        (*iterator)->move(power);
-}
-
-void Lift::SetHalfLift(double power)
-{
-    leftMotorList->front()->move(power);
-    rightMotorList->front()->move(power);
-    for (std::list<pros::Motor*>::iterator iterator = ++leftMotorList->begin(); 
-         iterator != leftMotorList->end(); iterator++)
-        (*iterator)->move(0.0);
-    for (std::list<pros::Motor*>::iterator iterator = ++rightMotorList->begin(); 
-         iterator != rightMotorList->end(); iterator++)
-        (*iterator)->move(0.0);
-}
-
 double Lift::GetPosition()
 {
     return leftMotorList->front()->get_position();
@@ -397,6 +375,28 @@ void Lift::Initialize()
     }
 
     liftPID->SetTargetValue(0.0);
+}
+
+void Lift::SetLift(double power)
+{
+    for (std::list<pros::Motor*>::iterator iterator = leftMotorList->begin(); 
+         iterator != leftMotorList->end(); iterator++)
+        (*iterator)->move(power);
+    for (std::list<pros::Motor*>::iterator iterator = rightMotorList->begin(); 
+         iterator != rightMotorList->end(); iterator++)
+        (*iterator)->move(power);
+}
+
+void Lift::SetHalfLift(double power)
+{
+    leftMotorList->front()->move(power);
+    rightMotorList->front()->move(power);
+    for (std::list<pros::Motor*>::iterator iterator = ++leftMotorList->begin(); 
+         iterator != leftMotorList->end(); iterator++)
+        (*iterator)->move(0.0);
+    for (std::list<pros::Motor*>::iterator iterator = ++rightMotorList->begin(); 
+         iterator != rightMotorList->end(); iterator++)
+        (*iterator)->move(0.0);
 }
 
 void Lift::Raise()

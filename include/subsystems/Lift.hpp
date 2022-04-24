@@ -42,20 +42,6 @@ private:
     double* holdPosition;
 
     //-------------------------------------------------------------------------
-    // Sets the lift to the designated power level
-    // power: The power level to set the lift to
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
-    void SetLift(double power);
-
-    //-------------------------------------------------------------------------
-    // Sets half the lift to the designated power level
-    // power: The power level to set the lift to
-    // v1: Created the method - Nathan S, 4-19-22
-    //-------------------------------------------------------------------------
-    void SetHalfLift(double power);
-
-    //-------------------------------------------------------------------------
     // Finds the current position of the lift
     // return: The current position of the lift encoders
     // v1: Created the method - Nathan S, 3-13-22
@@ -261,6 +247,20 @@ public:
     // v1: Created the method - Nathan S, 1-30-22
     //-------------------------------------------------------------------------
     void Initialize();
+
+    //-------------------------------------------------------------------------
+    // Sets the lift to the designated power level
+    // power: The power level to set the lift to
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void SetLift(double power);
+
+    //-------------------------------------------------------------------------
+    // Sets half the lift to the designated power level
+    // power: The power level to set the lift to
+    // v1: Created the method - Nathan S, 4-19-22
+    //-------------------------------------------------------------------------
+    void SetHalfLift(double power);
 
     //-------------------------------------------------------------------------
     // Raises the lift

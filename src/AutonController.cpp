@@ -51,14 +51,6 @@ void LiftTask(void* liftAngle)
     }
 }
 
-void ClawTask()
-{
-    AutonController::robot->claw->GrabObject();
-    *AutonController::taskComplete = true;
-    while (true)
-        pros::Task::delay(500);
-}
-
 namespace AutonController
 {
     Robot* robot = nullptr;
@@ -75,15 +67,13 @@ namespace AutonController
         parameter = &time;
         pros::Task timerTask(TimerTask, parameter, "Timer Task");
 
-        double params[2] = { 31.0, 0.0 };
+        double params[2] = { 25.0, 0.0 };
         parameter = &params;
-        pros::Task driveTask(DistanceDriveTask, parameter, "Drive Task");
+        pros::Task driveTask(ThroughDriveTask, parameter, "Drive Task");
 
-        double liftHeight = -17.0;
+        double liftHeight = -19.0;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
-
-        pros::Task clawTask(ClawTask, "Claw Task");
 
         while (!*taskComplete)
             pros::Task::delay(50);
@@ -91,18 +81,12 @@ namespace AutonController
         timerTask.remove();
         driveTask.remove();
         liftTask.remove();
-        clawTask.remove();
-
-        params[1] = 8.0;
-        parameter = &params;
-        pros::Task driveTask2(ThroughDriveTask, parameter, "Drive Task");
-
-        pros::delay(500);
-        robot->claw->SetClosed();
         robot->lift->Stop();
-        driveTask2.remove();
 
-        robot->drive->DriveStraight(-30.0, 0.0);
+        robot->claw->SetClosed();
+        pros::delay(130);        
+
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -119,10 +103,10 @@ namespace AutonController
 
     void DoGoalTask()
     {
-        robot->drive->SetDrive(-20.0, -20.0);
+        robot->drive->SetDrive(-60.0, -60.0);
         pros::delay(300);
+        robot->carrier->SetUp();
         robot->drive->SetDrive(0.0, 0.0);
-        robot->carrier->Raise();
     }
 
     void DoDistanceTask(double distance, double angle, double liftAngle, 

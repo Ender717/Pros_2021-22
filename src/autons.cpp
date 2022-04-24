@@ -34,11 +34,12 @@ namespace Autons
         //pros::Task positionTask(PositionTask);
 
         AutonController::DoStartTask();
-        AutonController::DoDistanceTask(27.5, 0.0, 110.0, true, false, false);
-        AutonController::DoTurnTask(90.0, 110.0, true, true, false);
-        AutonController::DoDistanceTask(-8.0, 90.0, 110.0, true, true, false);
-        AutonController::DoDistanceTask(-2.0, 90.0, 110.0, true, true, false);
-        AutonController::DoDistanceTask(0.0, 90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(33.5, 0.0, 110.0, true, false, false);
+        AutonController::DoTurnTask(75.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(-10.5, 75.0, 110.0, true, true, false);
+        AutonController::DoGoalTask();
+        pros::delay(100);
+        AutonController::DoTurnTask(180.0, 110.0, true, false, false);
 
         //positionTask.remove();
     }
