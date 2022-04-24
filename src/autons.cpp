@@ -51,6 +51,6 @@ namespace Autons
 
     void RightAuton()
     {
-
+        AutonController::DoDistanceTask(5.0, 0.0, 65.0, true, false, false);
     }
 }

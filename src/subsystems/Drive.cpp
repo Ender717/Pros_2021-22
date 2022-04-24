@@ -280,7 +280,7 @@ void Drive::SetDrive(double leftPower, double rightPower)
 void Drive::DriveStraight(double distance, double angle)
 {
     // Create and initialize variables
-    double startPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+    double startPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
     double targetPosition = startPosition + distance;
     double startAngle = position->GetAngle();
     double currentPosition = startPosition;
@@ -295,7 +295,7 @@ void Drive::DriveStraight(double distance, double angle)
     while(timer < 150)
     {
         // Update the current position
-        currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+        currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
         currentAngle = position->GetAngle();
 
         // Update the control values
@@ -317,7 +317,7 @@ void Drive::DriveStraight(double distance, double angle)
 void Drive::DriveStraightThrough(double distance, double angle)
 {
     // Create and initialize variables
-    double startPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+    double startPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
     double targetPosition = startPosition + distance;
     double currentPosition = startPosition;
     bool reversed = false;
@@ -336,7 +336,7 @@ void Drive::DriveStraightThrough(double distance, double angle)
             power *= -1;
         
         // Update the current position
-        currentPosition = leftTrackingSensor->get_position() / 36000.0 * 3.1415 * *wheelSize;
+        currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
         double currentAngle = -inertialSensor->get_rotation();//position->GetAngle();
 
         // Update the control values

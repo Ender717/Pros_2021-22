@@ -29,7 +29,8 @@ void opcontrol()
 
 	if (master.get_digital(E_CONTROLLER_DIGITAL_X))
 	{
-		Autons::LeftAuton();
+		//Autons::LeftAuton();
+		Autons::RightAuton();
 	}
 		
 	while(true)

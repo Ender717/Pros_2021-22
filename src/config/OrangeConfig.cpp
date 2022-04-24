@@ -11,7 +11,7 @@ namespace OrangeConfig
     const double DRIVE_COUNTS_PER_ROTATION = 36000.0;
     const double LIFT_BOTTOM_POSITION = -8.5;
     const double LIFT_TOP_POSITION = 100.0;
-    const double LIFT_START_POSITION = 150.0;
+    const double LIFT_START_POSITION = 65.0;
     const double LIFT_COUNTS_PER_DEGREE = 10.0;
 
     // Motor ports
@@ -30,12 +30,13 @@ namespace OrangeConfig
     const int RIGHT_LIFT_2_PORT = 16;
 
     // Sensor ports
-    const int LEFT_DRIVE_TRACKING_PORT = 8;
-    const int RIGHT_DRIVE_TRACKING_PORT = 0;
+    const int LEFT_DRIVE_TRACKING_PORT = 0;
+    const int RIGHT_DRIVE_TRACKING_PORT = 8;
     const int STRAFE_DRIVE_TRACKING_PORT = 18;
     const int INERTIAL_PORT = 21;
 
     // Piston ports
     const char CARRIER_1_PORT = 'H';
     const char CLAW_1_PORT = 'G';
+    const char CLAW_SENSOR_PORT = 'X';
 }
