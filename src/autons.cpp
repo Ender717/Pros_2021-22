@@ -33,13 +33,11 @@ namespace Autons
         //AutonController::robot->drive->SetPosition(-54.5, -36.0, 0.0);
         //pros::Task positionTask(PositionTask);
 
-        AutonController::DoStartTask();
-        AutonController::DoDistanceTask(33.5, 0.0, 110.0, true, false, false);
-        AutonController::DoTurnTask(75.0, 110.0, true, true, false);
-        AutonController::DoDistanceTask(-10.5, 75.0, 110.0, true, true, false);
+        AutonController::DoLeftStartTask();
+        AutonController::DoDistanceTask(5.5, 6.0, 110.0, true, false, false);
+        AutonController::DoTurnTask(96.0, 110.0, true, true, false);
         AutonController::DoGoalTask();
         pros::delay(100);
-        AutonController::DoTurnTask(180.0, 110.0, true, false, false);
 
         //positionTask.remove();
     }
@@ -51,6 +49,12 @@ namespace Autons
 
     void RightAuton()
     {
-        AutonController::DoDistanceTask(5.0, 0.0, 65.0, true, false, false);
+        AutonController::DoRightStartTask();
+        AutonController::DoDistanceTask(33.5, 0.0, 110.0, true, false, false);
+        AutonController::DoTurnTask(75.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(-9.5, 75.0, 110.0, true, true, false);
+        AutonController::DoGoalTask();
+        pros::delay(100);
+        AutonController::DoTurnTask(180.0, 110.0, true, false, false);
     }
 }

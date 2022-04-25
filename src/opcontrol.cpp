@@ -36,7 +36,7 @@ void opcontrol()
 	while(true)
 	{
 		robot->RobotControl(master);
-		//Menu::DrawPosition(robot);
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 32, "Angle: %.2f", robot->drive->GetTheta());
 	}
 
 	delete robot;

@@ -106,55 +106,28 @@ void Robot::UpdateCarrier(pros::Controller& master)
 	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT))
 		carrier->TogglePosition();
 	carrier->HoldPosition();
-
-	/*
-	if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT))
-		carrier.SetPower(-127);
-	else if (master.get_digital(E_CONTROLLER_DIGITAL_X))
-		carrier.SetPower(127);
-	else
-		carrier.HoldPosition();
-	}
-	*/
 }
 
 void Robot::UpdateClaw(pros::Controller& master)
 {
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B))
 		claw->TogglePosition();
 	claw->HoldPosition();
-
-	/*
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
-	{
-		if(claw.IsClosed())
-			claw.SetOpen();	
-		else
-			claw.SetClosed();
-	}
-	claw.HoldPosition();
-
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
-		claw.SetOpen();	
-	else if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_R2))
-		claw.SetClosed();
-	claw.HoldPosition();
-	*/
 }
 
 void Robot::UpdateDrive(pros::Controller& master)
 {
 	// Arcade drive mode
-	/*
 	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
 						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
 						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-	*/
 
 	// Tank drive mode
+	/*
 	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
 	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	*/
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);

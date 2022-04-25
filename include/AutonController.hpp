@@ -24,7 +24,13 @@ namespace AutonController
     // Runs a custom autonomous task routine to start the autonomous
     // v1: Created the method - Nathan S, 4-21-22
     //-------------------------------------------------------------------------
-    extern void DoStartTask();
+    extern void DoLeftStartTask();
+
+    //-------------------------------------------------------------------------
+    // Runs a custom autonomous task routine to start the autonomous
+    // v1: Created the method - Nathan S, 4-21-22
+    //-------------------------------------------------------------------------
+    extern void DoRightStartTask();
 
     //-------------------------------------------------------------------------
     // Runs a custom autonomous task routine to grab the alliance goal

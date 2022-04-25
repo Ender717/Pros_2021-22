@@ -19,7 +19,7 @@ void on_center_button() {
 void initialize() 
 {
 	RobotManager manager;
-	manager.CreateRobot(RobotConfigs::ORANGE);
+	manager.CreateRobot(RobotConfigs::BLUE);
 	RobotState::robot = manager.GetRobot();
 	RobotState::robot->Initialize();
 	AutonController::robot = RobotState::robot;

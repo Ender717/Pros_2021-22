@@ -378,7 +378,8 @@ void Drive::SetY(double y)
 
 void Drive::SetTheta(double theta)
 {
-    position->SetAngle(theta);
+    inertialSensor->set_rotation(theta);
+    //position->SetAngle(theta);
 }
 
 void Drive::SetPosition(double x, double y, double theta)
@@ -398,7 +399,7 @@ double Drive::GetY() const
 
 double Drive::GetTheta() const
 {
-    return position->GetAngle() * 3.1415 / 180.0;
+    return -inertialSensor->get_rotation();
 }
 
 void Drive::UpdatePosition()

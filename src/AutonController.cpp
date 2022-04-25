@@ -57,29 +57,50 @@ namespace AutonController
     bool* taskComplete = new bool(false);
 
     // Public method definitions ----------------------------------------------
-    void DoStartTask()
+    void DoLeftStartTask()
     {
         *AutonController::taskComplete = false;
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double time = 2000.0;
-        parameter = &time;
-        pros::Task timerTask(TimerTask, parameter, "Timer Task");
+        double liftHeight = -19.0;
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        double params[2] = { 25.0, 0.0 };
-        parameter = &params;
-        pros::Task driveTask(ThroughDriveTask, parameter, "Drive Task");
+        robot->drive->DriveStraightThrough(20.0, 0.0);
+        
+        liftTask.remove();
+        robot->lift->Stop();
+
+        robot->claw->SetClosed();
+        pros::delay(130);        
+
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
+
+        robot->drive->SetDrive(-40.0, -40.0);
+        pros::delay(1000);
+        robot->drive->SetDrive(0.0, 0.0);
+
+        liftHeight = 110.0;
+        parameter = &liftHeight;
+        pros::Task liftTask2(LiftTask, parameter, "Lift task");
+
+        pros::delay(1000);
+        liftTask2.remove();
+        robot->lift->Stop();
+    }
+
+    void DoRightStartTask()
+    {
+        robot->claw->SetOpen();
+        void* parameter = nullptr;
 
         double liftHeight = -19.0;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        while (!*taskComplete)
-            pros::Task::delay(50);
+        robot->drive->DriveStraightThrough(26.5, 0.0);
         
-        timerTask.remove();
-        driveTask.remove();
         liftTask.remove();
         robot->lift->Stop();
 
@@ -133,7 +154,6 @@ namespace AutonController
 
         robot->drive->DriveStraight(distance, angle);
 
-        liftTask.suspend();
         liftTask.remove();
 
         robot->lift->Stop();
@@ -165,7 +185,6 @@ namespace AutonController
 
         robot->drive->TurnToAngle(targetAngle);
 
-        liftTask.suspend();
         liftTask.remove();
 
         robot->lift->Stop();
