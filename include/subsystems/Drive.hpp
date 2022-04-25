@@ -42,6 +42,7 @@ private:
     PID* distancePID;
     PID* anglePID;
     PID* turnPID;
+    PID* velocityPID;
     Position* position;
     double* wheelSize;
 
@@ -75,6 +76,7 @@ public:
         PID* distancePID;
         PID* anglePID;
         PID* turnPID;
+        PID* velocityPID;
         Position* position;
         double* wheelSize;
 
@@ -163,6 +165,14 @@ public:
         DriveBuilder* WithTurnPID(PID* pid);
 
         //---------------------------------------------------------------------
+        // Wither method to add a PID controller for velocity to the build
+        // pid: The PID controller being added to the build
+        // return: The DriveBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-24-22
+        //---------------------------------------------------------------------
+        DriveBuilder* WithVelocityPID(PID* pid);
+
+        //---------------------------------------------------------------------
         // Wither method to add a position calculator to the build
         // position: The position calculation being added to the build
         // return: The DriveBuilder for build chaining
@@ -224,7 +234,7 @@ public:
     // distance: The distance being travelled
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void DriveStraightThrough(double distance, double angle);
+    void DriveStraightThrough(double distance, double angle, double velocity);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task

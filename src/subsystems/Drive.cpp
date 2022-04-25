@@ -13,6 +13,7 @@ Drive::DriveBuilder::DriveBuilder()
     distancePID = nullptr;
     anglePID = nullptr;
     turnPID = nullptr;
+    velocityPID = nullptr;
     position = nullptr;
     wheelSize = nullptr;
 }
@@ -37,6 +38,7 @@ Drive::DriveBuilder::~DriveBuilder()
     distancePID = nullptr;
     anglePID = nullptr;
     turnPID = nullptr;
+    velocityPID = nullptr;
     position = nullptr;
     if (wheelSize != nullptr)
     {
@@ -104,6 +106,12 @@ Drive::DriveBuilder* Drive::DriveBuilder::WithTurnPID(PID* pid)
     return this;
 }
 
+Drive::DriveBuilder* Drive::DriveBuilder::WithVelocityPID(PID* pid)
+{
+    velocityPID = pid;
+    return this;
+}
+
 Drive::DriveBuilder* Drive::DriveBuilder::WithPosition(Position* position)
 {
     this->position = position;
@@ -153,6 +161,7 @@ Drive::Drive(DriveBuilder* builder)
     this->distancePID = builder->distancePID;
     this->anglePID = builder->anglePID;
     this->turnPID = builder->turnPID;
+    this->velocityPID = builder->velocityPID;
 
     // Set the position tracking
     this->position = builder->position;
@@ -224,6 +233,11 @@ Drive::~Drive()
         delete turnPID;
         turnPID = nullptr;
     }
+    if (velocityPID != nullptr)
+    {
+        delete velocityPID;
+        velocityPID = nullptr;
+    }
     if (position != nullptr)
     {
         delete position;
@@ -280,71 +294,71 @@ void Drive::SetDrive(double leftPower, double rightPower)
 void Drive::DriveStraight(double distance, double angle)
 {
     // Create and initialize variables
-    double startPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
-    double targetPosition = startPosition + distance;
-    double startAngle = position->GetAngle();
-    double currentPosition = startPosition;
-    double currentAngle = startAngle;
+    leftTrackingSensor->set_position(0.0);
+    rightTrackingSensor->set_position(0.0);
+    double oldPosition = 0.0;
     int timer = 0;
 
     // Initialize the PID controllers
-    distancePID->SetTargetValue(targetPosition);
-    anglePID->SetTargetValue(startAngle);
+    distancePID->SetTargetValue(distance * 36000.0 / (3.1415 * *wheelSize));
+    anglePID->SetTargetValue(inertialSensor->get_rotation());
+    velocityPID->SetTargetValue(0.0);
 
     // Loop until finished
     while(timer < 150)
     {
-        // Update the current position
-        currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
-        currentAngle = position->GetAngle();
-
         // Update the control values
+        double currentPosition = (leftTrackingSensor->get_position() + rightTrackingSensor->get_position()) / 2.0;
+        double velocity = currentPosition - oldPosition;
+        oldPosition = currentPosition;
+
         double distanceControl = distancePID->GetControlValue(currentPosition);
-        double angleControl = anglePID->GetControlValue(currentAngle);
+        double angleControl = anglePID->GetControlValue(inertialSensor->get_rotation());
+
+        velocityPID->SetTargetValue(distanceControl);
+        double velocityControl = velocityPID->GetControlValue(velocity);
 
         // Update the motor power levels
-        SetDrive(distanceControl - angleControl, distanceControl + angleControl);
+        SetDrive(velocityControl + angleControl, velocityControl - angleControl);
 
-        if (abs(currentPosition - targetPosition) < 0.1)
-            timer += 60;
-        pros::Task::delay(60);
+        if (std::abs(currentPosition - distance) < 0.1)
+            timer += 50;
+        pros::Task::delay(50);
     }
 
     // Cut the power
     SetDrive(0.0, 0.0);
 }
 
-void Drive::DriveStraightThrough(double distance, double angle)
+void Drive::DriveStraightThrough(double distance, double angle, double velocity)
 {
     // Create and initialize variables
-    double startPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
-    double targetPosition = startPosition + distance;
-    double currentPosition = startPosition;
-    bool reversed = false;
-    if (distance < 0)
-        reversed = true;
+    leftTrackingSensor->set_position(0.0);
+    rightTrackingSensor->set_position(0.0);
+    double oldPosition = 0.0;
+    int timer = 0;
 
     // Initialize the PID controllers
-    anglePID->SetTargetValue(angle);
+    anglePID->SetTargetValue(inertialSensor->get_rotation());
+    velocityPID->SetTargetValue(velocity);
 
     // Loop until finished
-    while((!reversed && currentPosition < targetPosition) ||
-        (reversed && currentPosition > targetPosition))
+    while(std::abs((leftTrackingSensor->get_position() + rightTrackingSensor->get_position()) / 2.0) < std::abs(distance * 36000.0 / (3.1415 * *wheelSize)))
     {
-        double power = 127.0;
-        if (reversed)
-            power *= -1;
-        
-        // Update the current position
-        currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
-        double currentAngle = -inertialSensor->get_rotation();//position->GetAngle();
-
         // Update the control values
-        double angleControl = anglePID->GetControlValue(currentAngle);
+        double currentPosition = (leftTrackingSensor->get_position() + rightTrackingSensor->get_position()) / 2.0;
+        double currentVelocity = currentPosition - oldPosition;
+        oldPosition = currentPosition;
+
+        double angleControl = anglePID->GetControlValue(inertialSensor->get_rotation());
+        double velocityControl = velocityPID->GetControlValue(currentVelocity);
 
         // Update the motor power levels
-        SetDrive(power - angleControl, power + angleControl);
-        pros::Task::delay(20);
+        SetDrive(velocityControl + angleControl, velocityControl - angleControl);
+
+        if (std::abs(currentPosition - distance) < 0.1)
+            timer += 50;
+        pros::Task::delay(50);
     }
 }
 
@@ -359,7 +373,7 @@ void Drive::TurnToAngle(double targetAngle)
         double controlValue = turnPID->GetControlValue(currentAngle);
         SetDrive(-controlValue, controlValue);
 
-        if (abs(targetAngle - currentAngle) < 0.8)
+        if (std::abs(targetAngle - currentAngle) < 0.8)
             timer += 20;
         pros::Task::delay(20);
     }
