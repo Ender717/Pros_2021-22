@@ -5,6 +5,13 @@ namespace Menu
 {
     bool autonSelected = false;
 
+    void Erase(int x1, int y1, int x2, int y2)
+    {
+        pros::screen::set_pen(COLOR_BLACK);
+        pros::screen::fill_rect(x1, y1, x2, y2);
+        pros::screen::set_pen(COLOR_WHITE);
+    }
+
     void DrawMenuSelect()
     {
         // Draw the buttons
@@ -48,7 +55,7 @@ namespace Menu
             if(touched && status.touch_status == E_TOUCH_RELEASED)
             {
                 touched = false;
-                pros::screen::erase_rect(50, 50, 450, 90);
+                Erase(50, 50, 450, 90);
                 if(status.x >= 100 && status.x <= 180 && status.y >= 100 && status.y <= 180)
                 {
                     auton--;
@@ -69,19 +76,28 @@ namespace Menu
             switch(auton)
             {
                 case 1:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Orange");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Skills Blue");
                     break;
                 case 2:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Programming Skills Old");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Skills Orange");
                     break;
                 case 3:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Auton");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Blue");
                     break;
                 case 4:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Auton");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Blue");
                     break;
                 case 5:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Auton");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Blue");
+                    break;
+                case 6:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Orange");
+                    break;
+                case 7:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Orange");
+                    break;
+                case 8:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Orange");
                     break;
                 default:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "No Auton Selected");

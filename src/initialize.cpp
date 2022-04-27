@@ -44,5 +44,6 @@ void disabled() {}
 void competition_initialize() 
 {
 	Menu::DrawMenuSelect();
-	Menu::AutonSelect();	
+	Menu::AutonSelect();
+	Menu::Erase(0, 0, 480, 272);
 }

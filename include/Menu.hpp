@@ -20,6 +20,8 @@ namespace Menu
     // robotSelected: The robot which was selected to be used
     //-------------------------------------------------------------------------
     extern bool autonSelected;
+
+    extern void Erase(int x1, int y1, int x2, int y2);
     
     //-------------------------------------------------------------------------
     // Draws the auton selection menu

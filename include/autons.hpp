@@ -27,31 +27,49 @@ namespace Autons
     // This function runs the programming skills 1 routine
     // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    extern void ProgrammingSkills1();
+    extern void ProgrammingSkillsBlue();
 
     //-------------------------------------------------------------------------
     // This function runs the programming skills 2 routine
     // v1: Created the function - Nathan S, 2-6-22
     //-------------------------------------------------------------------------
-    extern void ProgrammingSkills2();
+    extern void ProgrammingSkillsOrange();
 
     //-------------------------------------------------------------------------
     // This function runs the left auton routine
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void LeftAuton();
+    extern void LeftAutonBlue();
 
     //-------------------------------------------------------------------------
     // This function runs the middle auton routine
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void MiddleAuton();
+    extern void MiddleAutonBlue();
 
     //-------------------------------------------------------------------------
     // This function runs the right auton routine
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
-    extern void RightAuton();
+    extern void RightAutonBlue();
+
+    //-------------------------------------------------------------------------
+    // This function runs the left auton routine
+    // v1: Created the function - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    extern void LeftAutonOrange();
+
+    //-------------------------------------------------------------------------
+    // This function runs the middle auton routine
+    // v1: Created the function - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    extern void MiddleAutonOrange();
+
+    //-------------------------------------------------------------------------
+    // This function runs the right auton routine
+    // v1: Created the function - Nathan S, 2-9-22
+    //-------------------------------------------------------------------------
+    extern void RightAutonOrange();
 }
 
 #endif

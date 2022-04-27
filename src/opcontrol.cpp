@@ -25,13 +25,7 @@ void opcontrol()
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	Robot* robot = RobotState::robot;
 	AutonController::robot = RobotState::robot;
-	pros::screen::erase();
-
-	if (master.get_digital(E_CONTROLLER_DIGITAL_X))
-	{
-		//Autons::LeftAuton();
-		Autons::RightAuton();
-	}
+	Menu::Erase(0, 0, 480, 272);
 		
 	while(true)
 	{

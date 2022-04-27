@@ -57,7 +57,7 @@ namespace AutonController
     bool* taskComplete = new bool(false);
 
     // Public method definitions ----------------------------------------------
-    void DoLeftStartTask()
+    void DoLeftStartTaskBlue()
     {
         *AutonController::taskComplete = false;
         robot->claw->SetOpen();
@@ -90,7 +90,82 @@ namespace AutonController
         robot->lift->Stop();
     }
 
-    void DoRightStartTask()
+    void DoMiddleStartTaskBlue()
+    {
+
+    }
+
+    void DoRightStartTaskBlue()
+    {
+        robot->claw->SetOpen();
+        void* parameter = nullptr;
+
+        double liftHeight = -19.0;
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+
+        robot->drive->DriveStraightThrough(26.5, 0.0);
+        
+        liftTask.remove();
+        robot->lift->Stop();
+
+        robot->claw->SetClosed();
+        pros::delay(130);        
+
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
+
+        robot->drive->SetDrive(-40.0, -40.0);
+        pros::delay(1000);
+        robot->drive->SetDrive(0.0, 0.0);
+
+        liftHeight = 110.0;
+        parameter = &liftHeight;
+        pros::Task liftTask2(LiftTask, parameter, "Lift task");
+
+        pros::delay(1000);
+        liftTask2.remove();
+        robot->lift->Stop();
+    }
+
+    void DoLeftStartTaskOrange()
+    {
+        *AutonController::taskComplete = false;
+        robot->claw->SetOpen();
+        void* parameter = nullptr;
+
+        double liftHeight = -19.0;
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+
+        robot->drive->DriveStraightThrough(20.0, 0.0);
+        
+        liftTask.remove();
+        robot->lift->Stop();
+
+        robot->claw->SetClosed();
+        pros::delay(130);        
+
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
+
+        robot->drive->SetDrive(-40.0, -40.0);
+        pros::delay(1000);
+        robot->drive->SetDrive(0.0, 0.0);
+
+        liftHeight = 110.0;
+        parameter = &liftHeight;
+        pros::Task liftTask2(LiftTask, parameter, "Lift task");
+
+        pros::delay(1000);
+        liftTask2.remove();
+        robot->lift->Stop();
+    }
+
+    void DoMiddleStartTaskOrange()
+    {
+
+    }
+
+    void DoRightStartTaskOrange()
     {
         robot->claw->SetOpen();
         void* parameter = nullptr;
