@@ -54,6 +54,10 @@ namespace AutonController
     //-------------------------------------------------------------------------
     extern void DoGoalTask();
 
+    extern void DoMatchLoads();
+
+    extern void DoRingTask();
+
     //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by the drive
     // distance: The distance to drive forward

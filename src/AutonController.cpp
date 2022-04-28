@@ -100,11 +100,11 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -19.0;
+        double liftHeight = -18.5;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(26.5, 0.0);
+        robot->drive->DriveStraightThrough(27.5, 0.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -118,12 +118,8 @@ namespace AutonController
         pros::delay(1000);
         robot->drive->SetDrive(0.0, 0.0);
 
-        liftHeight = 110.0;
-        parameter = &liftHeight;
-        pros::Task liftTask2(LiftTask, parameter, "Lift task");
-
-        pros::delay(1000);
-        liftTask2.remove();
+        robot->lift->SetLift(127.0);
+        pros::delay(2000);
         robot->lift->Stop();
     }
 
@@ -200,8 +196,29 @@ namespace AutonController
     void DoGoalTask()
     {
         robot->drive->SetDrive(-60.0, -60.0);
-        pros::delay(300);
+        pros::delay(400);
         robot->carrier->SetUp();
+        robot->drive->SetDrive(0.0, 0.0);
+    }
+
+    void DoMatchLoads()
+    {
+        robot->intake->Suck();
+        for (int i = 0; i < 3; i++)
+        {
+            robot->drive->SetDrive(30.0, 30.0);
+            pros::delay(1500);
+            robot->drive->SetDrive(-30.0, -30.0);
+            pros::delay(1500);
+        }
+        robot->drive->SetDrive(0.0, 0.0);
+    }
+
+    void DoRingTask()
+    {
+        robot->intake->Suck();
+        robot->drive->SetDrive(30.0, 30.0);
+        pros::delay(2400);
         robot->drive->SetDrive(0.0, 0.0);
     }
 
