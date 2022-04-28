@@ -25,11 +25,11 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -19.0;
+        double liftHeight = -18.5;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(28.0, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -180,9 +180,7 @@ namespace AutonController
         robot->drive->DriveStraight(distance, angle);
 
         liftTask.remove();
-
         robot->lift->Stop();
-        robot->intake->Stop();
         parameter = nullptr;
     }
 
@@ -211,9 +209,7 @@ namespace AutonController
         robot->drive->DriveStraightThrough(distance, angle, power);
 
         liftTask.remove();
-
         robot->lift->Stop();
-        robot->intake->Stop();
         parameter = nullptr;
     }
 
@@ -242,9 +238,7 @@ namespace AutonController
         robot->drive->TurnToAngle(targetAngle);
 
         liftTask.remove();
-
         robot->lift->Stop();
-        robot->intake->Stop();
         parameter = nullptr;
     }
 }
