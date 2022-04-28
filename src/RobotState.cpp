@@ -1,5 +1,5 @@
 // Included libraries
-#include "robot/RobotState.hpp"
+#include "RobotState.hpp"
 
 namespace RobotState
 {

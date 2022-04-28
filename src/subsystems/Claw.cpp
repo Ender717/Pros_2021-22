@@ -8,6 +8,7 @@ Claw::ClawBuilder::ClawBuilder()
 {
     motorList = nullptr;
     pistonList = nullptr;
+    objectSensor = nullptr;
     clawPID = nullptr;
     maxPosition = nullptr;
     minPosition = nullptr;
@@ -28,6 +29,7 @@ Claw::ClawBuilder::~ClawBuilder()
         delete pistonList;
         pistonList = nullptr;
     }
+    objectSensor = nullptr;
     clawPID = nullptr;
     if (maxPosition != nullptr)
     {
@@ -65,6 +67,12 @@ Claw::ClawBuilder* Claw::ClawBuilder::WithPiston(pros::ADIDigitalOut* piston)
     if (pistonList == nullptr)
         pistonList = new std::list<pros::ADIDigitalOut*>();
     pistonList->push_back(piston);
+    return this;
+}
+
+Claw::ClawBuilder* Claw::ClawBuilder::WithSensor(pros::ADIDigitalIn* sensor)
+{
+    objectSensor = sensor;
     return this;
 }
 
@@ -138,6 +146,7 @@ Claw::Claw(ClawBuilder* builder)
             this->pistonList->push_back(*iterator);
 
     // Set the direct transfer variables
+    this->objectSensor = builder->objectSensor;
     this->clawPID = builder->clawPID;
 
     if (builder->minPosition != nullptr)
@@ -189,6 +198,11 @@ Claw::~Claw()
         delete pistonList;
         pistonList = nullptr;
     }
+    if (objectSensor != nullptr)
+    {
+        delete objectSensor;
+        objectSensor = nullptr;
+    }
     if (clawPID != nullptr)
     {
         delete clawPID;
@@ -221,6 +235,32 @@ Claw::~Claw()
     }
 }
 
+// Private method definitions -------------------------------------------------
+void Claw::SetClaw(double power)
+{
+    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+         iterator != motorList->end(); iterator++)
+        (*iterator)->move(power);
+}
+
+double Claw::GetPosition()
+{
+    if (!motorList->empty())
+        return motorList->front()->get_position();
+    else
+        return 0.0;
+}
+
+bool Claw::IsOpened()
+{
+    return GetPosition() >= *minPosition;
+}
+
+bool Claw::IsClosed()
+{
+    return GetPosition() <= *maxPosition;
+}
+
 // Public method definitions --------------------------------------------------
 void Claw::Initialize()
 {
@@ -233,13 +273,6 @@ void Claw::Initialize()
     }
     if (clawPID != nullptr)
         clawPID->SetTargetValue(0.0);
-}
-
-void Claw::SetClaw(double power)
-{
-    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-         iterator != motorList->end(); iterator++)
-        (*iterator)->move(power);
 }
 
 void Claw::Open()
@@ -267,20 +300,10 @@ void Claw::Close()
 void Claw::HoldPosition()
 {
     if(!IsOpened() && !IsClosed())
-    {
         if (clawPID != nullptr)
             SetClaw(clawPID->GetControlValue(GetPosition()));
-    }
     else
         SetClaw(0.0);
-}
-
-double Claw::GetPosition()
-{
-    if (!motorList->empty())
-        return motorList->front()->get_position();
-    else
-        return 0.0;
 }
 
 void Claw::SetOpen()
@@ -311,12 +334,14 @@ void Claw::TogglePosition()
         SetOpen();
 }
 
-bool Claw::IsOpened()
+void Claw::GrabObject()
 {
-    return GetPosition() >= *minPosition;
+    while (!HasObject())
+        pros::Task::delay(5);
+    SetClosed();
 }
 
-bool Claw::IsClosed()
+bool Claw::HasObject()
 {
-    return GetPosition() <= *maxPosition;
+    return objectSensor->get_value();
 }

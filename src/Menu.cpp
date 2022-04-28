@@ -157,6 +157,12 @@ namespace Menu
                 case RobotConfigs::ORANGE:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Orange");
                     break;
+                case RobotConfigs::OLD_BLUE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Old Blue");
+                    break;
+                case RobotConfigs::OLD_ORANGE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Old Orange");
+                    break;
                 default:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "No Robot Selected");
                     break;

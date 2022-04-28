@@ -1,18 +1,20 @@
 // Inclusion guard
-#ifndef BLUE_CONFIG_HPP
-#define BLUE_CONFIG_HPP
+#ifndef OLD_ORANGE_CONFIG_HPP
+#define OLD_ORANGE_CONFIG_HPP
 
 // Included libraries
 #include "./main.h"
 
 //-----------------------------------------------------------------------------
-// This namespace controls the configuration of the blue robot
+// This namespace controls the configuration of the orange robot
 // v1: Created the namespace - Nathan S, 3-9-22
 //-----------------------------------------------------------------------------
-namespace BlueConfig
+namespace OldOrangeConfig
 {
     //-------------------------------------------------------------------------
     // Constants:
+    // OPEN_POSITION: The position of the claw when open
+    // CLOSED_POSITION: The position of the claw when closed
     // DRIVE_TRACKING_WHEEL_SIZE: The diameter of the tracking wheels on the drive
     // DRIVE_LEFT_TRACKING_DISTANCE: The left tracking wheel offset
     // DRIVE_RIGHT_TRACKING_DISTANCE: The right tracking wheel offset
@@ -25,6 +27,8 @@ namespace BlueConfig
     // LIFT_COUNTS_PER_DEGREE: The number of encoder counts the lift moves per 
     //                         degree of rotation it experiences
     //-------------------------------------------------------------------------
+    extern const double CLAW_OPEN_POSITION;
+    extern const double CLAW_CLOSED_POSITION;
     extern const double DRIVE_TRACKING_WHEEL_SIZE;
     extern const double DRIVE_LEFT_TRACKING_DISTANCE;
     extern const double DRIVE_RIGHT_TRACKING_DISTANCE;
@@ -37,6 +41,7 @@ namespace BlueConfig
 
     //-------------------------------------------------------------------------
     // Motor ports:
+    // CLAW_1_PORT: The port the claw motor is plugged into
     // LEFT_DRIVE_1_PORT: The port the first left drive motor is plugged into
     // LEFT_DRIVE_2_PORT: The port the second left drive motor is plugged into
     // LEFT_DRIVE_3_PORT: The port the third left drive motor is plugged into
@@ -51,19 +56,16 @@ namespace BlueConfig
     // RIGHT_LIFT_1_PORT: The port the first right lift motor is plugged into
     // RIGHT_LIFT_2_PORT: The port the second right lift motor is plugged into
     //-------------------------------------------------------------------------
+    extern const int CLAW_1_PORT;
     extern const int LEFT_DRIVE_1_PORT;
     extern const int LEFT_DRIVE_2_PORT;
     extern const int LEFT_DRIVE_3_PORT;
-    extern const int LEFT_DRIVE_4_PORT;
     extern const int RIGHT_DRIVE_1_PORT;
     extern const int RIGHT_DRIVE_2_PORT;
     extern const int RIGHT_DRIVE_3_PORT;
-    extern const int RIGHT_DRIVE_4_PORT;
     extern const int INTAKE_1_PORT;
     extern const int LEFT_LIFT_1_PORT;
-    extern const int LEFT_LIFT_2_PORT;
     extern const int RIGHT_LIFT_1_PORT;
-    extern const int RIGHT_LIFT_2_PORT;
     
     //-------------------------------------------------------------------------
     // Sensor ports:
@@ -74,17 +76,14 @@ namespace BlueConfig
     extern const int LEFT_DRIVE_TRACKING_PORT;
     extern const int RIGHT_DRIVE_TRACKING_PORT;
     extern const int STRAFE_DRIVE_TRACKING_PORT;
-    extern const int INERTIAL_PORT;
 
     //-------------------------------------------------------------------------
     // 3-wire ports:
     // CARRIER_1_PORT: The port for the first carrier piston
-    // CLAW_1_PORT: The port for the first claw piston
-    // CLAW_SENSOR_PORT: The port for the sensor on the claw
+    // CARRIER_2_PORT: The port for the second carrier piston
     //-------------------------------------------------------------------------
     extern const char CARRIER_1_PORT;
-    extern const char CLAW_1_PORT;
-    extern const char CLAW_SENSOR_PORT;
+    extern const char CARRIER_2_PORT;
 }
 
 #endif

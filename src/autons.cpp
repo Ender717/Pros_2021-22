@@ -1,5 +1,13 @@
-#include "autonomous/autons.hpp"
-#include "autonomous/AutonController.hpp"
+#include "autons.hpp"
+
+void PositionTask()
+{
+    while (true)
+    {
+        AutonController::robot->drive->UpdatePosition();
+        pros::Task::delay(20);
+    }
+}
 
 namespace Autons
 {
@@ -12,7 +20,7 @@ namespace Autons
     // Functions
     void ProgrammingSkillsBlue()
     {
-
+        //pros::Task positionTask(PositionTask);
     }
 
     void ProgrammingSkillsOrange()
@@ -22,10 +30,16 @@ namespace Autons
 
     void LeftAutonBlue()
     {
+        //AutonController::robot->drive->SetPosition(-54.5, -36.0, 0.0);
+        //pros::Task positionTask(PositionTask);
+
         AutonController::DoLeftStartTaskBlue();
         AutonController::DoDistanceTask(5.5, 6.0, 110.0, true, false, false);
         AutonController::DoTurnTask(96.0, 110.0, true, true, false);
+        AutonController::DoGoalTask();
         pros::delay(100);
+
+        //positionTask.remove();
     }
 
     void MiddleAutonBlue()
@@ -37,33 +51,27 @@ namespace Autons
     {
         AutonController::DoRightStartTaskBlue();
         pros::delay(100);
-        AutonController::DoDistanceTask(10.0, 0.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(33.5, 0.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoTurnTask(90.0, 110.0, true, true, false);
+        AutonController::DoTurnTask(75.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(-15.0, 75.0, 40.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(-10.5, 75.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoDistanceTask(5.0, 90.0, 110.0, true, false, false);
+        AutonController::DoGoalTask();
         pros::delay(100);
-        AutonController::DoTurnTask(180.0, 110.0, true, true, false);
+        AutonController::DoTurnTask(180.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(-10.0, 180.0, 40.0, 110.0, true, true, false);
-        AutonController::DoThroughDistanceTask(-2.0, 180.0, 40.0, 110.0, true, false, false);
         AutonController::DoDistanceTask(10.0, 180.0, 110.0, true, false, true);
-        pros::delay(1000);
-        for (int i = 0; i < 2; i++)
-        {
-            AutonController::DoThroughDistanceTask(10.0, 180.0, 40.0, 110.0, true, false, true);
-            AutonController::DoThroughDistanceTask(-10.0, 180.0, 40.0, 110.0, true, false, true);
-        }
+        pros::delay(2000);
+        AutonController::DoMatchLoads();
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(15.0, 180.0, 40.0, 110.0, true, false, true);
+        AutonController::DoRingTask();
         pros::delay(100);
         AutonController::DoDistanceTask(-10.0, 180.0, 110.0, true, false, true);
         pros::delay(100);
         AutonController::DoTurnTask(270.0, 110.0, true, false, true);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(15.0, 180.0, 40.0, 110.0, true, false, true);
+        AutonController::DoRingTask();
         pros::delay(100);
         AutonController::DoDistanceTask(-17.0, 270.0, 110.0, true, false, true);
         pros::delay(100);
@@ -71,7 +79,7 @@ namespace Autons
         pros::delay(100);
         AutonController::DoDistanceTask(16.0, 360.0, 110.0, true, false, true);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(15.0, 360.0, 30.0, 110.0, true, false, true);;
+        AutonController::DoRingTask();
         pros::delay(100);
         AutonController::DoDistanceTask(-30.0, 0.0, 110.0, true, false, true);
     }
@@ -84,6 +92,7 @@ namespace Autons
         AutonController::DoLeftStartTaskOrange();
         AutonController::DoDistanceTask(5.5, 6.0, 110.0, true, false, false);
         AutonController::DoTurnTask(96.0, 110.0, true, true, false);
+        AutonController::DoGoalTask();
         pros::delay(100);
 
         //positionTask.remove();
@@ -100,6 +109,7 @@ namespace Autons
         AutonController::DoDistanceTask(33.5, 0.0, 110.0, true, false, false);
         AutonController::DoTurnTask(75.0, 110.0, true, true, false);
         AutonController::DoDistanceTask(-9.5, 75.0, 110.0, true, true, false);
+        AutonController::DoGoalTask();
         pros::delay(100);
         AutonController::DoTurnTask(180.0, 110.0, true, false, false);
     }

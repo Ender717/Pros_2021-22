@@ -38,4 +38,5 @@ namespace OrangeConfig
     // Piston ports
     const char CARRIER_1_PORT = 'H';
     const char CLAW_1_PORT = 'G';
+    const char CLAW_SENSOR_PORT = 'X';
 }

@@ -7,106 +7,117 @@
 #include "./processes/PID.hpp"
 #include "./main.h"
 
-/**
- * This class manages an Intake subsystem
- */
+//-----------------------------------------------------------------------------
+// This class manages the Intake subsystem of the robot
+// v1: Created the class - Nathan S, 2-2-22
+// v2: Refactored the class - Nathan S, 2-14-22
+//-----------------------------------------------------------------------------
 class Intake
 {
 private:
-    /**
-     * The motors on the intake
-     */
+    //-------------------------------------------------------------------------
+    // Private data members
+    // motorList: The list of motors on the intake
+    // intakePID: The PID controller in charge of the intake
+    // intakeSpeed: The speed the intake runs at
+    //-------------------------------------------------------------------------
     std::list<pros::Motor*>* motorList;
-
-    /**
-     * The PID controller for the intake
-     */
     PID* intakePID;
-
-    /**
-     * The speed of the intake
-     */
     double* intakeSpeed;
 
 public:
-    /**
-     * Builder class for Intake
-     */
+    //-------------------------------------------------------------------------
+    // This is a builder class for the intake
+    // v1: Created the class - Nathan S, 3-9-22
+    //-------------------------------------------------------------------------
     class IntakeBuilder
     {
     public:
-        /**
-         * Data being used for construction
-         */
+        //---------------------------------------------------------------------
+        // motorList: The list of motors
+        // intakePID: The PID controller
+        //---------------------------------------------------------------------
         std::list<pros::Motor*>* motorList;
         PID* intakePID;
 
-        /**
-         * Default constructor for IntakeBuilder
-         */
+        //---------------------------------------------------------------------
+        // Default constructor for the IntakeBuilder class
+        // v1: Created the constructor - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
         IntakeBuilder();
 
-        /**
-         * Default destructor for IntakeBuilder
-         */
+        //---------------------------------------------------------------------
+        // Default destructor for the IntakeBuilder class
+        // v1: Created the destructor - Nathan S, 4-12-22
+        //---------------------------------------------------------------------
         ~IntakeBuilder();
 
-        /**
-         * Add a motor to the build
-         * @param motor The motor being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a motor to the build
+        // motor: The motor being added to the build
+        // return: The IntakeBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
         IntakeBuilder* WithMotor(pros::Motor* motor);
 
-        /**
-         * Add a PID controller to the build
-         * @param pid The PID controller being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a PID controller to the build
+        // pid: The PID controller being added to the build
+        // return: The IntakeBuilder for build chaining
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
         IntakeBuilder* WithPID(PID* pid);
 
-        /**
-         * Builds the intake using the stored data
-         * @return The new intake
-         */
+        //---------------------------------------------------------------------
+        // Build method for the IntakeBuilder
+        // return: The intake
+        // v1: Created the method - Nathan S, 3-9-22
+        //---------------------------------------------------------------------
         Intake* Build();
     };
 
-    /**
-     * Builder constructor for Intake
-     * @param builder The builder being used for construction
-     */
+    //-------------------------------------------------------------------------
+    // Builder constructor for the intake class
+    // builder: The builder being used for construction
+    // v1: Created the constructor - Nathan S, 3-9-22
+    //-------------------------------------------------------------------------
     Intake(IntakeBuilder* builder);
 
-    /**
-     * Default destructor for Intake
-     */
+    //-------------------------------------------------------------------------
+    // Default destructor for the Intake class
+    // v1: Created the destructor - Nathan S, 4-12-22
+    //-------------------------------------------------------------------------
     ~Intake();
     
-    /**
-     * Initializes the intake
-     */
+    //-------------------------------------------------------------------------
+    // Initializes the intake system
+    // v1: Created the method - Nathan S, 2-2-22
+    //-------------------------------------------------------------------------
     void Initialize();
 
-    /**
-     * Sets the speed of the intake
-     * @param speed The new speed of the intake
-     */
+    //-------------------------------------------------------------------------
+    // Sets the speed of the intake
+    // speed: The speed to set the intake to
+    // v1: Created the method - Nathan S, 3-9-22
+    //-------------------------------------------------------------------------
     void SetSpeed(double speed);
 
-    /**
-     * Sucks the intake inward
-     */
+    //-------------------------------------------------------------------------
+    // Runs the intake inwards
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
     void Suck();
 
-    /**
-     * Blows the intake outward
-     */
+    //-------------------------------------------------------------------------
+    // Runs the intake outwards
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
     void Blow();
 
-    /**
-     * Stops the intake
-     */
+    //-------------------------------------------------------------------------
+    // Stops the intake
+    // v1: Created the method - Nathan S, 2-13-22
+    //-------------------------------------------------------------------------
     void Stop();
 };
 

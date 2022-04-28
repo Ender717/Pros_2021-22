@@ -8,201 +8,244 @@
 #include "./processes/PID.hpp"
 #include "./main.h"
 
-/**
- * This class manages a Claw subsystem
- */
+//-----------------------------------------------------------------------------
+// This class manages the claw subsystem of the robot
+// v1: Created the class - Nathan S, 1-30-22
+// v2: Refactored - Nathan S, 2-14-22
+// v3: Converted to generalized class - Nathan S, 4-1-22
+//-----------------------------------------------------------------------------
 class Claw
 {
 private:
-    /**
-     * The motors on the claw
-     */
+    //-------------------------------------------------------------------------
+    // Private data members:
+    // motorList: The motors on the claw
+    // pistonList: The pistons on the claw
+    // objectSensor: The sensor used to determine if the claw is holding an object
+    // clawPID: The PID controller in charge of the claw
+    // minPosition: The minimum position of the claw in encoder counts
+    // maxPosition: The maximum position of the claw in encoder counts
+    // openPosition: The position of the claw when it is open
+    // closedPosition: The position of the claw when it is closed
+    // isOpen: Whether the claw is open or not
+    //-------------------------------------------------------------------------
     std::list<pros::Motor*>* motorList;
-
-    /**
-     * The pistons on the claw
-     */
     std::list<pros::ADIDigitalOut*>* pistonList;
-
-    /**
-     * The PID controller for the claw
-     */
+    pros::ADIDigitalIn* objectSensor;
     PID* clawPID;
-
-    /**
-     * The bounding positions of the claw
-     */
     double* minPosition;
     double* maxPosition;
-
-    /**
-     * The position of the claw when it is open
-     */
     double* openPosition;
-
-    /**
-     * The position of the claw when it is closed
-     */
     double* closedPosition;
-
-    /**
-     * Whether the claw is open or not
-     */
     bool* isOpen;
 
+    //-------------------------------------------------------------------------
+    // Sets the claw to the designated power level
+    // power: The power level to set the claw to
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
+    void SetClaw(double power);
+
+    //-------------------------------------------------------------------------
+    // Finds the current position of the claw
+    // return: The current position of the claw encoders
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
+    double GetPosition();
+
+    //-------------------------------------------------------------------------
+    // Checks if the claw is all the way open
+    // return: True if the claw is all the way open, false if not
+    // v1: Created the method - Nathan S, 2-31-22
+    //-------------------------------------------------------------------------
+    bool IsOpened();
+
+    //-------------------------------------------------------------------------
+    // Checks if the claw is all the way closed
+    // return: True if the claw is at the top of its range, false if not
+    // v1: Created the method - Nathan S, 2-31-22
+    //-------------------------------------------------------------------------
+    bool IsClosed();
+
 public:
-    /**
-     * Builder class for Claw
-     */
+    //-------------------------------------------------------------------------
+    // Builder class for the claw
+    // v1: Created the class - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
     class ClawBuilder
     {
     public:
-        /**
-         * The data being used to build the Claw
-         */
+        //---------------------------------------------------------------------
+        // Attributes:
+        // motorList: The motors on the claw
+        // pistonList: The pistons on the claw
+        // objectSensor: The sensor on the claw
+        // clawPID: The PID controller in charge of the claw
+        // minPosition: The minimum position of the claw in encoder counts
+        // maxPosition: The maximum position of the claw in encoder counts
+        // openPosition: The position of the claw when it is open
+        // closedPosition: The position of the claw when it is closed
+        //-------------------------------------------------------------------------
         std::list<pros::Motor*>* motorList;
         std::list<pros::ADIDigitalOut*>* pistonList;
+        pros::ADIDigitalIn* objectSensor;
         PID* clawPID;
         double* minPosition;
         double* maxPosition;
         double* openPosition;
         double* closedPosition;
 
-        /**
-         * Default constructor for ClawBuilder
-         */
+        //---------------------------------------------------------------------
+        // Default constructor for the ClawBuilder class
+        // v1: Created the constructor - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder();
 
-        /**
-         * Default destructor for ClawBuilder
-         */
+        //---------------------------------------------------------------------
+        // Default destructor for the ClawBuilder class
+        // v1: Created the destructor - Nathan S, 4-11-22
+        //---------------------------------------------------------------------
         ~ClawBuilder();
 
-        /**
-         * Adds a motor to the builder data
-         * @param motor The motor being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a motor to the build
+        // motor: The motor being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithMotor(pros::Motor* motor);
 
-        /**
-         * Adds a piston to the builder data
-         * @param piston The piston being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a piston to the build
+        // piston: The piston being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithPiston(pros::ADIDigitalOut* piston);
 
-        /**
-         * Adds a PID controller to the builder data
-         * @param pid The PID controller being added
-         * @return The buider for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a sensor to the build
+        // sensor: The sensor being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-22-22
+        //---------------------------------------------------------------------
+        ClawBuilder* WithSensor(pros::ADIDigitalIn* sensor);
+
+        //---------------------------------------------------------------------
+        // Wither method to add a pid controller to the build
+        // pid: The PID controller being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithPID(PID* pid);
 
-        /**
-         * Adds a minimum position for the claw to the builder data
-         * @param minPosition The minimum position being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a minimum position to the build
+        // minPosition: The minimum position being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithMinPosition(double minPosition);
 
-        /**
-         * Adds a maximum position for the claw to the builder data
-         * @param maxPosition The maximum position being added
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a maximum position to the build
+        // maxPosition: The maximum position being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithMaxPosition(double maxPosition);
 
-        /**
-         * Adds the position of the claw when it is open to the builder data
-         * @param openPosition The position of the claw when it is open
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add an open position to the build
+        // downPosition: The open position being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithOpenPosition(double openPosition);
 
-        /**
-         * Adds the position of the claw when it is closed to the builder data
-         * @param closedPosition The position of the claw when it is closed
-         * @return The builder for build chaining
-         */
+        //---------------------------------------------------------------------
+        // Wither method to add a closed position to the build
+        // closedPosition: The closed position being added
+        // return: The ClawBuilder for build chaining
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         ClawBuilder* WithClosedPosition(double closedPosition);
 
-        /**
-         * Builds the Claw using the stored data
-         * @return The new Claw
-         */
+        //---------------------------------------------------------------------
+        // Builder method for the builder class
+        // return: The claw
+        // v1: Created the method - Nathan S, 4-1-22
+        //---------------------------------------------------------------------
         Claw* Build();
     };
 
-    /**
-     * Builder constructor for Claw
-     * @param builder The builder being used for construction
-     */
+    //-------------------------------------------------------------------------
+    // Builder constructor for the Claw class
+    // builder: The builder being used for construction
+    // v1: Created the constructor - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
     Claw(ClawBuilder* builder);
 
-    /**
-     * Default destructor for Claw
-     */
+    //-------------------------------------------------------------------------
+    // Default destructor for the Claw class
+    // v1: Created the destructor - Nathan S, 4-11-22
+    //-------------------------------------------------------------------------
     ~Claw();
 
-    /**
-     * Initializes the claw
-     */
+    //-------------------------------------------------------------------------
+    // Initializes the claw
+    // v1: Created the method - Nathan S, 1-30-22
+    //-------------------------------------------------------------------------
     void Initialize();
 
-    /**
-     * Sets the motors on the claw to the designated power level
-     * @param power The power level the motors are being set to
-     */
-    void SetClaw(double power);
-
-    /**
-     * Opens the claw
-     */
+    //-------------------------------------------------------------------------
+    // Opens the claw
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
     void Open();
 
-    /**
-     * Closes the claw
-     */
+    //-------------------------------------------------------------------------
+    // Closes the claw
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
     void Close();
 
-    /**
-     * Holds the current position of the claw
-     */
+    //-------------------------------------------------------------------------
+    // Holds the claw at its current position
+    // v1: Created the method - Nathan S, 2-14-22
+    //-------------------------------------------------------------------------
     void HoldPosition();
 
-    /**
-     * Gets the current position of the claw
-     * @return The current position of the claw
-     */
-    double GetPosition();
-
-    /**
-     * Sets the claw to the open position
-     */
+    //-------------------------------------------------------------------------
+    // Sets the claw to the open position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
     void SetOpen();
 
-    /**
-     * Sets the claw to the closed position
-     */
+    //-------------------------------------------------------------------------
+    // Sets the claw to the closed position
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
     void SetClosed();
 
-    /**
-     * Toggles the position of the claw between open and closed
-     */
+    //-------------------------------------------------------------------------
+    // Toggles the position of the claw between open and closed
+    // v1: Created the method - Nathan S, 4-1-22
+    //-------------------------------------------------------------------------
     void TogglePosition();
 
-    /**
-     * Checks if the claw is currently open or not
-     * @return True if the claw is open, false if not
-     */
-    bool IsOpened();
+    //-------------------------------------------------------------------------
+    // Runs the claw to grab any objects it sees
+    // v1: Created the method - Nathan S, 4-22-22
+    //-------------------------------------------------------------------------
+    void GrabObject();
 
-    /**
-     * Checks if the claw is currently closed or not
-     * @return True if the claw is closed, false if not
-     */
-    bool IsClosed();
+    //-------------------------------------------------------------------------
+    // Checks if the claw has an object
+    // return: True if the claw has an object, false if not
+    // v1: Created the method - Nathan S, 4-22-22
+    //-------------------------------------------------------------------------
+    bool HasObject();
 };
 
 #endif

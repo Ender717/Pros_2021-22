@@ -384,6 +384,21 @@ Carrier::~Carrier()
 }
 
 // Private method definitions -------------------------------------------------
+void Carrier::SetCarrier(double power)
+{
+    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
+         iterator != motorList->end(); iterator++)
+        (*iterator)->move(power);
+}
+
+double Carrier::GetPosition()
+{
+    if (!motorList->empty())
+        return motorList->front()->get_position();
+    else
+        return 0.0;
+}
+
 double Carrier::AngleToPosition(double angle)
 {
     double position = (angle * *countsPerDegree) - (*startAngle * *countsPerDegree);
@@ -395,6 +410,16 @@ double Carrier::HeightToPosition(double height)
     double position = (height * *countsPerInch) - (*startHeight * *countsPerInch);
     position += *armLength * sin(GetAngle());
     return position;
+}
+
+bool Carrier::AtBottom()
+{
+    return GetPosition() <= *minPosition;
+}
+
+bool Carrier::AtTop()
+{
+    return GetPosition() >= *maxPosition;
 }
 
 // Public method definitions --------------------------------------------------
@@ -414,13 +439,6 @@ void Carrier::Initialize()
 
     if (carrierPID != nullptr)
         carrierPID->SetTargetValue(0.0);
-}
-
-void Carrier::SetCarrier(double power)
-{
-    for (std::list<pros::Motor*>::iterator iterator = motorList->begin(); 
-         iterator != motorList->end(); iterator++)
-        (*iterator)->move(power);
 }
 
 void Carrier::Raise()
@@ -450,21 +468,11 @@ void Carrier::HoldPosition()
     if (motorList->size() > 0)
     {
         if(!AtBottom() && !AtTop())
-        {
             if (carrierPID != nullptr)
                 SetCarrier(carrierPID->GetControlValue(GetPosition()));
-        }
         else
             SetCarrier(0.0);
     }
-}
-
-double Carrier::GetPosition()
-{
-    if (!motorList->empty())
-        return motorList->front()->get_position();
-    else
-        return 0.0;
 }
 
 void Carrier::SetAngle(double targetAngle)
@@ -523,14 +531,4 @@ void Carrier::TogglePosition()
         SetUp();
     else
         SetDown();
-}
-
-bool Carrier::AtBottom()
-{
-    return GetPosition() <= *minPosition;
-}
-
-bool Carrier::AtTop()
-{
-    return GetPosition() >= *maxPosition;
 }

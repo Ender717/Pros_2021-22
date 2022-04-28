@@ -1,4 +1,11 @@
 #include "opcontrol.h"
+
+void ClawTask(void* param)
+{
+	Robot* robot = (Robot*)param;
+	robot->claw->GrabObject();
+}
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -23,6 +30,7 @@ void opcontrol()
 	while(true)
 	{
 		robot->RobotControl(master);
+		pros::screen::print(text_format_e_t::E_TEXT_LARGE, 32, 32, "Angle: %.2f", robot->drive->GetTheta());
 	}
 
 	delete robot;
