@@ -4,4 +4,5 @@
 namespace RobotState
 {
     Robot* robot = nullptr;
+    RobotConfigs* configuration = nullptr;
 }

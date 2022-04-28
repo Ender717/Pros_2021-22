@@ -47,6 +47,8 @@ void disabled() {}
  */
 void competition_initialize() 
 {
+	RobotManager manager;
+
 	Menu::DrawMenuSelect();
 	Menu::AutonSelect();
 	Menu::Erase(0, 0, 480, 272);
@@ -55,8 +57,7 @@ void competition_initialize()
 	Menu::RobotSelect();
 	Menu::Erase(0, 0, 480, 272);
 
-	RobotManager manager;
-	manager.CreateRobot(RobotManager::GetConfig());
+	manager.CreateRobot(*RobotState::configuration);
 	RobotState::robot = manager.GetRobot();
 	RobotState::robot->Initialize();
 	AutonController::robot = RobotState::robot;

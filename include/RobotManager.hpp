@@ -29,7 +29,6 @@ enum class RobotConfigs
 class RobotManager
 {
 private:
-    static RobotConfigs configuration;
     //-------------------------------------------------------------------------
     // Attributes:
     // robot: The robot being stored in the manager
@@ -80,10 +79,6 @@ public:
     // v1: Created the method - Nathan S, 4-13-22
     //-------------------------------------------------------------------------
     Robot* GetRobot();
-
-    static RobotConfigs GetConfig();
-
-    static void SetConfig(RobotConfigs configuration);
 };
 
 #endif

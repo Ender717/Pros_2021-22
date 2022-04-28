@@ -111,7 +111,7 @@ namespace Menu
 
     void RobotSelect()
     {
-        RobotManager::SetConfig(RobotConfigs::BLUE);
+        RobotState::configuration = new RobotConfigs(RobotConfigs::BLUE);
         pros::screen::set_pen(COLOR_WHITE);
 
         // Select an autonomous
@@ -130,17 +130,17 @@ namespace Menu
                 Erase(0, 40, 480, 90);
                 if(status.x >= 100 && status.x <= 180 && status.y >= 100 && status.y <= 180)
                 {
-                    if (RobotManager::GetConfig() == RobotConfigs::BLUE)
-                        RobotManager::SetConfig(RobotConfigs::ORANGE);
+                    if (*RobotState::configuration == RobotConfigs::BLUE)
+                        *RobotState::configuration = RobotConfigs::ORANGE;
                     else
-                        RobotManager::SetConfig(RobotConfigs::BLUE);
+                        *RobotState::configuration = RobotConfigs::BLUE;
                 }
                 else if(status.x >= 320 && status.x <= 400 && status.y >= 100 && status.y <= 180)
                 {
-                    if (RobotManager::GetConfig() == RobotConfigs::BLUE)
-                        RobotManager::SetConfig(RobotConfigs::ORANGE);
+                    if (*RobotState::configuration == RobotConfigs::BLUE)
+                        *RobotState::configuration = RobotConfigs::ORANGE;
                     else
-                        RobotManager::SetConfig(RobotConfigs::BLUE);
+                        *RobotState::configuration = RobotConfigs::BLUE;
                 }
                 else if (((status.x - 250) * (status.x - 250)) + ((status.y - 140) * (status.y - 140)) <= (40 * 40))
                 {
@@ -149,7 +149,7 @@ namespace Menu
             }
             
             // Display the auton selection
-            switch(RobotManager::GetConfig())
+            switch(*RobotState::configuration)
             {
                 case RobotConfigs::BLUE:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Blue");
