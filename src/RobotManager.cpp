@@ -508,3 +508,13 @@ Robot* RobotManager::GetRobot()
 {
     return robot;
 }
+
+RobotConfigs RobotManager::GetConfig()
+{
+    return configuration;
+}
+
+void RobotManager::SetConfig(RobotConfigs configuration)
+{
+    RobotManager::configuration = configuration;
+}

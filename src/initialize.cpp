@@ -18,11 +18,15 @@ void on_center_button() {
  */
 void initialize() 
 {
-	RobotManager manager;
-	manager.CreateRobot(RobotConfigs::BLUE);
-	RobotState::robot = manager.GetRobot();
-	RobotState::robot->Initialize();
-	AutonController::robot = RobotState::robot;
+	if (!pros::competition::is_connected())
+	{
+		RobotManager manager;
+		manager.CreateRobot(RobotConfigs::BLUE);
+		RobotState::robot = manager.GetRobot();
+		RobotState::robot->Initialize();
+		AutonController::robot = RobotState::robot;
+	}
+	
 }
 
 /**
@@ -46,4 +50,14 @@ void competition_initialize()
 	Menu::DrawMenuSelect();
 	Menu::AutonSelect();
 	Menu::Erase(0, 0, 480, 272);
+
+	Menu::DrawMenuSelect();
+	Menu::RobotSelect();
+	Menu::Erase(0, 0, 480, 272);
+
+	RobotManager manager;
+	manager.CreateRobot(RobotManager::GetConfig());
+	RobotState::robot = manager.GetRobot();
+	RobotState::robot->Initialize();
+	AutonController::robot = RobotState::robot;
 }

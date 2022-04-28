@@ -4,6 +4,7 @@
 namespace Menu
 {
     bool autonSelected = false;
+    bool robotSelected = false;
 
     void Erase(int x1, int y1, int x2, int y2)
     {
@@ -55,7 +56,7 @@ namespace Menu
             if(touched && status.touch_status == E_TOUCH_RELEASED)
             {
                 touched = false;
-                Erase(50, 50, 450, 90);
+                Erase(0, 40, 480, 90);
                 if(status.x >= 100 && status.x <= 180 && status.y >= 100 && status.y <= 180)
                 {
                     auton--;
@@ -106,6 +107,67 @@ namespace Menu
         }
 
         Autons::selectedAuton = auton;
+    }
+
+    void RobotSelect()
+    {
+        RobotManager::SetConfig(RobotConfigs::BLUE);
+        pros::screen::set_pen(COLOR_WHITE);
+
+        // Select an autonomous
+        pros::screen_touch_status_s status;
+        bool touched = false;
+
+        while (!robotSelected)
+        {
+            status = pros::screen::touch_status();
+            // Move the menu selection
+            if(status.touch_status == E_TOUCH_PRESSED)
+                touched = true;
+            if(touched && status.touch_status == E_TOUCH_RELEASED)
+            {
+                touched = false;
+                Erase(0, 40, 480, 90);
+                if(status.x >= 100 && status.x <= 180 && status.y >= 100 && status.y <= 180)
+                {
+                    if (RobotManager::GetConfig() == RobotConfigs::BLUE)
+                        RobotManager::SetConfig(RobotConfigs::ORANGE);
+                    else
+                        RobotManager::SetConfig(RobotConfigs::BLUE);
+                }
+                else if(status.x >= 320 && status.x <= 400 && status.y >= 100 && status.y <= 180)
+                {
+                    if (RobotManager::GetConfig() == RobotConfigs::BLUE)
+                        RobotManager::SetConfig(RobotConfigs::ORANGE);
+                    else
+                        RobotManager::SetConfig(RobotConfigs::BLUE);
+                }
+                else if (((status.x - 250) * (status.x - 250)) + ((status.y - 140) * (status.y - 140)) <= (40 * 40))
+                {
+                    robotSelected = true;
+                }
+            }
+            
+            // Display the auton selection
+            switch(RobotManager::GetConfig())
+            {
+                case RobotConfigs::BLUE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Blue");
+                    break;
+                case RobotConfigs::ORANGE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "Orange");
+                    break;
+                case RobotConfigs::OLD_BLUE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Old Blue");
+                    break;
+                case RobotConfigs::OLD_ORANGE:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Old Orange");
+                    break;
+                default:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 50, 50, "No Robot Selected");
+                    break;
+            }
+        }
     }
 
     void DrawPosition(Robot* robot)

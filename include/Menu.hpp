@@ -3,6 +3,7 @@
 #define MENU_HPP
 
 // Included libraries
+#include "RobotManager.hpp"
 #include "Robot.hpp"
 #include "autons.hpp"
 #include "main.h"
@@ -20,6 +21,7 @@ namespace Menu
     // robotSelected: The robot which was selected to be used
     //-------------------------------------------------------------------------
     extern bool autonSelected;
+    extern bool robotSelected;
 
     extern void Erase(int x1, int y1, int x2, int y2);
     
@@ -34,6 +36,8 @@ namespace Menu
     // v1: Created the function - Nathan S, 2-9-22
     //-------------------------------------------------------------------------
     extern void AutonSelect();
+
+    extern void RobotSelect();
 
     //-------------------------------------------------------------------------
     // Displays the current position of the robot on screen
