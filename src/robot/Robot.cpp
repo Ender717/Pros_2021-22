@@ -1,11 +1,12 @@
 // Included libraries
-#include "Robot.hpp"
+#include "robot/Robot.hpp"
 
 // ROBOTBUILDER CLASS
 
 // Constructor definitions ----------------------------------------------------
 Robot::RobotBuilder::RobotBuilder()
 {
+	configuration = nullptr;
 	carrier = nullptr;
 	claw = nullptr;
 	drive = nullptr;
@@ -16,6 +17,7 @@ Robot::RobotBuilder::RobotBuilder()
 // Destructor definitions -----------------------------------------------------
 Robot::RobotBuilder::~RobotBuilder()
 {
+	configuration = nullptr;
 	carrier = nullptr;
 	claw = nullptr;
 	drive = nullptr;
@@ -24,6 +26,12 @@ Robot::RobotBuilder::~RobotBuilder()
 }
 
 // Public method definitions --------------------------------------------------
+Robot::RobotBuilder* Robot::RobotBuilder::WithConfiguration(RobotConfigs *configuration)
+{
+	this->configuration = configuration;
+	return this;
+}
+
 Robot::RobotBuilder* Robot::RobotBuilder::WithCarrier(Carrier* carrier)
 {
 	this->carrier = carrier;
@@ -64,6 +72,7 @@ Robot* Robot::RobotBuilder::Build()
 // Constructor definitions ----------------------------------------------------
 Robot::Robot(RobotBuilder* builder)
 {
+	this->configuration = builder->configuration;
 	this->carrier = builder->carrier;
 	this->claw = builder->claw;
 	this->drive = builder->drive;
@@ -73,6 +82,11 @@ Robot::Robot(RobotBuilder* builder)
 
 Robot::~Robot()
 {
+	if (configuration != nullptr)
+	{
+		delete configuration;
+		configuration = nullptr;
+	}
 	if (carrier != nullptr)
 	{
 		delete carrier;
@@ -110,28 +124,40 @@ void Robot::UpdateCarrier(pros::Controller& master)
 
 void Robot::UpdateClaw(pros::Controller& master)
 {
-	if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B))
-		claw->TogglePosition();
+	if (*configuration == RobotConfigs::BLUE)
+	{
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B))
+			claw->TogglePosition();
+	}
+	else if (*configuration == RobotConfigs::ORANGE)
+	{
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
+			claw->TogglePosition();
+	}
 	claw->HoldPosition();
 }
 
 void Robot::UpdateDrive(pros::Controller& master)
 {
 	// Arcade drive mode
-	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
-						+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
-						- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	double leftDrivePower = 0.0;
+	double rightDrivePower = 0.0;
 
-	// Tank drive mode
-	/*
-	double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-	double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-	*/
+	if (*configuration == RobotConfigs::BLUE)
+	{
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y) 
+			+ master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y)
+			- master.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+	}
+	else if (*configuration == RobotConfigs::ORANGE)
+	{
+		double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+	}
 
 	// Update
 	drive->SetDrive(leftDrivePower, rightDrivePower);
-	//drive->UpdatePosition();
 }
 
 void Robot::UpdateIntake(pros::Controller& master)

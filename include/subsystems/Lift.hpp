@@ -8,98 +8,79 @@
 #include "./processes/PID.hpp"
 #include "./main.h"
 
-//-----------------------------------------------------------------------------
-// This class manages the lift subsystem of the robot
-// v1: Created the class - Nathan S, 1-30-22
-// v2: Restructured the class - Nathan S, 2-14-22
-// v3: Converted to generalized class - Nathan S, 3-13-22
-//-----------------------------------------------------------------------------
+/**
+ * This class manages a Lift subsystem
+ */
 class Lift
 {
 private:
-    //-------------------------------------------------------------------------
-    // Private data members:
-    // motorList: The motors on the lift
-    // liftPID: The PID controller in charge of the lift
-    // startAngle: The starting angle of the lift in degrees
-    // startHeight: The starting height of the lift in inches
-    // countsPerDegree: The number of encoder counts per degree
-    // countsPerInch: The number of encoder counts per inch
-    // armLength: The length of the arm on the lift in inches
-    // minPosition: The minimum position of the lift in encoder counts
-    // maxPosition: The maximum position of the lift in encoder counts
-    //-------------------------------------------------------------------------
+    /**
+     * The motors on the left side of the lift
+     */
     std::list<pros::Motor*>* leftMotorList;
+
+    /**
+     * The motors on the right side of the lift
+     */
     std::list<pros::Motor*>* rightMotorList;
+
+    /**
+     * The PID controller for the lift
+     */
     PID* liftPID;
+
+    /**
+     * The starting position of the lift
+     */
     double* startAngle;
     double* startHeight;
+
+    /**
+     * The multiplier to measurable position from encoder counts
+     */
     double* countsPerDegree;
     double* countsPerInch;
+
+    /**
+     * The length of the lift arm
+     */
     double* armLength;
+
+    /**
+     * The bounds of the lift position
+     */
     double* minPosition;
     double* maxPosition;
+
+    /**
+     * The current position being held by the lift
+     */
     double* holdPosition;
 
-    //-------------------------------------------------------------------------
-    // Finds the current position of the lift
-    // return: The current position of the lift encoders
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
-    double GetPosition();
-
-    //-------------------------------------------------------------------------
-    // Converts an angle in degrees to a position in encoder counts
-    // return: The equivalent position
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Converts an angle to a position in encoder counts
+     * @param angle The angle being converted
+     * @return The position equivalent
+     */
     double AngleToPosition(double angle);
 
-    //-------------------------------------------------------------------------
-    // Converts a height in inches to a position in encoder counts
-    // return: The equivalent position
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Converts a height to a position in encoder counts
+     * @param height The height being converted
+     * @return The position equivalent
+     */
     double HeightToPosition(double height);
 
-    //-------------------------------------------------------------------------
-    // Checks if the lift is at the bottom of its range
-    // return: True if the lift is at the bottom of its range, false if not
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
-    bool AtBottom();
-
-    //-------------------------------------------------------------------------
-    // Checks if the lift is at the top of its range
-    // return: True if the lift is at the top of its range, false if not
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
-    bool AtTop();
-
 public:
-    //-------------------------------------------------------------------------
-    // Builder class for the lift
-    // v1: Created the class - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Builder class for Lift
+     */
     class LiftBuilder
     {
     public:
-        //---------------------------------------------------------------------
-        // Attributes:
-        // motorList: The motors on the lift
-        // liftPID: The PID controller in charge of the lift
-        // minPosition: The minimum position of the lift in encoder counts
-        // maxPosition: The maximum position of the lift in encoder counts
-        // startAngle: The starting angle of the lift in degrees
-        // minAngle: The minimum angle of the lift in degrees
-        // maxAngle: The maximum angle of the lift in degrees
-        // startHeight: The starting height of the lift in inches
-        // minHeight: The minimum height of the lift in inches
-        // maxHeight: The maximum height of the lift in inches
-        // countsPerDegree: The number of encoder counts per degree
-        // countsPerInch: The number of encoder counts per inch
-        // armLength: The length of the arm on the lift in inches
-        //-------------------------------------------------------------------------
+        /**
+         * The data being used for construction
+         */
         std::list<pros::Motor*>* leftMotorList;
         std::list<pros::Motor*>* rightMotorList;
         PID* liftPID;
@@ -113,212 +94,201 @@ public:
         double* countsPerInch;
         double* armLength;
 
-        //---------------------------------------------------------------------
-        // Default constructor for the LiftBuilder class
-        // v1: Created the constructor - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Default constructor for LiftBuilder
+         */
         LiftBuilder();
 
-        //---------------------------------------------------------------------
-        // Default destructor for the LiftBuilder class
-        // v1: Created the destructor - Nathan S, 4-12-22
-        //---------------------------------------------------------------------
+        /**
+         * Default destructor for LiftBuilder
+         */
         ~LiftBuilder();
 
-        //---------------------------------------------------------------------
-        // Wither method to add a motor to the build
-        // motor: The motor being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a left motor to the build
+         * @param motor The motor being added
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithLeftMotor(pros::Motor* motor);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a motor to the build
-        // motor: The motor being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a right motor to the build
+         * @param motor The motor being added
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithRightMotor(pros::Motor* motor);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a pid controller to the build
-        // pid: The PID controller being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a PID controller to the build
+         * @param pid The PID controller being added
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithPID(PID* pid);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a starting angle to the build
-        // startAngle: The starting angle being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a starting angle to the build
+         * @param startAngle The initial angle of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithStartAngle(double startAngle);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a minimum angle to the build
-        // minAngle: The minimum angle being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a minimum angle to the build
+         * @param minAngle The minimum angle of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithMinAngle(double minAngle);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a maximum angle to the build
-        // maxAngle: The maximum angle being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a maximum angle to the build
+         * @param maxAngle The maximum angle of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithMaxAngle(double maxAngle);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a starting height to the build
-        // startHeight: The starting height being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a starting height to the build
+         * @param startHeight The initial height of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithStartHeight(double startHeight);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a minimum height to the build
-        // minHeight: The minimum height being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a minimum height to the build
+         * @param minHeight The minimum height of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithMinHeight(double minHeight);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a maximum height to the build
-        // maxHeight: The maximum height being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a maximum height to the build
+         * @param maxHeight The maximum height of the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithMaxHeight(double maxHeight);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a number of counts per degree to the build
-        // countsPerDegree: The number of counts per degree being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a conversion multiplier from counts to degrees to the build
+         * @param countsPerDegree The number of encoder counts per degrees of motion
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithCountsPerDegree(double countsPerDegree);
 
-        //---------------------------------------------------------------------
-        // Wither method to add a number of counts per inch to the build
-        // countsPerInch: The number of counts per inch being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds a conversion multiplier from counts to inches to the build
+         * @param countsPerDegree The number of encoder counts per inches of motion
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithCountsPerInch(double countsPerInch);
 
-        //---------------------------------------------------------------------
-        // Wither method to add an arm length to the build
-        // armLength: The arm length being added
-        // return: The LiftBuilder for build chaining
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Adds an arm length to the build
+         * @param armLength The length of the arm on the lift
+         * @return The builder for build chaining
+         */
         LiftBuilder* WithArmLength(double armLength);
 
-        //---------------------------------------------------------------------
-        // Builder method for the builder class
-        // return: The lift
-        // v1: Created the method - Nathan S, 3-13-22
-        //---------------------------------------------------------------------
+        /**
+         * Builds a lift using the stored data
+         * @return The new lift
+         */
         Lift* Build();
     };
 
-    //-------------------------------------------------------------------------
-    // Builder constructor for the Lift class
-    // builder: The builder being used for construction
-    // v1: Created the constructor - Nathan S, 3-9-22
-    //-------------------------------------------------------------------------
+    /**
+     * Builder constructor for Lift
+     * @param builder The builder being used for construction
+     */
     Lift(LiftBuilder* builder);
 
-    //-------------------------------------------------------------------------
-    // Default destructor for the Lift class
-    // v1: Created the destructor - Nathan S, 4-12-22
-    //-------------------------------------------------------------------------
+    /**
+     * Default destructor for Lift
+     */
     ~Lift();
 
-    //-------------------------------------------------------------------------
-    // Initializes the lift
-    // v1: Created the method - Nathan S, 1-30-22
-    //-------------------------------------------------------------------------
+    /**
+     * Initializes the lift
+     */
     void Initialize();
 
-    //-------------------------------------------------------------------------
-    // Sets the lift to the designated power level
-    // power: The power level to set the lift to
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Sets the lift motors to a specified power level
+     * @param power The power level to set the motors to
+     */
     void SetLift(double power);
 
-    //-------------------------------------------------------------------------
-    // Sets half the lift to the designated power level
-    // power: The power level to set the lift to
-    // v1: Created the method - Nathan S, 4-19-22
-    //-------------------------------------------------------------------------
+    /**
+     * Sets half the lift motors to a specified power level
+     * @param power The power level to set the motors to
+     */
     void SetHalfLift(double power);
 
-    //-------------------------------------------------------------------------
-    // Raises the lift
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Raises the lift
+     */
     void Raise();
 
-    //-------------------------------------------------------------------------
-    // Lowers the lift
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Lowers the lift
+     */
     void Lower();
 
-    //-------------------------------------------------------------------------
-    // Stops the lift
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Stops the lift
+     */
     void Stop();
 
-    //-------------------------------------------------------------------------
-    // Holds the lift at its current position
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Holds the lift at its current position
+     */
     void HoldPosition();
 
-    //-------------------------------------------------------------------------
-    // Holds the lift up
-    // v1: Created the method - Nathan S, 2-14-22
-    //-------------------------------------------------------------------------
+    /**
+     * Gets the current position of the lift
+     * @return The current position of the lift
+     */
+    double GetPosition();
+
+    /**
+     * Holds the lift at the top
+     */
     void HoldUp();
 
-    //-------------------------------------------------------------------------
-    // Sets the lift to the desired angle
-    // targetAngle: The target angle in degrees
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Sets a target angle for the lift
+     * @param targetAngle The target angle being set
+     */
     void SetAngle(double targetAngle);
 
-    //-------------------------------------------------------------------------
-    // Sets the lift to the desired height
-    // targetHeight: The target height in inches
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Sets a target height for the lift
+     * @param targetHeight The target height being set
+     */
     void SetHeight(double targetHeight);
 
-    //-------------------------------------------------------------------------
-    // Calculates the current angle of the lift
-    // return: The current angle of the lift in degrees
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Gets the current angle of the lift
+     * @return The current angle of the lift
+     */
     double GetAngle();
 
-    //-------------------------------------------------------------------------
-    // Calculates the current height of the lift
-    // return: The current height of the lift in inches
-    // v1: Created the method - Nathan S, 3-13-22
-    //-------------------------------------------------------------------------
+    /**
+     * Gets the current height of the lift
+     * @return The current height of the lift
+     */
     double GetHeight();
+
+    /**
+     * Checks if the lift is currently at the bottom
+     * @return True if the lift is at the bottom, false if not
+     */
+    bool AtBottom();
+
+    /**
+     * Checks if the lift is currently at the top
+     * @return True if the lift is at the top, false if not
+     */
+    bool AtTop();
 };
 
 #endif

@@ -329,11 +329,6 @@ Lift::~Lift()
 }
 
 // Private method definitions -------------------------------------------------
-double Lift::GetPosition()
-{
-    return leftMotorList->front()->get_position();
-}
-
 double Lift::AngleToPosition(double angle)
 {
     double position = (angle * *countsPerDegree) - (*startAngle * *countsPerDegree);
@@ -345,16 +340,6 @@ double Lift::HeightToPosition(double height)
     double position = (height * *countsPerInch) - (*startHeight * *countsPerInch);
     position += *armLength * sin(GetAngle());
     return position;
-}
-
-bool Lift::AtBottom()
-{
-    return GetPosition() <= *minPosition;
-}
-
-bool Lift::AtTop()
-{
-    return GetPosition() >= *maxPosition;
 }
 
 // Public method definitions --------------------------------------------------
@@ -434,6 +419,11 @@ void Lift::HoldPosition()
         SetLift(0.0);
 }
 
+double Lift::GetPosition()
+{
+    return leftMotorList->front()->get_position();
+}
+
 void Lift::HoldUp()
 {
     if (*holdPosition > *maxPosition && !AtTop())
@@ -470,4 +460,14 @@ double Lift::GetHeight()
     if(*countsPerInch > 0.1)
         height += GetPosition() / *countsPerInch;
     return height;
+}
+
+bool Lift::AtBottom()
+{
+    return GetPosition() <= *minPosition;
+}
+
+bool Lift::AtTop()
+{
+    return GetPosition() >= *maxPosition;
 }
