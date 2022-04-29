@@ -23,7 +23,7 @@ namespace OrangeConfig
     const int RIGHT_DRIVE_2_PORT = 13;
     const int RIGHT_DRIVE_3_PORT = 12;
     const int RIGHT_DRIVE_4_PORT = 11;
-    const int INTAKE_1_PORT = 21;
+    const int INTAKE_1_PORT = 20;
     const int LEFT_LIFT_1_PORT = 5;
     const int LEFT_LIFT_2_PORT = 6;
     const int RIGHT_LIFT_1_PORT = 17;

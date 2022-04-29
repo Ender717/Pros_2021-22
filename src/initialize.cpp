@@ -21,12 +21,20 @@ void initialize()
 	if (!pros::competition::is_connected())
 	{
 		RobotManager manager;
-		manager.CreateRobot(RobotConfigs::BLUE);
+
+		Menu::DrawMenuSelect();
+		Menu::AutonSelect();
+		Menu::Erase(0, 0, 480, 272);
+
+		Menu::DrawMenuSelect();
+		Menu::RobotSelect();
+		Menu::Erase(0, 0, 480, 272);
+
+		manager.CreateRobot(*RobotState::configuration);
 		RobotState::robot = manager.GetRobot();
 		RobotState::robot->Initialize();
 		AutonController::robot = RobotState::robot;
 	}
-	
 }
 
 /**

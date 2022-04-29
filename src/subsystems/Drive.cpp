@@ -331,8 +331,9 @@ void Drive::DriveStraightThrough(double distance, double angle, double power)
     while((!reversed && currentPosition < targetPosition) ||
         (reversed && currentPosition > targetPosition))
     {
+        double drivePower = power;
         if (reversed)
-            power *= -1;
+            drivePower *= -1;
         
         // Update the current position
         currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
@@ -342,7 +343,7 @@ void Drive::DriveStraightThrough(double distance, double angle, double power)
         double angleControl = anglePID->GetControlValue(currentAngle);
 
         // Update the motor power levels
-        SetDrive(power - angleControl, power + angleControl);
+        SetDrive(drivePower - angleControl, drivePower + angleControl);
         pros::Task::delay(20);
     }
 }
