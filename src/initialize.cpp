@@ -23,10 +23,6 @@ void initialize()
 		RobotManager manager;
 
 		Menu::DrawMenuSelect();
-		Menu::AutonSelect();
-		Menu::Erase(0, 0, 480, 272);
-
-		Menu::DrawMenuSelect();
 		Menu::RobotSelect();
 		Menu::Erase(0, 0, 480, 272);
 
