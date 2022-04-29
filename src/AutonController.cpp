@@ -16,7 +16,7 @@ void TimerTask(void* time)
 void ThroughDriveTask(void* params)
 {
     double* value = (double*)params;
-    AutonController::robot->drive->DriveStraightThrough(value[0], value[1], 127.0);
+    AutonController::robot->drive->DriveStraightThrough(value[0], value[1]);
     *AutonController::taskComplete = true;
     while (true)
         pros::Task::delay(500);
@@ -67,7 +67,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(20.0, 0.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -75,7 +75,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -104,7 +104,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(27.5, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(27.5, 0.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -112,7 +112,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -133,7 +133,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(20.0, 0.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -141,7 +141,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -170,7 +170,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(26.5, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(26.5, 0.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -178,7 +178,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -247,36 +247,9 @@ namespace AutonController
         robot->drive->DriveStraight(distance, angle);
 
         liftTask.remove();
+
         robot->lift->Stop();
-        parameter = nullptr;
-    }
-
-    void DoThroughDistanceTask(double distance, double angle, double power, 
-        double liftAngle, bool clawClosed, bool carrierDown, bool intake)
-    {
-        if (clawClosed)
-            robot->claw->SetClosed();
-        else
-            robot->claw->SetOpen();
-
-        if (carrierDown)
-            robot->carrier->SetDown();
-        else
-            robot->carrier->SetUp();
-
-        if (intake)
-            robot->intake->Suck();
-        else
-            robot->intake->Stop();
-
-        void* parameter = nullptr;
-        parameter = &liftAngle;
-        pros::Task liftTask(LiftTask, parameter, "Lift task");
-
-        robot->drive->DriveStraightThrough(distance, angle, power);
-
-        liftTask.remove();
-        robot->lift->Stop();
+        robot->intake->Stop();
         parameter = nullptr;
     }
 
@@ -305,7 +278,9 @@ namespace AutonController
         robot->drive->TurnToAngle(targetAngle);
 
         liftTask.remove();
+
         robot->lift->Stop();
+        robot->intake->Stop();
         parameter = nullptr;
     }
 

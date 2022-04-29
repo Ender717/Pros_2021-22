@@ -70,17 +70,6 @@ namespace AutonController
         bool carrierDown, bool intake);
 
     //-------------------------------------------------------------------------
-    // Runs an autonomous task routine controlled by the drive
-    // distance: The distance to drive forward
-    // liftAngle: The angle to set the lift to
-    // clawClosed: Whether the claw should be closed or not
-    // carrierDown: Whether the carrier should be down or not
-    // v1: Created the method - Nathan S, 2-18-22
-    //-------------------------------------------------------------------------
-    extern void DoThroughDistanceTask(double distance, double angle, double power, double liftAngle, bool clawClosed, 
-        bool carrierDown, bool intake);
-
-    //-------------------------------------------------------------------------
     // Runs an autonomous task routine controlled by a turn
     // targetAngle: The target angle for the drive
     // liftAngle: The angle to set the lift to

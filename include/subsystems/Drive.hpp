@@ -224,7 +224,7 @@ public:
     // distance: The distance being travelled
     // v1: Created the method - Nathan S, 3-30-22
     //-------------------------------------------------------------------------
-    void DriveStraightThrough(double distance, double angle, double power);
+    void DriveStraightThrough(double distance, double angle);
 
     //-------------------------------------------------------------------------
     // Makes the drive turn to the target angle as a task
