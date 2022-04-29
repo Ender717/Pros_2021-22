@@ -10,11 +10,7 @@ RobotManager::RobotManager()
 // Destructor definitions ------------------------------------------------------
 RobotManager::~RobotManager()
 {
-    if (robot != nullptr)
-    {
-        delete robot;
-        robot = nullptr;
-    }
+    robot = nullptr;
 }
 
 // Private method definitions --------------------------------------------------

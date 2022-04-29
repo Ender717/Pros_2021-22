@@ -26,7 +26,6 @@ void initialize()
 		RobotState::robot->Initialize();
 		AutonController::robot = RobotState::robot;
 	}
-	
 }
 
 /**
