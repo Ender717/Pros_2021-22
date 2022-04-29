@@ -1,45 +1,7 @@
 // Library being defined
-#include "AutonController.hpp"
+#include "autonomous/AutonController.hpp"
 
 // Task function definitions --------------------------------------------------
-void TimerTask(void* time)
-{
-    double value = *(double*)time;
-    double targetTime = pros::c::millis() + value;
-    while (pros::c::millis() < targetTime)
-        pros::Task::delay(10);
-    *AutonController::taskComplete = true;
-    while (true)
-        pros::Task::delay(500);
-}
-
-void ThroughDriveTask(void* params)
-{
-    double* value = (double*)params;
-    AutonController::robot->drive->DriveStraightThrough(value[0], value[1]);
-    *AutonController::taskComplete = true;
-    while (true)
-        pros::Task::delay(500);
-}
-
-void DistanceDriveTask(void* params)
-{
-    double* value = (double*)params;
-    AutonController::robot->drive->DriveStraight(value[0], value[1]);
-    *AutonController::taskComplete = true;
-    while (true)
-        pros::Task::delay(500);
-}
-
-void TurnDriveTask(void* angle)
-{
-    double value = *(double*)angle;
-    AutonController::robot->drive->TurnToAngle(value);
-    *AutonController::taskComplete = true;
-    while (true)
-        pros::Task::delay(500);
-}
-
 void LiftTask(void* liftAngle)
 {
     double value = *(double*)liftAngle;
@@ -67,7 +29,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0);
+        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -75,7 +37,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -104,7 +66,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(27.5, 0.0);
+        robot->drive->DriveStraightThrough(27.5, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -112,7 +74,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -133,7 +95,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0);
+        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -141,7 +103,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -170,7 +132,7 @@ namespace AutonController
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(26.5, 0.0);
+        robot->drive->DriveStraightThrough(26.5, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -178,7 +140,7 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0);
+        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
 
         robot->drive->SetDrive(-40.0, -40.0);
         pros::delay(1000);
@@ -191,35 +153,6 @@ namespace AutonController
         pros::delay(1000);
         liftTask2.remove();
         robot->lift->Stop();
-    }
-
-    void DoGoalTask()
-    {
-        robot->drive->SetDrive(-60.0, -60.0);
-        pros::delay(400);
-        robot->carrier->SetUp();
-        robot->drive->SetDrive(0.0, 0.0);
-    }
-
-    void DoMatchLoads()
-    {
-        robot->intake->Suck();
-        for (int i = 0; i < 3; i++)
-        {
-            robot->drive->SetDrive(30.0, 30.0);
-            pros::delay(1500);
-            robot->drive->SetDrive(-30.0, -30.0);
-            pros::delay(1500);
-        }
-        robot->drive->SetDrive(0.0, 0.0);
-    }
-
-    void DoRingTask()
-    {
-        robot->intake->Suck();
-        robot->drive->SetDrive(30.0, 30.0);
-        pros::delay(2400);
-        robot->drive->SetDrive(0.0, 0.0);
     }
 
     void DoDistanceTask(double distance, double angle, double liftAngle, 
@@ -245,6 +178,37 @@ namespace AutonController
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
         robot->drive->DriveStraight(distance, angle);
+
+        liftTask.remove();
+
+        robot->lift->Stop();
+        robot->intake->Stop();
+        parameter = nullptr;
+    }
+
+    void DoThroughDistanceTask(double distance, double angle, double power, 
+        double liftAngle, bool clawClosed, bool carrierDown, bool intake)
+    {
+        if (clawClosed)
+            robot->claw->SetClosed();
+        else
+            robot->claw->SetOpen();
+
+        if (carrierDown)
+            robot->carrier->SetDown();
+        else
+            robot->carrier->SetUp();
+
+        if (intake)
+            robot->intake->Suck();
+        else
+            robot->intake->Stop();
+
+        void* parameter = nullptr;
+        parameter = &liftAngle;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+
+        robot->drive->DriveStraightThrough(distance, angle, power);
 
         liftTask.remove();
 
@@ -282,17 +246,5 @@ namespace AutonController
         robot->lift->Stop();
         robot->intake->Stop();
         parameter = nullptr;
-    }
-
-    void DoLiftDistanceTask(double distance, double liftAngle,
-        bool clawClosed, bool carrierDown, bool intake)
-    {
-
-    }
-
-    void DoLiftTurnTask(double targetAngle, double liftAngle,
-        bool clawClosed, bool carrierDown, bool intake)
-    {
-
     }
 }

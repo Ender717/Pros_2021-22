@@ -3,9 +3,8 @@
 #define OPCONTROL_H
 
 #include "Menu.hpp"
-#include "RobotManager.hpp"
-#include "RobotState.hpp"
-#include "autons.hpp"
+#include "robot/RobotManager.hpp"
+#include "robot/RobotState.hpp"
 #include "main.h"
 
 #endif

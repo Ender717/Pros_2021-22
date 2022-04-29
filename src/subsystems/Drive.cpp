@@ -305,7 +305,7 @@ void Drive::DriveStraight(double distance, double angle)
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
 
-        if (abs(currentPosition - targetPosition) < 0.1)
+        if (std::abs(currentPosition - targetPosition) < 0.1)
             timer += 60;
         pros::Task::delay(60);
     }
@@ -314,7 +314,7 @@ void Drive::DriveStraight(double distance, double angle)
     SetDrive(0.0, 0.0);
 }
 
-void Drive::DriveStraightThrough(double distance, double angle)
+void Drive::DriveStraightThrough(double distance, double angle, double power)
 {
     // Create and initialize variables
     double startPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
@@ -331,7 +331,6 @@ void Drive::DriveStraightThrough(double distance, double angle)
     while((!reversed && currentPosition < targetPosition) ||
         (reversed && currentPosition > targetPosition))
     {
-        double power = 127.0;
         if (reversed)
             power *= -1;
         
@@ -359,7 +358,7 @@ void Drive::TurnToAngle(double targetAngle)
         double controlValue = turnPID->GetControlValue(currentAngle);
         SetDrive(-controlValue, controlValue);
 
-        if (abs(targetAngle - currentAngle) < 0.8)
+        if (std::abs(targetAngle - currentAngle) < 0.8)
             timer += 20;
         pros::Task::delay(20);
     }
@@ -378,8 +377,7 @@ void Drive::SetY(double y)
 
 void Drive::SetTheta(double theta)
 {
-    inertialSensor->set_rotation(theta);
-    //position->SetAngle(theta);
+    position->SetAngle(theta);
 }
 
 void Drive::SetPosition(double x, double y, double theta)
