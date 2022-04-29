@@ -7,6 +7,16 @@ RobotManager::RobotManager()
     robot = nullptr;
 }
 
+// Destructor definitions ------------------------------------------------------
+RobotManager::~RobotManager()
+{
+    if (robot != nullptr)
+    {
+        delete robot;
+        robot = nullptr;
+    }
+}
+
 // Private method definitions --------------------------------------------------
 void RobotManager::CreateBlueRobot()
 {
