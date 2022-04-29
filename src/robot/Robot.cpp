@@ -152,8 +152,8 @@ void Robot::UpdateDrive(pros::Controller& master)
 	}
 	else if (*configuration == RobotConfigs::ORANGE)
 	{
-		double leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-		double rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+		leftDrivePower = master.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+		rightDrivePower = master.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 	}
 
 	// Update
