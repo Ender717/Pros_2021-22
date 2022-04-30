@@ -115,33 +115,33 @@ namespace Autons
         // Align against the second wall
         AutonController::DoDistanceTask(6.0, 0.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoTurnTask(-90.0, 110.0, true, true, false);
+        AutonController::DoTurnTask(-90.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoDistanceTask(15.0, -90.0, 110.0, true, true, false);
+        AutonController::DoDistanceTask(15.0, -90.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoThroughDistanceTask(2.0, -90.0, 40.0, 110.0, true, false, false);
         pros::delay(800);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-7.5, -90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-6.0, -90.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoTurnTask(-180.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(-10.0, -180.0, 40.0, 110.0, true, true, false);
+        AutonController::DoThroughDistanceTask(-13.0, -180.0, 40.0, 110.0, true, true, false);
         AutonController::DoThroughDistanceTask(-2.0, -180.0, 40.0, 110.0, true, false, false);
 
         // Do match load rings
-        AutonController::DoDistanceTask(2.0, -180.0, 110.0, true, false, true);
+        AutonController::DoDistanceTask(4.0, -180.0, 110.0, true, false, true);
         pros::delay(1000);
         for (int i = 0; i < 2; i++)
         {
-            AutonController::DoThroughDistanceTask(10.0, -180.0, 40.0, 110.0, true, false, true);
-            AutonController::DoThroughDistanceTask(-10.0, -180.0, 40.0, 110.0, true, false, true);
+            AutonController::DoThroughDistanceTask(10.0, -180.0, 30.0, 110.0, true, false, true);
+            AutonController::DoThroughDistanceTask(-10.0, -180.0, 30.0, 110.0, true, false, true);
             AutonController::DoDistanceTask(0.0, -180.0, 110.0, true, false, true);
-            pros::delay(200);
+            pros::delay(500);
         }
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(10.0, -180.0, 40.0, 110.0, true, false, true);
+        AutonController::DoThroughDistanceTask(10.0, -180.0, 30.0, 110.0, true, false, true);
         pros::delay(500);
 
         // Align against the second wall
@@ -149,11 +149,11 @@ namespace Autons
         pros::delay(100);
         AutonController::DoTurnTask(-90.0, 110.0, true, false, true);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(5.0, -90.0, 40.0, 110.0, true, false, true);
-        pros::delay(500);
+        AutonController::DoThroughDistanceTask(1.0, -90.0, 40.0, 110.0, true, false, true);
+        pros::delay(1000);
 
         // Align with the field rings
-        AutonController::DoDistanceTask(-17.0, -90.0, 110.0, true, false, true);
+        AutonController::DoDistanceTask(-16.3, -90.0, 110.0, true, false, true);
         pros::delay(100);
         AutonController::DoTurnTask(0.0, 110.0, true, false, true);
         pros::delay(100);
@@ -161,9 +161,10 @@ namespace Autons
         pros::delay(100);
 
         // Grab the field rings
-        AutonController::DoThroughDistanceTask(20.0, 0.0, 25.0, 110.0, true, false, true);;
+        AutonController::DoThroughDistanceTask(20.0, 0.0, 30.0, 110.0, true, false, true);;
         pros::delay(100);
         AutonController::DoDistanceTask(-30.0, 0.0, 110.0, true, false, true);
+        AutonController::DoDistanceTask(0.0, 0.0, 110.0, true, false, true);
     }
 
     void LeftAutonOrange()
@@ -213,7 +214,7 @@ namespace Autons
         pros::delay(100);
         AutonController::DoDistanceTask(-13.0, 40.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoTurnTask(70.0, 110.0, true, true, false);
+        AutonController::DoTurnTask(70.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoDistanceTask(10.0, 70.0, 110.0, true, false, false);
         pros::delay(100);
