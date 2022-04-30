@@ -292,7 +292,7 @@ void Drive::DriveStraight(double distance, double angle)
     anglePID->SetTargetValue(startAngle);
 
     // Loop until finished
-    while(timer < 150)
+    while(timer < 200)
     {
         // Update the current position
         currentPosition = rightTrackingSensor->get_position() / -36000.0 * 3.1415 * *wheelSize;
@@ -305,7 +305,7 @@ void Drive::DriveStraight(double distance, double angle)
         // Update the motor power levels
         SetDrive(distanceControl - angleControl, distanceControl + angleControl);
 
-        if (std::abs(currentPosition - targetPosition) < 0.1)
+        if (std::abs(currentPosition - targetPosition) < 1.0)
             timer += 60;
         pros::Task::delay(60);
     }
@@ -353,13 +353,13 @@ void Drive::TurnToAngle(double targetAngle)
     double currentAngle = -inertialSensor->get_rotation();
     turnPID->SetTargetValue(targetAngle);
     int timer = 0;
-    while (timer < 500)
+    while (timer < 300)
     {
         currentAngle = -inertialSensor->get_rotation();
         double controlValue = turnPID->GetControlValue(currentAngle);
         SetDrive(-controlValue, controlValue);
 
-        if (std::abs(targetAngle - currentAngle) < 0.8)
+        if (std::abs(targetAngle - currentAngle) < 1.5)
             timer += 20;
         pros::Task::delay(20);
     }
