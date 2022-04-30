@@ -205,25 +205,37 @@ namespace Autons
         // Align against the side wall
         AutonController::DoTurnTask(70.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoDistanceTask(75.0, 70.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(55.0, 70.0, 110.0, true, false, false);
+        pros::delay(100);
+        AutonController::DoTurnTask(40.0, 110.0, true, false, false);
+        pros::delay(100);
+        AutonController::DoDistanceTask(13.0, 40.0, 110.0, true, false, false);
+        pros::delay(100);
+        AutonController::DoDistanceTask(-13.0, 40.0, 110.0, true, false, false);
+        pros::delay(100);
+        AutonController::DoTurnTask(70.0, 110.0, true, true, false);
+        pros::delay(100);
+        AutonController::DoDistanceTask(10.0, 70.0, 110.0, true, false, false);
+        pros::delay(100);
         AutonController::DoThroughDistanceTask(2.0, 70.0, 40.0, 110.0, true, false, false);
-        pros::delay(500);
+        pros::delay(1000);
 
         // Align against the back wall
         AutonController::DoDistanceTask(-15.0, 70.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoTurnTask(160.0, 110.0, true, false, false);
         pros::delay(100);
-        AutonController::DoDistanceTask(24.0, 160.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(12.0, 160.0, 110.0, true, false, false);
         AutonController::DoThroughDistanceTask(2.0, 160.0, 40.0, 110.0, true, false, false);
+        pros::delay(2000);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-5.0, 160.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-4.5, 160.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoTurnTask(70.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(-4.0, 70.0, 30.0, 110.0, true, true, false);
-        pros::delay(300);
+        AutonController::DoThroughDistanceTask(-6.0, 70.0, 20.0, 110.0, true, true, false);
+        pros::delay(500);
         AutonController::DoDistanceTask(-2.0, 70.0, 110.0, true, false, false);
         pros::delay(100);
 
@@ -234,6 +246,8 @@ namespace Autons
         {
             AutonController::DoThroughDistanceTask(10.0, 70.0, 40.0, 110.0, true, false, true);
             AutonController::DoThroughDistanceTask(-10.0, 70.0, 40.0, 110.0, true, false, true);
+            AutonController::DoDistanceTask(0.0, 70.0, 110.0, true, false, true);
+            pros::delay(200);
         }
         AutonController::DoDistanceTask(0.0, 70.0, 110.0, true, false, true);
         pros::delay(1000);
