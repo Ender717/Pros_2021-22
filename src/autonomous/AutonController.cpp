@@ -129,13 +129,14 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -20.0;
+        robot->drive->DriveStraightThrough(1.0, 0.0, 127.0);
+
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
-
-        robot->drive->DriveStraightThrough(2.0, 0.0, 127.0);
         robot->carrier->SetDown();
-        robot->drive->DriveStraightThrough(22.0, 0.0, 127.0);
+
+        robot->drive->DriveStraightThrough(23.0, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();

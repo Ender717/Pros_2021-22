@@ -149,7 +149,7 @@ void RobotManager::CreateOrangeRobot()
 	PID* distancePID = pidBuilder->WithKp(12.6)->WithKi(0.0)->WithKd(0.6)->WithMax(80.0)->Build();
     PID* anglePID = pidBuilder->WithKp(3.9)->WithKi(0.0)->WithKd(0.0)->Build();
     PID* turnPID = pidBuilder->WithKp(12.7)->WithKi(0.0)->WithKd(0.8)->Build();
-	PID* liftPID = pidBuilder->WithKp(13.7)->WithKi(0.1)->WithKd(1.35)->WithIntegralLimit(90.0)->WithStartTarget(90.0)->Build();
+	PID* liftPID = pidBuilder->WithKp(12.5)->WithKi(0.1)->WithKd(1.70)->WithIntegralLimit(90.0)->WithStartTarget(90.0)->Build();
 	delete pidBuilder;
 	pidBuilder = nullptr;
 	
