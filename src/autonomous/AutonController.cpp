@@ -31,15 +31,14 @@ namespace AutonController
     // Public method definitions ----------------------------------------------
     void DoLeftStartTaskBlue()
     {
-        *AutonController::taskComplete = false;
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -18.5;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(28.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(29.5, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -47,24 +46,44 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(-20.0, 0.0, 127.0);
+        robot->drive->DriveStraight(-3.0, 0.0);
 
-        robot->drive->SetDrive(-40.0, -40.0);
-        pros::delay(1000);
-        robot->drive->SetDrive(0.0, 0.0);
-
-        liftHeight = 110.0;
-        parameter = &liftHeight;
-        pros::Task liftTask2(HoldLiftTask, /*parameter,*/ "Lift task");
-
-        pros::delay(1000);
-        liftTask2.remove();
+        robot->lift->SetLift(127.0);
+        pros::delay(2000);
         robot->lift->Stop();
     }
 
     void DoMiddleStartTaskBlue()
     {
+        robot->claw->SetOpen();
+        void* parameter = nullptr;
 
+        robot->drive->DriveStraight(17.0, 0.0);
+        pros::delay(100);
+
+        double liftHeight = -16.8;
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+        robot->drive->TurnToAngle(45.0);
+        liftTask.remove();
+        robot->lift->Stop();
+
+        robot->drive->DriveStraightThrough(19.0, 45.0, 127.0);
+
+        robot->claw->SetClosed();
+        pros::delay(130);   
+
+        robot->drive->DriveStraight(-20.0, 0.0);
+        robot->drive->TurnToAngle(0.0);
+
+        robot->drive->DriveStraightThrough(-10.0, 0.0, 40.0);
+        pros::delay(1000);
+        robot->drive->SetDrive(0.0, 0.0);
+
+        robot->lift->SetLift(127.0);
+        pros::delay(2000);
+        robot->lift->Stop();
     }
 
     void DoRightStartTaskBlue()
@@ -97,15 +116,14 @@ namespace AutonController
 
     void DoLeftStartTaskOrange()
     {
-        *AutonController::taskComplete = false;
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -19.0;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.0, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(29.5, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -113,18 +131,15 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-30.0, 0.0, 127.0);
-
-        robot->drive->SetDrive(-40.0, -40.0);
-        pros::delay(1000);
-        robot->drive->SetDrive(0.0, 0.0);
+        robot->drive->DriveStraightThrough(-20.0, 0.0, 127.0);
+        robot->drive->DriveStraight(-3.0, 0.0);
 
         robot->lift->SetLift(127.0);
         pros::delay(2000);
         robot->lift->Stop();
     }
 
-    void DoMiddleStartTaskOrange()
+    void DoMiddleLeftStartTaskOrange()
     {
         robot->claw->SetOpen();
         void* parameter = nullptr;
@@ -144,8 +159,36 @@ namespace AutonController
         robot->claw->SetClosed();
         pros::delay(130);        
 
-        robot->drive->DriveStraightThrough(-25.0, 0.0, 127.0);
-        robot->drive->DriveStraight(0.0, 0.0);
+        robot->drive->DriveStraightThrough(-21.0, 0.0, 127.0);
+        robot->drive->DriveStraight(-4.0, 0.0);
+
+        robot->lift->SetLift(127.0);
+        pros::delay(2000);
+        robot->lift->Stop();
+    }
+
+    void DoMiddleRightStartTaskOrange()
+    {
+        robot->claw->SetOpen();
+        void* parameter = nullptr;
+
+        robot->drive->DriveStraightThrough(1.0, 0.0, 127.0);
+
+        double liftHeight = -17.8;
+        parameter = &liftHeight;
+        pros::Task liftTask(LiftTask, parameter, "Lift task");
+        robot->carrier->SetDown();
+
+        robot->drive->DriveStraightThrough(23.0, 0.0, 127.0);
+        
+        liftTask.remove();
+        robot->lift->Stop();
+
+        robot->claw->SetClosed();
+        pros::delay(130);        
+
+        robot->drive->DriveStraightThrough(-20.0, 0.0, 127.0);
+        robot->drive->DriveStraight(-5.0, 0.0);
 
         robot->lift->SetLift(127.0);
         pros::delay(2000);
@@ -157,11 +200,11 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -19.0;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
-        robot->drive->DriveStraightThrough(20.5, 0.0, 127.0);
+        robot->drive->DriveStraightThrough(28.5, 0.0, 127.0);
         
         liftTask.remove();
         robot->lift->Stop();
@@ -175,12 +218,8 @@ namespace AutonController
         pros::delay(1000);
         robot->drive->SetDrive(0.0, 0.0);
 
-        liftHeight = 110.0;
-        parameter = &liftHeight;
-        pros::Task liftTask2(LiftTask, parameter, "Lift task");
-
-        pros::delay(1000);
-        liftTask2.remove();
+        robot->lift->SetLift(127.0);
+        pros::delay(2000);
         robot->lift->Stop();
     }
 

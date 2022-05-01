@@ -359,7 +359,7 @@ void Drive::TurnToAngle(double targetAngle)
         double controlValue = turnPID->GetControlValue(currentAngle);
         SetDrive(-controlValue, controlValue);
 
-        if (std::abs(targetAngle - currentAngle) < 1.5)
+        if (std::abs(targetAngle - currentAngle) < 1.2)
             timer += 20;
         pros::Task::delay(20);
     }

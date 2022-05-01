@@ -39,7 +39,12 @@ namespace AutonController
     /**
      * Runs a custom start task for the middle auton for the orange robot
      */
-    extern void DoMiddleStartTaskOrange();
+    extern void DoMiddleLeftStartTaskOrange();
+
+    /**
+     * Runs a custom start task for the middle auton for the orange robot
+     */
+    extern void DoMiddleRightStartTaskOrange();
 
     /**
      * Runs a custom start task for the right auton for the orange robot

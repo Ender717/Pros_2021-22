@@ -95,9 +95,12 @@ namespace Menu
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Left Orange");
                     break;
                 case 7:
-                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Orange");
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Left Orange");
                     break;
                 case 8:
+                    pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Middle Right Orange");
+                    break;
+                case 9:
                     pros::screen::print(text_format_e_t::E_TEXT_LARGE, 80, 50, "Right Orange");
                     break;
                 default:

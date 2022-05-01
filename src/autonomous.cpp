@@ -36,9 +36,12 @@ void autonomous()
 			Autons::LeftAutonOrange();
 			break;
 		case 7:
-			Autons::MiddleAutonOrange();
+			Autons::MiddleLeftAutonOrange();
 			break;
 		case 8:
+			Autons::MiddleRightAutonOrange();
+			break;
+		case 9:
 			Autons::RightAutonOrange();
 			break;
 		default:

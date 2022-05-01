@@ -54,7 +54,12 @@ namespace Autons
     /**
      * The middle goal auton routine for the orange robot
      */
-    extern void MiddleAutonOrange();
+    extern void MiddleLeftAutonOrange();
+
+    /**
+     * The middle goal auton routine for the orange robot
+     */
+    extern void MiddleRightAutonOrange();
 
     /**
      * The right goal auton routine for the orange robot
