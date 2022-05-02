@@ -353,7 +353,7 @@ void Drive::TurnToAngle(double targetAngle)
     double currentAngle = -inertialSensor->get_rotation();
     turnPID->SetTargetValue(targetAngle);
     int timer = 0;
-    while (timer < 300)
+    while (timer < 200)
     {
         currentAngle = -inertialSensor->get_rotation();
         double controlValue = turnPID->GetControlValue(currentAngle);

@@ -166,7 +166,7 @@ namespace Autons
         pros::delay(800);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-6.0, -90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-6.7, -90.0, 110.0, true, false, false);
         pros::delay(100);
         AutonController::DoTurnTask(-180.0, 110.0, true, true, false);
         pros::delay(100);
