@@ -33,7 +33,7 @@ namespace OrangeConfig
     const int LEFT_DRIVE_TRACKING_PORT = 0;
     const int RIGHT_DRIVE_TRACKING_PORT = 8;
     const int STRAFE_DRIVE_TRACKING_PORT = 18;
-    const int INERTIAL_PORT = 21;
+    const int INERTIAL_PORT = 18;
 
     // Piston ports
     const char CARRIER_1_PORT = 'H';

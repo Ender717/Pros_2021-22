@@ -126,7 +126,7 @@ void Robot::UpdateClaw(pros::Controller& master)
 {
 	if (*configuration == RobotConfigs::BLUE)
 	{
-		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B))
+		if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y))
 			claw->TogglePosition();
 	}
 	else if (*configuration == RobotConfigs::ORANGE)
