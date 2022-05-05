@@ -20,7 +20,7 @@ namespace OrangeConfig
     const int LEFT_DRIVE_3_PORT = 3;
     const int LEFT_DRIVE_4_PORT = 4;
     const int RIGHT_DRIVE_1_PORT = 14;
-    const int RIGHT_DRIVE_2_PORT = 13;
+    const int RIGHT_DRIVE_2_PORT = 18;
     const int RIGHT_DRIVE_3_PORT = 12;
     const int RIGHT_DRIVE_4_PORT = 11;
     const int INTAKE_1_PORT = 20;
@@ -32,8 +32,8 @@ namespace OrangeConfig
     // Sensor ports
     const int LEFT_DRIVE_TRACKING_PORT = 0;
     const int RIGHT_DRIVE_TRACKING_PORT = 8;
-    const int STRAFE_DRIVE_TRACKING_PORT = 18;
-    const int INERTIAL_PORT = 18;
+    const int STRAFE_DRIVE_TRACKING_PORT = 0;
+    const int INERTIAL_PORT = 999999999;
 
     // Piston ports
     const char CARRIER_1_PORT = 'H';
