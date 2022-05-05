@@ -19,6 +19,7 @@ void opcontrol()
 	Robot* robot = RobotState::robot;
 	AutonController::robot = RobotState::robot;
 	Menu::Erase(0, 0, 480, 272);
+	robot->lift->Stop();
 		
 	while(true)
 	{
