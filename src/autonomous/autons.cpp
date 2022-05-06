@@ -60,11 +60,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -262.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoDistanceTask(3.0, -262.0, 110.0, true, false, true);
-        pros::delay(1000);
-        AutonController::DoDistanceTask(0.0, -262.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, -262.0, 110.0, true, true, false);
     }
 
     void MiddleAutonBlue()
@@ -84,7 +79,7 @@ namespace Autons
         pros::delay(800);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-6.0, -90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-5.0, -90.0, 110.0, true, false, false);
         pros::delay(500);
         AutonController::DoTurnTask(-180.0, 110.0, true, true, false);
         pros::delay(100);
@@ -101,11 +96,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -180.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoTurnTask(0.0, 110.0, true, false, false);
-        pros::delay(100);
-        AutonController::DoDistanceTask(0.0, 0.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, 0.0, 110.0, true, true, false);
     }
 
     void RightAutonBlue()
@@ -123,7 +113,7 @@ namespace Autons
         pros::delay(1000);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-5.4, -90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-5.0, -90.0, 110.0, true, false, false);
         pros::delay(500);
         AutonController::DoTurnTask(-180.0, 110.0, true, true, false);
         pros::delay(100);
@@ -140,11 +130,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -180.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoTurnTask(0.0, 110.0, true, false, false);
-        pros::delay(100);
-        AutonController::DoDistanceTask(0.0, 0.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, 0.0, 110.0, true, true, false);
     }
 
     void LeftAutonOrange()
@@ -187,11 +172,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -262.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoDistanceTask(3.0, -262.0, 110.0, true, false, true);
-        pros::delay(1000);
-        AutonController::DoDistanceTask(0.0, -262.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, -262.0, 110.0, true, true, false);
     }
 
     void MiddleLeftAutonOrange()
@@ -245,11 +225,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, 70.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoDistanceTask(3.0, 70.0, 110.0, true, false, true);
-        pros::delay(1000);
-        AutonController::DoDistanceTask(0.0, 70.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, 70.0, 110.0, true, true, false);
     }
 
     void MiddleRightAutonOrange()
@@ -278,15 +253,16 @@ namespace Autons
         pros::delay(1000);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-5.4, -110.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-5.0, -110.0, 110.0, true, false, false);
         pros::delay(500);
         AutonController::DoTurnTask(-200.0, 110.0, true, true, false);
         pros::delay(100);
-        AutonController::DoThroughDistanceTask(-13.0, -200.0, 40.0, 110.0, true, true, false);
+        AutonController::DoThroughDistanceTask(-15.0, -200.0, 40.0, 110.0, true, true, false);
         AutonController::DoThroughDistanceTask(-2.0, -200.0, 40.0, 110.0, true, false, false);
 
         // Do match load rings
-        AutonController::DoDistanceTask(4.0, -200.0, 110.0, true, false, true);
+        AutonController::DoThroughDistanceTask(6.0, -200.0, 40.0, 110.0, true, false, true);
+        AutonController::robot->drive->SetDrive(0.0, 0.0);
         pros::delay(1000);
         for (int i = 0; i < 5; i++)
         {
@@ -295,11 +271,6 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -200.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoTurnTask(-20.0, 110.0, true, false, false);
-        pros::delay(100);
-        AutonController::DoDistanceTask(0.0, -20.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, -20.0, 110.0, true, true, false);
     }
 
     void RightAutonOrange()
@@ -317,7 +288,7 @@ namespace Autons
         pros::delay(1000);
 
         // Grab the alliance goal
-        AutonController::DoDistanceTask(-5.4, -90.0, 110.0, true, false, false);
+        AutonController::DoDistanceTask(-5.0, -90.0, 110.0, true, false, false);
         pros::delay(500);
         AutonController::DoTurnTask(-180.0, 110.0, true, true, false);
         pros::delay(100);
@@ -334,10 +305,5 @@ namespace Autons
             AutonController::DoDistanceTask(0.0, -180.0, 110.0, true, false, true);
             pros::delay(600);
         }
-        AutonController::DoTurnTask(0.0, 110.0, true, false, false);
-        pros::delay(100);
-        AutonController::DoDistanceTask(0.0, 0.0, 110.0, true, true, false);
-        pros::delay(500);
-        AutonController::DoDistanceTask(5.0, 0.0, 110.0, true, true, false);
     }
 }

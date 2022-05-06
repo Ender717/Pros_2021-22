@@ -34,7 +34,7 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -17.8;
+        double liftHeight = -17.0;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
@@ -60,10 +60,10 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        robot->drive->DriveStraight(19.7, 0.0);
+        robot->drive->DriveStraight(19.0, 0.0);
         pros::delay(100);
 
-        double liftHeight = -17.8;
+        double liftHeight = -17.0;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
         robot->drive->TurnToAngle(45.0);
@@ -95,7 +95,7 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -17.8;
+        double liftHeight = -17.0;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
@@ -123,7 +123,7 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -16.8;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
@@ -151,7 +151,7 @@ namespace AutonController
 
         robot->drive->DriveStraightThrough(1.0, 0.0, 127.0);
 
-        double liftHeight = -16.8;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
         robot->carrier->SetDown();
@@ -180,7 +180,7 @@ namespace AutonController
 
         robot->drive->DriveStraightThrough(1.0, 0.0, 127.0);
 
-        double liftHeight = -16.8;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
         robot->carrier->SetDown();
@@ -207,7 +207,7 @@ namespace AutonController
         robot->claw->SetOpen();
         void* parameter = nullptr;
 
-        double liftHeight = -16.8;
+        double liftHeight = -17.8;
         parameter = &liftHeight;
         pros::Task liftTask(LiftTask, parameter, "Lift task");
 
